@@ -32,7 +32,7 @@ Setser and S.T.W. (2019) established the accounting: lifers hedged ~USD 250bn of
 | 1 | **Economic hedge ratio** (headline) | (derivative hedges + FX-denominated policy liabilities) / foreign-currency assets | sector + firm | M (sector), Q (firm) | 2013 (firm), 2020 (sector) |
 | 2 | **Net open FX position** | foreign-currency assets − FX policy liabilities − derivative hedges, stored in NT$ million. USD, % GDP, % assets and × capital are presentations of the same series, selected in the artifact by a unit toggle — never a second y-axis | sector + firm | M / Q | 2020 / 2013 |
 | 3 | **Buffer coverage** | tiers as % of net open FX position and as implied absorbable TWD appreciation. v1 (to 2025): (a) FX price-fluctuation reserve; (b) + equity. v2 (2026→, four named buckets of the Feb 2026 notice): (a) 波動準備金 + 固定準備金 (liability side, offset FX losses); (b) + 特別盈餘公積–外匯風險固定準備 (equity); (c) 特別盈餘公積–外匯風險強化準備 shown separately as restricted capital — it cannot offset losses; (d) memo: unamortised FX differences, not loss-absorbing | sector + firm | M / Q | 2020 |
-| 4 | **Regulatory hedge ratio** | FSC definition (2026 notice §(九)): traditional hedge principal / (foreign investments − FX-policy liabilities − unhedged non-FVTPL equities and funds). v1 2020–2025 from the FSC monthly briefing; v2 2026→ same definition, same briefing, press-reported | sector | M | 2020 |
+| 4 | **Regulatory hedge ratio** | FSC definition (2026 notice §(九)): traditional hedge principal / (foreign investments − FX-policy liabilities − unhedged non-FVTPL equities and funds). Stated at the Insurance Bureau's monthly press briefing and reported by the press — never printed in the monthly release (Stage 1, decisions 1.2). Press-reported for its whole life; v1/v2 is a definitional break at the Feb 2026 notice, not a channel break | sector | M | 2020 (briefing series; 2024-12 and 2025-08→ ingested so far) |
 | 5 | **Gross hedge ratio** | derivative hedges / foreign assets (the figure most sell-side and press quote) | sector + firm | M / Q | 2013 |
 | 6 | **Hedge composition** | CS, NDF, proxy, FX policy, open — shares and NT$ | firm | Q | 2013 |
 | 7 | **Hedge cost** | reported annualised hedging cost (bp of foreign assets) vs market 3m CS/NDF implied cost | firm + market | Q / M | 2013 |
@@ -42,16 +42,17 @@ Setser and S.T.W. (2019) established the accounting: lifers hedged ~USD 250bn of
 Sign and unit conventions: all NT$ series stored in NT$ million as published; USD conversions use the CBC month-end closing rate stored alongside; GDP from DGBAS, annualised four-quarter sum.
 
 Reconciliation checks (fail the run if breached by > 3%):
-- FSC net exposure ≈ regulatory denominator × (1 − regulatory ratio).
-- FX-policy-backed assets ≈ total foreign investments − regulatory denominator.
+- FSC net exposure ≈ regulatory denominator × (1 − regulatory ratio). The denominator is only given at year-end briefings; holds for 2025-12 within 0.5% (decisions 1.2).
+- FX-policy-backed assets ≈ total foreign investments − regulatory denominator. Needs Stage 2/3 inputs; not runnable from sector data alone.
 - Sector economic ratio from firm panel (asset-weighted, six largest) within 5pp of sector ratio from FSC data.
+- Stage 1 additionally checks every release edition's arithmetic, the cross-edition reserve-balance ties, and the Feb 2026 notice's bucket identities on the press-reported rows (decisions 1.7).
 
 ---
 
 ## 4. Data sources
 
 ### 4.1 Sector-level (FSC / Insurance Bureau)
-Monthly press release "Profit/loss, net value and exchange gains/losses of the insurance industry" — hedge ratio, hedging cost, FX price-fluctuation reserve balance and buckets (P, Q, X, Y), exchange gains/losses, owners' equity. English and Chinese versions; Chinese carries more detail.
+Monthly press release "Profit/loss, net value and exchange gains/losses of the insurance industry". **Measured at Stage 1 across all 91 editions:** it carries pre-tax profit and owners' equity (life / non-life / total), FX gains/losses, hedging P&L (instrument P&L and swap cost, split from 2020-01), the reserve's net change, the life insurers' FX price-fluctuation reserve balance, the TWD move YTD and (2020-09→) net foreign-investment income. It does **not** carry the hedge ratio, a hedging-cost rate, the foreign-investment total, the regulatory exposure or the reserve buckets — those are stated at the Insurance Bureau's monthly briefing and reach the public through the press (see "Briefing channel" below). English and Chinese versions; Chinese carries more detail. Parser: `src/tlfx/fsc_parse.py`; ingestion: `scripts/stage1_sector_monthly.py`.
 - English press list: `https://www.fsc.gov.tw/en/home.jsp?id=54&parentpath=0,2`
 - Chinese press list: `https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2` — **confirmed 2026-09-03**
 - Insurance Bureau press list (mirrors the same releases): `https://www.ib.gov.tw/ch/home.jsp?id=239&parentpath=0,2`
@@ -63,16 +64,17 @@ Both press lists are the same CMS and expose a POST search form (`keyword`,
 title — never by page position, since the list interleaves banking, securities
 and insurance releases. `src/tlfx/fsc.py` implements this against both channels.
 
-**2026 channel.** The sector hedge ratio and the reserve totals continue monthly, but only orally: the Insurance Bureau briefs reporters when each month's figures are ready and the numbers reach the public through Economic Daily (udn.com), cnyes and CNA. Confirmed 2026 values: hedge ratio 50.23% (Dec 2025), 47.0% (Jan), 45.1% (Feb), 45.15% (Mar), 44.31% (Apr), 42.89% (Jun); FX reserve + FX-risk special reserves NT$969.8bn (Apr), NT$1,064.8bn (Jun). All three media hosts are blocked at the sandbox egress; the values are reachable through web-search snippets only, and are stored with `basis = 'press_reported'`. The Life Insurance Association publishes no hedge or FX data. Firm financial statements carry the mandated disclosures quarterly (notice §10) and are the provenance-clean v2 source.
+**Briefing channel (series 4 and, from 2026, the reserve buckets).** The Insurance Bureau briefs reporters the day each month's figures are ready — the same day the release used to be posted — and the hedge ratio, buckets and net exposure reach the public through Economic Daily (`money.udn.com`), cnyes and CNA (carried by CTS). This has been the only channel for the hedge ratio since the briefing series began in 2020. Ingested so far (`config/briefing_press.json`, verified against the fetched articles by `scripts/stage1_briefing_press.py`, stored with `basis = 'press_reported'`, `reporting_channel = 'briefing_press'`): 66.39% (Dec 2024), 62.25% (Aug 2025), 58.55% (Oct 2025), 50.23% (Dec 2025), 47% (Jan 2026), 45.1% (Feb), 45.15% (Mar), 44.31% (Apr), 43.66% (May), 42.89% (Jun), 42.94% (Jul); FX reserve + special reserves NT$915.6bn (Feb) → NT$1,083.3bn (Jul); net FX exposure NT$8.61tn (Mar) → NT$9.04tn (Jul). `money.udn.com`, `news.cnyes.com` and `news.cts.com.tw` fetch directly; `udn.com` apex, `www.cna.com.tw` and other outlets are blocked at the sandbox egress. The 2020-01 → 2025-07 monthly backfill is an open task. The Life Insurance Association publishes no hedge or FX data. Firm financial statements carry the mandated disclosures quarterly (notice §10) and are the provenance-clean v2 source (Stage 3).
 
 **Coverage, measured 2026-09-03.** The monthly release
 (`{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金`)
-runs to 90 editions from May 2018 to December 2025, with only two gaps (March
-2019, March 2020) — roughly twenty months more history than section 3 assumes.
-**It stops there.** No 2026 edition exists on either channel; the series appears
-to have ended at the IFRS 17 / TW-ICS transition on 1 January 2026. Resolving
-where the 2026 sector data now lives is Stage 1's first task — see
-`docs/decisions.md` 0.11.
+runs to 91 editions from May 2018 to December 2025: March 2019 has no edition
+under any title on either channel, and March 2020 is retitled
+(`…兌換損益、避險損益與外匯價格變動準備金情形`, without the profit and equity
+sections). **It stops there.** No 2026 edition exists on either channel; the
+series ended at the IFRS 17 / TW-ICS transition on 1 January 2026, and the
+briefing channel above carries the sector figures from then on — see
+`docs/decisions.md` 0.11 and 1.1–1.4.
 
 ### 4.2 Sector balance sheet (CBC)
 Financial Statistics Monthly, appendix table 8 "Life insurance companies' balance sheet" (人壽保險公司資產負債統計表), CSV/XLS.
@@ -92,7 +94,7 @@ Financial Statistics Monthly, appendix table 8 "Life insurance companies' balanc
 - English site root: `https://www.cbc.gov.tw/en/mp-2.html`
 
 ### 4.4 Taiwan Insurance Institute (TII)
-Life insurance statistics (fund utilisation, foreign investment share, monthly premium tables).
+Life insurance statistics (fund utilisation, foreign investment share, monthly premium tables). The servers omit their TWCA intermediate certificate; `tlfx.provenance.fetch` supplies it from `config/certs/` (decisions 1.5) — use `fetch`, or pass `verify=ca_bundle_for(url)`, for these hosts.
 - Statistics index: `https://www.tii.org.tw/tii/information/information1/000001.html`
 - Actuarial/statistics query system: `https://sv.tii.org.tw/`
 - Database service: `https://insdb.tii.org.tw/`

@@ -1,0 +1,181 @@
+{
+  "run_id": "8f9c18fe-4627-4354-959c-face84057f26",
+  "summary": {
+    "stage": "stage1-briefing",
+    "started_at": "2026-09-03T04:29:49.597038+00:00",
+    "finished_at": "2026-09-03T04:29:50.260367+00:00",
+    "sources_ok": 0,
+    "sources_total": 0,
+    "checks_failed": 0,
+    "checks_total": 16,
+    "status": "ok"
+  },
+  "rows": 11,
+  "months": [
+    "2024-12-01",
+    "2025-08-01",
+    "2025-10-01",
+    "2025-12-01",
+    "2026-01-01",
+    "2026-02-01",
+    "2026-03-01",
+    "2026-04-01",
+    "2026-05-01",
+    "2026-06-01",
+    "2026-07-01"
+  ],
+  "verification_failures": [],
+  "failed_checks": [],
+  "checks": [
+    {
+      "check_name": "net exposure = denominator × (1 − ratio) (2025-12)",
+      "lhs": 7664580.0,
+      "rhs": 7700000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0046,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "P + Q = reserve total (2026-02)",
+      "lhs": 625900.0,
+      "rhs": 625900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve + X + Y = buffer total (2026-02)",
+      "lhs": 915600.0,
+      "rhs": 915600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "P + Q = reserve total (2026-03)",
+      "lhs": 621400.0,
+      "rhs": 621400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve + X + Y = buffer total (2026-03)",
+      "lhs": 911100.0,
+      "rhs": 911100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "buffer / net exposure = absorbable appreciation (2026-03)",
+      "lhs": 10.58520093409083,
+      "rhs": 10.6,
+      "tolerance": 0.05,
+      "rel_error": 0.001396,
+      "passed": true,
+      "unit": "pct"
+    },
+    {
+      "check_name": "P + Q = reserve total (2026-04)",
+      "lhs": 680100.0,
+      "rhs": 680100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve + X + Y = buffer total (2026-04)",
+      "lhs": 969800.0,
+      "rhs": 969800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "buffer / net exposure = absorbable appreciation (2026-04)",
+      "lhs": 11.144052215480787,
+      "rhs": 11.1,
+      "tolerance": 0.05,
+      "rel_error": 0.003969,
+      "passed": true,
+      "unit": "pct"
+    },
+    {
+      "check_name": "P + Q = reserve total (2026-05)",
+      "lhs": 691300.0,
+      "rhs": 691300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve + X + Y = buffer total (2026-05)",
+      "lhs": 981000.0,
+      "rhs": 981000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "buffer / net exposure = absorbable appreciation (2026-05)",
+      "lhs": 11.178850207965358,
+      "rhs": 11.2,
+      "tolerance": 0.05,
+      "rel_error": 0.001888,
+      "passed": true,
+      "unit": "pct"
+    },
+    {
+      "check_name": "reserve + X + Y = buffer total (2026-06)",
+      "lhs": 1064800.0,
+      "rhs": 1064800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "buffer / net exposure = absorbable appreciation (2026-06)",
+      "lhs": 11.903989983118873,
+      "rhs": 11.9,
+      "tolerance": 0.05,
+      "rel_error": 0.000335,
+      "passed": true,
+      "unit": "pct"
+    },
+    {
+      "check_name": "reserve + X + Y = buffer total (2026-07)",
+      "lhs": 1083300.0,
+      "rhs": 1083300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "buffer / net exposure = absorbable appreciation (2026-07)",
+      "lhs": 11.981153986529081,
+      "rhs": 12.0,
+      "tolerance": 0.05,
+      "rel_error": 0.001571,
+      "passed": true,
+      "unit": "pct"
+    }
+  ],
+  "sources_failed": [],
+  "outputs": {
+    "csv": "data/sector_monthly_briefing.csv",
+    "sql": "out/stage1_briefing_20260903.sql",
+    "excerpts": "docs/sources/press/briefing_excerpts.md"
+  }
+}

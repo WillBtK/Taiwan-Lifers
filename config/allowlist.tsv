@@ -11,10 +11,10 @@ www.cbc.gov.tw	1	https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv		F
 www.cbc.gov.tw	1	https://www.cbc.gov.tw/tw/lp-4197-1.html		CBC USD/TWD swap + FX call-loan balance
 cpx.cbc.gov.tw	1	https://cpx.cbc.gov.tw/Tree/TreeSelect		CBC statistics database (history)
 www.lia-roc.org.tw	2	https://www.lia-roc.org.tw/		Life Insurance Association — reachable; public statistics carry no hedge or FX data (checked 2026-09-03)
-www.tii.org.tw	2	https://www.tii.org.tw/tii/information/information1/000001.html		TII statistics index — blocked at sandbox egress (CONNECT tunnel 502), not by the source
-sv.tii.org.tw	2	https://sv.tii.org.tw/		TII query system — blocked at sandbox egress (CONNECT tunnel 502)
-insdb.tii.org.tw	2	https://insdb.tii.org.tw/		TII database service — blocked at sandbox egress (CONNECT tunnel 502)
-law.tii.org.tw	3	https://law.tii.org.tw/		TII regulations database — blocked at sandbox egress (CONNECT tunnel 502)
+www.tii.org.tw	2	https://www.tii.org.tw/tii/information/information1/000001.html		TII statistics index — reachable 2026-09-03 once the TWCA intermediate the server omits is supplied (config/certs/, provenance.ca_bundle_for)
+sv.tii.org.tw	2	https://sv.tii.org.tw/		TII query system — reachable 2026-09-03 with the TWCA intermediate supplied; redirects to www.tii.org.tw/tii/
+insdb.tii.org.tw	2	https://insdb.tii.org.tw/		TII database service — reachable 2026-09-03 with the TWCA intermediate supplied
+law.tii.org.tw	3	https://law.tii.org.tw/		TII regulations database — reachable 2026-09-03 with the TWCA intermediate supplied
 www.stat.gov.tw	2	https://www.stat.gov.tw/		DGBAS (GDP)
 www.dgbas.gov.tw	3	https://www.dgbas.gov.tw/		DGBAS alternate host
 www.tpex.org.tw	2	https://www.tpex.org.tw/		Formosa bonds, bond ETFs
@@ -38,9 +38,9 @@ home.treasury.gov	2	https://home.treasury.gov/policy-issues/international/macroe
 fred.stlouisfed.org	2	https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXTAUS&cosd=2026-01-01		USD/TWD daily. CSV endpoint, date-bounded: the /series HTML page is JS-heavy and the unbounded CSV (1983-) read-times-out through the proxy
 api.stlouisfed.org	2	https://api.stlouisfed.org/fred/series?series_id=DEXTAUS	400	FRED API — 400 without FRED_API_KEY proves reachability
 data.imf.org	3	https://data.imf.org/		COFER (optional)
-udn.com	3	https://udn.com/news/story/7239/9661667		Economic Daily — carries IB monthly briefing figures; apex still 403 at proxy — money.udn.com suffices
-money.udn.com	3	https://money.udn.com/money/story/5613/9661667		Economic Daily (money); egress cleared 2026-09-03
-news.cnyes.com	3	https://news.cnyes.com/news/id/6323663		cnyes; egress cleared 2026-09-03
-news.cts.com.tw	3	https://news.cts.com.tw/cna/money/202605/202605283037334.html		CNA via CTS; egress cleared 2026-09-03
+udn.com	3	https://udn.com/news/story/7239/9661667		Economic Daily apex — still 403 at proxy 2026-09-03; every story id is also served by money.udn.com/money/story/5613/{id}
+money.udn.com	3	https://money.udn.com/money/story/5613/9661667		Economic Daily (money) — primary press channel for the IB monthly briefing; fetched in full 2026-09-03 with the default UA
+news.cnyes.com	3	https://news.cnyes.com/news/id/6323663		cnyes — briefing channel; fetched in full 2026-09-03
+news.cts.com.tw	3	https://news.cts.com.tw/cna/money/202605/202605283037334.html		CNA via CTS — briefing channel; fetched in full 2026-09-03 (www.cna.com.tw itself is 403 at proxy)
 www.cfr.org	3	https://www.cfr.org/		Reference (Setser), not ingested
 concentratedambiguity.wordpress.com	3	https://concentratedambiguity.wordpress.com/		Reference (S.T.W. 2019), not ingested

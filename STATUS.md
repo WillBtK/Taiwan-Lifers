@@ -2,85 +2,98 @@
 
 Current state only. History lives in `docs/decisions.md`.
 
-**Stage 0 (Scaffold) — complete, 2026-09-03.** Stages 1–7 not started.
+**Stage 1 (FSC sector series) — complete, 2026-09-03.** Stage 0 complete.
+Stages 2–7 not started.
 
 ## What runs
 
 | Command | Does | State |
 |---|---|---|
-| `python3 scripts/check_allowlist.py` | Probes one URL per allowlisted host, writes `reports/allowlist_YYYYMMDD.json` | Working. Exit 1 if any tier-1 host is unreachable |
-| `python3 scripts/check_allowlist.py --tier 1` | Tier-1 only (fast pre-flight for Stages 1–2) | Working |
+| `python3 scripts/check_allowlist.py [--tier 1]` | Probes one URL per allowlisted host, writes `reports/allowlist_YYYYMMDD.json` | Working |
+| `python3 scripts/stage1_sector_monthly.py [--offline] [--refresh] [--limit N]` | Locates all editions of the FSC monthly release on both press channels, caches and parses them, runs checks, writes `data/sector_monthly_release.csv`, `out/stage1_release_YYYYMMDD.sql`, `reports/stage1_release_YYYYMMDD.json` | Working: 91 editions, 423/423 checks |
+| `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 11 months, 16/16 checks |
 
-`src/tlfx/fsc.py` locates FSC / Insurance Bureau releases by keyword search
-across both channels: `find_monthly_releases()`, `find_fx_policy_releases()`,
-`latest_monthly()`. Verified against the live site 2026-09-03.
+Write path: the scripts emit idempotent SQL (`insert … on conflict do
+nothing` on the natural key); it is applied with the Supabase MCP or psql.
+Schema `tlfx` is not exposed through PostgREST, so `--write` (direct POST)
+needs that setting changed before it can be used.
 
-`src/tlfx/provenance.py` provides `fetch()`, `Provenance`, `RunLog`,
-`ReconciliationCheck`, the two basis enums and the per-host UA policy. Import
-via `sys.path.insert(0, 'src')` until the package is installed.
+Library: `src/tlfx/fsc.py` (locate releases), `fsc_parse.py` (parse one
+edition), `emit.py` (CSV / SQL / report), `provenance.py` (`fetch`,
+`ca_bundle_for`, `Provenance`, `RunLog`, `ReconciliationCheck`, basis enums).
+Import via `sys.path.insert(0, 'src')`.
 
 ## What is populated
 
-Nothing. All 11 tables in schema `tlfx` exist and are empty.
+`tlfx.sector_monthly` — 102 rows in two channels (select on
+`reporting_channel`; from 2025-08 a month can carry both):
 
-Project `term-premium-atlas` (`xzhoykybwlkefgvgwnii`), migration
-`supabase/migrations/0001_tlfx_schema.sql` applied. RLS enabled on every table,
-no permissive policy — ingestion uses the service role.
+| Channel | Rows | Months | Basis | Carries |
+|---|---|---|---|---|
+| `release` | 91 | 2018-05 → 2025-12 (no 2019-03; 2020-03 lacks profit/equity) | `disclosed` | pre-tax profit, equity (life / non-life / total), FX table (FX P&L, hedging P&L — split from 2020-01, reserve net change, total), life FX reserve balance, TWD move YTD, net foreign-investment income (2020-09→) |
+| `briefing_press` | 11 | 2024-12, 2025-08, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; year-end denominators for 2024 and 2025 |
 
-`entities`, `sector_monthly`, `sector_balance_sheet`, `firm_quarterly`,
-`cbc_fx_ops`, `bis_lbs_tw`, `market_daily`, `derived_series`, `run_log`,
-`run_source_status`, `run_reconciliation`.
+Migrations applied: `0001`–`0004`. `0003` adds the release fields, `0004`
+puts `reporting_channel` in the primary key. All other tables remain empty.
+Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
+`run_reconciliation`.
+
+## Findings that bind later stages
+
+- **The monthly release never carried the hedge ratio, hedging-cost rate,
+  foreign-investment total or reserve buckets** (all 91 editions checked).
+  Series 4 is press-reported from the Insurance Bureau's monthly briefing for
+  its entire life, 2020 onwards; the release ended at December 2025.
+- **Series 4 coverage now:** 2024-12, 2025-08, 2025-10, 2025-12, and every
+  2026 month to July (42.94%). The 2020-01 → 2025-07 monthly backfill of the
+  briefing series is a press search, not a parse — open task.
+- **README §3 checks 1–2 need the regulatory denominator**, which only the
+  year-end briefing gives. Check 1 holds for 2025-12 within 0.5%; check 2 moves
+  to Stages 2–3.
+- **Flow items are YTD** as published (`flows_are_ytd`). Monthly flows are a
+  derivation for `derived_series`.
+- **2026 profit/equity figures are IFRS 17** and not comparable with 2025.
+- **Firm statements (v2 clean source):** Cathay's 2Q26 deck shows the FX
+  volatility reserve at NT$130.9bn, matching the press tabulation of the Q2
+  statements (1,309.3億); the 20-firm aggregate (6,997.3億) matches the June
+  briefing. The 2025 year-end aggregate differs from the briefing by 41億 —
+  Stage 3 must explain that before substituting the firm aggregate.
 
 ## Network reachability (2026-09-03)
 
-Tier 1 (Stages 1–2 critical path): **6 of 6 reachable.** FSC ch + en, Insurance
-Bureau, CBC table-8 CSV, CBC swap page, CBC statistics database.
+Tier 1: 6 of 6. **TII resolved:** all four `*.tii.org.tw` hosts answer once
+the TWCA intermediate the server omits is supplied (`config/certs/`,
+`provenance.ca_bundle_for`). Media: `money.udn.com`, `news.cnyes.com`,
+`news.cts.com.tw` fetch in full with the default UA; `udn.com` apex,
+`www.cna.com.tw`, `www.chinatimes.com`, `www.ctee.com.tw`, `taronews.tw` are
+403 at the proxy (Economic Daily ids are all served by `money.udn.com`; CNA
+copy is carried by CTS). Unchanged from Stage 0: `www.ir-cloud.com`,
+`www.irpro.co`, `media-ctbc.todayir.com`, `data.imf.org` blocked, with the
+workarounds in `config/allowlist.tsv`. The FSC CMS occasionally resets a
+tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
-Tier 2: **15 of 21.** Tier 3: **6 of 8.**
+## Outstanding
 
-Outstanding failures, with the workaround each needs:
-
-| Host | Symptom | Workaround |
-|---|---|---|
-| `www.tii.org.tw`, `sv.`, `insdb.`, `law.` | `CONNECT tunnel failed, 502` | Blocked at sandbox egress, not by the source. Needs an environment allowlist entry before Stage 3 |
-| `www.ir-cloud.com` | 403 to all agents | Use `www.cathayholdings.com` (reachable) for Cathay |
-| `www.irpro.co` | 403 to all agents | Use `www.fubon.com` (reachable) for Fubon |
-| `media-ctbc.todayir.com` | 403 to all agents | Reach CTBC PDFs via `ir.ctbcholding.com` (reachable with browser UA) |
-| `data.imf.org` | 403 | Optional source (COFER); no action needed |
-
-`www.bis.org/statistics/full_data_sets.htm` is now 404 — BIS bulk downloads have
-moved to `data.bis.org/bulkdownload`. Config updated.
-
-## Outstanding before Stage 1
-
-1. Gold re-step applied; palette passes all checks (decisions 0.3).
-2. 2026 sector channel resolved: Insurance Bureau monthly briefing, press-reported,
-   ingested via search snippets with `basis='press_reported'`; firm statements are
-   the clean quarterly source (decisions 0.12). Media hosts blocked at egress —
-   add `udn.com`, `money.udn.com`, `news.cnyes.com`, `news.cts.com.tw` to the
-   environment policy if direct fetch is wanted.
-3. **TII egress.** Four TII hosts are blocked at the sandbox proxy. Not needed
-   until Stage 3, but resolve before starting it.
-4. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` / `FRED_API_KEY` are not set in
-   this environment; see `.env.example`.
-
-## Corrections to the README made in Stage 0
-
-- Series 4 and 3(a) have roughly twenty months more history than section 3
-  assumes: the FSC monthly release runs from May 2018, not 2020. Field coverage
-  in the older editions is unverified — Stage 1 confirms before the start dates
-  move.
-- Section 10 cited monthly FSC releases for January–July 2026. Those do not
-  exist on either press channel; the citation now reads May 2018 – December 2025.
-- The Chinese press-list `id` is 96, confirmed. No longer an open question.
+1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
+   (`FRED_API_KEY` is). Writes go through the MCP for now.
+2. Monthly backfill of the press-reported hedge ratio, 2020-01 → 2025-07.
+3. Stage 2 (CBC table 8) next; Stage 3 should verify the §10 disclosures
+   against Cathay's and Fubon's statutory Q2 2026 statements (deck seen, not
+   the statement) and resolve the 41億 year-end gap above.
+4. Gold re-step (decisions 0.3) still awaiting approval.
 
 ## Conventions that bind every later stage
 
-- NT$ amounts stored in NT$ million as published; no unit coercion on ingest.
+- NT$ amounts stored in NT$ million as published (the release prints 億;
+  ×100 is exact); no other unit coercion on ingest.
 - Every row carries `source_url`, `source_doc`, `retrieved_at`, `vintage`.
-  Revisions are kept, never overwritten: `(natural key, vintage)` is unique.
-- `accounting_basis` and `measurement_basis` are separate types and must not be
-  conflated (`docs/decisions.md` 0.5).
+  `vintage` is the publication date of the edition or article. Revisions are
+  kept, never overwritten: `(obs_month, reporting_channel, vintage)` is the key.
+- `accounting_basis` and `measurement_basis` are separate types
+  (`docs/decisions.md` 0.5); `press_reported` is a measurement basis.
 - Unamortised FX differences are a memo column, never a buffer tier.
-- Reconciliation tolerance is 3%; a breach fails the run.
+- Reconciliation tolerance is 3% relative; a breach fails the run. Printed
+  rounding (NT$ 1 億) is allowed on identity checks between tiny figures.
 - Charts with 4+ series use `dash` as well as hue (`docs/decisions.md` 0.2).
+- TLS verification is never disabled; a missing intermediate is supplied
+  from `config/certs/` (`docs/decisions.md` 1.5).

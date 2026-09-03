@@ -271,3 +271,203 @@ statements transcribed by a journalist, so they get their own basis value.
 
 **Files.** `README.md` §3, §4.1, §9, §10; `config/allowlist.tsv`;
 `supabase/migrations/0002_regime_v2.sql`; `docs/sources/`.
+
+---
+
+## Stage 1 — Sector series from the FSC (2026-09-03)
+
+### 1.1 What the monthly release carries — and the parser built for it
+
+**Decision.** `src/tlfx/fsc_parse.py` parses every edition of the monthly
+release into the fields the release actually prints, measured across all 91
+editions (May 2018 – December 2025): pre-tax profit and owners' equity for
+life, non-life and total; an FX table (FX gain/loss, hedging P&L — one line
+to 2019-12, split into instrument P&L and swap cost from 2020-01 — net change
+in the FX price-fluctuation reserve, and their sum); and a closing paragraph
+with the TWD move year-to-date, the life insurers' reserve balance, its change
+versus the prior month (to 2019) or prior year-end (2020-09→), and net
+foreign-investment income (2020-09→). January and February 2020 alone print
+total assets and the foreign-investment total. Flow items are cumulative
+year-to-date as published; the table records that (`flows_are_ytd`) and
+leaves monthly differencing to `derived_series`. Amounts are stored in NT$
+million, converted exactly (×100) from the printed NT$ 億. `vintage` is the
+edition's publication date, so a re-release of a month can coexist with the
+original. Migration `0003` adds the columns.
+
+Tables are identified by the section header preceding them and by their own
+row labels, never by position — December 2019 wraps each header in a
+one-cell `<table>` (six tables), March 2020 has one — and a table only counts
+once it yields figures.
+
+**Coverage.** 91 editions, two irregularities at source: March 2019 has no
+edition under any title on either channel (searched by month, by both title
+wordings, and by listing every insurance release published March–May 2019),
+and March 2020 is retitled without the profit and equity sections
+(`dataserno` 202004300002, found by a second keyword). `fsc.py` now queries
+both keywords and accepts both title forms. Because flows are YTD, the
+missing March 2019 loses only that month's balance-sheet points, not the flow.
+
+**Checks.** 423 of 423 pass: life + non-life = total for profit and equity;
+(1)+(2)+(3) = total in the FX table; the narrative's combined figure = the
+table's; and, across editions, prior balance + stated change = this balance
+(83 cross-edition ties, largest relative error 0.3%).
+
+**Rejected.** Storing the printed 億 unchanged — the repo convention fixes
+NT$ million and the conversion is exact. Storing life+non-life totals only —
+the monitor is about lifers and non-life FX P&L is one to two orders of
+magnitude smaller, but the totals are what the FSC headlines, so all three are
+kept.
+
+**Files.** `src/tlfx/fsc_parse.py`, `src/tlfx/fsc.py`, `src/tlfx/emit.py`,
+`scripts/stage1_sector_monthly.py`, `supabase/migrations/0003_*.sql`,
+`data/sector_monthly_release.csv`.
+
+### 1.2 The hedge ratio was never in the release: series 4 is press-reported for its whole life
+
+**Decision.** README §4.1 said the release carries the hedge ratio, hedging
+cost and the reserve buckets. It does not, in any of the 91 editions; nor
+does it carry the foreign-investment total or the regulatory exposure. Those
+figures are stated at the Insurance Bureau's monthly press briefing and reach
+the public through the press — and this has been so since the briefing series
+began in ROC 109 (2020), per Economic Daily's own dating. Series 4 therefore
+has one measurement basis, `press_reported`, before and after the 2026 regime
+change; the v1/v2 split is a definitional break (notice §九), not a channel
+break. README §3 and §4.1 are corrected.
+
+**Consequence for README §3 reconciliation checks 1 and 2.** Both need the
+regulatory denominator, which the briefing gives only at year-end (23.0兆 for
+2024, 22.8兆 for 2025, each "less FX-policy liabilities" — the notice's
+further deductions are not mentioned). Check 1 was run where the inputs exist:
+15.4兆 × (1 − 0.5023) = 7.665兆 against the Bureau's stated net exposure of
+"約7.7兆" — 0.5% apart, an identity holding within the rounding of a spoken
+figure (HANDOFF item 2). Check 2 cannot be run from sector data at all and
+moves to Stage 2/3 (CBC foreign assets, firm FX-policy liabilities).
+
+**What was ingested now.** Every 2026 month to July (the latest briefing,
+1 September 2026), plus December 2025 and the year-end 2024 anchor, plus the
+two 2025 months (August, October) that surfaced while locating the 2026
+articles. The 2020–2025 monthly backfill of the briefing series is a
+follow-up task: it is a press search month by month, not a parse.
+
+**Rejected.** Treating the briefing as an FSC source with `basis =
+'disclosed'` because the speaker is the regulator — the number passes through
+a journalist and the articles do restate figures (the February 2026 reserve
+balance was later given as 6,277億 against 6,259億 first reported). Kept as
+first reported, revision noted in `config/briefing_press.json`.
+
+**Files.** `README.md` §3, §4.1; `config/briefing_press.json`.
+
+### 1.3 The natural key of `sector_monthly` includes the reporting channel
+
+**Decision.** Migration `0004` makes the primary key `(obs_month,
+reporting_channel, vintage)`, with `reporting_channel` not null, default
+`release`, checked against `release | briefing_press | firm_statements`.
+
+**Reason.** The briefing is held the day the release is posted (August 2025:
+both 2025-09-30; October 2025: both 2025-11-27; December 2025: both
+2026-01-27), so the release row and the press-reported row of one month share
+`(obs_month, vintage)` and the Stage 0 key could hold only one of them. The
+channel is part of what the observation is. Consumers must select a channel;
+months from August 2025 carry two.
+
+**Rejected.** Folding the channel into `vintage` by shifting the press row a
+day — a lie about the date. Keeping the press rows in a separate table — the
+columns are the same and Stage 6 wants one series with a basis flag.
+
+**Files.** `supabase/migrations/0004_sector_monthly_pk_channel.sql`,
+`scripts/stage1_*.py` (conflict target).
+
+### 1.4 Press-reported rows: figures as printed, verified against the fetched article, with the notice's identities as checks
+
+**Decision.** `config/briefing_press.json` records each figure exactly as the
+cited article prints it (億, 兆, %), with the article URL, publication date,
+outlet, the official quoted and the sentence. `scripts/stage1_briefing_press.py`
+fetches every article in full, fails the run if a figure string is absent
+from its own citation, converts units, and runs the identities the February
+2026 notice implies: P + Q = reserve total, reserve + X + Y = buffer total,
+buffer ÷ net exposure = the "absorbable appreciation" the Bureau quotes, and
+net exposure = denominator × (1 − ratio). All 16 checks pass (bucket sums
+exact; absorbable-appreciation within 0.4%; the denominator identity within
+0.5%). `docs/sources/press/briefing_excerpts.md` keeps the quoted sentences;
+full articles stay in the uncommitted cache.
+
+**Measured change since Stage 0.** `money.udn.com`, `news.cnyes.com` and
+`news.cts.com.tw` now answer the default User-Agent with 200, so the 2026
+figures come from fetched articles, not search snippets; decision 0.12's
+"snippets only" caveat is superseded. `udn.com` (apex), `www.cna.com.tw`,
+`www.chinatimes.com`, `www.ctee.com.tw` and `taronews.tw` remain 403 at the
+proxy; every Economic Daily story id is also served by
+`money.udn.com/money/story/5613/{id}`, and CNA copy is carried by CTS.
+
+**Interpretation notes recorded with the rows.** (i) The Bureau's
+"實質避險比率" (55–56%) is stored only as `effective_hedge_ratio_memo`. (ii)
+From June 2026 the special reserves are quoted as one total (3,651億, up from
+2,897億); the Bureau said in March and May that Y stays zero until 2027, so
+the total sits under X with the caveat in `source_note`. (iii) 2026 profit
+and equity figures are IFRS 17 and are not comparable with the 2025 release
+series. (iv) Share-of-instrument figures are spoken bounds (">75%") and are
+stored as text notes, not numbers.
+
+**Rejected.** A per-month scraper of the outlets — three outlets, three
+layouts, and the numbers must be read in context (month-end versus monthly
+flow, restated versus first-reported). A curated config with literal
+verification is the honest shape for eleven rows a year.
+
+**Files.** `config/briefing_press.json`, `scripts/stage1_briefing_press.py`,
+`docs/sources/press/briefing_excerpts.md`, `data/sector_monthly_briefing.csv`.
+
+### 1.5 `*.tii.org.tw`: the server omits its intermediate certificate; the repo supplies it
+
+**Decision.** The four TII hosts serve only their leaf certificate
+(`CN=*.tii.org.tw`, issued by TWCA Secure SSL Certification Authority) with
+no intermediate, so every client without that intermediate cached fails with
+"unable to get local issuer certificate". Browsers succeed only through AIA
+fetching. The intermediate — taken from `www.fsc.gov.tw`'s complete chain,
+SHA-256 `1A:2C:75:FD:09:6E:04:99:E9:FF:6A:C7:4E:52:6F:61:EA:AE:3E:DF:C8:C2:EA:44:36:FE:E0:C2:4D:8B:7D:0E`,
+valid to 2030-10-16, and verified against the certifi store's TWCA Global
+Root CA — is checked in at `config/certs/twca_secure_ssl_ca.pem`.
+`provenance.ca_bundle_for(url)` merges it with the default store for
+`tii.org.tw` hosts only; `fetch()` and the allowlist probe pass it as
+`verify=`. Verification is never disabled. All four hosts answer 200
+(2026-09-03). HANDOFF item 1 is closed; Stage 0's "unfinished proxy
+provisioning" reading was wrong — the fault is at the origin.
+
+**Rejected.** `verify=False` for those hosts (forbidden, and unnecessary);
+asking for an environment change (nothing to change).
+
+**Files.** `config/certs/twca_secure_ssl_ca.pem`, `src/tlfx/provenance.py`,
+`scripts/check_allowlist.py`, `config/allowlist.tsv`.
+
+### 1.6 Firm statements as the v2 source: format seen, one figure reconciled, ingestion left to Stage 3
+
+**Decision.** Firm-level 2026 disclosure was looked at firsthand but not
+ingested. Cathay's 2Q26 results deck (fetched from `www.cathayholdings.com`,
+56 pages) carries a "Cathay Life – FX hedging strategy" page: FX assets
+NT$5.54tn, an FX-risk-exposure / reserve-for-FX-policy split of 74/26, hedging
+cost 1.21% for 1H26 (0.96% FY23, 1.56% FY24, 1.57% FY25) and an FX volatility
+reserve of NT$130.9bn at 1H26 (113.8bn FY25, 123.9bn 1Q26). Economic Daily's
+tabulation of all twenty life insurers' Q2 2026 statements (3 September 2026)
+gives Cathay 1,309.3億 — the same figure — and a sector total of 6,997.3億,
+which matches the Bureau's June briefing figure of 6,997億 to within 0.3億.
+The same tabulation puts the twenty firms' 2025 year-end balance at 6,178.2億
+against the briefing's 6,137億: a 41億 gap that Stage 3 must explain
+(coverage, the IFRS 17 opening-balance transfers the notice §四 allows, or
+timing) before the firm aggregate is used as the sector series.
+
+**Reason for deferring.** `entities` is empty, the six-firm scraper is Stage
+3's deliverable, and the press tabulation is not the provenance-clean source
+the notice §10 disclosure is. Putting press-reported firm rows in
+`firm_quarterly` would defeat the point of the v2 path.
+
+**Files.** none (recorded here and in `HANDOFF.md`).
+
+### 1.7 Stage 1 reconciliation set
+
+**Decision.** With the regulatory denominator absent from the release, the
+Stage 1 checks are: (a) in-edition arithmetic (four per edition), (b)
+cross-edition reserve-balance ties, (c) the v2 identities of 1.4 wherever
+their inputs exist. All pass; the run log and check rows are written to
+`tlfx.run_log` / `run_reconciliation` alongside the data. README §3's own
+checks 1–2 are re-homed to Stages 2–3 in the README text.
+
+**Files.** `README.md` §3, `scripts/stage1_*.py`.
