@@ -486,3 +486,41 @@ series regardless. Sibling monitors adopt the values when they next copy the
 spec; a token mismatch between projects until then is cosmetic.
 
 **Files.** `STATUS.md`, `HANDOFF.md`.
+
+### 1.9 The FSC release cannot substitute for the briefing; 2020-01 is the floor
+
+**Decision.** The monthly FSC release is not a source for the hedge ratio or
+the regulatory denominator, at any depth of its archive. The backfill stays on
+the press-reported briefing and starts at 2020-01. `docs/FSC_OFFICIAL_SOURCE.md`,
+written earlier in Stage 1b asserting the opposite, is removed.
+
+**Reason.** A web search for an official source surfaced
+`新聞稿-XXX年M月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金情形`
+on `fsc.gov.tw` and it was briefly taken for a new, better-structured channel
+reaching back to 2018. It is the release Stage 1 already parses — 91 editions,
+2018-05 → 2025-12, channel `release` — so re-fetching it adds nothing, and it
+does not carry the fields the backfill needs. Re-verified from the other
+direction, four editions spanning the archive:
+
+| Edition | 避險比率 | 曝險 | 國外投資金額 | 避險損益 | 外匯價格變動準備金 |
+|---|---|---|---|---|---|
+| 107年8月 (2018-08) | 0 | 0 | 0 | 1 | 3 |
+| 108年9月 (2019-09) | 0 | 0 | 0 | 7 | 6 |
+| 109年6月 (2020-06) | 0 | 0 | 0 | 7 | 6 |
+| 114年4月 (2025-04) | 0 | 0 | 0 | 8 | 7 |
+
+(occurrence counts in the fetched page text). This agrees with 1.2's
+all-91-edition check. `foreign_investments` is populated in 2 of 91 release rows.
+
+**Consequence — depth of history is asymmetric.** The denominator can be pushed
+back (CBC foreign assets, Stage 2, to 2000); the ratio cannot go before 2020,
+because the briefing series itself begins in ROC 109 per Economic Daily's own
+dating (already cited in the 2025-10 row's note). Hedge principal needs both, so
+2020-01 binds. Pre-2020 sector series 1/2/5 need either a different ratio source
+— TII/保發中心's statistics database and the LIA are the untested candidates,
+and `*.tii.org.tw` is reachable since 1.5 — or they stay on the six-firm panel.
+
+**Rejected.** Extending the backfill to 2018 on the strength of the FSC archive
+reaching that far: the depth is real, the fields are not there.
+
+**Files.** `docs/FSC_OFFICIAL_SOURCE.md` (deleted), `BACKFILL_HANDOFF.md`.

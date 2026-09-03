@@ -16,41 +16,46 @@ This task fills in the Insurance Bureau's monthly hedge ratio data for 2020-01 �
 
 4. **Reference config** (`config/briefing_press.json`): 11 months of complete 2024-12 and 2026 data showing the exact format. Run `scripts/stage1_briefing_press.py` to verify and generate SQL.
 
+## Do not use the FSC release for this — it does not carry the ratio
+
+The FSC monthly release (`新聞稿-XXX年M月保險業損益、淨值，以及兌換損益、避險損益
+與外匯價格變動準備金情形`) looks like the obvious source and is not one. It is
+already fully parsed by Stage 1 — 91 editions, 2018-05 → 2025-12, in
+`sector_monthly` channel `release` — and it carries **hedging P&L and the FX
+reserve, never the hedge ratio, the exposure denominator or the
+foreign-investment total** (`docs/decisions.md` 1.2, re-verified in 1.9).
+Re-fetching it, at any depth of its archive, adds nothing. See decisions 1.9
+before proposing it again.
+
+**2020-01 is the floor, and it is not arbitrary.** The ratio is a figure the
+Insurance Bureau states at its monthly briefing, and Economic Daily dates that
+briefing series to ROC 109 (2020). There is no earlier regulatory ratio to find.
+
 ## Your task (Haiku)
 
-**UPDATED STRATEGY:** Use official FSC releases instead of scattered press articles for more reliable data extraction.
-
-For each of the 67 months (2020-01 → 2025-07), fetch the FSC official monthly insurance statistics release and extract:
+For each of the 67 months (2020-01 → 2025-07), identify one article from
+`money.udn.com` (or secondary sources cnyes.com, CTS/CNA) citing the Insurance
+Bureau's monthly briefing, and extract:
 
 ### Primary field (required)
-- `hedge_ratio_regulatory`: Hedge ratio as printed in FSC tables (e.g., "50.23%")
+- `hedge_ratio_regulatory`: Hedge ratio as printed (e.g., "50.23%")
 
-### Secondary fields (if available in FSC release)
+### Secondary fields (if available, strengthen the backfill)
 - `regulatory_fx_exposure`: Exposure after FX-policy deductions (e.g., "15.4兆元")
 - `foreign_investments`: Gross foreign investment (e.g., "22.8兆元")
 - `fx_reserve_total`: FX volatility reserve balance (e.g., "6,137億元")
 
-### FSC Official Source
-
-FSC publishes monthly releases at `fsc.gov.tw` with pattern:
-`https://www.fsc.gov.tw/ch/home.jsp?id=96&...&dataserno=YYYYMMDDNNNN&dtable=News`
-
-Title: `新聞稿-XXX年M月保險業損益、淨值，以及兌換損益...`
-
-Where XXX is ROC year (109=2020, 110=2021, 111=2022, 112=2023, 113=2024, 114=2025).
-
-See `docs/FSC_OFFICIAL_SOURCE.md` for examples and full URL list.
-
-### How to extract
+### How to search
 
 1. **For each month YYYY-MM:**
-   - Identify the corresponding FSC release URL (search fsc.gov.tw or reference FSC_OFFICIAL_SOURCE.md)
-   - Fetch the page and locate the monthly insurance statistics table (避險損益/hedging section)
-   - Extract hedge_ratio_regulatory and exposure figures from the structured table
+   - Search: `site:money.udn.com 保險局 避險比率 YYYY年M月` (or similar keyword variants)
+   - Alternative outlets if money.udn.com articles are missing: `news.cnyes.com`, `news.cts.com.tw`
+   - Articles are typically published within 1–2 weeks of month-end
+   - Look for the earliest, most authoritative article
 
-2. **Once you have extracted data:**
+2. **Once you have a URL:**
    - Run: `python3 scripts/verify_backfill_articles.py --month YYYY-MM --url "https://..."` to fetch and preview
-   - Extract the exact quote/table row containing the figures
+   - Extract the exact quote containing the figures
    - Add the complete source entry to `config/briefing_press_backfill.json`:
      ```json
      {
@@ -58,16 +63,20 @@ See `docs/FSC_OFFICIAL_SOURCE.md` for examples and full URL list.
        "reported_by": "金管會保險局",
        "sources": [
          {
-           "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&...&dataserno=...",
+           "url": "https://money.udn.com/...",
            "published": "YYYY-MM-DD",
-           "outlet": "金融監督管理委員會",
+           "outlet": "經濟日報",
            "fields": {"hedge_ratio_regulatory": "NN.NN%"},
-           "quote": "Table row or exact figure string from FSC release"
+           "quote": "Exact quote with all figures"
          }
        ],
-       "note": "Extracted from FSC official monthly release"
+       "note": "…"
      }
      ```
+
+**A month with no published figure is a result, not a failure.** Record it as a
+gap with the searches tried rather than substituting a number from a narrative
+mention ("避險比率約6~7成"), which is not the regulatory series.
 
 ### Denominator handling
 
