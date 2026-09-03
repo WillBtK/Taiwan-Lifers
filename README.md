@@ -31,8 +31,8 @@ Setser and S.T.W. (2019) established the accounting: lifers hedged ~USD 250bn of
 |---|--------|------------|-------|-------|-------|
 | 1 | **Economic hedge ratio** (headline) | (derivative hedges + FX-denominated policy liabilities) / foreign-currency assets | sector + firm | M (sector), Q (firm) | 2013 (firm), 2020 (sector) |
 | 2 | **Net open FX position** | foreign-currency assets − FX policy liabilities − derivative hedges, stored in NT$ million. USD, % GDP, % assets and × capital are presentations of the same series, selected in the artifact by a unit toggle — never a second y-axis | sector + firm | M / Q | 2020 / 2013 |
-| 3 | **Buffer coverage** | three tiers, each as % of net open FX position and as implied absorbable TWD appreciation: (a) FX price-fluctuation reserve + fixed FX special reserve; (b) + equity; (c) memo: accounting deferral (unamortised FX differences, not loss-absorbing) | sector + firm | M / Q | 2020 |
-| 4 | **Regulatory hedge ratio** | FSC definition: derivative hedges / (foreign investments − FX-policy-backed assets) | sector | M | 2020 |
+| 3 | **Buffer coverage** | tiers as % of net open FX position and as implied absorbable TWD appreciation. v1 (to 2025): (a) FX price-fluctuation reserve; (b) + equity. v2 (2026→, four named buckets of the Feb 2026 notice): (a) 波動準備金 + 固定準備金 (liability side, offset FX losses); (b) + 特別盈餘公積–外匯風險固定準備 (equity); (c) 特別盈餘公積–外匯風險強化準備 shown separately as restricted capital — it cannot offset losses; (d) memo: unamortised FX differences, not loss-absorbing | sector + firm | M / Q | 2020 |
+| 4 | **Regulatory hedge ratio** | FSC definition (2026 notice §(九)): traditional hedge principal / (foreign investments − FX-policy liabilities − unhedged non-FVTPL equities and funds). v1 2020–2025 from the FSC monthly briefing; v2 2026→ same definition, same briefing, press-reported | sector | M | 2020 |
 | 5 | **Gross hedge ratio** | derivative hedges / foreign assets (the figure most sell-side and press quote) | sector + firm | M / Q | 2013 |
 | 6 | **Hedge composition** | CS, NDF, proxy, FX policy, open — shares and NT$ | firm | Q | 2013 |
 | 7 | **Hedge cost** | reported annualised hedging cost (bp of foreign assets) vs market 3m CS/NDF implied cost | firm + market | Q / M | 2013 |
@@ -62,6 +62,8 @@ Both press lists are the same CMS and expose a POST search form (`keyword`,
 `qptdate`, `qdldate`, `page`, `pagesize`). Query it by keyword and filter on
 title — never by page position, since the list interleaves banking, securities
 and insurance releases. `src/tlfx/fsc.py` implements this against both channels.
+
+**2026 channel.** The sector hedge ratio and the reserve totals continue monthly, but only orally: the Insurance Bureau briefs reporters when each month's figures are ready and the numbers reach the public through Economic Daily (udn.com), cnyes and CNA. Confirmed 2026 values: hedge ratio 50.23% (Dec 2025), 47.0% (Jan), 45.1% (Feb), 45.15% (Mar), 44.31% (Apr), 42.89% (Jun); FX reserve + FX-risk special reserves NT$969.8bn (Apr), NT$1,064.8bn (Jun). All three media hosts are blocked at the sandbox egress; the values are reachable through web-search snippets only, and are stored with `basis = 'press_reported'`. The Life Insurance Association publishes no hedge or FX data. Firm financial statements carry the mandated disclosures quarterly (notice §10) and are the provenance-clean v2 source.
 
 **Coverage, measured 2026-09-03.** The monthly release
 (`{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金`)
@@ -230,7 +232,8 @@ Use **Haiku 4.5** inside stages for repetitive work — re-running a proven scra
 
 ## 9. Interpretation notes and known pitfalls
 
-- The regulatory ratio's denominator excludes FX-policy-backed assets; the gross ratio does not. With FX-policy sales growing 30–50% y/y, the gross ratio falls mechanically. Publish all three ratios; headline the economic ratio.
+- The regulator now also quotes an "effective hedge ratio" that adds the reserve stock to the hedged share (55% at June 2026 against 42.89% nominal). Publish it as a memo line with its construction stated; do not headline it — it mixes a flow hedge with a stock buffer.
+- The regulatory ratio's denominator excludes FX-policy-backed assets and unhedged non-FVTPL equities and funds; the gross ratio excludes neither. With FX-policy sales growing 30–50% y/y, the gross ratio falls mechanically. Publish all three ratios; headline the economic ratio.
 - FX policies are a balance-sheet match, not a behavioural one: surrender periods and charges are short, so a sharp TWD rally could see policyholders redenominate. Carry a stressed variant that haircuts the policy match.
 - The 2026 amortisation rule applies only to amortised-cost bonds with no designated FX hedge. It defers recognition; it does not absorb losses. Never count unamortised FX differences as a buffer.
 - Remaining hedges are mostly short-dated and marked to market while the hedged assets are not; this creates a further incentive to reduce hedging (Setser 2026, fn.).
@@ -244,6 +247,7 @@ Use **Haiku 4.5** inside stages for repetitive work — re-running a proven scra
 ## 10. References (Chicago author-date)
 
 - Financial Supervisory Commission. 2025. "FSC announces proposed amendments to the Regulations Governing the Preparation of Financial Reports by Insurance Enterprises as concerns foreign exchange gains and losses." Press release, 23 December 2025.
+- Financial Supervisory Commission. 2026. 人身保險業外匯價格變動準備金應注意事項修正規定. Notice, 12 February 2026. Saved as `docs/sources/fsc_2026-02-12_fx_reserve_notice.pdf`.
 - Financial Supervisory Commission. 2018–2026. "{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金." Monthly press releases, May 2018 – December 2025 (90 editions; the series has no 2026 edition on either the FSC or Insurance Bureau press channel as at 3 September 2026).
 - Setser, Brad W. 2026. "Taiwan's Backdoor Currency Manipulation." Follow the Money, Council on Foreign Relations, 26 January 2026.
 - Setser, Brad W., and Joshua Younger. 2025. "How Taiwan became a quiet bond market superpower." Financial Times, May 2025.

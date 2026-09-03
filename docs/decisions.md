@@ -246,3 +246,28 @@ and the headline economic ratio must be carried forward from the firm panel
 (Stage 3) instead — a definitional change that would need recording here.
 
 **Files.** `src/tlfx/fsc.py`, `README.md` §4.1 and §10.
+
+### 0.12 The 2026 sector hedge ratio is press-reported; the notice's definitions are adopted as v2
+
+**Decision.** From January 2026 the sector hedge ratio and reserve totals are
+ingested from press reports of the Insurance Bureau's monthly briefing, stored
+with `measurement_basis = 'press_reported'` and the article as `source_doc`.
+Firm financial statements (quarterly, notice §10 disclosures) are the
+provenance-clean v2 source and the sector aggregate is built from them. The
+notice's own definitions of net exposure (§二) and hedge ratio (§九) replace the
+README's; its four bucket names replace P/Q/X/Y.
+
+**Reason.** The monthly release page ended at December 2025 but the briefing
+did not: the README's 50.2% and 42.9% trace to Economic Daily reports of the
+Insurance Bureau deputy director's monthly statements, not to Setser (2019),
+which predates them. The Life Insurance Association's public statistics carry
+no hedge or FX data (checked 2026-09-03). Media hosts are blocked at the
+sandbox egress, so the numbers are reachable only via search snippets — a
+degraded channel that must be flagged on every figure it produces.
+
+**Rejected.** Treating series 4 as ended at 2025-12 — the figures exist and are
+regulator-sourced. Treating press reports as equal to a release — they are oral
+statements transcribed by a journalist, so they get their own basis value.
+
+**Files.** `README.md` §3, §4.1, §9, §10; `config/allowlist.tsv`;
+`supabase/migrations/0002_regime_v2.sql`; `docs/sources/`.

@@ -53,18 +53,12 @@ moved to `data.bis.org/bulkdownload`. Config updated.
 
 ## Outstanding before Stage 1
 
-1. **Decision needed from the user:** apply the recommended `--gold` re-step
-   (`#8A6A12` light, `#B08C38` dark) to the §2 tokens of
-   `docs/artifact_design_system.md`, or keep the current values and accept two
-   failing checks. See `docs/decisions.md` 0.3.
-2. **Find the 2026 sector data.** Resolved for 2018–2025: the monthly release
-   is located by keyword search (`src/tlfx/fsc.py`), 90 editions from May 2018
-   to December 2025, two gaps. But the series **stops at December 2025** on both
-   the FSC and Insurance Bureau channels — no 2026 edition exists, almost
-   certainly because of the IFRS 17 / TW-ICS transition. Stage 1 must find where
-   the 2026 sector hedge ratio and reserve buckets now live before it can parse
-   anything. Search order and the fallback if none exists: `docs/decisions.md`
-   0.11.
+1. Gold re-step applied; palette passes all checks (decisions 0.3).
+2. 2026 sector channel resolved: Insurance Bureau monthly briefing, press-reported,
+   ingested via search snippets with `basis='press_reported'`; firm statements are
+   the clean quarterly source (decisions 0.12). Media hosts blocked at egress —
+   add `udn.com`, `money.udn.com`, `news.cnyes.com`, `news.cts.com.tw` to the
+   environment policy if direct fetch is wanted.
 3. **TII egress.** Four TII hosts are blocked at the sandbox proxy. Not needed
    until Stage 3, but resolve before starting it.
 4. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` / `FRED_API_KEY` are not set in

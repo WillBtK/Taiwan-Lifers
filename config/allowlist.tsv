@@ -10,7 +10,7 @@ www.ib.gov.tw	1	https://www.ib.gov.tw/		Insurance Bureau statistics
 www.cbc.gov.tw	1	https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv		FSM table 8 life insurer balance sheet
 www.cbc.gov.tw	1	https://www.cbc.gov.tw/tw/lp-4197-1.html		CBC USD/TWD swap + FX call-loan balance
 cpx.cbc.gov.tw	1	https://cpx.cbc.gov.tw/Tree/TreeSelect		CBC statistics database (history)
-www.lia-roc.org.tw	2	https://www.lia-roc.org.tw/		Life Insurance Association — candidate 2026 sector hedge-ratio/hedge-cost channel per FX reserve notice §3, content unverified
+www.lia-roc.org.tw	2	https://www.lia-roc.org.tw/		Life Insurance Association — reachable; public statistics carry no hedge or FX data (checked 2026-09-03)
 www.tii.org.tw	2	https://www.tii.org.tw/tii/information/information1/000001.html		TII statistics index — blocked at sandbox egress (CONNECT tunnel 502), not by the source
 sv.tii.org.tw	2	https://sv.tii.org.tw/		TII query system — blocked at sandbox egress (CONNECT tunnel 502)
 insdb.tii.org.tw	2	https://insdb.tii.org.tw/		TII database service — blocked at sandbox egress (CONNECT tunnel 502)
@@ -38,5 +38,9 @@ home.treasury.gov	2	https://home.treasury.gov/policy-issues/international/macroe
 fred.stlouisfed.org	2	https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXTAUS&cosd=2026-01-01		USD/TWD daily. CSV endpoint, date-bounded: the /series HTML page is JS-heavy and the unbounded CSV (1983-) read-times-out through the proxy
 api.stlouisfed.org	2	https://api.stlouisfed.org/fred/series?series_id=DEXTAUS	400	FRED API — 400 without FRED_API_KEY proves reachability
 data.imf.org	3	https://data.imf.org/		COFER (optional)
+udn.com	3	https://udn.com/news/story/7239/9661667		Economic Daily — carries IB monthly briefing figures; blocked at sandbox egress
+money.udn.com	3	https://money.udn.com/money/story/5613/9661667		Economic Daily (money) — same; blocked at egress
+news.cnyes.com	3	https://news.cnyes.com/news/id/6323663		cnyes — same; blocked at egress
+news.cts.com.tw	3	https://news.cts.com.tw/cna/money/202605/202605283037334.html		CNA via CTS — same; blocked at egress
 www.cfr.org	3	https://www.cfr.org/		Reference (Setser), not ingested
 concentratedambiguity.wordpress.com	3	https://concentratedambiguity.wordpress.com/		Reference (S.T.W. 2019), not ingested
