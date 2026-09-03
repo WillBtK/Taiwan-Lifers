@@ -27,7 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from tlfx.provenance import Provenance, RunLog, sha256_hex, ua_for, utc_now  # noqa: E402
+from tlfx.provenance import Provenance, RunLog, ca_bundle_for, sha256_hex, ua_for, utc_now  # noqa: E402
 
 import requests  # noqa: E402
 
@@ -89,6 +89,7 @@ def probe(entry: dict, timeout: int, transport_retries: int = TRANSPORT_RETRIES)
                 headers={"User-Agent": ua_for(url), "Accept": "*/*"},
                 timeout=timeout,
                 stream=True,
+                verify=ca_bundle_for(url),
             )
             body = resp.raw.read(65536, decode_content=True) or b""
             result.update(

@@ -9,3 +9,5 @@ reports/*.json
 reports/*.html
 data/raw/
 .DS_Store
+cache/
+out/

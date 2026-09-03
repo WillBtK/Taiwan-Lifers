@@ -1,0 +1,3851 @@
+{
+  "run_id": "b68a60a6-30fd-4854-b06e-996e1319c6e6",
+  "summary": {
+    "stage": "stage1-release",
+    "started_at": "2026-09-03T04:24:31.038997+00:00",
+    "finished_at": "2026-09-03T04:27:07.282879+00:00",
+    "sources_ok": 95,
+    "sources_total": 95,
+    "checks_failed": 0,
+    "checks_total": 423,
+    "status": "ok"
+  },
+  "editions": 91,
+  "first": "2018-05-01",
+  "last": "2025-12-01",
+  "warnings": {
+    "2019-11-01": [
+      "TWD move quoted month-on-month; YTD left null",
+      "swap cost taken from narrative"
+    ],
+    "2019-12-01": [
+      "TWD move quoted month-on-month; YTD left null",
+      "swap cost taken from narrative"
+    ],
+    "2020-01-01": [
+      "reserve balance not found in narrative"
+    ],
+    "2020-02-01": [
+      "reserve balance not found in narrative"
+    ],
+    "2020-03-01": [
+      "no pre-tax profit table",
+      "no equity table"
+    ]
+  },
+  "failed_checks": [],
+  "checks": [
+    {
+      "check_name": "pretax life+nonlife=total (2018-05)",
+      "lhs": 52400.0,
+      "rhs": 52400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-05)",
+      "lhs": 1467700.0,
+      "rhs": 1467700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-05)",
+      "lhs": -80300.0,
+      "rhs": -80300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2018-06)",
+      "lhs": 73000.0,
+      "rhs": 73000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-06)",
+      "lhs": 1487400.0,
+      "rhs": 1487400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-06)",
+      "lhs": -98400.0,
+      "rhs": -98400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2018-07)",
+      "lhs": 120100.0,
+      "rhs": 120100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-07)",
+      "lhs": 1565300.0,
+      "rhs": 1565300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-07)",
+      "lhs": -123300.0,
+      "rhs": -123300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2018-08)",
+      "lhs": 129000.0,
+      "rhs": 129000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-08)",
+      "lhs": 1571600.0,
+      "rhs": 1571600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-08)",
+      "lhs": -139800.0,
+      "rhs": -139800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2018-09)",
+      "lhs": 128500.0,
+      "rhs": 128500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-09)",
+      "lhs": 1504500.0,
+      "rhs": 1504500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-09)",
+      "lhs": -165700.0,
+      "rhs": -165700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2018-10)",
+      "lhs": 131400.0,
+      "rhs": 131400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-10)",
+      "lhs": 1235100.0,
+      "rhs": 1235100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-10)",
+      "lhs": -178200.0,
+      "rhs": -178200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2018-11)",
+      "lhs": 123100.0,
+      "rhs": 123100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-11)",
+      "lhs": 1237000.0,
+      "rhs": 1237000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-11)",
+      "lhs": -200800.0,
+      "rhs": -200800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2018-12)",
+      "lhs": 99100.0,
+      "rhs": 99100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2018-12)",
+      "lhs": 1207600.0,
+      "rhs": 1207600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2018-12)",
+      "lhs": -230900.0,
+      "rhs": -230900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-01)",
+      "lhs": 5700.0,
+      "rhs": 5700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-01)",
+      "lhs": 1382700.0,
+      "rhs": 1382700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-01)",
+      "lhs": -22600.0,
+      "rhs": -22600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-02)",
+      "lhs": 20600.0,
+      "rhs": 20600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-02)",
+      "lhs": 1482400.0,
+      "rhs": 1482400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-02)",
+      "lhs": -41100.0,
+      "rhs": -41100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-04)",
+      "lhs": 53400.0,
+      "rhs": 53400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-04)",
+      "lhs": 1697800.0,
+      "rhs": 1697800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-04)",
+      "lhs": -83000.0,
+      "rhs": -83000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-05)",
+      "lhs": 84300.0,
+      "rhs": 84300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-05)",
+      "lhs": 1694900.0,
+      "rhs": 1694900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-05)",
+      "lhs": -82900.0,
+      "rhs": -82900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-06)",
+      "lhs": 101000.0,
+      "rhs": 101000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-06)",
+      "lhs": 1854100.0,
+      "rhs": 1854100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-06)",
+      "lhs": -115400.0,
+      "rhs": -115400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-07)",
+      "lhs": 147700.0,
+      "rhs": 147700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-07)",
+      "lhs": 1907000.0,
+      "rhs": 1907000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-07)",
+      "lhs": -135700.0,
+      "rhs": -135700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-08)",
+      "lhs": 178300.0,
+      "rhs": 178300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-08)",
+      "lhs": 2053200.0,
+      "rhs": 2053200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-08)",
+      "lhs": -147900.0,
+      "rhs": -147900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-09)",
+      "lhs": 187900.0,
+      "rhs": 187900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-09)",
+      "lhs": 1988400.0,
+      "rhs": 1988400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-09)",
+      "lhs": -181700.0,
+      "rhs": -181700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-10)",
+      "lhs": 187900.0,
+      "rhs": 187900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-10)",
+      "lhs": 2007500.0,
+      "rhs": 2007500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-10)",
+      "lhs": -228700.0,
+      "rhs": -228700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-11)",
+      "lhs": 184000.0,
+      "rhs": 184000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-11)",
+      "lhs": 2047900.0,
+      "rhs": 2047900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-11)",
+      "lhs": -248300.0,
+      "rhs": -248300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2019-12)",
+      "lhs": 170600.0,
+      "rhs": 170600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2019-12)",
+      "lhs": 2065000.0,
+      "rhs": 2065000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2019-12)",
+      "lhs": -291200.0,
+      "rhs": -291200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-01)",
+      "lhs": 24900.0,
+      "rhs": 24900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-01)",
+      "lhs": 2122000.0,
+      "rhs": 2122000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-01)",
+      "lhs": -22200.0,
+      "rhs": -22200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-01)",
+      "lhs": -22200.0,
+      "rhs": -22200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-02)",
+      "lhs": 52600.0,
+      "rhs": 52600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-02)",
+      "lhs": 2132100.0,
+      "rhs": 2132100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-02)",
+      "lhs": -40800.0,
+      "rhs": -40800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-02)",
+      "lhs": -40800.0,
+      "rhs": -40800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-03)",
+      "lhs": -52800.0,
+      "rhs": -52800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-03)",
+      "lhs": -52800.0,
+      "rhs": -52800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-04)",
+      "lhs": 74400.0,
+      "rhs": 74400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-04)",
+      "lhs": 1908300.0,
+      "rhs": 1908300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-04)",
+      "lhs": -97900.0,
+      "rhs": -97900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-04)",
+      "lhs": -97900.0,
+      "rhs": -97900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-05)",
+      "lhs": 93900.0,
+      "rhs": 93900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-05)",
+      "lhs": 2010400.0,
+      "rhs": 2010400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-05)",
+      "lhs": -122300.0,
+      "rhs": -122300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-05)",
+      "lhs": -122300.0,
+      "rhs": -122300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-06)",
+      "lhs": 118000.0,
+      "rhs": 118000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-06)",
+      "lhs": 2200400.0,
+      "rhs": 2200400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-06)",
+      "lhs": -151800.0,
+      "rhs": -151800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-06)",
+      "lhs": -151800.0,
+      "rhs": -151800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-07)",
+      "lhs": 160400.0,
+      "rhs": 160400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-07)",
+      "lhs": 2523600.0,
+      "rhs": 2523600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-07)",
+      "lhs": -178900.0,
+      "rhs": -178900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-07)",
+      "lhs": -178900.0,
+      "rhs": -178900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-08)",
+      "lhs": 199300.0,
+      "rhs": 199300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-08)",
+      "lhs": 2440400.0,
+      "rhs": 2440400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-08)",
+      "lhs": -195500.0,
+      "rhs": -195500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-08)",
+      "lhs": -195500.0,
+      "rhs": -195500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-09)",
+      "lhs": 210000.0,
+      "rhs": 210000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-09)",
+      "lhs": 2333300.0,
+      "rhs": 2333300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-09)",
+      "lhs": -219300.0,
+      "rhs": -219300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-09)",
+      "lhs": -219300.0,
+      "rhs": -219300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-10)",
+      "lhs": 222400.0,
+      "rhs": 222400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-10)",
+      "lhs": 2273600.0,
+      "rhs": 2273600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-10)",
+      "lhs": -236400.0,
+      "rhs": -236400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-10)",
+      "lhs": -236400.0,
+      "rhs": -236400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-11)",
+      "lhs": 224000.0,
+      "rhs": 224000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-11)",
+      "lhs": 2608300.0,
+      "rhs": 2608300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-11)",
+      "lhs": -260300.0,
+      "rhs": -260300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-11)",
+      "lhs": -260300.0,
+      "rhs": -260300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2020-12)",
+      "lhs": 223100.0,
+      "rhs": 223100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2020-12)",
+      "lhs": 2663100.0,
+      "rhs": 2663100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2020-12)",
+      "lhs": -296800.0,
+      "rhs": -296800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2020-12)",
+      "lhs": -296800.0,
+      "rhs": -296800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-01)",
+      "lhs": 63400.0,
+      "rhs": 63400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-01)",
+      "lhs": 2584600.0,
+      "rhs": 2584600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-01)",
+      "lhs": -27600.0,
+      "rhs": -27600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-01)",
+      "lhs": -27600.0,
+      "rhs": -27600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-02)",
+      "lhs": 121300.0,
+      "rhs": 121300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-02)",
+      "lhs": 2496400.0,
+      "rhs": 2496400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-02)",
+      "lhs": -47800.0,
+      "rhs": -47800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-02)",
+      "lhs": -47800.0,
+      "rhs": -47800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-03)",
+      "lhs": 177300.0,
+      "rhs": 177300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-03)",
+      "lhs": 2545500.0,
+      "rhs": 2545500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-03)",
+      "lhs": -61300.0,
+      "rhs": -61300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-03)",
+      "lhs": -61300.0,
+      "rhs": -61300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-04)",
+      "lhs": 213100.0,
+      "rhs": 213100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-04)",
+      "lhs": 2659500.0,
+      "rhs": 2659500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-04)",
+      "lhs": -97800.0,
+      "rhs": -97800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-04)",
+      "lhs": -97800.0,
+      "rhs": -97800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-05)",
+      "lhs": 231300.0,
+      "rhs": 231300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-05)",
+      "lhs": 2604900.0,
+      "rhs": 2604900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-05)",
+      "lhs": -120700.0,
+      "rhs": -120700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-05)",
+      "lhs": -120700.0,
+      "rhs": -120700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-06)",
+      "lhs": 271400.0,
+      "rhs": 271400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-06)",
+      "lhs": 2784400.0,
+      "rhs": 2784400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-06)",
+      "lhs": -135400.0,
+      "rhs": -135400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-06)",
+      "lhs": -135400.0,
+      "rhs": -135400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-07)",
+      "lhs": 319200.0,
+      "rhs": 319200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-07)",
+      "lhs": 2824900.0,
+      "rhs": 2824900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-07)",
+      "lhs": -149700.0,
+      "rhs": -149700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-07)",
+      "lhs": -149700.0,
+      "rhs": -149700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-08)",
+      "lhs": 356100.0,
+      "rhs": 356100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-08)",
+      "lhs": 2845600.0,
+      "rhs": 2845600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-08)",
+      "lhs": -169000.0,
+      "rhs": -169000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-08)",
+      "lhs": -169000.0,
+      "rhs": -169000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-09)",
+      "lhs": 378700.0,
+      "rhs": 378700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-09)",
+      "lhs": 2711700.0,
+      "rhs": 2711700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-09)",
+      "lhs": -177500.0,
+      "rhs": -177500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-09)",
+      "lhs": -177500.0,
+      "rhs": -177500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-10)",
+      "lhs": 396700.0,
+      "rhs": 396700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-10)",
+      "lhs": 2770300.0,
+      "rhs": 2770300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-10)",
+      "lhs": -182800.0,
+      "rhs": -182800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-10)",
+      "lhs": -182800.0,
+      "rhs": -182800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-11)",
+      "lhs": 408800.0,
+      "rhs": 408800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-11)",
+      "lhs": 2811200.0,
+      "rhs": 2811200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-11)",
+      "lhs": -197200.0,
+      "rhs": -197200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-11)",
+      "lhs": -197200.0,
+      "rhs": -197200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2021-12)",
+      "lhs": 411100.0,
+      "rhs": 411100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2021-12)",
+      "lhs": 2883000.0,
+      "rhs": 2883000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2021-12)",
+      "lhs": -217400.0,
+      "rhs": -217400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2021-12)",
+      "lhs": -217400.0,
+      "rhs": -217400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-01)",
+      "lhs": 69000.0,
+      "rhs": 69000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-01)",
+      "lhs": 2579700.0,
+      "rhs": 2579700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-01)",
+      "lhs": -3200.0,
+      "rhs": -3200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-01)",
+      "lhs": -3200.0,
+      "rhs": -3200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-02)",
+      "lhs": 98200.0,
+      "rhs": 98200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-02)",
+      "lhs": 2398300.0,
+      "rhs": 2398300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-02)",
+      "lhs": 3900.0,
+      "rhs": 3900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-02)",
+      "lhs": 3900.0,
+      "rhs": 3900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-03)",
+      "lhs": 135600.0,
+      "rhs": 135600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-03)",
+      "lhs": 2349700.0,
+      "rhs": 2349700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-03)",
+      "lhs": 23200.0,
+      "rhs": 23200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-03)",
+      "lhs": 23200.0,
+      "rhs": 23200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-04)",
+      "lhs": 183200.0,
+      "rhs": 183200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-04)",
+      "lhs": 1845600.0,
+      "rhs": 1845600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-04)",
+      "lhs": 52300.0,
+      "rhs": 52300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-04)",
+      "lhs": 52300.0,
+      "rhs": 52300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-05)",
+      "lhs": 159900.0,
+      "rhs": 159900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-05)",
+      "lhs": 1775000.0,
+      "rhs": 1775000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-05)",
+      "lhs": 19000.0,
+      "rhs": 19000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-05)",
+      "lhs": 19000.0,
+      "rhs": 19000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-06)",
+      "lhs": 166900.0,
+      "rhs": 166900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-06)",
+      "lhs": 1358200.0,
+      "rhs": 1358200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-06)",
+      "lhs": 40100.0,
+      "rhs": 40100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-06)",
+      "lhs": 40100.0,
+      "rhs": 40100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-07)",
+      "lhs": 186300.0,
+      "rhs": 186300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-07)",
+      "lhs": 1625400.0,
+      "rhs": 1625400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-07)",
+      "lhs": 32600.0,
+      "rhs": 32600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-07)",
+      "lhs": 32600.0,
+      "rhs": 32600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-08)",
+      "lhs": 187800.0,
+      "rhs": 187800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-08)",
+      "lhs": 1461300.0,
+      "rhs": 1461300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-08)",
+      "lhs": 44700.0,
+      "rhs": 44700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-08)",
+      "lhs": 44700.0,
+      "rhs": 44700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-09)",
+      "lhs": 187100.0,
+      "rhs": 187100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-09)",
+      "lhs": 905300.0,
+      "rhs": 905300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-09)",
+      "lhs": 94400.0,
+      "rhs": 94400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-09)",
+      "lhs": 94400.0,
+      "rhs": 94400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-10)",
+      "lhs": 157600.0,
+      "rhs": 157600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-10)",
+      "lhs": 1509400.0,
+      "rhs": 1509400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-10)",
+      "lhs": 102400.0,
+      "rhs": 102400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-10)",
+      "lhs": 102400.0,
+      "rhs": 102400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-11)",
+      "lhs": 61800.0,
+      "rhs": 61800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-11)",
+      "lhs": 1761200.0,
+      "rhs": 1761200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-11)",
+      "lhs": 17000.0,
+      "rhs": 17000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-11)",
+      "lhs": 17000.0,
+      "rhs": 17000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2022-12)",
+      "lhs": -18600.0,
+      "rhs": -18600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2022-12)",
+      "lhs": 1651800.0,
+      "rhs": 1651800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2022-12)",
+      "lhs": -26400.0,
+      "rhs": -26400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2022-12)",
+      "lhs": -26400.0,
+      "rhs": -26400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-01)",
+      "lhs": -20700.0,
+      "rhs": -20700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-01)",
+      "lhs": 1928900.0,
+      "rhs": 1928900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-01)",
+      "lhs": -56100.0,
+      "rhs": -56100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-01)",
+      "lhs": -56100.0,
+      "rhs": -56100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-02)",
+      "lhs": -25400.0,
+      "rhs": -25400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-02)",
+      "lhs": 1865400.0,
+      "rhs": 1865400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-02)",
+      "lhs": -77300.0,
+      "rhs": -77300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-02)",
+      "lhs": -77300.0,
+      "rhs": -77300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-03)",
+      "lhs": -29500.0,
+      "rhs": -29500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-03)",
+      "lhs": 1977400.0,
+      "rhs": 1977400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-03)",
+      "lhs": -104500.0,
+      "rhs": -104500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-03)",
+      "lhs": -104500.0,
+      "rhs": -104500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-04)",
+      "lhs": -8800.0,
+      "rhs": -8800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-04)",
+      "lhs": 1984800.0,
+      "rhs": 1984800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-04)",
+      "lhs": -109000.0,
+      "rhs": -109000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-04)",
+      "lhs": -109000.0,
+      "rhs": -109000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-05)",
+      "lhs": -7300.0,
+      "rhs": -7300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-05)",
+      "lhs": 2019000.0,
+      "rhs": 2019000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-05)",
+      "lhs": -138700.0,
+      "rhs": -138700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-05)",
+      "lhs": -138700.0,
+      "rhs": -138700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-06)",
+      "lhs": 55600.0,
+      "rhs": 55600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-06)",
+      "lhs": 2166100.0,
+      "rhs": 2166100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-06)",
+      "lhs": -127500.0,
+      "rhs": -127500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-06)",
+      "lhs": -127500.0,
+      "rhs": -127500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-07)",
+      "lhs": 129500.0,
+      "rhs": 129500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-07)",
+      "lhs": 2286600.0,
+      "rhs": 2286600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-07)",
+      "lhs": -98000.0,
+      "rhs": -98000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-07)",
+      "lhs": -98000.0,
+      "rhs": -98000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-08)",
+      "lhs": 158900.0,
+      "rhs": 158900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-08)",
+      "lhs": 2210200.0,
+      "rhs": 2210200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-08)",
+      "lhs": -92300.0,
+      "rhs": -92300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-08)",
+      "lhs": -92300.0,
+      "rhs": -92300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-09)",
+      "lhs": 187100.0,
+      "rhs": 187100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-09)",
+      "lhs": 2086600.0,
+      "rhs": 2086600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-09)",
+      "lhs": -80700.0,
+      "rhs": -80700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-09)",
+      "lhs": -80700.0,
+      "rhs": -80700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-10)",
+      "lhs": 193800.0,
+      "rhs": 193800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-10)",
+      "lhs": 1962200.0,
+      "rhs": 1962200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-10)",
+      "lhs": -86300.0,
+      "rhs": -86300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-10)",
+      "lhs": -86300.0,
+      "rhs": -86300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-11)",
+      "lhs": 129100.0,
+      "rhs": 129100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-11)",
+      "lhs": 2223500.0,
+      "rhs": 2223500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-11)",
+      "lhs": -171200.0,
+      "rhs": -171200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-11)",
+      "lhs": -171200.0,
+      "rhs": -171200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2023-12)",
+      "lhs": 98100.0,
+      "rhs": 98100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2023-12)",
+      "lhs": 2373400.0,
+      "rhs": 2373400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2023-12)",
+      "lhs": -228800.0,
+      "rhs": -228800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2023-12)",
+      "lhs": -228800.0,
+      "rhs": -228800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-01)",
+      "lhs": 34700.0,
+      "rhs": 34700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-01)",
+      "lhs": 2354900.0,
+      "rhs": 2354900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-01)",
+      "lhs": -20200.0,
+      "rhs": -20200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-01)",
+      "lhs": -20200.0,
+      "rhs": -20200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-02)",
+      "lhs": 58700.0,
+      "rhs": 58700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-02)",
+      "lhs": 2438100.0,
+      "rhs": 2438100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-02)",
+      "lhs": -40200.0,
+      "rhs": -40200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-02)",
+      "lhs": -40200.0,
+      "rhs": -40200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-03)",
+      "lhs": 105300.0,
+      "rhs": 105300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-03)",
+      "lhs": 2617400.0,
+      "rhs": 2617400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-03)",
+      "lhs": -50200.0,
+      "rhs": -50200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-03)",
+      "lhs": -50200.0,
+      "rhs": -50200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-04)",
+      "lhs": 153900.0,
+      "rhs": 153900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-04)",
+      "lhs": 2508700.0,
+      "rhs": 2508700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-04)",
+      "lhs": -47800.0,
+      "rhs": -47800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-04)",
+      "lhs": -47800.0,
+      "rhs": -47800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-05)",
+      "lhs": 176500.0,
+      "rhs": 176500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-05)",
+      "lhs": 2612400.0,
+      "rhs": 2612400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-05)",
+      "lhs": -86200.0,
+      "rhs": -86200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-05)",
+      "lhs": -86200.0,
+      "rhs": -86200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-06)",
+      "lhs": 229700.0,
+      "rhs": 229700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-06)",
+      "lhs": 2781600.0,
+      "rhs": 2781600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-06)",
+      "lhs": -112300.0,
+      "rhs": -112300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-06)",
+      "lhs": -112300.0,
+      "rhs": -112300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-07)",
+      "lhs": 318600.0,
+      "rhs": 318600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-07)",
+      "lhs": 2815200.0,
+      "rhs": 2815200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-07)",
+      "lhs": -109100.0,
+      "rhs": -109100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-07)",
+      "lhs": -109100.0,
+      "rhs": -109100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-08)",
+      "lhs": 305400.0,
+      "rhs": 305400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-08)",
+      "lhs": 2824500.0,
+      "rhs": 2824500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-08)",
+      "lhs": -179600.0,
+      "rhs": -179600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-08)",
+      "lhs": -179600.0,
+      "rhs": -179600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-09)",
+      "lhs": 316000.0,
+      "rhs": 316000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-09)",
+      "lhs": 2823400.0,
+      "rhs": 2823400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-09)",
+      "lhs": -224400.0,
+      "rhs": -224400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-09)",
+      "lhs": -224400.0,
+      "rhs": -224400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-10)",
+      "lhs": 329800.0,
+      "rhs": 329800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-10)",
+      "lhs": 2728700.0,
+      "rhs": 2728700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-10)",
+      "lhs": -259300.0,
+      "rhs": -259300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-10)",
+      "lhs": -259300.0,
+      "rhs": -259300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-11)",
+      "lhs": 351300.0,
+      "rhs": 351300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-11)",
+      "lhs": 2780600.0,
+      "rhs": 2780600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-11)",
+      "lhs": -267900.0,
+      "rhs": -267900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-11)",
+      "lhs": -267900.0,
+      "rhs": -267900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2024-12)",
+      "lhs": 341500.0,
+      "rhs": 341500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2024-12)",
+      "lhs": 2737100.0,
+      "rhs": 2737100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2024-12)",
+      "lhs": -302900.0,
+      "rhs": -302900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2024-12)",
+      "lhs": -302900.0,
+      "rhs": -302900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-01)",
+      "lhs": 35700.0,
+      "rhs": 35700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-01)",
+      "lhs": 2748200.0,
+      "rhs": 2748200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-01)",
+      "lhs": -25300.0,
+      "rhs": -25300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-01)",
+      "lhs": -25300.0,
+      "rhs": -25300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-02)",
+      "lhs": 60500.0,
+      "rhs": 60500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-02)",
+      "lhs": 2795800.0,
+      "rhs": 2795800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-02)",
+      "lhs": -47200.0,
+      "rhs": -47200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-02)",
+      "lhs": -47200.0,
+      "rhs": -47200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-03)",
+      "lhs": 93100.0,
+      "rhs": 93100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-03)",
+      "lhs": 2571300.0,
+      "rhs": 2571300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-03)",
+      "lhs": -49900.0,
+      "rhs": -49900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-03)",
+      "lhs": -49900.0,
+      "rhs": -49900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-04)",
+      "lhs": 54800.0,
+      "rhs": 54800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-04)",
+      "lhs": 2368900.0,
+      "rhs": 2368900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-04)",
+      "lhs": -118300.0,
+      "rhs": -118300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-04)",
+      "lhs": -118300.0,
+      "rhs": -118300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-05)",
+      "lhs": -49500.0,
+      "rhs": -49500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-05)",
+      "lhs": 2185700.0,
+      "rhs": 2185700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-05)",
+      "lhs": -263800.0,
+      "rhs": -263800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-05)",
+      "lhs": -263800.0,
+      "rhs": -263800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-06)",
+      "lhs": 19400.0,
+      "rhs": 19400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-06)",
+      "lhs": 2365700.0,
+      "rhs": 2365700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-06)",
+      "lhs": -522000.0,
+      "rhs": -522000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-06)",
+      "lhs": -522000.0,
+      "rhs": -522000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-07)",
+      "lhs": 42400.0,
+      "rhs": 42400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-07)",
+      "lhs": 2497100.0,
+      "rhs": 2497100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-07)",
+      "lhs": -597600.0,
+      "rhs": -597600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-07)",
+      "lhs": -597600.0,
+      "rhs": -597600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-08)",
+      "lhs": 78800.0,
+      "rhs": 78800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-08)",
+      "lhs": 2635500.0,
+      "rhs": 2635500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-08)",
+      "lhs": -623200.0,
+      "rhs": -623200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-08)",
+      "lhs": -623200.0,
+      "rhs": -623200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-09)",
+      "lhs": 117700.0,
+      "rhs": 117700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-09)",
+      "lhs": 2807400.0,
+      "rhs": 2807400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-09)",
+      "lhs": -653900.0,
+      "rhs": -653900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-09)",
+      "lhs": -653900.0,
+      "rhs": -653900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-10)",
+      "lhs": 167800.0,
+      "rhs": 167800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-10)",
+      "lhs": 2969500.0,
+      "rhs": 2969500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-10)",
+      "lhs": -680600.0,
+      "rhs": -680600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-10)",
+      "lhs": -680600.0,
+      "rhs": -680600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-11)",
+      "lhs": 213800.0,
+      "rhs": 213800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-11)",
+      "lhs": 2980300.0,
+      "rhs": 2980300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-11)",
+      "lhs": -704800.0,
+      "rhs": -704800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-11)",
+      "lhs": -704800.0,
+      "rhs": -704800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "pretax life+nonlife=total (2025-12)",
+      "lhs": 193700.0,
+      "rhs": 193700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "equity life+nonlife=total (2025-12)",
+      "lhs": 2884800.0,
+      "rhs": 2884800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx table (1)+(2)+(3)=total (2025-12)",
+      "lhs": -821200.0,
+      "rhs": -821200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "fx combined: table vs narrative (2025-12)",
+      "lhs": -821200.0,
+      "rhs": -821200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2018-06)",
+      "lhs": 45100.0,
+      "rhs": 45100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2018-07)",
+      "lhs": 41800.0,
+      "rhs": 41800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2018-08)",
+      "lhs": 47300.0,
+      "rhs": 47300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2018-09)",
+      "lhs": 42800.0,
+      "rhs": 42800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2018-10)",
+      "lhs": 53000.0,
+      "rhs": 53000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2018-11)",
+      "lhs": 53700.0,
+      "rhs": 53700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2018-12)",
+      "lhs": 56000.0,
+      "rhs": 56000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-01)",
+      "lhs": 61500.0,
+      "rhs": 61400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.001629,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-02)",
+      "lhs": 65800.0,
+      "rhs": 65800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-05)",
+      "lhs": 102000.0,
+      "rhs": 102000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-06)",
+      "lhs": 83700.0,
+      "rhs": 83700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-08)",
+      "lhs": 94300.0,
+      "rhs": 94300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-09)",
+      "lhs": 80400.0,
+      "rhs": 80400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-10)",
+      "lhs": 59600.0,
+      "rhs": 59600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-11)",
+      "lhs": 58500.0,
+      "rhs": 58500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_month (2019-12)",
+      "lhs": 54600.0,
+      "rhs": 54600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2020-09)",
+      "lhs": 34600.0,
+      "rhs": 34600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2020-10)",
+      "lhs": 40500.0,
+      "rhs": 40500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2020-11)",
+      "lhs": 43000.0,
+      "rhs": 42900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.002331,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2020-12)",
+      "lhs": 46300.0,
+      "rhs": 46200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.002165,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-01)",
+      "lhs": 37900.0,
+      "rhs": 37900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-02)",
+      "lhs": 36900.0,
+      "rhs": 36900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-03)",
+      "lhs": 52600.0,
+      "rhs": 52600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-04)",
+      "lhs": 34600.0,
+      "rhs": 34600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-05)",
+      "lhs": 30400.0,
+      "rhs": 30400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-06)",
+      "lhs": 31900.0,
+      "rhs": 31900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-07)",
+      "lhs": 33300.0,
+      "rhs": 33300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-08)",
+      "lhs": 28900.0,
+      "rhs": 28900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-09)",
+      "lhs": 34000.0,
+      "rhs": 34000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-10)",
+      "lhs": 41200.0,
+      "rhs": 41200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-11)",
+      "lhs": 37900.0,
+      "rhs": 37900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2021-12)",
+      "lhs": 43700.0,
+      "rhs": 43700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-01)",
+      "lhs": 54300.0,
+      "rhs": 54300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-02)",
+      "lhs": 75200.0,
+      "rhs": 75200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-03)",
+      "lhs": 107900.0,
+      "rhs": 107900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-04)",
+      "lhs": 150300.0,
+      "rhs": 150300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-05)",
+      "lhs": 130000.0,
+      "rhs": 130000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-06)",
+      "lhs": 166500.0,
+      "rhs": 166500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-07)",
+      "lhs": 175000.0,
+      "rhs": 174900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.000572,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-08)",
+      "lhs": 204800.0,
+      "rhs": 204800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-09)",
+      "lhs": 274600.0,
+      "rhs": 274600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-10)",
+      "lhs": 304500.0,
+      "rhs": 304500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-11)",
+      "lhs": 242300.0,
+      "rhs": 242300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2022-12)",
+      "lhs": 228700.0,
+      "rhs": 228900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.000874,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-01)",
+      "lhs": 192700.0,
+      "rhs": 192700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-02)",
+      "lhs": 207900.0,
+      "rhs": 207900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-03)",
+      "lhs": 203000.0,
+      "rhs": 203000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-04)",
+      "lhs": 210000.0,
+      "rhs": 210000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-05)",
+      "lhs": 202800.0,
+      "rhs": 202800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-06)",
+      "lhs": 210700.0,
+      "rhs": 210700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-07)",
+      "lhs": 215100.0,
+      "rhs": 215100.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-08)",
+      "lhs": 215800.0,
+      "rhs": 215800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-09)",
+      "lhs": 216200.0,
+      "rhs": 216200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-10)",
+      "lhs": 214600.0,
+      "rhs": 214600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-11)",
+      "lhs": 128600.0,
+      "rhs": 128600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2023-12)",
+      "lhs": 92000.0,
+      "rhs": 92000.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-01)",
+      "lhs": 114600.0,
+      "rhs": 114600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-02)",
+      "lhs": 130600.0,
+      "rhs": 130600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-03)",
+      "lhs": 160800.0,
+      "rhs": 160900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.000622,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-04)",
+      "lhs": 203300.0,
+      "rhs": 203300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-05)",
+      "lhs": 188400.0,
+      "rhs": 188400.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-06)",
+      "lhs": 189900.0,
+      "rhs": 189900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-07)",
+      "lhs": 230600.0,
+      "rhs": 230600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-08)",
+      "lhs": 174700.0,
+      "rhs": 174700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-09)",
+      "lhs": 157700.0,
+      "rhs": 157700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-10)",
+      "lhs": 155200.0,
+      "rhs": 155200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-11)",
+      "lhs": 185200.0,
+      "rhs": 185200.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2024-12)",
+      "lhs": 219600.0,
+      "rhs": 219600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-01)",
+      "lhs": 226300.0,
+      "rhs": 226300.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-02)",
+      "lhs": 234700.0,
+      "rhs": 234700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-03)",
+      "lhs": 283600.0,
+      "rhs": 283600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-04)",
+      "lhs": 164800.0,
+      "rhs": 164800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-05)",
+      "lhs": 18800.0,
+      "rhs": 18800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-06)",
+      "lhs": 233500.0,
+      "rhs": 233500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-07)",
+      "lhs": 233900.0,
+      "rhs": 233900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-08)",
+      "lhs": 372600.0,
+      "rhs": 372600.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-09)",
+      "lhs": 341900.0,
+      "rhs": 341900.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-10)",
+      "lhs": 384500.0,
+      "rhs": 384500.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-11)",
+      "lhs": 513800.0,
+      "rhs": 513800.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    },
+    {
+      "check_name": "reserve balance ties to prev_year_end (2025-12)",
+      "lhs": 613700.0,
+      "rhs": 613700.0,
+      "tolerance": 0.03,
+      "rel_error": 0.0,
+      "passed": true,
+      "unit": "NT$ mn"
+    }
+  ],
+  "sources_failed": [],
+  "outputs": {
+    "csv": "data/sector_monthly_release.csv",
+    "sql": "out/stage1_release_20260903.sql"
+  }
+}

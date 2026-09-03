@@ -20,13 +20,17 @@ continuous line.
 from __future__ import annotations
 
 import hashlib
+import os
+import tempfile
 import time
 from dataclasses import dataclass, asdict, field
 from datetime import date, datetime, timezone
 from enum import Enum
+from pathlib import Path
 from typing import Any, Mapping
 from urllib.parse import urlparse
 
+import certifi
 import requests
 
 # User-Agent policy. No single string works everywhere, so it is per-host.
@@ -69,6 +73,40 @@ USER_AGENT_OVERRIDES: dict[str, str] = {
 def ua_for(url: str) -> str:
     """User-Agent to send to `url`'s host."""
     return USER_AGENT_OVERRIDES.get(urlparse(url).hostname or "", USER_AGENT)
+
+
+# TLS trust. `*.tii.org.tw` serves its leaf certificate without the issuing
+# intermediate (TWCA Secure SSL Certification Authority), so any client
+# without that intermediate cached fails with "unable to get local issuer
+# certificate" — browsers succeed only because they fetch it via AIA. The
+# intermediate is checked into config/certs/; it chains to TWCA Global Root
+# CA, which is in the system and certifi stores (`openssl verify` OK,
+# 2026-09-03). Verification is never disabled; the missing link is supplied.
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_EXTRA_INTERMEDIATES: dict[str, Path] = {
+    "tii.org.tw": _REPO_ROOT / "config" / "certs" / "twca_secure_ssl_ca.pem",
+}
+_BUNDLE_CACHE: dict[str, str] = {}
+
+
+def ca_bundle_for(url: str) -> str | bool:
+    """Value for requests' `verify=` when fetching `url`.
+
+    True (the default trust store) for every host except those listed in
+    `_EXTRA_INTERMEDIATES`, which get a merged bundle: the default store plus
+    the intermediate their server omits. Merged bundles are written once per
+    process to a temp file.
+    """
+    host = urlparse(url).hostname or ""
+    for suffix, pem in _EXTRA_INTERMEDIATES.items():
+        if host == suffix or host.endswith("." + suffix):
+            if suffix not in _BUNDLE_CACHE:
+                base = os.environ.get("REQUESTS_CA_BUNDLE") or os.environ.get("SSL_CERT_FILE") or certifi.where()
+                merged = Path(tempfile.gettempdir()) / f"tlfx-ca-{suffix}.pem"
+                merged.write_bytes(Path(base).read_bytes() + b"\n" + pem.read_bytes())
+                _BUNDLE_CACHE[suffix] = str(merged)
+            return _BUNDLE_CACHE[suffix]
+    return True
 
 
 DEFAULT_TIMEOUT = 45
@@ -158,7 +196,7 @@ def fetch(
             time.sleep(delay)
         started = time.monotonic()
         try:
-            resp = requests.get(url, headers=hdrs, timeout=timeout)
+            resp = requests.get(url, headers=hdrs, timeout=timeout, verify=ca_bundle_for(url))
         except requests.RequestException as exc:  # transport failure
             last_exc = exc
             continue

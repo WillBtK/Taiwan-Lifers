@@ -1,0 +1,179 @@
+{
+  "_doc": [
+    "Sector figures the Insurance Bureau states at its monthly press briefing and",
+    "that reach the public only through the press (docs/decisions.md 0.12, 1.4).",
+    "Each row is one reference month. `sources[0]` is the primary article: its",
+    "publication date is the row's vintage and its URL the row's source_url.",
+    "Every field value is written exactly as printed in the cited article",
+    "(NT$ 億 / 兆, %); scripts/stage1_briefing_press.py converts units, and",
+    "fails the run if a value string cannot be found in the fetched article text.",
+    "Percent fields ending in _ratio_* are stored as fractions; *_pct as percent.",
+    "Nothing here is a snippet: every article was fetched in full on 2026-09-03."
+  ],
+  "rows": [
+    {
+      "obs_month": "2024-12-01",
+      "reported_by": "保險局副局長蔡火炎",
+      "sources": [
+        {"url": "https://money.udn.com/money/story/5613/9292493", "published": "2026-01-27",
+         "outlet": "經濟日報",
+         "fields": {"hedge_ratio_regulatory": "66.39%", "foreign_investments": "23兆元", "regulatory_fx_exposure": "15.6兆元"},
+         "quote": "壽險業2024年底國外投資金額23兆元，扣除外幣保單後的曝險金額為15.6兆元，2024年底避險比率為66.39%"}
+      ],
+      "note": "Year-end anchor stated retrospectively at the January 2026 briefing. Exposure as described deducts FX-policy liabilities only; the notice's further deductions (unhedged non-FVTPL equities and funds) are not mentioned."
+    },
+    {
+      "obs_month": "2025-08-01",
+      "reported_by": "金管會統計（未具名）",
+      "sources": [
+        {"url": "https://money.udn.com/money/story/5613/9039413", "published": "2025-09-30",
+         "outlet": "經濟日報",
+         "fields": {"hedge_ratio_regulatory": "62.25%", "fx_reserve_total": "3,726億元", "hedge_cost_cs_annual_pct": "2.55%"},
+         "quote": "外價金充裕下，壽險業大幅調降避險操作，避險比率下滑至62.25%…8月底壽險業避險大宗的CS（換匯交易）年化成本為2.55%"}
+      ],
+      "note": "Reserve balance agrees with the August 2025 release (3,726億). NDF cost quoted only as '高掛4%'; not stored."
+    },
+    {
+      "obs_month": "2025-10-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {"url": "https://money.udn.com/money/story/5613/9167271", "published": "2025-11-27",
+         "outlet": "經濟日報",
+         "fields": {"hedge_ratio_regulatory": "58.55%", "fx_reserve_total": "3,845億元"},
+         "quote": "10月的避險比率58.55%，不僅比上月減少，亦為109年以來最低；而截至今年10月底為止，壽險業外匯價格變動準備金的累積餘額為3,845億元"}
+      ],
+      "note": "Reserve balance agrees with the October 2025 release (3,845億). The article states the briefing series starts in ROC 109 (2020)."
+    },
+    {
+      "obs_month": "2025-12-01",
+      "reported_by": "保險局副局長蔡火炎",
+      "sources": [
+        {"url": "https://news.cnyes.com/news/id/6323663", "published": "2026-01-27",
+         "outlet": "鉅亨網",
+         "fields": {"hedge_ratio_regulatory": "50.23%", "foreign_investments": "22.8兆元", "regulatory_fx_exposure": "15.4兆元",
+                    "fx_reserve_total": "6137億元", "one_off_provision": "823.37億元",
+                    "hedge_cs_share_note": ">70%", "hedge_ndf_share_note": "25–30%"},
+         "quote": "截至去年底，壽險業國外投資金額達 22.8 兆元，扣除外幣保單後的曝險金額為 15.4 兆元，避險比率降至約 5 成…整體壽險業避險比例…大幅降至 50.23%…目前 CS(換匯交易) 占比仍高於 7 成，而 NDF 占比已降至 25% 到 30% 之間…總計提存金額達 823.37 億元，因此推升去年底壽險業外價金累積餘額來到 6137 億元"},
+        {"url": "https://money.udn.com/money/story/5613/9414972", "published": "2026-03-31",
+         "outlet": "經濟日報",
+         "fields": {"special_reserve_fx_fixed": "2897億元"},
+         "quote": "截至2025年底提存的特別盈餘公積2897億元"},
+        {"url": "https://news.cnyes.com/news/id/6343469", "published": "2026-02-12",
+         "outlet": "鉅亨網",
+         "fields": {"net_fx_exposure": "7.7兆元"},
+         "quote": "目前整體壽險業的淨曝險部位約新台幣 7.7 兆元，現有 6137 億元全數轉入 P"}
+      ],
+      "note": "Reserve balance agrees with the December 2025 release (6,137億). Net exposure of 7.7兆 is an approximate figure given by the Bureau's specialist on 12 Feb 2026; used for the identity check denominator × (1 − ratio) ≈ net exposure. Share notes are bounds as spoken, not figures."
+    },
+    {
+      "obs_month": "2026-01-01",
+      "reported_by": "保險局副局長蔡火炎",
+      "sources": [
+        {"url": "https://money.udn.com/money/story/5613/9371869", "published": "2026-03-10",
+         "outlet": "經濟日報",
+         "fields": {"hedge_ratio_regulatory": "47%", "hedge_cs_share_note": ">75%", "hedge_ndf_share_note": "<25%"},
+         "quote": "壽險業2025年12月底外匯避險比率為50.23%，至今年1月避險比率降至47%…今年1月CS比重則高於75%，NDF比重低於25%"},
+        {"url": "https://money.udn.com/money/story/5613/9371789", "published": "2026-03-10",
+         "outlet": "經濟日報",
+         "fields": {"hedge_cost_cs_annual_pct": "2.03%", "hedge_cost_ndf_annual_pct": "0.74%"},
+         "quote": "1月底CS年化成本率約2.03%，月減0.1個百分點；NDF年化成本率0.74%，月增0.45個百分點"}
+      ],
+      "note": "No reserve balance was reported for January."
+    },
+    {
+      "obs_month": "2026-02-01",
+      "reported_by": "保險局副局長蔡火炎",
+      "sources": [
+        {"url": "https://money.udn.com/money/story/5613/9414972", "published": "2026-03-31",
+         "outlet": "經濟日報",
+         "fields": {"hedge_ratio_regulatory": "45.1%", "fx_reserve_total": "6259億元", "fx_reserve_volatility": "6159億元",
+                    "fx_reserve_fixed": "100億元", "special_reserve_fx_fixed": "2897億元", "fx_buffer_total": "9156億元",
+                    "hedge_cs_share_note": ">75%", "hedge_ndf_share_note": "<25%"},
+         "quote": "壽險業2月底外匯價格變動準備金餘額為6259億元…特別盈餘公積2897億元，兩者加總為9156億元…以2月底數字來看，P跟Q分別為6159億元與100億元，X跟Y尚無相關數字"},
+        {"url": "https://money.udn.com/money/story/5613/9414846", "published": "2026-03-31",
+         "outlet": "經濟日報",
+         "fields": {"hedge_cost_cs_annual_pct": "1.96%", "hedge_cost_ndf_annual_pct": "1.01%"},
+         "quote": "2月底CS年化成本率1.96%，月減0.07個百分點；NDF年化成本率則升至1.01%，月增0.27個百分點"}
+      ],
+      "note": "The April briefing restated the February reserve balance as 6,277億 (cnyes 6435712: '較 2 月修正後數字 (6277 億元)'). Kept as first reported; the revision is recorded here, not applied."
+    },
+    {
+      "obs_month": "2026-03-01",
+      "reported_by": "保險局副局長蔡火炎",
+      "sources": [
+        {"url": "https://news.cnyes.com/news/id/6435712", "published": "2026-04-28",
+         "outlet": "鉅亨網",
+         "fields": {"hedge_ratio_regulatory": "45.15%", "fx_reserve_total": "6214億元", "fx_reserve_volatility": "6006億元",
+                    "fx_reserve_fixed": "208億元", "special_reserve_fx_fixed": "2897億元", "special_reserve_fx_strengthening": "0元",
+                    "fx_buffer_total": "9111億元", "net_fx_exposure": "8兆6073億元", "buffer_absorbable_appreciation_pct": "10.6%",
+                    "hedge_cs_share_note": ">75%", "hedge_ndf_share_note": "<25%"},
+         "quote": "截至今年 3 月底，壽險業國外投資之避險比率為 45.15%…外匯價格變動準備金 (負債項下) 合計 6214 億元，分別為 P(波動準備金)6006 億元與 Q(固定準備金) 208 億元…特別盈餘公積 (權益項下) 合計為 2897 億元，皆為 X…Y…目前為 0 元…3 月底壽險業國外投資淨曝險部位為 8 兆 6073 億元…可緩衝新台幣升值幅度達 10.6%"},
+        {"url": "https://money.udn.com/money/story/5613/9470127", "published": "2026-04-28",
+         "outlet": "經濟日報",
+         "fields": {"effective_hedge_ratio_memo": "55.75%"},
+         "quote": "3月底壽險業避險比率為45.15%，但若納入外價金與特別盈餘公積，在全數匯回情境下，實質避險比率約55.75%"}
+      ]
+    },
+    {
+      "obs_month": "2026-04-01",
+      "reported_by": "保險局副局長陳清源",
+      "sources": [
+        {"url": "https://news.cts.com.tw/cna/money/202605/202605283037334.html", "published": "2026-05-28",
+         "outlet": "中央社（華視轉載）",
+         "fields": {"hedge_ratio_regulatory": "44.31%", "fx_reserve_total": "6801億元", "fx_reserve_volatility": "6486億元",
+                    "fx_reserve_fixed": "315億元", "special_reserve_fx_fixed": "2897億元", "special_reserve_fx_strengthening": "0",
+                    "fx_buffer_total": "9698億元", "net_fx_exposure": "8兆7024億元", "buffer_absorbable_appreciation_pct": "11.1%",
+                    "usdtwd_month_end": "31.648", "hedge_cs_share_note": ">75%", "hedge_ndf_share_note": "<25%"},
+         "quote": "壽險業4月底外匯避險比率為44.31%…4月底外匯價格變動準備金餘額為6801億元，其中P為6486億元，Q為315億元；另外2桶金中，X為2897億元，Y…目前為0…合計達9698億元…壽險業4月底國外投資淨曝險為8兆7024億元…可以緩衝新台幣升值幅度11.1%，以4月底新台幣收盤價31.648元"},
+        {"url": "https://money.udn.com/money/story/5613/9532002", "published": "2026-05-28",
+         "outlet": "經濟日報",
+         "fields": {"effective_hedge_ratio_memo": "55.41%"},
+         "quote": "4月底壽險業避險比率為44.31%，但若納入外價金與特別盈餘公積，在全數匯回情境下，實質避險比率是拉高到55.41%"}
+      ]
+    },
+    {
+      "obs_month": "2026-05-01",
+      "reported_by": "保險局副局長陳清源",
+      "sources": [
+        {"url": "https://news.cts.com.tw/cna/money/202607/202607023050938.html", "published": "2026-07-02",
+         "outlet": "中央社（華視轉載）",
+         "fields": {"hedge_ratio_regulatory": "43.66%", "fx_reserve_total": "6913億元", "fx_reserve_volatility": "6490億元",
+                    "fx_reserve_fixed": "423億元", "special_reserve_fx_fixed": "2897億元", "special_reserve_fx_strengthening": "0",
+                    "fx_buffer_total": "9810億元", "net_fx_exposure": "8兆7755億元", "buffer_absorbable_appreciation_pct": "11.2%",
+                    "owners_equity": "3兆9103億元", "pretax_profit_life": "2463億元", "pretax_profit_nonlife": "262億元"},
+         "quote": "壽險業5月避險比率43.66%…5月底外匯價格變動準備金餘額為6913億元，其中P為6490億元，Q為423億元；另外2桶金中，X為2897億元，Y…目前為0…合計達9810億元…壽險業5月底國外投資淨曝險為8兆7755億元…可緩衝新台幣升值11.2%…壽險業5月底淨值達3兆9103億元…壽險業累計獲利2463億元，產險業累計獲利262億元"}
+      ],
+      "note": "Profit figures are YTD under IFRS 17 (first full year); not comparable with the 2025 release series. Monthly-only flows quoted (May swap cost 105億, provision 112億, net FX loss 110億) are not stored because the table holds YTD flows."
+    },
+    {
+      "obs_month": "2026-06-01",
+      "reported_by": "金管會統計（未具名）",
+      "sources": [
+        {"url": "https://money.udn.com/money/story/5613/9661667", "published": "2026-07-30",
+         "outlet": "經濟日報",
+         "fields": {"hedge_ratio_regulatory": "42.89%", "fx_reserve_total": "6,997億元", "special_reserve_fx_fixed": "3,651億元",
+                    "fx_buffer_total": "1兆648億元", "net_fx_exposure": "8兆9,449億元", "buffer_absorbable_appreciation_pct": "11.9%",
+                    "effective_hedge_ratio_memo": "55%", "fx_combined_effect": "-1,428億元", "hedging_swap_cost": "-682億元"},
+         "quote": "壽險業避險比率雖降至42.89%…實質避險比率可拉高至55%…6月底外匯價格準備金餘額為6,997億元、上半年增加860億元，特別盈餘公積3,651億元，兩者合計首度突破兆元…上半年壽險業淨匯損僅1,428億元…上半年避險工具成本682億元"},
+        {"url": "https://money.udn.com/money/story/5613/9661695", "published": "2026-07-31",
+         "outlet": "經濟日報",
+         "fields": {"owners_equity": "4兆1,854億元", "pretax_profit_life": "2,779億元", "pretax_profit_nonlife": "315億元", "pretax_profit_total": "3,094億元"},
+         "quote": "上半年壽險業賺2,779億元、產險業315億元，合計3,094億元…壽險業6月底淨值首度衝破4兆元大關，達4兆1,854億元"}
+      ],
+      "note": "Special reserves are quoted as one total (3,651億); the Bureau said in March and May that Y stays zero until 2027, so the total is stored under X with this caveat. 'Net FX loss' (淨匯損) is the Bureau's combined FX + hedging + reserve figure, stored as fx_combined_effect, YTD. No P/Q split reported."
+    },
+    {
+      "obs_month": "2026-07-01",
+      "reported_by": "金管會統計（未具名）",
+      "sources": [
+        {"url": "https://money.udn.com/money/story/5613/9728229", "published": "2026-09-01",
+         "outlet": "經濟日報",
+         "fields": {"hedge_ratio_regulatory": "42.94%", "fx_reserve_total": "7,182億元", "fx_reserve_change": "185億元",
+                    "special_reserve_fx_fixed": "3,651億元", "fx_buffer_total": "1兆833億元", "net_fx_exposure": "9兆417億元",
+                    "usdtwd_month_end": "32.292", "buffer_absorbable_appreciation_pct": "12%"},
+         "quote": "7月底外價金餘額攀升到7,182億元，月增185億元，特別盈餘公積維持3,651億元，合計1兆833億元新高。以7月底新台幣兌美元32.292元換算…以海外淨曝險9兆417億元估算，約可吸收12%的升值幅度…避險比率微升到42.94%"}
+      ],
+      "note": "fx_reserve_change is month-on-month (fx_reserve_change_basis = prev_month). Monthly-only flows (July hedge cost 106億, net FX loss 388億) not stored."
+    }
+  ]
+}

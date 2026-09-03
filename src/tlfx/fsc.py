@@ -16,12 +16,13 @@ Confirmed working 2026-09-03; see docs/decisions.md 0.10 and 0.11.
 from __future__ import annotations
 
 import re
+import time
 from dataclasses import dataclass
 from datetime import date
 
 import requests
 
-from .provenance import Provenance, ua_for, utc_now
+from .provenance import RETRY_BACKOFF, Provenance, ua_for, utc_now
 
 # Both regulators run the same CMS and the same search form, and the monthly
 # release is mirrored on both. Querying both and merging on dataserno costs one
@@ -33,10 +34,15 @@ CHANNELS: dict[str, tuple[str, str]] = {
 DEFAULT_CHANNEL = "fsc"
 ITEM_URL = "{base}?id={list_id}&parentpath=0,2&mcustomize=news_view.jsp&dataserno={dataserno}&dtable=News"
 
-# The monthly sector release. Full title, e.g.:
-#   114年12月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金
-MONTHLY_TITLE = re.compile(r"(\d{2,3})年(\d{1,2})月保險業損益[、，]?淨值")
-MONTHLY_KEYWORD = "損益、淨值"
+# The monthly sector release. Three title wordings over its life:
+#   107年5月保險業損益、淨值及匯兌損益情形                     (2018-05 → 2019-02)
+#   108年4月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金情形
+#   109年3月保險業兌換損益、避險損益與外匯價格變動準備金情形     (2020-03 only:
+#       the March 2020 edition dropped the profit and equity sections and
+#       the "損益、淨值" phrase, so a single keyword misses it)
+MONTHLY_TITLE = re.compile(r"(\d{2,3})年(\d{1,2})月保險業(?:損益[、，]?淨值|兌換損益)")
+MONTHLY_KEYWORDS = ("損益、淨值", "外匯價格變動準備金情形")
+MONTHLY_KEYWORD = MONTHLY_KEYWORDS[0]  # kept for callers of the Stage 0 API
 
 # Foreign-currency policy sales, e.g.:
 #   壽險業115年截至6月底外幣保險商品銷售情形
@@ -75,11 +81,24 @@ def search(keyword: str, *, channel: str = DEFAULT_CHANNEL, pagesize: int = 200,
         "qunit": "", "dateid": "", "qptdate": "", "qdldate": "",
         "page": str(page), "pagesize": str(pagesize),
     }
-    resp = requests.post(
-        base, data=payload,
-        headers={"User-Agent": ua_for(base), "Accept": "*/*"},
-        timeout=timeout,
-    )
+    # The sandbox egress drops a tunnel now and then (connection reset before
+    # the response); that is transport, not the source, so retry it with the
+    # same backoff `fetch` uses. HTTP errors are raised, never retried.
+    last_exc: Exception | None = None
+    for attempt, delay in enumerate((0,) + RETRY_BACKOFF):
+        if delay:
+            time.sleep(delay)
+        try:
+            resp = requests.post(
+                base, data=payload,
+                headers={"User-Agent": ua_for(base), "Accept": "*/*"},
+                timeout=timeout,
+            )
+            break
+        except requests.RequestException as exc:
+            last_exc = exc
+    else:
+        raise RuntimeError(f"search failed after {len(RETRY_BACKOFF) + 1} attempts: {base}") from last_exc
     resp.raise_for_status()
     prov = Provenance(
         source_url=f"{base}?id={list_id} [POST keyword={keyword}]",
@@ -93,15 +112,18 @@ def search(keyword: str, *, channel: str = DEFAULT_CHANNEL, pagesize: int = 200,
     return list(seen.items()), prov
 
 
-def _find(keyword: str, pattern: re.Pattern[str], *, channels: tuple[str, ...] = ("fsc", "ib"),
-          **kw) -> tuple[list[Release], list[Provenance]]:
+def _find(keywords: str | tuple[str, ...], pattern: re.Pattern[str], *,
+          channels: tuple[str, ...] = ("fsc", "ib"), **kw) -> tuple[list[Release], list[Provenance]]:
+    if isinstance(keywords, str):
+        keywords = (keywords,)
     items: dict[str, str] = {}
     provs: list[Provenance] = []
-    for channel in channels:
-        found, prov = search(keyword, channel=channel, **kw)
-        provs.append(prov)
-        for serno, title in found:
-            items.setdefault(serno, title)
+    for keyword in keywords:
+        for channel in channels:
+            found, prov = search(keyword, channel=channel, **kw)
+            provs.append(prov)
+            for serno, title in found:
+                items.setdefault(serno, title)
     out = []
     for serno, title in items.items():
         m = pattern.search(title)
@@ -128,11 +150,13 @@ def find_monthly_releases(**kw) -> tuple[list[Release], list[Provenance]]:
 
     Newest first. Stage 1's entry point — it never assumes a page position.
 
-    Coverage as measured 2026-09-03: 90 editions, May 2018 to December 2025.
-    The series STOPS at the December 2025 edition (published 2026-01-27) on
-    both channels; see docs/decisions.md 0.11 before relying on it for 2026.
+    Coverage as measured 2026-09-03: 91 editions, May 2018 to December 2025,
+    March 2019 missing (no edition under any title on either channel) and
+    March 2020 retitled. The series STOPS at the December 2025 edition
+    (published 2026-01-27) on both channels; see docs/decisions.md 0.11 and
+    1.2 before relying on it for 2026.
     """
-    return _find(MONTHLY_KEYWORD, MONTHLY_TITLE, **kw)
+    return _find(MONTHLY_KEYWORDS, MONTHLY_TITLE, **kw)
 
 
 def find_fx_policy_releases(**kw) -> tuple[list[Release], list[Provenance]]:
