@@ -1,0 +1,41 @@
+# TLFX network allowlist — one probe URL per host.
+# tier: 1 = required for Stages 1-2 (run fails if unreachable)
+#       2 = required for Stages 3-6
+#       3 = optional / reference only (never ingested)
+# Columns: host	tier	probe_url	expect	note
+#   expect: blank = any 2xx/3xx counts as reachable; a number = that exact status does
+www.fsc.gov.tw	1	https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2		Chinese press-release list (id=96 confirmed 2026-09-03)
+www.fsc.gov.tw	1	https://www.fsc.gov.tw/en/home.jsp?id=54&parentpath=0,2		English press-release list
+www.ib.gov.tw	1	https://www.ib.gov.tw/		Insurance Bureau statistics
+www.cbc.gov.tw	1	https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv		FSM table 8 life insurer balance sheet
+www.cbc.gov.tw	1	https://www.cbc.gov.tw/tw/lp-4197-1.html		CBC USD/TWD swap + FX call-loan balance
+cpx.cbc.gov.tw	1	https://cpx.cbc.gov.tw/Tree/TreeSelect		CBC statistics database (history)
+www.tii.org.tw	2	https://www.tii.org.tw/tii/information/information1/000001.html		TII statistics index — blocked at sandbox egress (CONNECT tunnel 502), not by the source
+sv.tii.org.tw	2	https://sv.tii.org.tw/		TII query system — blocked at sandbox egress (CONNECT tunnel 502)
+insdb.tii.org.tw	2	https://insdb.tii.org.tw/		TII database service — blocked at sandbox egress (CONNECT tunnel 502)
+law.tii.org.tw	3	https://law.tii.org.tw/		TII regulations database — blocked at sandbox egress (CONNECT tunnel 502)
+www.stat.gov.tw	2	https://www.stat.gov.tw/		DGBAS (GDP)
+www.dgbas.gov.tw	3	https://www.dgbas.gov.tw/		DGBAS alternate host
+www.tpex.org.tw	2	https://www.tpex.org.tw/		Formosa bonds, bond ETFs
+mops.twse.com.tw	3	https://mops.twse.com.tw/		JS-rendered, rate-limited; fallback only
+mopsov.twse.com.tw	3	https://mopsov.twse.com.tw/		legacy MOPS
+emops.twse.com.tw	3	https://emops.twse.com.tw/		English MOPS
+www.cathayholdings.com	2	https://www.cathayholdings.com/holdings/eng/ir		Cathay Life IR
+www.ir-cloud.com	2	https://www.ir-cloud.com/taiwan/2882/		Cathay IR hosting — returns 403 to automated clients incl. browser UA; use www.cathayholdings.com instead
+www.fubon.com	2	https://www.fubon.com/financialholdings/en/		Fubon IR
+www.irpro.co	2	https://www.irpro.co/2881/		Fubon monthly PDFs — 403 to automated clients; use www.fubon.com instead
+www.tsholdings.com.tw	2	https://www.tsholdings.com.tw/		TS Financial (Shin Kong Life)
+www.kgi.com	2	https://www.kgi.com/en/		KGI Financial
+www.kgilife.com.tw	2	https://www.kgilife.com.tw/		KGI Life
+ir.ctbcholding.com	2	https://ir.ctbcholding.com/html/index		CTBC IR (www host is robots-blocked)
+media-ctbc.todayir.com	2	https://media-ctbc.todayir.com/		CTBC PDFs — 403 to automated clients; reach PDFs via ir.ctbcholding.com
+www.nanshanlife.com.tw	2	https://www.nanshanlife.com.tw/		Nan Shan Life (unverified)
+data.bis.org	2	https://data.bis.org/topics/LBS/data		BIS LBS portal
+stats.bis.org	2	https://stats.bis.org/api/v2/structure/dataflow/BIS/		BIS SDMX API — the v2 root returns 501 by design
+www.bis.org	2	https://www.bis.org/		BIS root; /statistics/full_data_sets.htm is now 404 — bulk lives at data.bis.org/bulkdownload
+home.treasury.gov	2	https://home.treasury.gov/policy-issues/international/macroeconomic-and-foreign-exchange-policies-of-major-trading-partners-of-the-united-states		US Treasury FX report
+fred.stlouisfed.org	2	https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXTAUS&cosd=2026-01-01		USD/TWD daily. CSV endpoint, date-bounded: the /series HTML page is JS-heavy and the unbounded CSV (1983-) read-times-out through the proxy
+api.stlouisfed.org	2	https://api.stlouisfed.org/fred/series?series_id=DEXTAUS	400	FRED API — 400 without FRED_API_KEY proves reachability
+data.imf.org	3	https://data.imf.org/		COFER (optional)
+www.cfr.org	3	https://www.cfr.org/		Reference (Setser), not ingested
+concentratedambiguity.wordpress.com	3	https://concentratedambiguity.wordpress.com/		Reference (S.T.W. 2019), not ingested

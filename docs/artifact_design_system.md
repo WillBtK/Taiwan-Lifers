@@ -625,6 +625,8 @@ Six categorical hues exist in this palette (`--blue`, `--orange`, `--teal`,
 The first four are the working set. `--gold` and `--rose` are an extension for
 charts that genuinely need five or six series — use them only after confirming
 the chart cannot be split, and see §7 for the constraint that comes with them.
+From the fourth series onward, hue alone is not sufficient: pair it with `dash`
+per §7.
 Beyond six, split into two charts or a small-multiples grid (`.smallmult`); a
 chart nobody can decode is worse than two charts.
 
@@ -730,8 +732,9 @@ highlight a summary/total row; use `class="sign-pos"` / `class="sign-neg"` on a
   slider labels. Never mix the two within one text run.
 - **Color discipline**: `--blue`/`--orange`/`--teal`/`--purple`/`--gold`/`--rose`
   are the only 6 chart/accent hues, assigned in that fixed order (§5b). Any
-  chart using 5 or 6 series must ALSO encode each series by line style (`dash`),
-  not hue alone — see §7. `--ink`/`--ink-2`/`--muted`/`--faint` are the only text
+  chart using 4, 5 or 6 series must ALSO encode each series by line style
+  (`dash`), not hue alone — blue↔purple fails the all-pairs CVD test in both
+  modes, see §7. `--ink`/`--ink-2`/`--muted`/`--faint` are the only text
   grays (muted for captions/labels, faint for the least-important annotation
   text). Never hardcode a hex color anywhere outside the `:root` token blocks —
   every color reference in CSS is a `var(--token)`, and every color reference in
@@ -798,14 +801,37 @@ The four-hue working set (`--blue`, `--orange`, `--teal`, `--purple`) was
 validated with the `dataviz` skill's palette validator for CVD-safety against
 both the light (`#FFFFFF`) and dark (`#1A1E24`) surfaces.
 
-`--gold` and `--rose` extend it to six. **These two have not yet been run
-through the validator.** Until they have been, treat them as provisional and
-observe the mitigation below; the first project to need them should validate
-the full six-hue set against both surfaces and record the outcome here.
+**Validation outcome, recorded 2026-09-03 (TLFX, the first project to need the
+extension).** All six hues run through `dataviz/scripts/validate_palette.js`
+against both surfaces. Two results matter and neither was anticipated by the
+text above.
 
-Mitigation, mandatory while the extension is provisional and good practice
-afterwards: **any chart carrying 5 or 6 series must encode each series by line
-style as well as hue.** `drawLine()` already supports a `dash` property per
+*Adjacent-pair test (the default: only neighbours in the fixed colour order are
+compared, which is the right test for stacked bars and ordered categories).*
+The six-hue set passes CVD separation, the normal-vision floor and contrast in
+both modes — worst adjacent pair teal↔orange ΔE 8.8 (protan) in light, and
+teal↔orange ΔE 10.3 (deutan) in dark. Two checks fail, both on `--gold`:
+chroma 0.098 against a 0.100 floor in light (it reads gray), and lightness
+0.721 against a 0.48–0.67 band in dark. Re-stepping gold to `#8A6A12` (light)
+and `#B08C38` (dark) clears both and returns ALL CHECKS PASS in both modes.
+Those two values are **recommended but not yet applied** to the tokens in §2 —
+changing a token changes every page built from this spec, so it needs an
+explicit decision, not a silent edit.
+
+*All-pairs test (any two series in the same chart may be compared — the right
+test for a line chart, a scatter, or small multiples).* Both the six-hue set
+**and the four-hue working set** fail, in both modes, on the same pair:
+`--blue`↔`--purple`. Light: ΔE 1.0 (protan), 9.9 (normal). Dark: ΔE 5.1
+(deutan), 11.5 (normal). A normal-vision ΔE below 15 is a hard fail — full
+colour readers cannot reliably tell the two apart, and a protanope cannot
+tell them apart at all. The claim in the paragraph above that the four-hue
+set is validated is therefore true only for adjacent-pair use; it does not
+hold for a four-line chart, which is the commonest form in this system.
+
+Mitigation, mandatory: **any chart carrying 4, 5 or 6 series must encode each
+series by line style as well as hue.** The threshold is four, not five, because
+`--purple` enters at slot 4 and blue↔purple is the failing pair — a four-line
+chart in hue alone is not readable, in either mode. `drawLine()` already supports a `dash` property per
 series, and `legend()` renders dashed swatches correctly. Alternate solid and
 dashed down the fixed colour order so that the chart degrades gracefully for a
 reader with colour-vision deficiency and in greyscale print:
@@ -926,4 +952,9 @@ Amendments so far:
 - Palette extended from four to six categorical hues (`--gold`, `--rose`),
   with a mandatory dash-encoding requirement at 5+ series pending CVD
   validation (§7).
+- Six-hue set validated against both surfaces (TLFX, 2026-09-03). Dash
+  encoding is now mandatory from 4 series, not 5: blue↔purple fails the
+  all-pairs CVD and normal-vision tests in both modes. Gold re-step to
+  `#8A6A12` / `#B08C38` recommended and recorded in §7, not yet applied
+  to the §2 tokens (§7).
 - Text flow and editorial register specified (§8).
