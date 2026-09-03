@@ -471,3 +471,18 @@ their inputs exist. All pass; the run log and check rows are written to
 checks 1–2 are re-homed to Stages 2–3 in the README text.
 
 **Files.** `README.md` §3, `scripts/stage1_*.py`.
+
+### 1.8 Gold re-step: already applied; decision 0.3 superseded
+
+**Decision.** No action. The `--gold` tokens in all three `:root` blocks of
+`docs/artifact_design_system.md` already carry the re-stepped values
+(`#8A6A12` light, `#B08C38` dark), and §7 and §10 of the spec record them as
+applied. Decision 0.3's "recommended, not applied" was overtaken later in
+Stage 0 and the STATUS/HANDOFF lines saying it awaited approval were stale;
+both are corrected. Kept as applied: the change is measured (all six hues
+pass the CVD and normal-vision checks in both modes), gold is only the fifth
+hue and only series 6 needs it, and dash encoding is mandatory from four
+series regardless. Sibling monitors adopt the values when they next copy the
+spec; a token mismatch between projects until then is cosmetic.
+
+**Files.** `STATUS.md`, `HANDOFF.md`.

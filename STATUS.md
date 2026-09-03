@@ -45,8 +45,11 @@ Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
   Series 4 is press-reported from the Insurance Bureau's monthly briefing for
   its entire life, 2020 onwards; the release ended at December 2025.
 - **Series 4 coverage now:** 2024-12, 2025-08, 2025-10, 2025-12, and every
-  2026 month to July (42.94%). The 2020-01 → 2025-07 monthly backfill of the
-  briefing series is a press search, not a parse — open task.
+  2026 month to July (42.89%). The 2020-01 → 2025-07 monthly backfill of the
+  briefing series is a press search, not a parse — open, and load-bearing:
+  the release gives hedging P&L but not hedge principal, so sector series 1,
+  2 and 5 before 2026 need ratio × denominator from the briefing (or the
+  firm panel). Do it before Stage 2 derives those series.
 - **README §3 checks 1–2 need the regulatory denominator**, which only the
   year-end briefing gives. Check 1 holds for 2025-12 within 0.5%; check 2 moves
   to Stages 2–3.
@@ -80,7 +83,9 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 3. Stage 2 (CBC table 8) next; Stage 3 should verify the §10 disclosures
    against Cathay's and Fubon's statutory Q2 2026 statements (deck seen, not
    the statement) and resolve the 41億 year-end gap above.
-4. Gold re-step (decisions 0.3) still awaiting approval.
+
+The gold re-step is applied in the spec (all three `:root` blocks, §7/§10);
+decisions 0.3's "not applied" was superseded in Stage 0 — see 1.8.
 
 ## Conventions that bind every later stage
 

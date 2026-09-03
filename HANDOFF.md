@@ -1,8 +1,7 @@
 # TLFX — Stage 1 handoff (2026-09-03)
 
-Stage 1 (FSC sector series) is complete on branch
-`claude/stage-1-fsc-sector-monthly-jh1pkf`. Current state lives in
-`STATUS.md`, history and rationale in `docs/decisions.md` (entries 1.1–1.7).
+Stage 1 (FSC sector series) is complete and merged to `main`. Current state lives in
+`STATUS.md`, history and rationale in `docs/decisions.md` (entries 1.1–1.8).
 
 ## What Stage 1 delivered
 
@@ -33,22 +32,31 @@ Stage 1 (FSC sector series) is complete on branch
 
 ## What's still open
 
-1. **Briefing backfill 2020-01 → 2025-07.** A month-by-month press search
-   (Economic Daily `money.udn.com` search works; the briefing series dates
-   from ROC 109). Same config-and-verify pattern as the 2026 rows.
+1. **Briefing backfill 2020-01 → 2025-07 — load-bearing, not optional.**
+   The release carries hedging P&L and swap cost but never the hedge
+   principal, so the sector-level economic ratio (series 1), net open
+   position (series 2) and gross ratio (series 5) for 2020–2025 need
+   hedge principal = regulatory ratio × denominator, which only the
+   briefing gives (denominator at year-ends only; interpolate or use CBC
+   foreign assets less firm FX-policy liabilities, and flag which). It also
+   gives the realised sector hedge-cost rate (swap cost ÷ principal) for
+   series 7. Without it, pre-2026 sector series 1/2/5 rest on the six-firm
+   panel alone. Month-by-month search on `money.udn.com` (the briefing series
+   dates from ROC 109); same config-and-verify pattern as the 2026 rows;
+   suitable for Haiku 4.5. Do it before Stage 2 derives series 1/2/5.
 2. **Firm-level §10 disclosure format** is seen in Cathay's 2Q26 deck (FX
    assets NT$5.54tn, hedging cost 1.21%, FX volatility reserve NT$130.9bn),
    not yet in a statutory statement. Fubon's IR pages under `/en/` do not
    link statements; try the Chinese IR path or MOPS. Both are Stage 3.
 3. **Supabase credentials** are not in the environment; SQL is applied via
    the MCP. `--write` (PostgREST) also needs schema `tlfx` exposed.
-4. Gold re-step (decisions 0.3) awaits approval.
 
 ## Suggested initial prompt for the next session
 
-Read HANDOFF.md, STATUS.md, and docs/decisions.md (Stage 1 entries 1.1–1.7).
-Stage 1 is done on branch claude/stage-1-fsc-sector-monthly-jh1pkf. Start
-Stage 2 per README section 7: ingest CBC Financial Statistics Monthly table 8
+Read HANDOFF.md, STATUS.md, and docs/decisions.md (Stage 1 entries 1.1–1.8).
+Stage 1 is merged to main. First run the briefing backfill (HANDOFF open
+item 1) with the config-and-verify pattern in scripts/stage1_briefing_press.py,
+then start Stage 2 per README section 7: ingest CBC Financial Statistics Monthly table 8
 (`065_EF67_A4L.csv`, index `np-532-1.html`) monthly and the statistics
 database (`cpx.cbc.gov.tw`) for history to 2000 into sector_balance_sheet;
 derive foreign assets and equity; combine with sector_monthly (channel
