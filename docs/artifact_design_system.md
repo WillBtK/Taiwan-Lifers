@@ -93,7 +93,7 @@ Architecture rules, non-negotiable:
   --teal:    #1E8C6E;
   --teal-soft: #DCEDE6;
   --purple:  #7A5FA0;
-  --gold:    #8A6D22;
+  --gold:    #8A6A12;
   --rose:    #A44468;
   --focus:   #2E6B9E;
   --shadow:  0 1px 2px rgba(35,32,26,0.06), 0 4px 16px rgba(35,32,26,0.05);
@@ -117,7 +117,7 @@ Architecture rules, non-negotiable:
     --teal:    #2FA080;
     --teal-soft: #1D3630;
     --purple:  #8C6BC0;
-  --gold:    #C3A04C;
+  --gold:    #B08C38;
   --rose:    #CE7392;
     --focus:   #5B93CC;
     --shadow:  0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
@@ -141,7 +141,7 @@ Architecture rules, non-negotiable:
   --teal:    #2FA080;
   --teal-soft: #1D3630;
   --purple:  #8C6BC0;
-  --gold:    #C3A04C;
+  --gold:    #B08C38;
   --rose:    #CE7392;
   --focus:   #5B93CC;
   --shadow:  0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
@@ -813,10 +813,11 @@ both modes — worst adjacent pair teal↔orange ΔE 8.8 (protan) in light, and
 teal↔orange ΔE 10.3 (deutan) in dark. Two checks fail, both on `--gold`:
 chroma 0.098 against a 0.100 floor in light (it reads gray), and lightness
 0.721 against a 0.48–0.67 band in dark. Re-stepping gold to `#8A6A12` (light)
-and `#B08C38` (dark) clears both and returns ALL CHECKS PASS in both modes.
-Those two values are **recommended but not yet applied** to the tokens in §2 —
-changing a token changes every page built from this spec, so it needs an
-explicit decision, not a silent edit.
+and `#B08C38` (dark) clears both and returns ALL CHECKS PASS for the full
+six-hue set in both modes. **Both values are applied** to the `--gold` token in
+all three `:root` blocks in §2 (light default, dark media query, and the
+`[data-theme="dark"]` override), on the user's decision of 2026-09-03. The
+superseded values were `#8A6D22` (light) and `#C3A04C` (dark).
 
 *All-pairs test (any two series in the same chart may be compared — the right
 test for a line chart, a scatter, or small multiples).* Both the six-hue set
@@ -954,7 +955,8 @@ Amendments so far:
   validation (§7).
 - Six-hue set validated against both surfaces (TLFX, 2026-09-03). Dash
   encoding is now mandatory from 4 series, not 5: blue↔purple fails the
-  all-pairs CVD and normal-vision tests in both modes. Gold re-step to
-  `#8A6A12` / `#B08C38` recommended and recorded in §7, not yet applied
-  to the §2 tokens (§7).
+  all-pairs CVD and normal-vision tests in both modes. `--gold` re-stepped
+  to `#8A6A12` (light) and `#B08C38` (dark) in all three `:root` blocks;
+  it previously failed the chroma floor in light and the lightness band in
+  dark (§2, §7).
 - Text flow and editorial register specified (§8).

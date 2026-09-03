@@ -11,6 +11,10 @@ Current state only. History lives in `docs/decisions.md`.
 | `python3 scripts/check_allowlist.py` | Probes one URL per allowlisted host, writes `reports/allowlist_YYYYMMDD.json` | Working. Exit 1 if any tier-1 host is unreachable |
 | `python3 scripts/check_allowlist.py --tier 1` | Tier-1 only (fast pre-flight for Stages 1–2) | Working |
 
+`src/tlfx/fsc.py` locates FSC / Insurance Bureau releases by keyword search
+across both channels: `find_monthly_releases()`, `find_fx_policy_releases()`,
+`latest_monthly()`. Verified against the live site 2026-09-03.
+
 `src/tlfx/provenance.py` provides `fetch()`, `Provenance`, `RunLog`,
 `ReconciliationCheck`, the two basis enums and the per-host UA policy. Import
 via `sys.path.insert(0, 'src')` until the package is installed.
@@ -53,14 +57,28 @@ moved to `data.bis.org/bulkdownload`. Config updated.
    (`#8A6A12` light, `#B08C38` dark) to the §2 tokens of
    `docs/artifact_design_system.md`, or keep the current values and accept two
    failing checks. See `docs/decisions.md` 0.3.
-2. **Locate the monthly FSC release.** id=96 is confirmed but is the all-FSC
-   list; the monthly profit/loss-and-FX release was not on page 1. Stage 1 must
-   paginate with a title filter, or use the Insurance Bureau's own page.
-   See `docs/decisions.md` 0.10.
+2. **Find the 2026 sector data.** Resolved for 2018–2025: the monthly release
+   is located by keyword search (`src/tlfx/fsc.py`), 90 editions from May 2018
+   to December 2025, two gaps. But the series **stops at December 2025** on both
+   the FSC and Insurance Bureau channels — no 2026 edition exists, almost
+   certainly because of the IFRS 17 / TW-ICS transition. Stage 1 must find where
+   the 2026 sector hedge ratio and reserve buckets now live before it can parse
+   anything. Search order and the fallback if none exists: `docs/decisions.md`
+   0.11.
 3. **TII egress.** Four TII hosts are blocked at the sandbox proxy. Not needed
    until Stage 3, but resolve before starting it.
 4. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` / `FRED_API_KEY` are not set in
    this environment; see `.env.example`.
+
+## Corrections to the README made in Stage 0
+
+- Series 4 and 3(a) have roughly twenty months more history than section 3
+  assumes: the FSC monthly release runs from May 2018, not 2020. Field coverage
+  in the older editions is unverified — Stage 1 confirms before the start dates
+  move.
+- Section 10 cited monthly FSC releases for January–July 2026. Those do not
+  exist on either press channel; the citation now reads May 2018 – December 2025.
+- The Chinese press-list `id` is 96, confirmed. No longer an open question.
 
 ## Conventions that bind every later stage
 

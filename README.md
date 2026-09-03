@@ -53,9 +53,24 @@ Reconciliation checks (fail the run if breached by > 3%):
 ### 4.1 Sector-level (FSC / Insurance Bureau)
 Monthly press release "Profit/loss, net value and exchange gains/losses of the insurance industry" — hedge ratio, hedging cost, FX price-fluctuation reserve balance and buckets (P, Q, X, Y), exchange gains/losses, owners' equity. English and Chinese versions; Chinese carries more detail.
 - English press list: `https://www.fsc.gov.tw/en/home.jsp?id=54&parentpath=0,2`
-- Chinese press list: `https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2` (verify `id` on first run — unconfirmed)
-- Insurance Bureau statistics: `https://www.ib.gov.tw/` (Chinese: 保險局 → 統計資料)
-- Foreign-currency policy new premiums: monthly Insurance Bureau release.
+- Chinese press list: `https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0,2` — **confirmed 2026-09-03**
+- Insurance Bureau press list (mirrors the same releases): `https://www.ib.gov.tw/ch/home.jsp?id=239&parentpath=0,2`
+- Insurance Bureau statistics: `https://www.ib.gov.tw/ch/home.jsp?id=48&parentpath=0,4`; official statistical returns `id=385`
+- Foreign-currency policy new premiums: monthly Insurance Bureau release, title `壽險業{ROC year}年截至{month}月底外幣保險商品銷售情形`.
+
+Both press lists are the same CMS and expose a POST search form (`keyword`,
+`qptdate`, `qdldate`, `page`, `pagesize`). Query it by keyword and filter on
+title — never by page position, since the list interleaves banking, securities
+and insurance releases. `src/tlfx/fsc.py` implements this against both channels.
+
+**Coverage, measured 2026-09-03.** The monthly release
+(`{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金`)
+runs to 90 editions from May 2018 to December 2025, with only two gaps (March
+2019, March 2020) — roughly twenty months more history than section 3 assumes.
+**It stops there.** No 2026 edition exists on either channel; the series appears
+to have ended at the IFRS 17 / TW-ICS transition on 1 January 2026. Resolving
+where the 2026 sector data now lives is Stage 1's first task — see
+`docs/decisions.md` 0.11.
 
 ### 4.2 Sector balance sheet (CBC)
 Financial Statistics Monthly, appendix table 8 "Life insurance companies' balance sheet" (人壽保險公司資產負債統計表), CSV/XLS.
@@ -229,7 +244,7 @@ Use **Haiku 4.5** inside stages for repetitive work — re-running a proven scra
 ## 10. References (Chicago author-date)
 
 - Financial Supervisory Commission. 2025. "FSC announces proposed amendments to the Regulations Governing the Preparation of Financial Reports by Insurance Enterprises as concerns foreign exchange gains and losses." Press release, 23 December 2025.
-- Financial Supervisory Commission. 2026. Monthly press releases on insurance-industry profit/loss, net value and exchange gains/losses, January–July 2026.
+- Financial Supervisory Commission. 2018–2026. "{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金." Monthly press releases, May 2018 – December 2025 (90 editions; the series has no 2026 edition on either the FSC or Insurance Bureau press channel as at 3 September 2026).
 - Setser, Brad W. 2026. "Taiwan's Backdoor Currency Manipulation." Follow the Money, Council on Foreign Relations, 26 January 2026.
 - Setser, Brad W., and Joshua Younger. 2025. "How Taiwan became a quiet bond market superpower." Financial Times, May 2025.
 - Setser, Brad W., and S.T.W. 2019. "Shadow FX Intervention in Taiwan: Solving a USD 100+ bn Enigma." Council on Foreign Relations / Concentrated Ambiguity, October 2019.

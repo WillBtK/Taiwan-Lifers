@@ -195,3 +195,54 @@ either paginate this list filtering on title, or find the Insurance Bureau's own
 release page. Do not assume a fixed page position.
 
 **Files.** `config/allowlist.tsv`, `README.md` §7.
+
+### 0.11 Releases are located by keyword search across two channels, never by position
+
+**Decision.** `src/tlfx/fsc.py` finds FSC releases by POSTing the press list's
+own search form (`keyword`, `qptdate`, `qdldate`, `page`, `pagesize`) and
+filtering titles by regex, querying both the FSC list (`id=96`) and the
+Insurance Bureau mirror (`id=239`) and merging on `dataserno`. Republic-of-China
+years are converted by `roc_to_date` (114年 = 2025).
+
+**Reason.** The earlier open question — "the monthly release was not on page 1"
+— was the wrong frame. `id=96` is a single reverse-chronological stream of every
+FSC release across banking, securities and insurance, so the monthly release
+sits at a different offset every month and no page position is stable. The list
+exposes a server-side search, which makes position irrelevant. Both regulators
+run the same CMS, so covering the mirror costs one extra request and removes a
+single point of failure.
+
+**Rejected.** (i) Walking pages until the title appears — brittle and slow, and
+it breaks whenever release cadence changes; (ii) the English list — the README
+notes the Chinese carries more detail; (iii) the Insurance Bureau statistics
+section as the primary locator, which needs a deeper crawl than the press
+search and is not needed while the press channel carries the series.
+
+**Measured outcome, 2026-09-03.** 90 monthly editions, May 2018 to December
+2025, with exactly two gaps (March 2019 and March 2020, both to be checked at
+Stage 1 — likely retitled rather than missing). That is roughly twenty months
+more history than README section 3 assumes for series 4 and 3(a). Field
+coverage in the older editions is unverified: Stage 1 must confirm which of the
+FX-reserve buckets and the hedge-ratio fields the 2018–2019 releases carry
+before extending those series' start dates.
+
+**The material finding: the series stops at December 2025.** The December 2025
+edition (`dataserno` 202601270003, published 2026-01-27) is the last one on
+either channel. There is no 2026 edition, which contradicts the README's own
+reference list; that citation has been corrected. The likely cause is the
+IFRS 17 / TW-ICS transition on 1 January 2026, consistent with the FSC's
+May 2026 solvency-regime item and its August 2026 amendment to the insurance
+financial-reporting preparation standards.
+
+**Stage 1's first task, therefore, is not parsing — it is locating the 2026
+sector data.** In order: (i) the Insurance Bureau statistics sections
+(`id=48`, `id=385`), whose tables are not exposed as plain anchors and need a
+deeper crawl; (ii) the TII statistics service, once the sandbox egress block on
+`*.tii.org.tw` is lifted; (iii) the CBC balance sheet (the Stage 2 source,
+already reachable), which gives foreign assets and equity but not the hedge
+ratio or the reserve buckets, so it is a cross-check rather than a substitute.
+If none carries the sector hedge ratio from 2026, series 4 ends in December 2025
+and the headline economic ratio must be carried forward from the firm panel
+(Stage 3) instead — a definitional change that would need recording here.
+
+**Files.** `src/tlfx/fsc.py`, `README.md` §4.1 and §10.
