@@ -10,6 +10,7 @@ www.ib.gov.tw	1	https://www.ib.gov.tw/		Insurance Bureau statistics
 www.cbc.gov.tw	1	https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv		FSM table 8 life insurer balance sheet
 www.cbc.gov.tw	1	https://www.cbc.gov.tw/tw/lp-4197-1.html		CBC USD/TWD swap + FX call-loan balance
 cpx.cbc.gov.tw	1	https://cpx.cbc.gov.tw/Tree/TreeSelect		CBC statistics database (history)
+www.lia-roc.org.tw	2	https://www.lia-roc.org.tw/		Life Insurance Association — candidate 2026 sector hedge-ratio/hedge-cost channel per FX reserve notice §3, content unverified
 www.tii.org.tw	2	https://www.tii.org.tw/tii/information/information1/000001.html		TII statistics index — blocked at sandbox egress (CONNECT tunnel 502), not by the source
 sv.tii.org.tw	2	https://sv.tii.org.tw/		TII query system — blocked at sandbox egress (CONNECT tunnel 502)
 insdb.tii.org.tw	2	https://insdb.tii.org.tw/		TII database service — blocked at sandbox egress (CONNECT tunnel 502)
