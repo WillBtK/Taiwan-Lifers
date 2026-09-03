@@ -18,27 +18,39 @@ This task fills in the Insurance Bureau's monthly hedge ratio data for 2020-01 �
 
 ## Your task (Haiku)
 
-For each of the 67 months (2020-01 → 2025-07), identify one article from `money.udn.com` (or secondary sources cnyes.com, CTS/CNA) citing the Insurance Bureau's monthly briefing, and extract:
+**UPDATED STRATEGY:** Use official FSC releases instead of scattered press articles for more reliable data extraction.
+
+For each of the 67 months (2020-01 → 2025-07), fetch the FSC official monthly insurance statistics release and extract:
 
 ### Primary field (required)
-- `hedge_ratio_regulatory`: Hedge ratio as printed (e.g., "50.23%")
+- `hedge_ratio_regulatory`: Hedge ratio as printed in FSC tables (e.g., "50.23%")
 
-### Secondary fields (if available, strengthen the backfill)
+### Secondary fields (if available in FSC release)
 - `regulatory_fx_exposure`: Exposure after FX-policy deductions (e.g., "15.4兆元")
 - `foreign_investments`: Gross foreign investment (e.g., "22.8兆元")
 - `fx_reserve_total`: FX volatility reserve balance (e.g., "6,137億元")
 
-### How to search
+### FSC Official Source
+
+FSC publishes monthly releases at `fsc.gov.tw` with pattern:
+`https://www.fsc.gov.tw/ch/home.jsp?id=96&...&dataserno=YYYYMMDDNNNN&dtable=News`
+
+Title: `新聞稿-XXX年M月保險業損益、淨值，以及兌換損益...`
+
+Where XXX is ROC year (109=2020, 110=2021, 111=2022, 112=2023, 113=2024, 114=2025).
+
+See `docs/FSC_OFFICIAL_SOURCE.md` for examples and full URL list.
+
+### How to extract
 
 1. **For each month YYYY-MM:**
-   - Search: `site:money.udn.com 保險局 避險比率 YYYY年M月` (or similar keyword variants)
-   - Alternative outlets if money.udn.com articles are missing: `news.cnyes.com`, `news.cts.com.tw`
-   - Articles are typically published within 1–2 weeks of month-end
-   - Look for the earliest, most authoritative article
+   - Identify the corresponding FSC release URL (search fsc.gov.tw or reference FSC_OFFICIAL_SOURCE.md)
+   - Fetch the page and locate the monthly insurance statistics table (避險損益/hedging section)
+   - Extract hedge_ratio_regulatory and exposure figures from the structured table
 
-2. **Once you have a URL:**
+2. **Once you have extracted data:**
    - Run: `python3 scripts/verify_backfill_articles.py --month YYYY-MM --url "https://..."` to fetch and preview
-   - Extract the exact quote containing the figures
+   - Extract the exact quote/table row containing the figures
    - Add the complete source entry to `config/briefing_press_backfill.json`:
      ```json
      {
@@ -46,14 +58,14 @@ For each of the 67 months (2020-01 → 2025-07), identify one article from `mone
        "reported_by": "金管會保險局",
        "sources": [
          {
-           "url": "https://money.udn.com/...",
+           "url": "https://www.fsc.gov.tw/ch/home.jsp?id=96&...&dataserno=...",
            "published": "YYYY-MM-DD",
-           "outlet": "經濟日報",
+           "outlet": "金融監督管理委員會",
            "fields": {"hedge_ratio_regulatory": "NN.NN%"},
-           "quote": "Exact quote with all figures"
+           "quote": "Table row or exact figure string from FSC release"
          }
        ],
-       "note": "…"
+       "note": "Extracted from FSC official monthly release"
      }
      ```
 
