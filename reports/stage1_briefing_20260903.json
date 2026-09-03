@@ -1,18 +1,20 @@
 {
-  "run_id": "8f9c18fe-4627-4354-959c-face84057f26",
+  "run_id": "b968b018-fdc7-4420-b590-8ea7f1596bf0",
   "summary": {
     "stage": "stage1-briefing",
-    "started_at": "2026-09-03T04:29:49.597038+00:00",
-    "finished_at": "2026-09-03T04:29:50.260367+00:00",
+    "started_at": "2026-09-03T23:57:16.540544+00:00",
+    "finished_at": "2026-09-03T23:57:17.099324+00:00",
     "sources_ok": 0,
     "sources_total": 0,
     "checks_failed": 0,
     "checks_total": 16,
     "status": "ok"
   },
-  "rows": 11,
+  "rows": 13,
   "months": [
+    "2024-04-01",
     "2024-12-01",
+    "2025-04-01",
     "2025-08-01",
     "2025-10-01",
     "2025-12-01",

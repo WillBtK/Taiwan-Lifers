@@ -11,7 +11,7 @@ Stages 2–7 not started.
 |---|---|---|
 | `python3 scripts/check_allowlist.py [--tier 1]` | Probes one URL per allowlisted host, writes `reports/allowlist_YYYYMMDD.json` | Working |
 | `python3 scripts/stage1_sector_monthly.py [--offline] [--refresh] [--limit N]` | Locates all editions of the FSC monthly release on both press channels, caches and parses them, runs checks, writes `data/sector_monthly_release.csv`, `out/stage1_release_YYYYMMDD.sql`, `reports/stage1_release_YYYYMMDD.json` | Working: 91 editions, 423/423 checks |
-| `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 11 months, 16/16 checks |
+| `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 13 months, 16/16 checks |
 
 Write path: the scripts emit idempotent SQL (`insert … on conflict do
 nothing` on the natural key); it is applied with the Supabase MCP or psql.
@@ -25,13 +25,13 @@ Import via `sys.path.insert(0, 'src')`.
 
 ## What is populated
 
-`tlfx.sector_monthly` — 102 rows in two channels (select on
-`reporting_channel`; from 2025-08 a month can carry both):
+`tlfx.sector_monthly` — 104 rows in two channels (select on
+`reporting_channel`; from 2024-04 a month can carry both):
 
 | Channel | Rows | Months | Basis | Carries |
 |---|---|---|---|---|
 | `release` | 91 | 2018-05 → 2025-12 (no 2019-03; 2020-03 lacks profit/equity) | `disclosed` | pre-tax profit, equity (life / non-life / total), FX table (FX P&L, hedging P&L — split from 2020-01, reserve net change, total), life FX reserve balance, TWD move YTD, net foreign-investment income (2020-09→) |
-| `briefing_press` | 11 | 2024-12, 2025-08, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; year-end denominators for 2024 and 2025 |
+| `briefing_press` | 13 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; year-end denominators for 2024 and 2025 |
 
 Migrations applied: `0001`–`0004`. `0003` adds the release fields, `0004`
 puts `reporting_channel` in the primary key. All other tables remain empty.
@@ -44,12 +44,15 @@ Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
   foreign-investment total or reserve buckets** (all 91 editions checked).
   Series 4 is press-reported from the Insurance Bureau's monthly briefing for
   its entire life, 2020 onwards; the release ended at December 2025.
-- **Series 4 coverage now:** 2024-12, 2025-08, 2025-10, 2025-12, and every
-  2026 month to July (42.89%). The 2020-01 → 2025-07 monthly backfill of the
-  briefing series is a press search, not a parse — open, and load-bearing:
-  the release gives hedging P&L but not hedge principal, so sector series 1,
-  2 and 5 before 2026 need ratio × denominator from the briefing (or the
-  firm panel). Do it before Stage 2 derives those series.
+- **Series 4 coverage now:** 2024-04, 2024-12, 2025-04, 2025-08, 2025-10,
+  2025-12, and every 2026 month to July (42.89%). The backfill is a press
+  search, not a parse, and it is **sparse by nature, not by neglect**: no
+  contemporaneous article carrying the ratio was found anywhere in 2020-01 →
+  2024-03, and the June 2020 monthly write-up carries the release's field set
+  with no ratio at all (`docs/decisions.md` 1.10, ledger in
+  `docs/briefing_coverage.md`). Plan pre-2024 sector series 1/2/5 around
+  year-end anchors plus the six-firm panel, not a monthly briefing series.
+  **Search cnyes, not udn**, for anything older than a year — udn purges.
 - **README §3 checks 1–2 need the regulatory denominator**, which only the
   year-end briefing gives. Check 1 holds for 2025-12 within 0.5%; check 2 moves
   to Stages 2–3.
@@ -63,6 +66,13 @@ Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
   Stage 3 must explain that before substituting the firm aggregate.
 
 ## Network reachability (2026-09-03)
+
+**Press retention (measured 2026-09-03).** `money.udn.com` purges at roughly
+twelve months — clean cliff between story 8947103 (404) and 8974899 (200, dated
+2025-08-31). `news.cnyes.com` retains to 2020 and earlier (15/15 sampled ids).
+Search engines still serve cached snippets of purged udn stories, so an old
+article can look reachable and 404 on fetch. `api.cnyes.com` is 403 at the
+proxy, so cnyes site search (client-rendered off it) is unusable.
 
 Tier 1: 6 of 6. **TII resolved:** all four `*.tii.org.tw` hosts answer once
 the TWCA intermediate the server omits is supplied (`config/certs/`,
@@ -79,7 +89,10 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
 1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
    (`FRED_API_KEY` is). Writes go through the MCP for now.
-2. Monthly backfill of the press-reported hedge ratio, 2020-01 → 2025-07.
+2. Hedge-ratio backfill: continue on cnyes with the `完全不避險` search key.
+   Open pieces — pin the month monthly press reporting of the ratio begins
+   (somewhere mid-2020 → early 2024), and recover the 2020–2023 year-end
+   anchors, which are the only months also carrying the denominator.
 3. Stage 2 (CBC table 8) next; Stage 3 should verify the §10 disclosures
    against Cathay's and Fubon's statutory Q2 2026 statements (deck seen, not
    the statement) and resolve the 41億 year-end gap above.

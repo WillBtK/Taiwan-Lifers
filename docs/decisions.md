@@ -524,3 +524,49 @@ and `*.tii.org.tw` is reachable since 1.5 — or they stay on the six-firm panel
 reaching that far: the depth is real, the fields are not there.
 
 **Files.** `docs/FSC_OFFICIAL_SOURCE.md` (deleted), `BACKFILL_HANDOFF.md`.
+
+### 1.10 cnyes, not udn, is the archive channel; the ratio series is sparser than the statistic
+
+**Decision.** The briefing backfill runs on `news.cnyes.com` for any month older
+than about a year, and its deliverable is every month where a figure was
+actually published, with gaps recorded as gaps — not a 67-row monthly series.
+Coverage is tracked in `docs/briefing_coverage.md`.
+
+**Reason — measured retention.** `money.udn.com` purges at roughly twelve
+months: story 8947103 is 404 while 8974899 (dated 2025-08-31) is 200, a clean
+cliff, sampled across 29 ids. `news.cnyes.com` returned 200 for all 15 sampled
+ids spanning 2020→2026. Search engines still serve cached snippets of the purged
+udn stories, so a 2022 article looks reachable and 404s on fetch; two were
+chased that way before the cliff was measured. `api.cnyes.com` is 403 at the
+proxy, so cnyes's own site search — client-rendered off that API — cannot be
+driven server-side; harvesting goes through domain-restricted web search
+instead. All three facts are recorded in `config/allowlist.tsv`.
+
+**Reason — the search key.** The Bureau's monthly write-up uses a fixed
+construction, `在完全不避險下…有 X% 避險比率後…`. Querying that phrase is far more
+productive than month-name queries, which the search engine largely ignores.
+
+**Result.** Two months recovered, 2024-04 (66%) and 2025-04 (63.07%), both
+verifying with 0 failures. 2025-04's reserve balance (1,648億) ties exactly to
+the release for the same month, independently anchoring the ratio to April 2025.
+The method also re-derived 2025-08 and 2025-10 from cnyes and matched the
+existing udn rows exactly.
+
+**Consequence — the recoverable history is shorter than the statistic.** No
+contemporaneous monthly article carrying the ratio was found anywhere in
+2020-01 → 2024-03. cnyes 4510085 (2020-07-30) is the June 2020 monthly write-up
+and carries the release's field set with no ratio at all. The inference — and it
+is an inference from one article, not a proven start date — is that the
+statistic dates from ROC 109 as Economic Daily says, while *press reporting* of
+it began materially later. Pre-2024 sector series 1/2/5 should therefore be
+planned around year-end anchors plus the six-firm panel, not a monthly briefing
+series. Pinning the month monthly reporting begins is the open piece of work.
+
+**Rejected.** Generating a 67-row monthly template (the earlier
+`scripts/backfill_hedge_ratio_search.py`, now removed): it encoded a monthly
+cadence that the sources do not have, and an unfilled row is not a null — it is
+an untested claim that a figure exists.
+
+**Files.** `config/briefing_press.json`, `config/allowlist.tsv`,
+`docs/briefing_coverage.md`, `scripts/probe_briefing_article.py` (replaces the
+two earlier backfill scripts), `STATUS.md`, `BACKFILL_HANDOFF.md`.

@@ -44,3 +44,4 @@ news.cnyes.com	3	https://news.cnyes.com/news/id/6323663		cnyes — briefing chan
 news.cts.com.tw	3	https://news.cts.com.tw/cna/money/202605/202605283037334.html		CNA via CTS — briefing channel; fetched in full 2026-09-03 (www.cna.com.tw itself is 403 at proxy)
 www.cfr.org	3	https://www.cfr.org/		Reference (Setser), not ingested
 concentratedambiguity.wordpress.com	3	https://concentratedambiguity.wordpress.com/		Reference (S.T.W. 2019), not ingested
+api.cnyes.com	3	https://api.cnyes.com/media/api/v1/search/news	blocked	403 at proxy (CONNECT policy denial) 2026-09-03 — cnyes on-site search is client-rendered off this host, so site search is unusable; harvest cnyes via domain-restricted web search and fetch news.cnyes.com/news/id/{id} directly
