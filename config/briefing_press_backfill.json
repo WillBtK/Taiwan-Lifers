@@ -1,0 +1,1084 @@
+{
+  "_doc": [
+    "Insurance Bureau monthly briefing — 2020-01 to 2025-07 backfill search candidates.",
+    "Each row is one reference month. Search results and URLs are to be filled in.",
+    "Searches conducted on money.udn.com for: 保險局 避險比率 (Insurance Bureau hedge ratio)",
+    "for the month-end briefing (published early next month).",
+    "Primary fields to extract: hedge_ratio_regulatory; secondary: regulatory_fx_exposure,",
+    "foreign_investments. See docs/decisions.md 1.2 and HANDOFF.md item 1 for context."
+  ],
+  "rows": [
+    {
+      "obs_month": "2020-01-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-02-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-02-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-03-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-03-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-04-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-04-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-05-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-05-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-06-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-06-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-07-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-07-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-08-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-08-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-09-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-09-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-10-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-10-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-11-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-11-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2020-12-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2020-12-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-01-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-01-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-02-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-02-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-03-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-03-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-04-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-04-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-05-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-05-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-06-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-06-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-07-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-07-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-08-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-08-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-09-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-09-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-10-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-10-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-11-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-11-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2021-12-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2021-12-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-01-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-01-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-02-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-02-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-03-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-03-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-04-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-04-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-05-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-05-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-06-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-06-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-07-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-07-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-08-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-08-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-09-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-09-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-10-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-10-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-11-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-11-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2022-12-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2022-12-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-01-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-01-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-02-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-02-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-03-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-03-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-04-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-04-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-05-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-05-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-06-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-06-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-07-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-07-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-08-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-08-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-09-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-09-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-10-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-10-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-11-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-11-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2023-12-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2023-12-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-01-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-01-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-02-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-02-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-03-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-03-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-04-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-04-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-05-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-05-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-06-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-06-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-07-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-07-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-08-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-08-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-09-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-09-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-10-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-10-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-11-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-11-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2024-12-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2024-12-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-01-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2025-01-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-02-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2025-02-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-03-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2025-03-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-04-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2025-04-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-05-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2025-05-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-06-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2025-06-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-07-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    },
+    {
+      "obs_month": "2025-07-01",
+      "reported_by": "金管會保險局",
+      "sources": [
+        {
+          "url": "",
+          "published": "2025-08-XX",
+          "outlet": "經濟日報",
+          "fields": {
+            "hedge_ratio_regulatory": ""
+          },
+          "quote": ""
+        }
+      ],
+      "note": "Backfill 2020-01 → 2025-07: to be searched and verified."
+    }
+  ]
+}
