@@ -12,17 +12,19 @@ Fubon (49 periods incl. colour-bound recurring cost and a 2005→1Q07 era-A
 backfill) and KGI (20 periods) are extracted, loaded and checksum-verified;
 out of scope with reasons on record: Fubon 2008-13 (ING-merger panels,
 multi-column era — 3.15/3.19), KGI pre-2023 (no archive), Taiwan Life / Shin
-Kong decks (holdco IR hosts proxy-blocked). **Statement side in flight:** the
-MOPS t164sb01 fetcher grinds the backfill for five codes plus Cathay
-2013–2019 (WAF-paced, ~days; `cache/mops_fetch.log`), parser ready
-(`stage3_mops_parse.py`); statement loads, the 41億 gap and the KGI cost
-definition wait on it — but the bulk MOPS crawl is **withdrawn as
-impractical** (WAF pacing ~12 min/quarter, and background processes die when
-the session idles — decisions 4.3); a targeted ~8-request queue replaces it.
-**Stage 4 started:** the sector derived series are built and loaded (8 keys,
-2024-04 → 2026-07, decisions 4.1) and the firm side carries Fubon's
-disclosed economic hedge ratio plus both firms' hedge-cost series (4.2).
-Stages 5–7 not started.
+Kong decks (holdco IR hosts proxy-blocked). **Statement side landed:** all six entities carry
+statement data — Cathay from the Excel companions (2020→), the other five
+from MOPS XBRL, whose derived 2026 FX-reserve balances tie the Fubon and KGI
+decks exactly (decisions 4.5). The bulk MOPS crawl is **withdrawn as
+impractical** (~12 min/quarter against the WAF, and background processes die
+when the session idles — 4.3); a targeted queue with ~7 requests left
+replaces it, run in the foreground. **Stage 4 under way:** sector derived
+series loaded (8 keys, 2024-04 → 2026-07, 4.1) and firm series loaded (194
+rows — Fubon's disclosed economic hedge ratio over 36 quarters plus both
+firms' hedge-cost series, split discrete/cumulative after 4.4). The 41億
+reserve gap is closed as immaterial (4.8) and the KGI cost definition is
+pinned as all-in (4.6). One judgement is open and flagged for the user: the
+Cathay composition-pie base (4.2/4.7). Stages 5–7 not started.
 
 ## What runs
 
