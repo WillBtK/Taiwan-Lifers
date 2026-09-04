@@ -990,3 +990,40 @@ between FY24 (~63%) and 1H26 (36%) while the exposure/policy split barely moved
 denominator series to divide the statement-side buffers by.
 
 **Files.** `scripts/stage3_cathay_decks.py`, `data/cathay_deck_fx.csv`.
+
+### 2.2 CBC statistics-database API: monthly history to 1987, on the Chinese endpoint only
+
+**Decision.** `scripts/stage2_cbc_history.py` ingests appendix table 8 from the
+CBC Statistical Database's JSON API — `cpx.cbc.gov.tw/API/DataAPI/Get?FileName=
+EF67M01` — giving the sector balance sheet **monthly from 1987-05**, 471 months,
+thirty-seven years beyond the rolling CSV and seventeen beyond README §7's
+"history to 2000" target. 6,960 rows, 1,316/1,316 checks, and **all 443 cells
+overlapping the CSV channel agree exactly**.
+
+**Use the Chinese item code; the English one is served through a broken
+chunker.** Both endpoints exist (`EF67M01`, `EF67M01en`; the API is documented
+in a PDF downloadable from the database's own page, POST `Tree/ExportToAPIInfo`).
+The English payload chunks rows at 31 cells including the period marker, while a
+period actually owns 31 data cells — so alignment drifts one period every 31
+(measured: ~11 periods adrift by 2016, ~15 by 2024) and the stream ends ~15
+months short of its labels; 2026 values are absent outright. The Chinese payload
+is exact: 471 rows of `[YYYYMMM, (amount, annual growth)×15]` in the same line
+order as the CSV. Do not use `…en` for anything.
+
+**One line is null in the API from 2025-01**: 人壽保險與投資合約負債. The CSV
+channel carries those months, and the loader inserts on the shared natural key
+with the CSV rows taking precedence, so the table is complete.
+
+**The series itself**: foreign assets NT$74mn at 1987-05, NT$121bn at 2000-12,
+NT$21.9tn at 2026-07 — the sector's foreign book grew five orders of magnitude
+in four decades, and the pre-2000 stub documents that the pre-liberalisation
+base was effectively zero.
+
+**Loading convention.** Bulk rows are loaded through the compact
+labels/vals CTE form (one INSERT…SELECT per batch), not the emitted
+per-row SQL, and a load is verified server-side afterwards — row count, total
+checksum and spot values against the local CSV — because content relayed
+through conversation calls cannot be assumed faithful without a check.
+
+**Files.** `scripts/stage2_cbc_history.py`, `data/sector_balance_sheet_history.csv`,
+`out/stage2b_cbc_api_*.sql`, `reports/stage2b_cbc_api_*.json`.

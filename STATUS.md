@@ -11,6 +11,9 @@ Stages 2–7 not started.
 |---|---|---|
 | `python3 scripts/check_allowlist.py [--tier 1]` | Probes one URL per allowlisted host, writes `reports/allowlist_YYYYMMDD.json` | Working |
 | `python3 scripts/stage1_sector_monthly.py [--offline] [--refresh] [--limit N]` | Locates all editions of the FSC monthly release on both press channels, caches and parses them, runs checks, writes `data/sector_monthly_release.csv`, `out/stage1_release_YYYYMMDD.sql`, `reports/stage1_release_YYYYMMDD.json` | Working: 91 editions, 423/423 checks |
+| `python3 scripts/stage2_cbc_balance_sheet.py [--refresh]` | Parses CBC table 8 CSV (Big5, rolling window) into long format, runs the three balance-sheet identities, writes `data/sector_balance_sheet.csv`, `out/stage2_cbc_*.sql`, report | Working: 30 months, 96/96 checks |
+| `python3 scripts/stage2_cbc_history.py [--refresh]` | Fetches CBC statistics-database API item EF67M01 (monthly, 1987-05→), validates identities and exact agreement with the CSV channel, writes `data/sector_balance_sheet_history.csv`, `out/stage2b_*.sql`, report | Working: 471 months, 1316/1316 checks |
+| `python3 scripts/stage3_cathay_decks.py [--csv] [--limit N]` | Indexes Cathay's 112 results decks, extracts the FX hedging page (wedge-bound pies, tiered validity), writes `data/cathay_deck_fx.csv` | Working: 44 quarters extracted |
 | `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 13 months, 16/16 checks |
 
 Write path: the scripts emit idempotent SQL (`insert … on conflict do
