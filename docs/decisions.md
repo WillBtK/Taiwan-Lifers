@@ -764,3 +764,57 @@ data and would remove the parsing problem entirely rather than merely improving
 it. Then locate the derivatives and currency-risk notes and pin the line items.
 
 **Files.** `config/allowlist.tsv`.
+
+### 3.3 The MOPS statutory route reaches the statement index; the download is gated
+
+**State.** The statutory filing route works end to end **up to the index of
+statements**, and stops at the file download. Recorded here so the mechanics are
+not re-derived: they are non-obvious and took several attempts.
+
+**The working sequence.**
+
+1. `POST https://mopsov.twse.com.tw/mops/web/ajax_t57sb01_q1` with
+   `step=1, firstin=ture, off=1, TYPEK=all, queryName=co_id, inpuType=co_id,
+   co_id=<code>, year=<ROC year>`. Note `firstin=ture` — the misspelling is
+   MOPS's own, taken from the form on `t57sb01_q1`, and `true` does not work.
+2. The reply is not the data. It is a 3 kB page saying results open in a popup,
+   carrying the real target in an `onSubmit`/`run` attribute.
+3. `GET https://doc.twse.com.tw/server-java/t57sb01?step=1&colorchg=1&co_id=<code>&year=<ROC>&seamon=&mtype=A`
+   — a **GET**, with a `mopsov` Referer. `mtype=A` is 財務報告書, `F` is 年報.
+   POSTing this returns an 800-byte block page, which is what made it look
+   closed earlier.
+
+That returns the index as a clean HTML table. For KGI Life (2823), ROC 113:
+
+| Quarter | File | Size | Uploaded |
+|---|---|---|---|
+| Q1 | `202401_2823_AI2.pdf` | 5,087,773 | 113/05/15 |
+| Q2 | `202402_2823_AI2.pdf` | 4,729,762 | 113/08/20 |
+| Q3 | `202403_2823_AI2.pdf` | 2,135,353 | 113/11/13 |
+| Q4 | `202404_2823_AI2.pdf` | 3,772,865 | 114/02/27 |
+
+all typed `IFRSs個別財報`. So the document identifiers are recoverable
+programmatically, which is most of what an ingester needs.
+
+**Where it stops.** The download itself is gated: `step=9` by POST and by GET,
+and the direct `/pdf/<name>` path, all return MOPS's security page (800 B,
+"因為安全性考量") rather than the file. One earlier request also drew a 307 to
+the same page, so there is rate limiting as well as a referer/session check.
+
+**The browser is not the workaround here.** Playwright with the pre-installed
+Chromium is now installed and launches, but `mopsov` and `doc.twse.com.tw` reset
+its connections through the egress proxy (`ws_closed_mid_exchange`, repeatably,
+across four attempts with unrelated hosts blocked) while plain `requests`
+succeeds against the same endpoints. So decisions 3.2's suggestion to drive it
+with Playwright is withdrawn: for these two hosts, `requests` is the working
+client and the browser is the broken one.
+
+**Next, in preference order.** (a) The insurers' own sites — every insurer must
+publish its statements under 保險業資訊公開管理辦法, which avoids MOPS entirely.
+`www.kgilife.com.tw` and `www.fubon.com` both answer; `www.cathaylife.com.tw`
+errors at the proxy. The disclosure sections need locating per firm, by search
+rather than by guessing paths, which is what failed here. (b) Work the MOPS
+download gate. (c) Check whether XBRL is exposed anywhere, which would remove
+the parsing problem rather than improve it.
+
+**Files.** `config/allowlist.tsv`.

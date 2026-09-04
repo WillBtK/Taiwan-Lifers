@@ -50,3 +50,5 @@ www.tigf.org.tw	3	https://www.tigf.org.tw/	blocked	403 at proxy 2026-09-03 — h
 www.tpefx.com.tw	3	https://www.tpefx.com.tw/	blocked	403 at proxy 2026-09-03 — Taipei FX Market Development Foundation research on currency risk in the life sector
 doc.twse.com.tw	3	https://doc.twse.com.tw/server-java/t57sb01	js-gated	statutory statement document server behind MOPS 電子書 — returns an 800-byte shell to plain HTTP; drivable with the pre-installed Chromium/Playwright, not by requests
 insdb.tii.org.tw	3	https://insdb.tii.org.tw/pivot/index.asp	login-required	TII insurance statistics database — member login; catalogue is premiums/contracts plus standard statements, no hedging detail, so not a route to the FX disclosure
+www.kgilife.com.tw	2	https://www.kgilife.com.tw/about/finance	reachable	KGI Life (2823, ex-China Life) — site answers; statutory disclosure section not yet located
+www.cathaylife.com.tw	2	https://www.cathaylife.com.tw/	blocked	errors at the proxy 2026-09-04; use www.cathayholdings.com for Cathay IR material
