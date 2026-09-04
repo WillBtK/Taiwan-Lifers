@@ -1286,3 +1286,36 @@ identities (note sums, pie-sums-to-100, en/zh agreement, wedge containment),
 never from ordering or plausibility.
 
 **Files.** `config/fubon_conference_decks.json`; cache under `cache/fubon/`.
+
+### 3.15 Fubon deck series extracted: 49 periods, 2011 → 1H26, all cross-checked
+
+**Extraction.** `scripts/stage3_fubon_decks.py` over the 238-deck corpus:
+**173 rows / 49 distinct periods, 4Q11-era → 1H26**, `data/fubon_deck_fx.csv`.
+Bindings are in-document only (3.14): each `±N bps` token pairs with its
+nearest period label (capped Euclidean — layouts always print them adjacent;
+same-x column layouts made axis-based binding arbitrary, which was this
+script's one real bug); pies bind by the "caption, 12.3%" comma through 2025
+and by the note identity in 2026; era A/B (2006–2010 tables, 2011–13
+multi-column bars) is explicitly out of scope, reported not guessed.
+
+**Semantics — the headline is NOT the recurring hedge cost.** The bps series
+is the **all-in FX result** (recurring hedge cost + FX G/L & reserve
+provisioning): proven by the stacked-component identity, which holds on
+151/173 rows where components print (e.g. 2Q25: −179 + −521 = **−700bps**,
+the TWD-shock quarter; FY25: −130 + −146 = −276; 1H26: −48 + −76 = −124; the
+2014-era prints the total unsigned: 37+25 = "62 bps"). Signs are era
+conventions (2022 prints "+52bps" net gain). Attributing the component pair
+to recurring-vs-FX G/L needs legend-colour binding — next pass; until then
+`total_fx_cost_bps` is loaded nowhere and `hedge_cost_bp` stays deck-empty
+for Fubon.
+
+**Validation.** Sibling decks (CH/EN, conference duplicates) agree on every
+field for all 49 periods; cross-deck the full `cost_series` agrees in
+magnitude on every period any two decks both print. Composition coverage: 36
+periods (完全避險 76.6% at 1H14 → CS/NDF/policy 95.2% at 1Q18 → 57.7% FY25 →
+CS+NDF 24.6% with 60.9% naked at 1H26 — the post-shock de-hedging is now a
+measured series). 外價金 balance appears from the 2025 editions (1H26:
+NT$153.7bn).
+
+**Files.** `scripts/stage3_fubon_decks.py`, `data/fubon_deck_fx.csv`,
+`config/fubon_conference_decks.json`.
