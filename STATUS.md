@@ -89,10 +89,11 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
 1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
    (`FRED_API_KEY` is). Writes go through the MCP for now.
-2. Hedge-ratio backfill: continue on cnyes with the `完全不避險` search key.
-   Open pieces — pin the month monthly press reporting of the ratio begins
-   (somewhere mid-2020 → early 2024), and recover the 2020–2023 year-end
-   anchors, which are the only months also carrying the denominator.
+2. Hedge-ratio backfill: the start of the series is now pinned — **2024-04**
+   in practice (`docs/decisions.md` 1.11). Before that the press gives spoken
+   ranges ("6~7成"), not the regulatory figure, so pre-2024 sector series 1/2/5
+   go to the six-firm panel. Remaining: the 2020–2023 year-end anchors, the only
+   months that also carry a denominator, and ratings-agency aggregates.
 3. Stage 2 (CBC table 8) next; Stage 3 should verify the §10 disclosures
    against Cathay's and Fubon's statutory Q2 2026 statements (deck seen, not
    the statement) and resolve the 41億 year-end gap above.
