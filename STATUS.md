@@ -16,8 +16,13 @@ Kong decks (holdco IR hosts proxy-blocked). **Statement side in flight:** the
 MOPS t164sb01 fetcher grinds the backfill for five codes plus Cathay
 2013–2019 (WAF-paced, ~days; `cache/mops_fetch.log`), parser ready
 (`stage3_mops_parse.py`); statement loads, the 41億 gap and the KGI cost
-definition wait on it. Stages 4–7 not started; series 1/2/5 derivation is
-the next unblocked build.
+definition wait on it — but the bulk MOPS crawl is **withdrawn as
+impractical** (WAF pacing ~12 min/quarter, and background processes die when
+the session idles — decisions 4.3); a targeted ~8-request queue replaces it.
+**Stage 4 started:** the sector derived series are built and loaded (8 keys,
+2024-04 → 2026-07, decisions 4.1) and the firm side carries Fubon's
+disclosed economic hedge ratio plus both firms' hedge-cost series (4.2).
+Stages 5–7 not started.
 
 ## What runs
 
@@ -76,6 +81,13 @@ reserve, total assets, equity at NT$-thousand precision from the Excel
 statement companions; 2026 reserve derived exactly via the cash-flow net
 change and tied to the deck — decisions 3.12). Both loads checksum-verified.
 2012–2019 statements are PDF-only, unextracted. Other tables remain empty.
+`tlfx.derived_series` — **sector 55 rows / 8 keys, 2024-04 → 2026-07**
+(reg hedge ratio and the Bureau's effective memo, denominator, net open,
+hedge principal, gross hedge ratio, buffer total, absorbable appreciation —
+decisions 4.1) and **firm 171 rows** (Fubon economic hedge ratio and net-open
+share, 36 quarters 2014 → FY25; Fubon and Cathay recurring hedge cost in bp).
+No economic hedge ratio is published for Cathay or for Fubon 2026: the
+composition pie's base is not stated there (decisions 4.2).
 Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
 `run_reconciliation`.
 

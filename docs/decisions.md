@@ -1450,3 +1450,73 @@ briefing does not publish separately.
 
 **Files.** `scripts/derive_sector_series.py`,
 `data/derived_series_sector.csv`, `out/derive_sector_20260904.sql`.
+
+### 4.2 The composition-pie base question — settled for Fubon pre-2026, open elsewhere
+
+**The question.** Every firm's hedging page draws two cuts of the FX book: a
+bar splitting FX assets into FX-risk-bearing (~74-77%) and FX-policy-backed
+(~23-26%), and a pie of instrument shares summing to 100. Is the pie taken
+over *total* FX assets or only over the FX-risk-bearing subset? The answer
+moves the headline economic hedge ratio by ~10pp, so it cannot be assumed.
+
+**Settled for Fubon pre-2026, by the wedge's own label.** Through the 2025
+editions the big wedge is named 「外匯交換、無本金遠期外匯、外幣保單」
+("Currency swap, NDF, FX policy"). It names FX-policy backing among its own
+contents — and policy-backed assets are excluded from the FX-risk subset by
+construction — so the pie must be over total FX assets, and **that wedge is
+the economic hedge ratio, disclosed rather than inferred**. Its complement
+(the naked-currency wedges, plus the separately drawn 股票/共同基金 wedge in
+the 2014-15 editions) is the net open position. The pie closes to 100 on all
+36 quarters. Series: 76.6% (1H14) → 88.8% (FY19) → 84.0% (1Q22) → 75.7%
+(1Q24) → 71.0% (1Q25) → 61.8% (9M25) → **57.7% (FY25)**.
+
+**Open for Cathay, and for Fubon from 2026.** Cathay's pie (CS&NDF / proxy &
+open / FVOCI) names no policy wedge, and Fubon's 2026 redesign moves the
+policy split into its own bar, so in both the base is inferred. The evidence
+is genuinely two-sided and is recorded rather than resolved:
+
+- *For the total-assets base:* Cathay's page title is "FX asset hedging
+  structure" and its cost note states "Hedging cost is calculated based on FX
+  assets"; across 13 quarters Cathay's CS&NDF share never exceeds its FX-risk
+  share and often sits just under it (69 vs 70 at 9M18), which is what a
+  near-fully-hedged risk book looks like on a shared base and would be
+  coincidence on separate ones. Cathay 1H26 would then read 36 + 26 = 62%
+  economic, against a sector economic ratio of roughly 60% built from the
+  briefing (gross 29.9% + policy ~30%).
+- *For the subset base:* Fubon's 2026 pie labels its 60.9% wedge 未避險
+  ("unhedged"), and on a total-assets base that wedge would have to contain
+  the 22.6% policy-backed assets the same page draws separately as hedged.
+  On this reading Cathay 1Q22 reads 75.5% economic rather than 95%, and 95%
+  is hard to credit against a contemporaneous sector regulatory ratio near
+  66%.
+
+**The test that would settle it,** for whoever picks this up: find any
+edition printing one wedge in NT$ alongside the FX-asset total, or a quarter
+where the instrument share exceeds the FX-risk share (which would force the
+subset reading). Until then no economic hedge ratio is published for Cathay
+or for Fubon 2026 — a partial series with a stated basis beats a complete one
+resting on a guess.
+
+**Files.** `scripts/derive_firm_series.py`, `data/derived_series_firm.csv`.
+
+### 4.3 Background processes do not survive session idling here
+
+**Measured.** The MOPS fetcher was launched under `nohup` at 07:35 UTC and
+its last log line is 07:43; by 15:30 the process was gone. Worse, the check
+that reported it healthy was a false positive: `pgrep -f stage3_mops_fetch`
+matches the shell running the check itself, whose command line contains the
+pattern. Both errors are now avoided — verify with `ps -eo pid,cmd | grep`
+plus the log's mtime, never `pgrep -f` on a pattern you just typed.
+
+**Consequence for the statement backfill.** The crawl managed 3 successes in
+35 minutes against the WAF (~12 min each including penalty backoff); at ~290
+firm-quarters that is ~58 hours of wall clock, and it cannot run unattended
+because the process dies on idle. The bulk MOPS route is therefore
+impractical in this environment and is withdrawn. What remains viable: a
+*targeted* queue of the few quarters that carry analytic weight (the latest
+quarter plus 2024/2025 year-ends for the four non-Cathay firms, ~8 requests),
+re-launched each working turn. The clean fix is still the proxy unblock for
+`ins-info.ib.gov.tw`, which serves the same statements without a WAF.
+
+**Files.** `scripts/stage3_mops_fetch.py` (unchanged; the queue is the thing
+to narrow).
