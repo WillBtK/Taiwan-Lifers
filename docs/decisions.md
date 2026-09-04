@@ -1027,3 +1027,30 @@ through conversation calls cannot be assumed faithful without a check.
 
 **Files.** `scripts/stage2_cbc_history.py`, `data/sector_balance_sheet_history.csv`,
 `out/stage2b_cbc_api_*.sql`, `reports/stage2b_cbc_api_*.json`.
+
+### 3.8 en/zh deck merge: agreement is the standard; 3.7's cost suspicion withdrawn
+
+**Decision.** `stage3_merge_cathay.py` joins the English and Chinese extractions
+into `data/cathay_fx_quarterly.csv` — 47 deck-quarters, 2014 → 1H26 — with
+per-field source tracking. A field present in both languages must agree
+(`both`); a disagreement blanks the value and records the pair in `flags`,
+because a disagreeing cell is not data. Result: **106 agreements, 1 conflict**
+(CS & NDF at the 2023-03 deck: en 56 vs zh 33 — the FY22 share is therefore
+withheld pending a manual read of that page). Every extracted cost-period label
+(9M23, 1H25, FY22 …) matches the period derived from the deck month, validating
+both.
+
+**3.7's suspicion about the cost cells was wrong, and is withdrawn.** The zh
+2023-11 deck prints "9M23 避險成本0.49%" verbatim, and 0.14% for FY22 appears in
+both languages independently — economically coherent, since the TWD's 2022
+depreciation collapsed realised hedging costs. The provisional tier is upgraded:
+`hedging_cost_pct` is now cross-confirmed on ~30 quarters and single-sourced on
+the rest, with the source column saying which.
+
+**What zh added.** Three deck-quarters the en run lacked entirely (2017-08,
+2019-08, 2019-11), the 2015–2023 cost series in labelled form, and 2023-era
+CS & NDF shares whose en values are graphics-only. What en still owns: the
+exposure/policy split and the 2026 structure trio.
+
+**Files.** `scripts/stage3_merge_cathay.py`, `data/cathay_fx_quarterly.csv`,
+`data/cathay_deck_fx_zh.csv` (full 48-row run, superseding the smoke test).
