@@ -726,3 +726,41 @@ captions again. Cross-vintage layout handling is the remaining work before the
 panel can be run over all 112 decks and the other five firms.
 
 **Files.** `scripts/stage3_cathay_decks.py`, `config/cathay_decks.json`.
+
+### 3.2 Statutory filings, not IR decks, are the target; legacy MOPS is usable
+
+**Decision.** The firm panel should be built from statutory financial statements
+rather than results decks. The decks stay as a cross-check and as the only source
+for figures the statements do not state directly.
+
+**Reason.** The deck gives the hedging split as rounded chart labels (36% / 60% /
+4%) that have to be recovered from pie geometry — decisions 3.1 records the
+wedge-binding needed to do that safely, which is effort spent on a presentation
+artefact rather than on data. Statutory statements carry the underlying NT$
+amounts on an audited, fixed-structure basis: derivative notionals by instrument
+in the derivatives note, foreign-currency assets by currency under the IFRS 7
+currency-risk disclosure, and 外匯價格變動準備金 as a balance-sheet liability
+line. The gross hedge ratio can then be **computed** from audited inputs instead
+of read off a rounded label, and the 2026 notice §10 disclosure is itself a
+statutory requirement.
+
+**Access, measured 2026-09-04.**
+
+| Host | Status | Note |
+|---|---|---|
+| `mopsov.twse.com.tw` | **usable** | Plain HTML tables, accepts POST. `ajax_t164sb04` with `co_id=2823` returned a table (凱基人壽). |
+| `mops.twse.com.tw` | JS shell | 800 bytes to plain HTTP. |
+| `doc.twse.com.tw` | JS-gated | 800 bytes; this is where the statement files sit. Drivable with the pre-installed Chromium/Playwright. |
+| `insdb.tii.org.tw` | login | Catalogue is premiums/contracts plus standard statements; no hedging detail. |
+
+**Correction to the allowlist.** It recorded MOPS as "JS-rendered, rate-limited;
+fallback only". That is true of `mops.twse.com.tw` and false of
+`mopsov.twse.com.tw`, which is the one that works. The entry is corrected; the
+dismissal had made the whole statutory route look closed when it is not.
+
+**Open.** Land an actual statement for one insurer via Playwright against
+`doc.twse.com.tw`, and check whether XBRL is exposed — XBRL would be structured
+data and would remove the parsing problem entirely rather than merely improving
+it. Then locate the derivatives and currency-risk notes and pin the line items.
+
+**Files.** `config/allowlist.tsv`.

@@ -19,7 +19,7 @@ www.stat.gov.tw	2	https://www.stat.gov.tw/		DGBAS (GDP)
 www.dgbas.gov.tw	3	https://www.dgbas.gov.tw/		DGBAS alternate host
 www.tpex.org.tw	2	https://www.tpex.org.tw/		Formosa bonds, bond ETFs
 mops.twse.com.tw	3	https://mops.twse.com.tw/		JS-rendered, rate-limited; fallback only
-mopsov.twse.com.tw	3	https://mopsov.twse.com.tw/		legacy MOPS
+mopsov.twse.com.tw	3	https://mopsov.twse.com.tw/mops/web/t164sb04	reachable	legacy MOPS — serves PLAIN HTML TABLES and accepts POST queries (verified 2026-09-04: ajax_t164sb04 co_id=2823 returned a table, 凱基人壽). Use this, not mops.twse.com.tw, which returns an 800-byte JS shell. See decisions 3.2
 emops.twse.com.tw	3	https://emops.twse.com.tw/		English MOPS
 www.cathayholdings.com	2	https://www.cathayholdings.com/holdings/eng/ir		Cathay Life IR
 www.ir-cloud.com	2	https://www.ir-cloud.com/taiwan/2882/		Cathay IR hosting — returns 403 to automated clients incl. browser UA; use www.cathayholdings.com instead
@@ -48,3 +48,5 @@ api.cnyes.com	3	https://api.cnyes.com/media/api/v1/search/news	blocked	403 at pr
 www.ib.gov.tw	3	https://www.ib.gov.tw/ch/home.jsp?id=239&mcustomize=news_view.jsp&dataserno=202508280002&dtable=News	reachable	Insurance Bureau own site — carries the FSC monthly release verbatim (mirror, not a second channel); no hedge ratio, decisions 1.11
 www.tigf.org.tw	3	https://www.tigf.org.tw/	blocked	403 at proxy 2026-09-03 — hosts the FSC-commissioned FX risk supervision study that may tabulate a historical hedge-ratio series
 www.tpefx.com.tw	3	https://www.tpefx.com.tw/	blocked	403 at proxy 2026-09-03 — Taipei FX Market Development Foundation research on currency risk in the life sector
+doc.twse.com.tw	3	https://doc.twse.com.tw/server-java/t57sb01	js-gated	statutory statement document server behind MOPS 電子書 — returns an 800-byte shell to plain HTTP; drivable with the pre-installed Chromium/Playwright, not by requests
+insdb.tii.org.tw	3	https://insdb.tii.org.tw/pivot/index.asp	login-required	TII insurance statistics database — member login; catalogue is premiums/contracts plus standard statements, no hedging detail, so not a route to the FX disclosure
