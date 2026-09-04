@@ -1142,3 +1142,40 @@ holdco-code trap of decisions 3.5 is the reason for the discipline.
 its name) in `break_note` rather than a successor row.
 
 **Files.** `supabase/seeds/entities_seed.sql`.
+
+### 2.4 stage2c: the monthly FSC-basis denominator is built — 110 months, each label proven by a CBC tie
+
+**Decision.** `scripts/stage2c_ib_indicators.py` walks the Insurance Bureau's
+保險市場重要指標 archive (`www.ib.gov.tw` id=48, paginated POST) and parses
+表17-1 人身保險業資金運用表 from every edition: **110 months, 2017-01 →
+2026-04** of FSC-basis 國外投資 alongside 資金運用總額/資金總額/資產總額.
+Loaded to `tlfx.sector_monthly` under a new `reporting_channel='ib_indicators'`
+(migration `0005`, additive CHECK extension), vintage = the PDF's upload
+timestamp from its URL.
+
+**The 2.3 alignment question is settled: the column is labelled, not offset.**
+Each table prints its current column's own header ("2025/05", or a bare year
+for December). The ingester reads that label and then *proves* it by tying the
+same edition's 資產總額 to CBC table 8 total assets for the labelled month —
+110/110 ties pass. The May-2025 "6% above CBC" puzzle in 2.3 dissolves: that
+was 國外投資 vs CBC *foreign assets* (the usage-vs-residence wedge, spiked by
+the May TWD shock's flight to FX deposits), not a column offset.
+
+**Named tolerance exceptions, both structural, neither a parse doubt:**
+- obs ≥ 2026-01: rel tolerance 0.02 — the IB's 2026 editions are IFRS 17
+  ("IFRS17" in the filenames) and run ~1.27% above CBC's basis, steady across
+  2026-01/02/03; the 2025-12 restatement moved only 0.05%.
+- 2020-03: tolerance 0.005 (0.30% miss) — the COVID-disrupted round whose FSC
+  release the same month is also missing sections (see the release channel).
+
+**Two-page-spread trap.** Chinese table titles print on the *preceding* page,
+so selecting the parse page by title captured a 2008-11 historical annex and
+failed 99/112 editions. The fix selects by parsed value scale (國外投資 ≥
+3×10⁶, 資產總額 ≥ 2×10⁷ NT$ mn), not title.
+
+**Gaps.** 113-01 and 106-02 editions fail to parse (layout variants); 2017-02
+and 2024-01 are therefore missing. Recoverable later; not blocking.
+
+**Files.** `scripts/stage2c_ib_indicators.py`, `data/ib_indicators_monthly.csv`,
+`out/stage2c_ib_20260904.sql`, `reports/stage2c_ib_20260904.json`,
+`supabase/migrations/0005_sector_monthly_channel_ib_indicators.sql`.

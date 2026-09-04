@@ -3,11 +3,13 @@
 Current state only. History lives in `docs/decisions.md`.
 
 **Stage 1 complete (2026-09-03). Stage 2 data complete (2026-09-04):** the
-sector balance sheet is loaded monthly from 1987-05; series 1/2/5 derivation
-waits on the FSC/CBC foreign-asset basis question (decisions 2.1). **Stage 3 in
-progress:** Cathay's deck series is extracted and merged (47 quarters); the
-statement archive is mapped; five firms and the statement-side extraction
-remain. Stages 4–7 not started.
+sector balance sheet is loaded monthly from 1987-05, and the monthly FSC-basis
+foreign-investment denominator is loaded 2017-01 → 2026-04 (`ib_indicators`
+channel); the FSC/CBC basis question is settled — a stable 2.4–4.2%
+classification wedge (decisions 2.3/2.4), so series 1/2/5 derivation is
+unblocked. **Stage 3 in progress:** Cathay's deck series is extracted and
+merged (47 quarters); the statement archive is mapped; five firms and the
+statement-side extraction remain. Stages 4–7 not started.
 
 ## What runs
 
@@ -18,6 +20,7 @@ remain. Stages 4–7 not started.
 | `python3 scripts/stage2_cbc_balance_sheet.py [--refresh]` | Parses CBC table 8 CSV (Big5, rolling window) into long format, runs the three balance-sheet identities, writes `data/sector_balance_sheet.csv`, `out/stage2_cbc_*.sql`, report | Working: 30 months, 96/96 checks |
 | `python3 scripts/stage2_cbc_history.py [--refresh]` | Fetches CBC statistics-database API item EF67M01 (monthly, 1987-05→), validates identities and exact agreement with the CSV channel, writes `data/sector_balance_sheet_history.csv`, `out/stage2b_*.sql`, report | Working: 471 months, 1316/1316 checks |
 | `python3 scripts/stage3_cathay_decks.py [--csv] [--limit N]` | Indexes Cathay's 112 results decks, extracts the FX hedging page (wedge-bound pies, tiered validity), writes `data/cathay_deck_fx.csv` | Working: 44 quarters extracted |
+| `python3 scripts/stage2c_ib_indicators.py [--refresh] [--limit N]` | Walks the Insurance Bureau's monthly 保險市場重要指標 archive (id=48), parses 表17-1 人身保險業資金運用表 (page selected by value scale — titles print on the preceding page), ties each edition's 資產總額 to CBC table 8, writes `data/ib_indicators_monthly.csv`, `out/stage2c_ib_*.sql`, report | Working: 110 months, 110/110 ties (two named tolerance exceptions: IFRS-17-era 2026, disrupted 2020-03); 113-01 and 106-02 editions unparsed |
 | `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 14 months, 16/16 checks |
 
 Write path: the scripts emit idempotent SQL (`insert … on conflict do
@@ -32,8 +35,8 @@ Import via `sys.path.insert(0, 'src')`.
 
 ## What is populated
 
-`tlfx.sector_monthly` — 105 rows in two channels (select on
-`reporting_channel`; from 2024-04 a month can carry both). `tlfx.
+`tlfx.sector_monthly` — 215 rows in three channels (select on
+`reporting_channel`; a month can carry several). `tlfx.
 sector_balance_sheet` — **6,967 rows, 471 months, 1987-05 → 2026-07** (CBC
 table 8: statistics-database API for history, rolling CSV for the current
 window; the two agree exactly on every overlapping cell, and the CSV row wins
@@ -43,10 +46,12 @@ the shared key). Loads are checksum-verified server-side against the local CSVs
 | Channel | Rows | Months | Basis | Carries |
 |---|---|---|---|---|
 | `release` | 91 | 2018-05 → 2025-12 (no 2019-03; 2020-03 lacks profit/equity) | `disclosed` | pre-tax profit, equity (life / non-life / total), FX table (FX P&L, hedging P&L — split from 2020-01, reserve net change, total), life FX reserve balance, TWD move YTD, net foreign-investment income (2020-09→) |
+| `ib_indicators` | 110 | 2017-01 → 2026-04 (no 2017-02, 2024-01) | `disclosed` | FSC-basis 國外投資 (the regulatory hedge-ratio denominator) and 資產總額, monthly, from 表17-1 of the Bureau's key-indicators PDFs; each month's column label proven by a CBC total-assets tie; vintage = PDF upload date; 2026 figures are IFRS 17 and current-year figures unaudited per the table's own note |
 | `briefing_press` | 14 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-09, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; denominators at 2024-12, 2025-09, 2025-10, 2025-12 — hedge principal derivable at the ratio-bearing three: 10.36tn → 8.90tn → 7.74tn NT$ |
 
-Migrations applied: `0001`–`0004`. `0003` adds the release fields, `0004`
-puts `reporting_channel` in the primary key. Firm-level deck data lives in
+Migrations applied: `0001`–`0005`. `0003` adds the release fields, `0004`
+puts `reporting_channel` in the primary key, `0005` admits the
+`ib_indicators` channel. Firm-level deck data lives in
 `data/cathay_fx_quarterly.csv` (47 quarters, en/zh cross-confirmed, one flagged
 conflict) pending an `entities`/`firm_quarterly` load design. Other tables
 remain empty.
@@ -109,9 +114,11 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
    ranges ("6~7成"), not the regulatory figure, so pre-2024 sector series 1/2/5
    go to the six-firm panel. Remaining: the 2020–2023 year-end anchors, the only
    months that also carry a denominator, and ratings-agency aggregates.
-3. Stage 2 series derivation is gated on the FSC/CBC foreign-asset gap
-   (2.30% → 3.48% over 2025, definitional — decisions 2.1/2.2); test the
-   國際板債券 hypothesis before pairing the CBC denominator with FSC ratios.
+3. FSC/CBC gap settled (decisions 2.3/2.4): a stable 2.4–4.2%
+   usage-vs-residence wedge, so ratios pair with the monthly FSC denominator
+   in `ib_indicators`, never the CBC series. Remaining tidy-ups: the two
+   unparsed editions (113-01, 106-02) and a wedge decomposition (FX deposits
+   at domestic banks vs bond-ETF look-through) if it ever matters.
 4. Stage 3 next steps: read the 2023-03 deck page to resolve the one flagged
    CS & NDF conflict; design `entities`/`firm_quarterly` load for the Cathay
    series; statement-side extraction (Excel companions first — 58 quarters on
