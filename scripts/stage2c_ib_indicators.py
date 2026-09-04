@@ -56,7 +56,8 @@ YEAR_END_FI = {"2021": 19878660, "2022": 21184914, "2023": 21857811,
                "2024": 23025710, "2025": 22767215}
 
 ROWS = {
-    "foreign_investments": r"國外投資\s*Foreign\s*Investments",
+    # 106-02 wraps the English label after "Foreign", so the tail is optional
+    "foreign_investments": r"國外投資\s*Foreign(?:\s*Investments?)?",
     "funds_invested_total": r"資金運用總額\s*Total Amount of Capital Invested",
     "total_capital": r"資金總額\s*Total Capital",
     "total_assets": r"資產總額\s*Total Assets",
@@ -126,7 +127,10 @@ def parse_edition(pdf: bytes) -> dict | None:
         vals: dict[str, list[int]] = {}
         for code, label in ROWS.items():
             if code in ("total_capital", "total_assets"):
-                m = re.search(label + r"\s*((?:{a}\s*){{5}})".format(a=AMT), flat)
+                # 113-01 prints literal TRUE in three year columns of 資產總額
+                # (a spreadsheet artifact); admit it as a token and keep the
+                # numeric cells, whose last one is still the current month.
+                m = re.search(label + r"\s*((?:(?:TRUE|{a})\s*){{5}})".format(a=AMT), flat)
                 if m:
                     vals[code] = [int(x.replace(",", "")) for x in re.findall(AMT, m.group(1))][:5]
             else:

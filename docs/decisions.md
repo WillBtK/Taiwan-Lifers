@@ -1173,8 +1173,14 @@ so selecting the parse page by title captured a 2008-11 historical annex and
 failed 99/112 editions. The fix selects by parsed value scale (國外投資 ≥
 3×10⁶, 資產總額 ≥ 2×10⁷ NT$ mn), not title.
 
-**Gaps.** 113-01 and 106-02 editions fail to parse (layout variants); 2017-02
-and 2024-01 are therefore missing. Recoverable later; not blocking.
+**Gaps — closed same day.** 113-01 and 106-02 initially failed to parse.
+Causes, both in-document: 106-02 wraps the English row label after "Foreign";
+113-01 prints literal `TRUE` in three year columns of 資產總額 (a spreadsheet
+artifact — its footnote also marks 2023 data provisional, e.g. 2023-12
+國外投資 21,857,675 vs the final 21,857,811). Regexes widened (optional label
+tail; TRUE admitted as a token, numerics kept). Now **112 months, 112/112
+ties, no gaps**; both rows loaded and the channel re-verified (sum fi
+2,140,634,844; sum ta 3,526,440,724).
 
 **Files.** `scripts/stage2c_ib_indicators.py`, `data/ib_indicators_monthly.csv`,
 `out/stage2c_ib_20260904.sql`, `reports/stage2c_ib_20260904.json`,
