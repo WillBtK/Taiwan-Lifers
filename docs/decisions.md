@@ -1392,3 +1392,23 @@ so no annualisation was applied.
 
 **Files.** `supabase/migrations/0007_firm_quarterly_deck_composition.sql`,
 `scripts/stage3_load_decks.py`, `out/stage3_decks_20260904.sql`.
+
+### 3.19 Fubon era-A backfill: 2005 → 1Q07 recovered; the 2008-10 panels are out of scope
+
+**Decision.** `scripts/stage3_fubon_eraA.py` parses the rotated 'Fubon Life –
+Hedging Cost' tables of the earliest decks: **7 periods, 2005 → 1Q07**
+(`data/fubon_eraA_cost.csv`), cross-deck agreed. Signs are normalised
+cost-negative using the deck's own 'Implied hedging cost' reference column
+(a market cost by construction, so its printed sign reveals the deck's
+convention — decks genuinely flip it, and 2009 shows real hedging *gains*
+when swap points inverted, so magnitude-only normalisation would destroy
+information). Booked cost 2005 −157bp → 2006 −210 → 3Q06 −262; implied
+consistently ~100-150bp above booked.
+
+**Out of scope, with the reason on record:** the 2008-2010 editions print
+side-by-side panels — Fubon Life beside the newly acquired ING Antai book —
+with several hedging columns per panel. Entity attribution there needs its
+own evidence chain, for a pre-merger series of modest analytic value; the
+2011-13 multi-column era (3.15) remains out for the same reason.
+
+**Files.** `scripts/stage3_fubon_eraA.py`, `data/fubon_eraA_cost.csv`.
