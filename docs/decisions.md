@@ -1127,3 +1127,18 @@ behind the edition name — the ingester must read the column header, and the
 May/April ambiguity is confounded by the May 2025 TWD shock either way.
 
 **Files.** none yet — `stage2c` ingester next; PDFs cached under `cache/ib/`.
+
+### 3.10 entities seeded: six firms, lifeco codes only, Shin Kong continuity encoded
+
+**Decision.** `tlfx.entities` is seeded (`supabase/seeds/entities_seed.sql`,
+applied via the MCP, verified back). Conventions: `valid_from` marks TLFX panel
+coverage start (2011-01-01, the earliest deck being 2011 Q4), not incorporation;
+`ticker` holds the **life company's** filing code and stays NULL until verified
+from a primary document — cathay_life 5846, fubon_life 5865, nanshan_life 5874,
+kgi_life 2823 are verified, taiwan_life and shinkong_life are pending, and the
+holdco-code trap of decisions 3.5 is the reason for the discipline.
+`shinkong_life` keeps one `entity_id` across the 2026-01-01 merger per README
+§4.5, with the legal mechanics (Taishin Life absorbed Shin Kong Life and took
+its name) in `break_note` rather than a successor row.
+
+**Files.** `supabase/seeds/entities_seed.sql`.
