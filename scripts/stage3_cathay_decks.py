@@ -60,6 +60,11 @@ SPLIT_LABELS = {
     "fx risk": "fx_risk_exposure_pct",
     "risk exposure": "fx_risk_exposure_pct",
     "fx policy": "fx_policy_reserve_pct",
+    # Chinese decks: instrument captions stay in English, the split captions
+    # do not — and their text layer carries structure values the English decks
+    # draw as graphics, so the zh run fills the structure series' gaps.
+    "具外匯風險": "fx_risk_exposure_pct",
+    "外幣保單": "fx_policy_reserve_pct",
 }
 
 
@@ -95,7 +100,7 @@ def deck_bytes(rec: dict) -> bytes:
 
 def find_fx_page(doc) -> int | None:
     """The quarterly FX hedging page: the FIRST page naming the FX asset base
-    alongside a hedging-instrument caption.
+    (English or Chinese) alongside a hedging-instrument caption.
 
     Most decks carry two qualifying pages — the quarterly page in the body
     (pages ~23–28) and a "Dynamic hedging strategy" appendix whose long-history
@@ -104,8 +109,10 @@ def find_fx_page(doc) -> int | None:
     keyword *scoring* preferred the appendix in four of them (decisions 3.1).
     """
     for i, page in enumerate(doc):
-        low = page.get_text().lower()
-        if ("fx asset" in low or "fx assets" in low) and                 any(k in low for k in ("ndf", "proxy", "fvoci", "currency swap")):
+        raw = page.get_text()
+        low = raw.lower()
+        if ("fx asset" in low or "外幣資產" in raw) and \
+                any(k in low for k in ("ndf", "proxy", "fvoci", "currency swap")):
             return i
     return None
 
@@ -173,8 +180,9 @@ def extract(doc, page_no: int) -> dict:
     flat = re.sub(r"\s+", " ", text)
     row: dict = {"fx_page": page_no + 1}
 
-    # "NT$5.54TN" in 2025-26 decks, "NT$5.53TR" in 2024 ones
-    if m := re.search(r"FX assets?\s*NT\$\s*([\d.]+)\s*T[NR]", flat, re.I):
+    # "NT$5.54TN" in 2025-26 decks, "NT$5.53TR" in 2024 ones, "NT$5.36兆元" in zh
+    if m := re.search(r"FX assets?\s*NT\$\s*([\d.]+)\s*T[NR]", flat, re.I) or \
+            re.search(r"外幣資產\s*NT\$\s*([\d.]+)\s*兆", flat):
         row["fx_assets_ntd_tn"] = float(m.group(1))
 
     # One combined pass: the structure and exposure pies sit on the same page,
@@ -188,7 +196,8 @@ def extract(doc, page_no: int) -> dict:
     # narrative / labelled cost line — wording varies by era:
     #   "1H26 hedging cost was 1.21%"   (2026)
     #   "1H25 Hedging cost 1.45%"       (2024-25, with its period label)
-    if m := re.search(r"((?:FY|1H|9M|[1-4]Q)\d\d)?\s*hedging cost(?: was)?\s*(?:of\s*)?([\d.]+)\s*%", flat, re.I):
+    if m := re.search(r"((?:FY|1H|9M|[1-4]Q)\d\d)?\s*hedging cost(?: was)?\s*(?:of\s*)?([\d.]+)\s*%", flat, re.I) or \
+            re.search(r"((?:FY|1H|9M|[1-4]Q)\d\d)\s*避險成本\s*([\d.]+)\s*%", flat):
         row["hedging_cost_pct_narrative"] = float(m.group(2))
         if m.group(1):
             row["hedging_cost_period"] = m.group(1)
@@ -289,7 +298,7 @@ def main() -> int:
               f"  {r.get('structure_asof','')}")
     if args.csv and emitted:
         import csv as _csv
-        out = ROOT / "data" / "cathay_deck_fx.csv"
+        out = ROOT / "data" / ("cathay_deck_fx.csv" if args.lang == "en" else f"cathay_deck_fx_{args.lang}.csv")
         cols = ["deck_date", "fx_page", "fx_assets_ntd_tn", "hedge_cs_ndf_pct",
                 "hedge_proxy_open_pct", "hedge_fvoci_pct", "fx_risk_exposure_pct",
                 "fx_policy_reserve_pct", "hedging_cost_pct", "hedging_cost_period",
