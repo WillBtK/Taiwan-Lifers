@@ -23,10 +23,13 @@ CACHE = ROOT / "cache" / "mops"
 URL = "https://mopsov.twse.com.tw/server-java/t164sb01"
 
 FIRMS = {"5865": "fubon_life", "5874": "nanshan_life", "2823": "kgi_life",
-         "2833": "taiwan_life", "6985": "shinkong_life"}
+         "2833": "taiwan_life", "6985": "shinkong_life", "5846": "cathay_life"}
 # 6985 is the surviving ex-Taishin Life entity: its pre-2026 filings are
 # Taishin Life's, not Shin Kong Life's (entities break_note), so skip them.
 MIN_YEAR = {"6985": 2026}
+# Cathay 2020-on is already extracted from the Excel companions (3.12);
+# MOPS only needs to close the 2013-2019 gap.
+MAX_YEAR = {"5846": 2019}
 
 
 def quarters():
@@ -52,7 +55,7 @@ def main():
     fetched = skipped = empty = 0
     for y, q in quarters():
         for co in FIRMS:
-            if y < MIN_YEAR.get(co, 0):
+            if y < MIN_YEAR.get(co, 0) or y > MAX_YEAR.get(co, 9999):
                 continue
             # consolidated first; on a "file does not exist" miss fall back to
             # the individual report (KGI Life files no 'C' for some quarters)
