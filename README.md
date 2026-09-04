@@ -174,11 +174,15 @@ The two were conflated in an earlier draft of this section.
 | 富邦人壽 Fubon Life | **5865** | Fubon FHC | 2881 |
 | 南山人壽 Nan Shan Life | **5874** | — (unlisted) | — |
 | 凱基人壽 KGI Life (ex-China Life) | **2823** | KGI FHC | 2883 |
-| 新光人壽 Shin Kong Life | — | TS Financial (merged) | 2887, formerly 2888 |
-| 台灣人壽 Taiwan Life | — | CTBC FHC | 2891 |
+| 新光人壽 Shin Kong Life | **6985** (2026-on only) | TS Financial (merged) | 2887, formerly 2888 |
+| 台灣人壽 Taiwan Life | **2833** | CTBC FHC | 2891 |
 
 2823 was verified directly against MOPS; 5846, 5865 and 5874 appear on the
-companies' own filed documents.
+companies' own filed documents; 2833 and 6985 come from the TWSE open-data
+registry of public companies (`openapi.twse.com.tw/v1/opendata/t187ap03_P`,
+decisions 3.13). **6985 is the surviving ex-Taishin Life entity's code**: its
+pre-2026 filings are Taishin Life's, not Shin Kong Life's, so pre-merger
+Shin Kong statements need the old code, which is not yet verified.
 
 **Statutory statements.** Reach them through the legacy MOPS, which serves plain
 HTML and accepts POST — the new `mops.twse.com.tw` returns an 800-byte JS shell,

@@ -1238,3 +1238,25 @@ re-uploads; the 2020Q1 file says 2023-09-11).
 **Files.** `scripts/stage3_cathay_statements.py`,
 `config/cathay_life_statements.json`, `data/cathay_statements_quarterly.csv`,
 `out/stage3_cathay_stmt_20260904.sql`.
+
+### 3.13 The last two filing codes, verified from the TWSE open-data registry
+
+**Decision.** Taiwan Life = **2833**, Shin Kong Life (post-merger) = **6985**,
+both from `openapi.twse.com.tw/v1/opendata/t187ap03_P` (公開發行公司基本資料,
+出表日期 1150903) — an authoritative registry reachable despite the insurers'
+own sites (taiwanlife.com, skl.com.tw, taishinlife.com.tw, tsfl.com.tw) all
+being proxy-blocked. Cross-check: the registry's 統編 for Fubon Life
+(27935073) matches the ins-info UID on Fubon's own public-info page.
+
+**The 6985 trap, documented before it bites.** 6985 is the *surviving
+ex-Taishin Life* entity, renamed 新光人壽 at the 2026-01-01 merger; its
+pre-2026 filings are Taishin Life's. The panel's pre-2026 shinkong_life rows
+need old Shin Kong Life's own code, still unverified — `entities.break_note`
+and the MOPS fetcher (`MIN_YEAR`) both encode the restriction.
+
+**Applied.** `tlfx.entities` tickers updated (all six now verified),
+`supabase/seeds/entities_seed.sql` kept in sync, README §4.5 table completed,
+fetcher extended to five codes.
+
+**Files.** `supabase/seeds/entities_seed.sql`, `scripts/stage3_mops_fetch.py`,
+`README.md` §4.5.
