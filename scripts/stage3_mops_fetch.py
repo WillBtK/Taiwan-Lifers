@@ -54,40 +54,50 @@ def main():
         for co in FIRMS:
             if y < MIN_YEAR.get(co, 0):
                 continue
-            fn = CACHE / f"t164sb01_{co}_{y}_{q}_C.html"
-            miss = CACHE / f"t164sb01_{co}_{y}_{q}_C.miss"
-            if fn.exists() or miss.exists():
-                skipped += 1
-                continue
-            while True:
-                try:
-                    r = s.get(URL, params={"step": "1", "CO_ID": co, "SYEAR": str(y),
-                                           "SSEASON": str(q), "REPORT_ID": "C"},
-                              timeout=90)
-                    t = r.content.decode("big5", errors="replace")
-                except Exception as ex:
-                    print(f"{co} {y}Q{q}: transport {ex}; sleep {backoff}", flush=True)
-                    time.sleep(backoff)
-                    backoff = min(backoff * 2, 3600)
+            # consolidated first; on a "file does not exist" miss fall back to
+            # the individual report (KGI Life files no 'C' for some quarters)
+            got = False
+            for rid in ("C", "A"):
+                fn = CACHE / f"t164sb01_{co}_{y}_{q}_{rid}.html"
+                miss = CACHE / f"t164sb01_{co}_{y}_{q}_{rid}.miss"
+                if fn.exists():
+                    skipped += 1
+                    got = True
+                    break
+                if miss.exists():
+                    skipped += 1
                     continue
-                if "資產總計" in t:
-                    fn.write_text(t, encoding="utf-8")
-                    fetched += 1
-                    backoff = 300
-                    print(f"{co} {y}Q{q}: ok {len(t)}", flush=True)
-                elif "CAN NOT BE ACCESSED" in t or r.status_code == 307:
-                    print(f"{co} {y}Q{q}: WAF; sleep {backoff}", flush=True)
-                    time.sleep(backoff)
-                    backoff = min(backoff * 2, 3600)
-                    continue
-                else:
-                    # served page without a balance sheet: treat as no filing
-                    miss.write_text(t[:2000], encoding="utf-8")
-                    empty += 1
-                    backoff = 300
-                    print(f"{co} {y}Q{q}: no filing ({len(t)}b)", flush=True)
-                break
-            time.sleep(random.uniform(60, 100))
+                while True:
+                    try:
+                        r = s.get(URL, params={"step": "1", "CO_ID": co, "SYEAR": str(y),
+                                               "SSEASON": str(q), "REPORT_ID": rid},
+                                  timeout=90)
+                        t = r.content.decode("big5", errors="replace")
+                    except Exception as ex:
+                        print(f"{co} {y}Q{q}{rid}: transport {ex}; sleep {backoff}", flush=True)
+                        time.sleep(backoff)
+                        backoff = min(backoff * 2, 3600)
+                        continue
+                    if "資產總計" in t:
+                        fn.write_text(t, encoding="utf-8")
+                        fetched += 1
+                        backoff = 300
+                        print(f"{co} {y}Q{q}{rid}: ok {len(t)}", flush=True)
+                        got = True
+                    elif "CAN NOT BE ACCESSED" in t or r.status_code == 307:
+                        print(f"{co} {y}Q{q}{rid}: WAF; sleep {backoff}", flush=True)
+                        time.sleep(backoff)
+                        backoff = min(backoff * 2, 3600)
+                        continue
+                    else:
+                        miss.write_text(t[:2000], encoding="utf-8")
+                        empty += 1
+                        backoff = 300
+                        print(f"{co} {y}Q{q}{rid}: no filing ({len(t)}b)", flush=True)
+                    break
+                time.sleep(random.uniform(60, 100))
+                if got:
+                    break
     print(f"done: fetched {fetched}, no-filing {empty}, cached-skip {skipped}", flush=True)
     return 0
 
