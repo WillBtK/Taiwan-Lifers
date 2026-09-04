@@ -1179,3 +1179,25 @@ and 2024-01 are therefore missing. Recoverable later; not blocking.
 **Files.** `scripts/stage2c_ib_indicators.py`, `data/ib_indicators_monthly.csv`,
 `out/stage2c_ib_20260904.sql`, `reports/stage2c_ib_20260904.json`,
 `supabase/migrations/0005_sector_monthly_channel_ib_indicators.sql`.
+
+### 3.11 firm_quarterly carries the Cathay deck series — shares, not notionals, under a channel key
+
+**Decision.** Migration `0006` extends `tlfx.firm_quarterly` additively:
+deck-disclosed hedge composition is stored as *shares* (`hedge_cs_ndf_share_pct`,
+`hedge_proxy_open_share_pct`, `hedge_fvoci_share_pct`, `fx_risk_share_pct`,
+`fx_policy_share_pct`) because decks never disclose notionals (3.6); the
+original notional columns stay for statement-derived figures. A
+`source_channel` column ('deck' | 'statement') joins the primary key —
+precedent 0004 — so a quarter can carry both a deck row and a statement row,
+cross-checked on `fx_reserve_balance`.
+
+**Load.** `scripts/stage3_load_cathay.py` maps `data/cathay_fx_quarterly.csv`:
+period 1Q/1H/9M/FY+yy → first day of the period's end quarter; NT$ tn → mn
+(foreign_assets), NT$ bn → mn (fx_reserve_balance), cost % → bp; basis IFRS17
+for 2026-on periods, IFRS4 before; vintage = deck date; source_url from the
+language deck indexes (en preferred). 47 rows 2013-Q4 → 2026-Q2 loaded and
+checksum-verified server-side (count, four sums, two spot values). Per-field
+en/zh provenance travels in `source_note`.
+
+**Files.** `supabase/migrations/0006_firm_quarterly_deck_shares.sql`,
+`scripts/stage3_load_cathay.py`, `out/stage3_cathay_20260904.sql`.

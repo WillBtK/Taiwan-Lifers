@@ -51,9 +51,13 @@ the shared key). Loads are checksum-verified server-side against the local CSVs
 
 Migrations applied: `0001`–`0005`. `0003` adds the release fields, `0004`
 puts `reporting_channel` in the primary key, `0005` admits the
-`ib_indicators` channel. Firm-level deck data lives in
-`data/cathay_fx_quarterly.csv` (47 quarters, en/zh cross-confirmed, one flagged
-conflict) pending an `entities`/`firm_quarterly` load design. Other tables
+`ib_indicators` channel, `0006` adds deck share columns and the
+`source_channel` key to `firm_quarterly`.
+`tlfx.entities` holds the six firms (decisions 3.10). `tlfx.firm_quarterly`
+holds Cathay's deck series — **47 quarters, 2013-Q4 → 2026-Q2,
+`source_channel='deck'`** (shares, cost in bp, FX volatility reserve; en/zh
+cross-confirmed, loaded and checksum-verified — decisions 3.11); the
+`statement` channel is empty pending statement-side extraction. Other tables
 remain empty.
 Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
 `run_reconciliation`.
@@ -119,11 +123,13 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
    in `ib_indicators`, never the CBC series. Remaining tidy-ups: the two
    unparsed editions (113-01, 106-02) and a wedge decomposition (FX deposits
    at domestic banks vs bond-ETF look-through) if it ever matters.
-4. Stage 3 next steps: read the 2023-03 deck page to resolve the one flagged
-   CS & NDF conflict; design `entities`/`firm_quarterly` load for the Cathay
-   series; statement-side extraction (Excel companions first — 58 quarters on
-   cathayholdings); then Fubon, Nan Shan, KGI, Taiwan Life, Shin Kong. The
-   41億 year-end reserve gap remains Stage 3's to explain.
+4. Stage 3 next steps: statement-side extraction into the `statement` channel
+   (Cathay Excel companions first — 58 quarters on cathayholdings); then
+   Fubon, Nan Shan, KGI, Taiwan Life, Shin Kong (verify the last two firms'
+   filing codes before touching any filing system — decisions 3.5). The
+   41億 year-end reserve gap remains Stage 3's to explain. The FY22 en/zh
+   binding conflict is resolved (wedge colour — decisions 3.9); the Cathay
+   deck series is loaded (3.11).
 
 The gold re-step is applied in the spec (all three `:root` blocks, §7/§10);
 decisions 0.3's "not applied" was superseded in Stage 0 — see 1.8.
