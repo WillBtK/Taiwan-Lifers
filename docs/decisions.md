@@ -1085,3 +1085,45 @@ stayed 56% — carry moves the cost far faster than the book.
 
 **Files.** `scripts/stage3_merge_cathay.py`, `data/cathay_fx_quarterly.csv`,
 `README.md` §9.
+
+### 2.3 The FSC/CBC foreign-asset gap is a stable classification wedge, not a widening one — and the FSC-basis denominator exists monthly
+
+**Source.** The Insurance Bureau's monthly 保險市場重要指標 PDFs (`www.ib.gov.tw`,
+id=48), whose 人身保險業資金運用表 carries the FSC-basis 國外投資 — the precise
+figures behind the briefing's rounded 23兆/22.8兆.
+
+**The gap, measured properly at five year-ends (NT$ mn):**
+
+| Year-end | FSC 國外投資 | CBC 國外資產 | Gap | Rel |
+|---|---|---|---|---|
+| 2021 | 19,878,660 | 19,046,093 | 832,567 | 4.19% |
+| 2022 | 21,184,914 | 20,510,322 | 674,592 | 3.18% |
+| 2023 | 21,857,811 | 21,045,823 | 811,988 | 3.71% |
+| 2024 | 23,025,710 | 22,471,627 | 554,083 | 2.41% |
+| 2025 | 22,767,215 | 22,009,067 | 758,148 | 3.33% |
+
+**Correction to 2.1.** "The gap is widening" is withdrawn: it rested on two
+points with a rounded numerator (23兆 read against 22.472兆). With precise
+numerators the wedge fluctuates between 2.4% and 4.2% with no trend.
+
+**What the wedge is.** The same table's 資產總額 ties CBC total assets to
+~0.005–0.008% at every year-end, so population and accounting basis are
+identical; the wedge is purely *usage-versus-residence classification*: items
+the Insurance Act counts as 國外投資 that are claims on residents in CBC's
+balance sheet. Named candidates: foreign-currency deposits at domestic banks
+and domestic bond ETFs under the look-through rules. 國際板 (Formosa) bonds are
+**excluded as a candidate** — their issuers are non-residents, so they sit on
+the foreign side of both measures.
+
+**Consequence for series 1/2/5.** The 3%±1 wedge means CBC foreign assets must
+not stand in for the FSC denominator (as 2.1 said) — but they no longer need
+to: each monthly 指標 edition's fund-utilisation table carries its own recent
+month (the 114年5月 edition adds a 21,687,492 column beyond the 2024 year-end),
+so a **monthly FSC-basis foreign-investment series** is recoverable by walking
+the archive. One alignment question is open and must be settled from the
+documents, not assumed: the May-2025 edition's figure sits within 0.3% of CBC's
+*April* but 6% above CBC's May, so editions may label their column one month
+behind the edition name — the ingester must read the column header, and the
+May/April ambiguity is confounded by the May 2025 TWD shock either way.
+
+**Files.** none yet — `stage2c` ingester next; PDFs cached under `cache/ib/`.
