@@ -1548,3 +1548,37 @@ derivation should carry the same guard: `on conflict do nothing` is the right
 idempotency primitive and the wrong error detector.
 
 **Files.** `scripts/derive_firm_series.py`, `data/derived_series_firm.csv`.
+
+### 4.5 The statement and deck channels validate each other exactly — and all six firms are now populated
+
+**The tie.** The IFRS-17 recovery of decisions 3.12 — 2026 FX-reserve balance
+= the firm's own 2025Q4 balance less the cash-flow statement's year-to-date
+net change — was inferred from Cathay alone. It is now *verified against
+independently extracted deck figures on two further firms*, from a data path
+that shares nothing with the decks (MOPS XBRL facts matched by concept and
+context date):
+
+| | statement-derived | deck-extracted |
+|---|---|---|
+| Fubon Mar-26 | 147,389.0 | 147.4 |
+| Fubon Jun-26 | 153,677.3 | 153.7 |
+| KGI 1Q26 | 44,831.8 | 44.83 |
+| KGI 1H26 | 48,991.5 | 48.99 |
+
+Exact to the decks' own rounding in all four. Fubon's Dec-25 statement line
+(142,124.635) also lands on its deck's 142.1 for the same date. That
+cross-validates three things at once: the MOPS XBRL parser, the KGI and Fubon
+deck extractors (3.15/3.16), and the recovery method itself.
+
+**Loaded.** 11 statement-channel rows for the five non-Cathay firms, 11/11
+A=L+E, checksum-verified. Only reserve balances whose base is a *statement*
+are loaded (Fubon, Nan Shan); KGI's base is its own deck, so its reserve
+stays in the deck channel and the tie above is validation rather than a
+second copy of the same number. KGI files no consolidated statement for these
+quarters, so its rows are the individual report, noted per row.
+
+**All six entities now carry data**: Cathay and Fubon in both channels, KGI
+deck plus statement, Nan Shan / Taiwan Life / Shin Kong statement-only.
+
+**Files.** `scripts/stage3_load_mops.py`, `data/mops_statements.csv`,
+`out/stage3_mops_load_20260904.sql`.

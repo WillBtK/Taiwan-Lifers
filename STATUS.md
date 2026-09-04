@@ -80,7 +80,11 @@ path, composition; its cost series stays CSV-only pending definition —
 reserve, total assets, equity at NT$-thousand precision from the Excel
 statement companions; 2026 reserve derived exactly via the cash-flow net
 change and tied to the deck — decisions 3.12). Both loads checksum-verified.
-2012–2019 statements are PDF-only, unextracted. Other tables remain empty.
+2012–2019 statements are PDF-only, unextracted. The **statement channel also
+carries the five non-Cathay firms** — 11 rows from MOPS XBRL (Fubon and Nan
+Shan 2025Q4 plus 2026 quarters for all five), whose derived 2026 reserve
+balances tie the Fubon and KGI decks exactly (decisions 4.5), so all six
+entities are now populated. Other tables remain empty.
 `tlfx.derived_series` — **sector 55 rows / 8 keys, 2024-04 → 2026-07**
 (reg hedge ratio and the Bureau's effective memo, denominator, net open,
 hedge principal, gross hedge ratio, buffer total, absorbable appreciation —
