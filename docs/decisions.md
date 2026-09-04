@@ -1057,3 +1057,31 @@ exposure/policy split and the 2026 structure trio.
 
 **Files.** `scripts/stage3_merge_cathay.py`, `data/cathay_fx_quarterly.csv`,
 `data/cathay_deck_fx_zh.csv` (full 48-row run, superseding the smoke test).
+
+### 3.9 FY22 conflict resolved by wedge colour; two README §9 anecdotes fail verification
+
+**Decision.** The one merge conflict (FY22 CS & NDF share, en 56 vs zh 33) is
+resolved to **CS & NDF 56%, proxy & open 33%, FVOCI & FVTPL 12%**, entered in
+the merge script as a `manual_geometry` resolution rather than an edit to either
+extraction file, so the evidence trail survives re-runs.
+
+**Method.** Both language editions print the same trio (56/12/33), so the
+disagreement was binding, not data. On the page geometry: 56% sits in the dark
+blue wedge, whose nearest caption is Currency Swap & NDF; 33% in the yellow
+wedge (Proxy & Open); 12% in the green wedge (FVOCI & FVTPL) — margins of 9–28
+points against 40+ for the alternatives. Decisive corroboration: the wedge
+palette is identical to the independently verified 2026-08 page (dark blue =
+CS & NDF, yellow = proxy, green = FVOCI). Text order on the page (56/12/33
+against caption order Proxy/CS/FVOCI) would have given the opposite answer —
+another instance of the rule that text order lies on these charts.
+
+**Consequence — README §9 corrected again.** "Cathay ran CS/NDF at ~15% in
+2022" is contradicted by the deck series itself: 59% (9M21) → 65% (1Q22) → 64%
+(1H22, 9M22) → 56% (FY22). Together with the earlier 1H26 finding, both halves
+of that sentence failed verification, and §9 now points at
+`data/cathay_fx_quarterly.csv` instead of anecdotes. The FY22 pattern worth
+keeping: the *cost* collapsed to 0.14% on TWD depreciation while the *share*
+stayed 56% — carry moves the cost far faster than the book.
+
+**Files.** `scripts/stage3_merge_cathay.py`, `data/cathay_fx_quarterly.csv`,
+`README.md` §9.

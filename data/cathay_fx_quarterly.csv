@@ -13,7 +13,7 @@ deck_date,period,fx_assets_ntd_tn,fx_assets_ntd_tn_src,hedge_cs_ndf_pct,hedge_cs
 2023-11-24,9M23,5.36,both,62.0,both,,,,,68.0,en,32.0,en,0.49,both,,,9M23,,
 2023-08-25,1H23,5.26,both,59.0,both,,,,,68.0,en,32.0,en,0.87,both,,,1H23,,
 2023-05-26,1Q23,5.19,both,55.0,zh,,,,,69.0,en,31.0,en,1.81,both,,,1Q23,,
-2023-03-22,FY22,5.11,both,,conflict,,,,,,,,,0.14,both,,,FY22,,hedge_cs_ndf_pct: en=56.0 zh=33.0
+2023-03-22,FY22,5.11,both,56,manual_geometry,33,manual_geometry,12,manual_geometry,,,,,0.14,both,,,FY22,,
 2022-11-21,9M22,4.95,both,64.0,both,,,,,,,,,,,,,,,
 2022-08-29,1H22,4.88,both,64.0,both,,,,,68.0,en,32.0,en,,,,,,,
 2022-05-23,1Q22,4.87,both,65.0,both,21.0,en,14.0,en,70.0,en,30.0,en,,,,,,,

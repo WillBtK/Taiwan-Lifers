@@ -33,6 +33,16 @@ NUM_FIELDS = ["fx_assets_ntd_tn", "hedge_cs_ndf_pct", "hedge_proxy_open_pct",
               "hedge_fvoci_pct", "fx_risk_exposure_pct", "fx_policy_reserve_pct",
               "hedging_cost_pct", "fx_volatility_reserve_ntd_bn"]
 
+# Conflicts resolved by reading the page geometry by hand (decisions 3.9):
+# wedge colours are stable across vintages (dark blue = CS & NDF, yellow =
+# proxy & open, green = FVOCI), and on the 2023-03 page values 56/33/12 sit in
+# the blue/yellow/green wedges respectively, in both language editions.
+MANUAL = {
+    ("2023-03-22", "hedge_cs_ndf_pct"): "56",
+    ("2023-03-22", "hedge_proxy_open_pct"): "33",
+    ("2023-03-22", "hedge_fvoci_pct"): "12",
+}
+
 
 def load(path: Path) -> dict[str, dict]:
     if not path.exists():
@@ -62,6 +72,9 @@ def main() -> int:
         row: dict = {"deck_date": d, "period": period_for(d)}
         flags = []
         for f in NUM_FIELDS:
+            if (d, f) in MANUAL:
+                row[f], row[f + "_src"] = MANUAL[(d, f)], "manual_geometry"
+                continue
             ev, zv = e.get(f, "").strip(), z.get(f, "").strip()
             if ev and zv:
                 if abs(float(ev) - float(zv)) <= (0.05 if f.endswith("_tn") else 0.101):
