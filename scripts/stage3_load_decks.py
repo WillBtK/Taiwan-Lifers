@@ -16,9 +16,11 @@ Fubon:
   fx_risk/fx_policy share columns; everything else -> deck_composition jsonb.
 
 KGI:
-  recurring_yield_pre, fx_reserve_balance, composition pie (+ fx_risk/policy).
-  KGI's 避險成本 stays OUT of the database until its definition is pinned
-  (decisions 3.16) — it lives only in data/kgi_deck_fx.csv.
+  recurring_yield_pre, fx_reserve_balance, composition pie (+ fx_risk/policy),
+  and — since decisions 4.6 pinned it — 避險成本 as total_fx_cost_bp, the
+  ALL-IN measure. It is not hedge_cost_bp: KGI's series triples to 306bp in
+  the 2025 shock half, tracking Fubon's all-in 389bp rather than Fubon's
+  recurring 147bp, and a recurring swap cost cannot move like that.
 
 vintage = the period's own deck upload timestamp (14-digit filename stamp);
 period end when no stamp exists (older Fubon filenames), noted per row.
@@ -146,7 +148,8 @@ def kgi_rows():
         except ValueError:
             pass
         for field, col in (("yield_pre_hedge_pct_series", "yield_pre"),
-                           ("fx_reserve_ntd_bn_series", "reserve_bn")):
+                           ("fx_reserve_ntd_bn_series", "reserve_bn"),
+                           ("hedging_cost_pct_series", "cost_pct")):
             for p, v in json.loads(r[field] or "{}").items():
                 y, em = period_parts(p)
                 per.setdefault((y, em), {})[col] = v
@@ -166,12 +169,15 @@ def kgi_rows():
     for (y, em), c in sorted(per.items()):
         url = deck_url.get((y, em))
         v = stamp(url) if url else None
+        cost = c.get("cost_pct")
         out.append({
             "entity": "kgi_life", "obs": f"{y}-{Q_START[em]}",
             "vintage": v or f"{y}-{Q_END[em]}",
             "vnote": "deck upload stamp" if v else "period end (figure from later decks' charts)",
             "basis": "IFRS17" if y >= 2026 else "IFRS4",
-            "total_bp": None, "hedge_bp": None,
+            # negative = cost, matching the column's convention (0007)
+            "total_bp": None if cost is None else -round(cost * 100),
+            "hedge_bp": None,
             "reserve_mn": c.get("reserve_bn") and c["reserve_bn"] * 1000,
             "yield_pre": c.get("yield_pre"),
             "fx_risk": c.get("fx_risk"), "fx_policy": c.get("fx_policy"),

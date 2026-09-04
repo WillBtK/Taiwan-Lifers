@@ -121,22 +121,28 @@ def extract(doc, pg):
               if re.fullmatch(r"-?\d{1,3}\.\d{1,2}", w)]
 
     def nearest_title(cx, cy):
-        # captions are left-aligned and charts extend rightward: a word
-        # belongs to the rightmost caption starting left of it; captions
-        # stacked at the same x (a grid column) split by vertical distance
+        # captions are left-aligned and each chart hangs BELOW its caption, so
+        # a word belongs to the rightmost caption starting left of it and,
+        # within that column, to the nearest caption ABOVE it. Splitting the
+        # column by absolute vertical distance instead is wrong: the shared
+        # period-label row of a 2x2 grid sits closer to the lower caption than
+        # to the upper chart it actually labels, which starved the upper block
+        # of labels entirely.
         left = [k for k in titles if titles[k][0] <= cx + 20]
-        if left:
-            best_x = max(titles[k][0] for k in left)
-            col = [k for k in left if titles[k][0] == best_x]
-            return min(col, key=lambda k: abs(titles[k][1] - cy))
-        return min(titles, key=lambda k: abs(titles[k][0] - cx)) if titles else None
+        if not left:
+            return min(titles, key=lambda k: abs(titles[k][0] - cx)) if titles else None
+        best_x = max(titles[k][0] for k in left)
+        col = [k for k in left if titles[k][0] == best_x]
+        above = [k for k in col if titles[k][1] <= cy]
+        return max(above, key=lambda k: titles[k][1]) if above \
+            else min(col, key=lambda k: titles[k][1])
 
     for key, (tx, ty) in titles.items():
         # captions sit above the chart in some vintages, below in others: try
         # both vertical bands; a word belongs to a block only if this title is
         # its NEAREST title horizontally (the grid partitions the page)
         best = {}
-        for lo, hi in ((ty, ty + 230), (ty - 230, ty)):
+        for lo, hi in ((ty, ty + 230),):
             blk_labels = [l for l in labels
                           if lo < l[3] < hi and nearest_title(l[2], l[3]) == key]
             blk_values = [v for v in values

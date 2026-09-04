@@ -1582,3 +1582,40 @@ deck plus statement, Nan Shan / Taiwan Life / Shin Kong statement-only.
 
 **Files.** `scripts/stage3_load_mops.py`, `data/mops_statements.csv`,
 `out/stage3_mops_load_20260904.sql`.
+
+### 4.6 KGI's 避險成本 is an all-in measure; Cathay's is recurring — settled by the shock half
+
+**The test.** The May-2025 TWD shock separates the two definitions cleanly: an
+all-in cost (recurring hedge cost plus FX P&L and reserve provisioning) must
+spike in 1H25; a recurring swap cost cannot, because swap points did not
+triple. Fubon publishes both and brackets the range — recurring 147bp, all-in
+389bp in that half.
+
+| | 2023 | 2024 | **1H25** | 2025 | 1H26 |
+|---|---|---|---|---|---|
+| KGI 避險成本 | 153 | 109 | **306** | 256 | 117 |
+| Fubon all-in | 85 | 141 | **389** | 276 | 124 |
+| Fubon recurring | 160 | 175 | **147** | 130 | 48 |
+| Cathay hedging cost | 96 | 156 | **145** | 157 | 121 |
+
+**KGI is all-in**: it triples into the shock half and tracks Fubon's all-in
+through 2025-26 (256/276, 130/126, 117/124), nowhere near Fubon's recurring
+(130, 50, 48). **Cathay is recurring**: it does not move in the shock half at
+all (156 → 145 → 157), which no all-in measure could manage in a quarter that
+produced the sector's record FX loss. That retrospectively evidences the
+assumption under which Cathay was already loaded into series 7.
+
+**Applied.** KGI's series is written to `total_fx_cost_bp` (all-in column,
+negative = cost; sum −2,578bp over 20 quarters, verified), never to
+`hedge_cost_bp`, and it stays out of derived series 7, which carries only the
+recurring measure and so remains comparable across firms. 3.16 is closed.
+
+**A regression caught on the way.** The KGI extractor's caption binding had
+been changed to split a same-x caption stack by absolute vertical distance;
+that assigned the 2×2 grid's shared period-label row to the *lower* caption
+and silently emptied the cost series. Captions always sit above their chart,
+so the rule is now "nearest caption above", and the cost series is restored
+(20 periods, 0 conflicts) with the reserve and yield series unchanged.
+
+**Files.** `scripts/stage3_kgi_decks.py`, `scripts/stage3_load_decks.py`,
+`data/kgi_deck_fx.csv`.
