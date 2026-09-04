@@ -117,6 +117,13 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
 1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
    (`FRED_API_KEY` is). Writes go through the MCP for now.
+1a. **Proxy unblock request (for the user):** the cleanest firm and sector
+   sources are blocked at the egress proxy — `ins-info.ib.gov.tw` (the
+   Bureau's insurer-disclosure portal), `data.gov.tw`, and every insurer's
+   own site tried so far (`www.cathaylife.com.tw`, `www.taiwanlife.com`,
+   `www.skl.com.tw`, `www.taishinlife.com.tw`, `www.tsfl.com.tw`).
+   Unblocking ins-info alone would replace the MOPS WAF crawl with direct
+   statutory disclosures for all six firms.
 2. Hedge-ratio backfill: the start of the series is now pinned — **2024-04**
    in practice (`docs/decisions.md` 1.11). Before that the press gives spoken
    ranges ("6~7成"), not the regulatory figure, so pre-2024 sector series 1/2/5

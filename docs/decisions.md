@@ -1260,3 +1260,29 @@ fetcher extended to five codes.
 
 **Files.** `supabase/seeds/entities_seed.sql`, `scripts/stage3_mops_fetch.py`,
 `README.md` §4.5.
+
+### 3.14 Fubon deck route open — and the 60.9% binding trap resolved by an in-document identity
+
+**Route.** Fubon FHC's results decks live on `fubon.irpro.co` (conference.php,
+year pages 2007→2026) with files on `www.irpro.co` — both reachable, no WAF
+(the old allowlist note dismissing irpro.co wholesale is wrong for this path).
+238 PDFs indexed to `config/fubon_conference_decks.json` (118 CH-site, 120
+EN-site; some "EN" files are the Chinese deck — the true English deck is a
+separate event id, e.g. 584 zh-content vs 585 English for 1H26).
+
+**The hedging page** (1H26: p.21 避險組合及外價金餘額 / Hedging portfolio and
+FX reserve) carries: recurring hedge cost in bps by quarter and cumulative
+(1Q26 −126, 2Q26 −121, 1H26 −124), the 外價金 balance path with fixed/
+volatility split (Jun-26 NT$153.7bn), a 具外匯風險資產 77.4%/22.6% split, and
+a hedge-composition pie.
+
+**The trap.** Text order and label proximity both suggest CS+NDF = 60.9%.
+Wrong: the page's own note — "Naked USD 59.1% + other currencies 1.8%" — sums
+to 60.9%, proving **未避險 = 60.9% and CS+NDF = 24.6%** (FVOCI 8.5, FVTPL
+6.0). Economic priors fail here precisely because the truth is remarkable:
+post the 2025 TWD shock Fubon runs a ~25% swap-hedged, ~61% naked book backed
+by the accumulated reserve. Extractor bindings must come from in-document
+identities (note sums, pie-sums-to-100, en/zh agreement, wedge containment),
+never from ordering or plausibility.
+
+**Files.** `config/fubon_conference_decks.json`; cache under `cache/fubon/`.
