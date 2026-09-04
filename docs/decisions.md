@@ -1694,3 +1694,58 @@ item is closed rather than carried, and the reason is recorded so it is not
 reopened as though unexamined.
 
 **Files.** none — a reconciliation, not a load.
+
+### 4.9 The allowlist additions: data.gov.tw opens a clean regulator channel, ins-info stays shut for a different reason
+
+Both hosts were allowlisted on 2026-09-04. They behave completely differently,
+and the distinction matters for what to try next.
+
+**`data.gov.tw` — open, and productive.** Its front-end API needs no key
+(the documented v2 REST one does): `POST /api/front/dataset/list`,
+`GET /api/front/dataset/detail?nid=N`, and a keyword search at
+`GET /api/front/dataset/dropdown?list_type=published&qs=TERM`. The Insurance
+Bureau is `agency_tid` 716 with **303 datasets**. The `list` endpoint ignores
+the filter parameter names guessed so far, so the practical route is the
+dropdown search plus `detail`.
+
+**The win: dataset 14501 「人身保險業資金運用表」 → `openapi.tii.org.tw/
+TIIOPENDATA/API/CSV_EXPORT?TableID=I171`.** That is 表17-1 itself — the
+FSC-basis 國外投資 denominator — as structured monthly-refreshed CSV, reachable
+once the TWCA intermediate is supplied exactly as for the other tii.org.tw
+hosts (decisions 1.5). TableIDs are exact: I17 and I172 both answer "table not
+find!", so they must be discovered from a dataset's resource url, not guessed.
+
+**What it does and does not replace.** The export carries 16 rows — annual
+2011-2025 plus the latest month (2026-05) — so it does *not* backfill the
+112-month history that the PDF walk built (2.4); that pipeline stands. What it
+does is (a) extend the series one month beyond the PDFs, (b) give a
+maintenance path that needs no PDF parsing, and (c) **independently validate
+stage2c**: an entirely separate channel agrees with the PDF-derived year-ends
+to within 0.05% — 2024 國外投資 23,025,710 vs 23,025,601, 2025 22,765,264 vs
+22,767,215, total assets 36,900,415 vs 36,900,485. The residuals are vintage
+effects (ours are as-printed in the edition parsed, TII's are current
+restatements), not parse error.
+
+**`ins-info.ib.gov.tw` — allowlisted and still unreachable, which is not the
+same as blocked.** The proxy no longer refuses it; the origin simply never
+completes a TCP connection. Evidence: `curl` reports `time_appconnect=0.000`
+on every TLS variant tried (1.2, 1.3, SECLEVEL=1) so no handshake ever
+starts, the proxy logs `ws_closed_mid_exchange` rather than a 403 policy
+denial, and the plain-HTTP path returns an Envoy **503 "upstream connect
+error or disconnect/reset before headers. reset reason: connection timeout"**.
+Browser headers, deep links and 70-second timeouts all fail identically. This
+is a routing or geo-restriction problem at the origin, not something the
+allowlist can fix.
+
+**Consequence.** Dataset **7191 「壽險財務業務指標」 is the firm-level prize** —
+`INSURER_Name` by year and quarter across 23 statutory indicators — but its
+payload is hosted at `ins-info.ib.gov.tw/opendata/json-06161610.aspx`, so it
+stays out of reach. The open-data catalogue also carries **no** hedge-ratio or
+FX-price-reserve dataset (`避險` returns nothing; `準備金` returns only labour
+and earthquake-fund series), so series 4 remains briefing-sourced and the
+firm FX reserves remain deck- and statement-sourced. If the firm-level route
+is wanted, the thing to ask for is an egress that can reach ins-info — not a
+further allowlist entry.
+
+**Files.** `config/allowlist.tsv` (three rows rewritten),
+`cache/tii/I171_20260904.csv`.
