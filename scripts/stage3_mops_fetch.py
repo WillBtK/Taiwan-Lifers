@@ -32,9 +32,22 @@ MIN_YEAR = {"6985": 2026}
 # Cathay 2020-on is already extracted from the Excel companions (3.12);
 # MOPS only needs to close the 2013-2019 gap.
 MAX_YEAR = {"5846": 2019}
+# Cathay 2020-on is covered by the Excel companions, so the targeted queue's
+# recent quarters have nothing to add for 5846.
 
 
-def quarters():
+# The bulk crawl is withdrawn (decisions 4.3): ~12 min per firm-quarter
+# against the WAF, and background processes do not survive session idling.
+# TARGETED is the queue that carries analytic weight — the latest reported
+# quarter plus the two most recent year-ends, which is what the buffer and
+# reserve series need. --full restores the old sweep for an environment
+# where the WAF is not in the way (an ins-info unblock, say).
+TARGETED = [(2026, 2), (2026, 1), (2025, 4), (2024, 4)]
+
+
+def quarters(full=False):
+    if not full:
+        return list(TARGETED)
     # newest first so the freshest data lands earliest in the run
     out = []
     for y in range(2026, 2012, -1):
@@ -46,6 +59,7 @@ def quarters():
 
 
 def main():
+    full = "--full" in sys.argv
     CACHE.mkdir(parents=True, exist_ok=True)
     s = requests.Session()
     s.headers.update({
@@ -55,7 +69,7 @@ def main():
     })
     backoff = 300
     fetched = skipped = empty = 0
-    for y, q in quarters():
+    for y, q in quarters(full):
         for co in FIRMS:
             if y < MIN_YEAR.get(co, 0) or y > MAX_YEAR.get(co, 9999):
                 continue
