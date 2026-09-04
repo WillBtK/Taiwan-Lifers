@@ -1201,3 +1201,34 @@ en/zh provenance travels in `source_note`.
 
 **Files.** `supabase/migrations/0006_firm_quarterly_deck_shares.sql`,
 `scripts/stage3_load_cathay.py`, `out/stage3_cathay_20260904.sql`.
+
+### 3.12 Cathay statement channel: Excel companions give the FX volatility reserve quarterly from 2020
+
+**Decision.** `scripts/stage3_cathay_statements.py` parses the Excel companions
+of Cathay Life's (5846) consolidated quarterly statements on cathayholdings
+(index mirrored to `config/cathay_life_statements.json`): **26 quarters,
+2020Q1 → 2026Q2**, loaded to `firm_quarterly` under `source_channel=
+'statement'`. Excel companions exist only from 2020 — 2012–2019 editions are
+PDF-only and remain unextracted. Carried: 外匯價格變動準備 (FX volatility
+reserve), 資產總計, 權益總額/總計, at NT$-thousand precision stored as NT$ mn.
+
+**The IFRS-17 fold-in, and its exact recovery.** The 2026 condensed balance
+sheets drop the reserve line (folded into 其他負債), but the cash-flow
+statement still prints 外匯價格變動準備淨變動 YTD, so the 2026 balances derive
+exactly: 2025Q4 113,806,568 + 10,139,244 → 1Q26 123,945,812; + 17,125,178 →
+2Q26 130,931,746 (NT$ th). Both tie the deck's independently extracted 123.9bn
+/ 130.9bn — the decisions 3.6 statement↔deck join holds at the two quarters
+where both sides carry the figure. Checks 28/28 (A=L+E identity every quarter,
+column date ties the label, deck joins to 0.05bn).
+
+**Label drift handled:** current-column headers are Excel serials in some
+years, `2026年6月30日` strings in others; equity total is 權益總額 before 2026,
+權益總計 after.
+
+**Vintage convention for the statement channel:** the statement's period-end
+date — publication dates are unrecoverable (the CMS re-stamps Last-Modified on
+re-uploads; the 2020Q1 file says 2023-09-11).
+
+**Files.** `scripts/stage3_cathay_statements.py`,
+`config/cathay_life_statements.json`, `data/cathay_statements_quarterly.csv`,
+`out/stage3_cathay_stmt_20260904.sql`.

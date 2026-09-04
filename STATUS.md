@@ -21,6 +21,8 @@ statement-side extraction remain. Stages 4–7 not started.
 | `python3 scripts/stage2_cbc_history.py [--refresh]` | Fetches CBC statistics-database API item EF67M01 (monthly, 1987-05→), validates identities and exact agreement with the CSV channel, writes `data/sector_balance_sheet_history.csv`, `out/stage2b_*.sql`, report | Working: 471 months, 1316/1316 checks |
 | `python3 scripts/stage3_cathay_decks.py [--csv] [--limit N]` | Indexes Cathay's 112 results decks, extracts the FX hedging page (wedge-bound pies, tiered validity), writes `data/cathay_deck_fx.csv` | Working: 44 quarters extracted |
 | `python3 scripts/stage2c_ib_indicators.py [--refresh] [--limit N]` | Walks the Insurance Bureau's monthly 保險市場重要指標 archive (id=48), parses 表17-1 人身保險業資金運用表 (page selected by value scale — titles print on the preceding page), ties each edition's 資產總額 to CBC table 8, writes `data/ib_indicators_monthly.csv`, `out/stage2c_ib_*.sql`, report | Working: 110 months, 110/110 ties (two named tolerance exceptions: IFRS-17-era 2026, disrupted 2020-03); 113-01 and 106-02 editions unparsed |
+| `python3 scripts/stage3_load_cathay.py` | Maps `data/cathay_fx_quarterly.csv` (merged deck series) into `firm_quarterly` SQL — period → quarter, tn/bn → mn, % → bp, IFRS17 from 2026 | Working: 47 rows |
+| `python3 scripts/stage3_cathay_statements.py` | Parses the cached Cathay Life statement Excels (2020→), extracts FX volatility reserve / total assets / equity, derives 2026 reserve via cash-flow net change, joins the deck series, emits CSV + `firm_quarterly` SQL | Working: 26 quarters, 28/28 checks |
 | `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 14 months, 16/16 checks |
 
 Write path: the scripts emit idempotent SQL (`insert … on conflict do
@@ -54,11 +56,13 @@ puts `reporting_channel` in the primary key, `0005` admits the
 `ib_indicators` channel, `0006` adds deck share columns and the
 `source_channel` key to `firm_quarterly`.
 `tlfx.entities` holds the six firms (decisions 3.10). `tlfx.firm_quarterly`
-holds Cathay's deck series — **47 quarters, 2013-Q4 → 2026-Q2,
-`source_channel='deck'`** (shares, cost in bp, FX volatility reserve; en/zh
-cross-confirmed, loaded and checksum-verified — decisions 3.11); the
-`statement` channel is empty pending statement-side extraction. Other tables
-remain empty.
+holds Cathay in both channels: **deck — 47 quarters, 2013-Q4 → 2026-Q2**
+(shares, cost in bp, FX volatility reserve; en/zh cross-confirmed — decisions
+3.11) and **statement — 26 quarters, 2020-Q1 → 2026-Q2** (FX volatility
+reserve, total assets, equity at NT$-thousand precision from the Excel
+statement companions; 2026 reserve derived exactly via the cash-flow net
+change and tied to the deck — decisions 3.12). Both loads checksum-verified.
+2012–2019 statements are PDF-only, unextracted. Other tables remain empty.
 Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
 `run_reconciliation`.
 
