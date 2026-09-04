@@ -1412,3 +1412,41 @@ own evidence chain, for a pre-merger series of modest analytic value; the
 2011-13 multi-column era (3.15) remains out for the same reason.
 
 **Files.** `scripts/stage3_fubon_eraA.py`, `data/fubon_eraA_cost.csv`.
+
+### 4.1 Sector derived series built inside one regulatory scope
+
+**Decision.** `scripts/derive_sector_series.py` produces the sector half of
+README §3 from the loaded channels: **55 rows across 8 series keys, 2024-04 →
+2026-07**, loaded to `tlfx.derived_series` and checksum-verified. Every row
+stays inside the briefing's own regulatory scope, or is flagged where it does
+not.
+
+**Two in-document identities carry the derivation, both verified (6/6):**
+`net_fx_exposure = denominator × (1 − ratio)` and `buffer_total /
+net_fx_exposure = absorbable appreciation %`. The second holds to 0.01pp at
+every 2026 month (e.g. 2026-03: 911,100/8,607,300 = 10.59% vs published
+10.6), which is what licenses the first identity's *inverse* use: from
+2026-02 the briefing stops printing the denominator but prints net exposure
+and the ratio, so the denominator is recovered as `net/(1 − ratio)` and
+tagged `definition_version = v2_identity`, `basis = estimated`. The recovered
+values are continuous with the published anchors (15.4tn at 2025-12 →
+15.69tn at 2026-03 → 15.85tn at 2026-07), which is the sanity check that
+matters: a scope error would show as a step, not a drift.
+
+**Series produced.** `reg_hedge_ratio` (13 months, v1/v2 break at the Feb-2026
+notice), `reg_hedge_ratio_effective` (the Bureau's own with-buffers memo),
+`reg_denominator`, `net_open_fx`, `hedge_principal` (10.36tn at 2024-12 →
+7.74tn at 2025-12 → 6.80tn at 2026-07), `gross_hedge_ratio`, `buffer_total`,
+`absorbable_appreciation`.
+
+**The one deliberate cross-scope construct.** `gross_hedge_ratio` = hedge
+principal (regulatory scope) / FSC-basis 國外投資 (`ib_indicators`) — the
+figure sell-side quotes. It is `basis = estimated` with the mixing stated in
+`basis_note` on every row, because the regulatory denominator is only ~68% of
+國外投資 (15.4tn vs 22.8tn at 2025-12 — decisions 2.3). Read: 45.0% (2024-12)
+→ 34.0% (2025-12) → 31.2% (2026-04). Series 1 (economic hedge ratio) is NOT
+derived here: it needs FX-policy liabilities on the same scope, which the
+briefing does not publish separately.
+
+**Files.** `scripts/derive_sector_series.py`,
+`data/derived_series_sector.csv`, `out/derive_sector_20260904.sql`.
