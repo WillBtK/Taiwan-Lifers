@@ -673,3 +673,56 @@ measure, so pairing it with a CBC foreign-asset series would mix bases.
 
 **Files.** `scripts/stage2_cbc_balance_sheet.py`, `data/sector_balance_sheet.csv`,
 `out/stage2_cbc_*.sql`, `reports/stage2_cbc_*.json`, `STATUS.md`.
+
+---
+
+## Stage 3 — Firm panel (2026-09-04)
+
+### 3.1 The firm decks are the primary source, and they are machine-readable back to 2011
+
+**Decision.** The six-firm panel leads for series 1, 2, 5, 6 and 7; the sector
+press route is demoted to a cross-check. README §7's Stage 2 → Stage 3 ordering
+is inverted in practice. `scripts/stage3_cathay_decks.py` indexes the decks and
+extracts the FX hedging page.
+
+**Reason — the sector route bottoms out, the firm route does not.** Decisions
+1.11 put the sector regulatory ratio's practical start at 2024-04, and 2.1 found
+a widening definitional gap between FSC 國外投資 and CBC 國外資產 (3.47% at
+2025-12) that blocks using CBC foreign assets as the monthly denominator against
+an FSC-defined ratio. So sector series 1/2/5 cannot be built before 2024 from
+sector sources at all. Against that:
+
+- Cathay's IR site lists **112 results decks back to 2011 Q4**, at a stable path,
+  fetched directly (no MOPS dependency; MOPS itself returns an 800-byte JS shell).
+- **Every deck sampled is machine-readable text**, 19k–38k characters, including
+  2014 and 2016. README §7's plan to "hand-code the 2013–2019 history where PDFs
+  are not machine-readable" is not needed — that assumption is withdrawn.
+- One page, "Cathay Life – FX hedging strategy", carries the whole disclosure:
+  FX asset base (NT$5.54tn at 1H26), the hedging structure split, the FX risk
+  exposure vs reserve-for-FX-policy split (74/26), a five-period hedging-cost
+  strip and a six-period FX volatility reserve strip. That is series 1, 2, 5, 6
+  and 7 inputs from a single page, quarterly, on one consistent basis — numerator
+  and denominator from the same document, which is exactly what the sector route
+  cannot offer.
+
+**Extraction: bind pie values through the wedge, never straight to the caption.**
+The captions sit outside the pie on leader lines, so a value inside one wedge can
+be nearer a neighbouring wedge's caption. Direct nearest-caption pairing swaps
+the 60% and 4% shares on the 2Q26 deck. The filled wedges are recoverable via
+`page.get_drawings()`, and both value→wedge and caption→wedge resolve with a
+clear margin, so the join is made on the wedge. With that, 2Q26 extracts exactly:
+CS & NDF 36%, proxy & open 60%, FVOCI 4%, FX risk exposure 74%, hedging cost
+1.21%, reserve NT$130.9bn — matching the deck.
+
+The 60% proxy-and-open share is not an error: the deck's own note says those
+positions are mainly AC bond exposures, which is the 2026 AC FX accounting
+treatment, and it is the same reclassification that took the sector ratio from
+50.23% to 42.89%.
+
+**Open.** Page selection still mis-fires on some vintages (it picks pages 34/37/38/41
+in several 2024–26 decks, which carry the keywords in a different layout), the
+reserve-for-FX-policy caption does not always match, and older decks use different
+captions again. Cross-vintage layout handling is the remaining work before the
+panel can be run over all 112 decks and the other five firms.
+
+**Files.** `scripts/stage3_cathay_decks.py`, `config/cathay_decks.json`.
