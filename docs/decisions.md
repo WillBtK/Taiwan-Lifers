@@ -818,3 +818,46 @@ download gate. (c) Check whether XBRL is exposed anywhere, which would remove
 the parsing problem rather than improve it.
 
 **Files.** `config/allowlist.tsv`.
+
+### 3.4 The right firm-level source is the Insurance Bureau's own portal, and it is unreachable here
+
+**Finding.** The statutory route for firm data is neither MOPS nor the IR sites.
+It is **保險業公開資訊觀測站** at `ins-info.ib.gov.tw` — the Insurance Bureau's
+own centralised disclosure portal, the insurance-sector counterpart to MOPS,
+carrying per-company pages (`customer/life.aspx?UID=…`, `Info2-2/2-3.aspx`) and
+aggregate tables, among them 表06021011 財務報告彙總 and 表06161610
+壽險財務業務指標. Every insurer's disclosure is published there under
+人身保險業辦理資訊公開管理辦法.
+
+**It cannot be reached from this environment.** The https tunnel closes
+repeatedly at about 12 s (six consecutive attempts, `ws_closed_mid_exchange`
+after 517 B); plain http returns 503 "upstream connect error … connection
+timeout". This is not a policy denial, so it may be the site or the egress path.
+
+**The same data exists as open data, and that is policy-blocked.**
+`data.gov.tw` dataset 7191 is 壽險財務業務指標 published as structured open data,
+which would remove scraping from this problem altogether. `data.gov.tw` answers
+403 to CONNECT at the proxy. **These two are worth raising with whoever controls
+the network policy: between them they are the clean solution to firm-level
+data, and both are government sources.**
+
+**What is reachable, and what a statement actually contains.** Cathay Life's own
+host `www.cathaylife.com.tw` is 403-blocked, but its statutory statements are
+also served from `www.cathayholdings.com`, which is not. One was fetched and
+parsed: 127 pages, 108,691 characters of extractable text, with derivatives on
+26 pages, hedging on 19, and the FX price-fluctuation reserve on 10.
+
+That statement gives derivative **fair values** by instrument family
+(遠期外匯、換匯、換匯換利 assets NT$3.42bn against liabilities NT$8.88bn at
+101.6.30) — but its only 名目本金 disclosure covers **related-party** trades with
+Cathay United Bank, not the total book. Fair value is not a hedge notional, so
+that vintage alone cannot produce a hedge ratio. Whether current statements do
+is the open question: IFRS 9 hedge-accounting disclosure and the 2026 notice §10
+both require considerably more than this 2012-vintage statement carried, and
+that must be checked against a current filing before the approach is judged.
+
+Also reachable and publishing statutory material: `www.fubon.com` (a structured
+財務概況 disclosure section), `www.nanshanlife.com.tw` (quarterly 財務概況 PDFs
+from `portal-api/File/{id}`), `www.kgilife.com.tw`.
+
+**Files.** `config/allowlist.tsv`.
