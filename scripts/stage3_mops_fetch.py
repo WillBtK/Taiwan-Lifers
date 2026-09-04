@@ -3,8 +3,10 @@
 
 One request per firm-quarter, heavily paced: mopsov's WAF blocks bursts (two
 requests 30s apart triggered it; a lone request succeeds), so the loop sleeps
-a randomised 60-100s between fetches and backs off five minutes and doubling
-on each WAF page. Every success is written to cache immediately; reruns skip
+a randomised 120-180s between fetches and backs off five minutes and doubling
+on each WAF page (gentler pacing nets more than penalty cycles; the WAF budget
+is shared across TWSE hosts, openapi included, so nothing else may call them
+while this runs). Every success is written to cache immediately; reruns skip
 cached files, so the job resumes cleanly.
 
 t164sb01 params: step=1, CO_ID, SYEAR (western), SSEASON 1-4, REPORT_ID=C
@@ -98,7 +100,7 @@ def main():
                         backoff = 300
                         print(f"{co} {y}Q{q}{rid}: no filing ({len(t)}b)", flush=True)
                     break
-                time.sleep(random.uniform(60, 100))
+                time.sleep(random.uniform(120, 180))
                 if got:
                     break
     print(f"done: fetched {fetched}, no-filing {empty}, cached-skip {skipped}", flush=True)
