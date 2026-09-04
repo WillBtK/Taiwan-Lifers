@@ -59,6 +59,24 @@ def period_parts(p):
     raise ValueError(p)
 
 
+def period_kind(p):
+    """'2Q22' is the quarter alone; '1H22'/'9M22'/'2022'/'FY22' are cumulative
+    year-to-date. Fubon's cost chart prints BOTH on one page and they differ
+    materially (4Q22 -110bp vs FY22 -51bp), so they must not share a series
+    key — mapping both to the period's end quarter silently dropped 13 of 55
+    observations on the first load."""
+    return "Q" if re.fullmatch(r"[1-4]Q\d\d", p) else "YTD"
+
+
+def cost_keys(p):
+    """A first-quarter figure is simultaneously the quarter and the cumulative
+    period — the same number by definition — so it belongs to both series and
+    neither is left with an annual gap."""
+    if re.fullmatch(r"1Q\d\d", p):
+        return ["hedge_cost_recurring", "hedge_cost_recurring_ytd"]
+    return ["hedge_cost_recurring"] if period_kind(p) == "Q" else ["hedge_cost_recurring_ytd"]
+
+
 def num(s):
     return None if s in (None, "") else float(s)
 
@@ -121,26 +139,44 @@ def main():
             continue
         p = r["period"]
         y, em = period_parts(p)
-        emit(7, "hedge_cost_recurring", "fubon_life", f"{y}-{Q_START[em]}", "Q",
-             -float(r["recurring_bps"]), "bp of FX assets", "deck_disclosed",
-             "IFRS17" if y >= 2026 else "IFRS4", FUBON_DECKS,
-             "富邦金控 results deck, 經常性避險成本 (legend-colour bound, sum-verified)",
-             note="recurring hedge cost only; the deck's headline bar is the all-in FX "
-                  "result (decisions 3.15/3.17). Positive = cost.",
-             vintage=f"{y}-{Q_END[em]}")
+        kind = period_kind(p)
+        for _ck in cost_keys(p):
+          emit(7, _ck, "fubon_life", f"{y}-{Q_START[em]}", "Q",
+               -float(r["recurring_bps"]), "bp of FX assets", "deck_disclosed",
+               "IFRS17" if y >= 2026 else "IFRS4", FUBON_DECKS,
+               "富邦金控 results deck, 經常性避險成本 (legend-colour bound, sum-verified)",
+               note=("recurring hedge cost only; the deck's headline bar is the all-in FX "
+                     "result (decisions 3.15/3.17). Positive = cost. Deck label "
+                     f"{p} — " + ("the quarter alone." if kind == "Q" else
+                                  "cumulative from 1 January; obs_date is the quarter the "
+                                  "period ends in.")),
+               vintage=f"{y}-{Q_END[em]}")
 
     for r in csv.DictReader(open(ROOT / "data" / "cathay_fx_quarterly.csv", encoding="utf-8")):
         cost = num(r["hedging_cost_pct"])
         if cost is None:
             continue
         y, em = period_parts(r["period"])
-        emit(7, "hedge_cost_recurring", "cathay_life", f"{y}-{Q_START[em]}", "Q",
-             cost * 100, "bp of FX assets", "deck_disclosed",
-             "IFRS17" if y >= 2026 else "IFRS4", CATHAY_DECKS,
-             "國泰金控 results deck, hedging cost",
-             note="the page states its base: 'Hedging cost is calculated based on FX assets'. "
-                  "Positive = cost.",
-             vintage=r["deck_date"])
+        for _ck in cost_keys(r["period"]):
+          emit(7, _ck, "cathay_life", f"{y}-{Q_START[em]}", "Q",
+               cost * 100, "bp of FX assets", "deck_disclosed",
+               "IFRS17" if y >= 2026 else "IFRS4", CATHAY_DECKS,
+               "國泰金控 results deck, hedging cost",
+               note="the page states its base: 'Hedging cost is calculated based on FX assets'. "
+                    "Positive = cost. Cathay prints cumulative periods only, so every row is "
+                    "year-to-date; obs_date is the quarter the period ends in.",
+               vintage=r["deck_date"])
+
+    # ---------- key-collision guard ----------
+    # the DB's natural key is (series_key, entity, obs_date, vintage); anything
+    # that collides here would be dropped silently by `on conflict do nothing`
+    seen_keys = {}
+    for r in rows:
+        k = (r["series_key"], r["entity_id"], r["obs_date"], r["vintage"])
+        if k in seen_keys:
+            problems.append(f"duplicate natural key {k}: values {seen_keys[k]} and {r['value']}")
+        seen_keys[k] = r["value"]
+    checks.append(("no duplicate natural keys", len(seen_keys) == len(rows)))
 
     # ---------- write ----------
     cols = ["series_id", "series_key", "entity_id", "obs_date", "freq", "value",

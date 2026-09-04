@@ -84,8 +84,10 @@ change and tied to the deck — decisions 3.12). Both loads checksum-verified.
 `tlfx.derived_series` — **sector 55 rows / 8 keys, 2024-04 → 2026-07**
 (reg hedge ratio and the Bureau's effective memo, denominator, net open,
 hedge principal, gross hedge ratio, buffer total, absorbable appreciation —
-decisions 4.1) and **firm 171 rows** (Fubon economic hedge ratio and net-open
-share, 36 quarters 2014 → FY25; Fubon and Cathay recurring hedge cost in bp).
+decisions 4.1) and **firm 194 rows** (Fubon economic hedge ratio and net-open
+share, 36 quarters 2014 → FY25; Fubon and Cathay recurring hedge cost in bp,
+split into discrete-quarter and cumulative series because the decks print
+both and they differ materially — decisions 4.4).
 No economic hedge ratio is published for Cathay or for Fubon 2026: the
 composition pie's base is not stated there (decisions 4.2).
 Run logs and check rows are in `tlfx.run_log`, `run_source_status`,

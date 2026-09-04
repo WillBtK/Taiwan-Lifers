@@ -1520,3 +1520,31 @@ re-launched each working turn. The clean fix is still the proxy unblock for
 
 **Files.** `scripts/stage3_mops_fetch.py` (unchanged; the queue is the thing
 to narrow).
+
+### 4.4 A silent key collision: discrete quarters and cumulative periods are different measures
+
+**Found by the checksum step, not by the run.** The first firm-series load
+reported no error but landed 42 of Fubon's 55 hedge-cost rows. Cause: Fubon's
+cost chart prints *both* discrete quarters (1Q21…4Q21) and *cumulative*
+periods (1H21, 9M21, 2021) on the same page, and mapping every label to the
+quarter its period ends in put 4Q22 and FY22 on the same natural key. The 13
+losers went out silently through `on conflict do nothing`.
+
+They are not near-duplicates. 4Q22 discrete is **−110bp**; FY22 cumulative is
+**−51bp**. Keeping either at the other's expense would have corrupted the
+series.
+
+**Fix.** `hedge_cost_recurring` carries discrete quarters, `hedge_cost_
+recurring_ytd` cumulative ones, each row's `basis_note` naming the deck label
+and which it is. A first-quarter figure is both by definition, so it is
+emitted to both series and neither carries an annual gap — Cathay, whose
+decks print cumulative periods only, therefore has a complete 44-quarter YTD
+series. 194 rows, 37/37 checks.
+
+**Guard added.** The script now asserts no two emitted rows share
+`(series_key, entity_id, obs_date, vintage)` before writing, so a collision
+fails the run instead of vanishing into the conflict clause. Any future
+derivation should carry the same guard: `on conflict do nothing` is the right
+idempotency primitive and the wrong error detector.
+
+**Files.** `scripts/derive_firm_series.py`, `data/derived_series_firm.csv`.
