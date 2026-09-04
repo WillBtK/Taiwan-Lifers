@@ -54,9 +54,12 @@ STRUCTURE_LABELS = {
     "proxy": "hedge_proxy_open_pct",
     "fvoci": "hedge_fvoci_pct",
 }
+# Fragments, not full phrases: the captions wrap across text blocks, so the
+# full phrase is often split between blocks and never matches whole.
 SPLIT_LABELS = {
-    "fx risk exposure": "fx_risk_exposure_pct",
-    "reserve for fx policy": "fx_policy_reserve_pct",
+    "fx risk": "fx_risk_exposure_pct",
+    "risk exposure": "fx_risk_exposure_pct",
+    "fx policy": "fx_policy_reserve_pct",
 }
 
 
@@ -91,27 +94,20 @@ def deck_bytes(rec: dict) -> bytes:
 
 
 def find_fx_page(doc) -> int | None:
-    """The FX hedging page, identified by the combination only it carries.
+    """The quarterly FX hedging page: the FIRST page naming the FX asset base
+    alongside a hedging-instrument caption.
 
-    Scoring on 'hedging' keywords alone picks up appendix and income-statement
-    pages (observed at pages 34/37/38/41 across the 2024–26 decks). The real page
-    always names the FX asset base, at least one hedging-instrument caption, and
-    at least one of the two history strips, so all three families are required.
+    Most decks carry two qualifying pages — the quarterly page in the body
+    (pages ~23–28) and a "Dynamic hedging strategy" appendix whose long-history
+    chart has no numeric text layer. The body page always precedes the appendix,
+    so taking the first candidate selects correctly in every vintage sampled;
+    keyword *scoring* preferred the appendix in four of them (decisions 3.1).
     """
-    best, best_score = None, 0
     for i, page in enumerate(doc):
         low = page.get_text().lower()
-        has_base = "fx asset" in low or "fx assets" in low
-        has_caption = any(k in low for k in ("ndf", "proxy", "fvoci", "currency swap"))
-        has_strip = any(k in low for k in ("hedging cost", "volatility reserve", "fx risk exposure"))
-        if not (has_base and has_caption and has_strip):
-            continue
-        score = sum(k in low for k in
-                    ("fx hedging", "hedging structure", "hedging strategy", "fx risk exposure",
-                     "volatility reserve", "hedging cost", "ndf", "proxy", "fvoci"))
-        if score > best_score:
-            best, best_score = i, score
-    return best
+        if ("fx asset" in low or "fx assets" in low) and                 any(k in low for k in ("ndf", "proxy", "fvoci", "currency swap")):
+            return i
+    return None
 
 
 def pie_slices(page) -> list[tuple[float, float]]:
@@ -177,17 +173,37 @@ def extract(doc, page_no: int) -> dict:
     flat = re.sub(r"\s+", " ", text)
     row: dict = {"fx_page": page_no + 1}
 
-    if m := re.search(r"FX asset\s*NT\$\s*([\d.]+)\s*TN", flat, re.I):
+    # "NT$5.54TN" in 2025-26 decks, "NT$5.53TR" in 2024 ones
+    if m := re.search(r"FX assets?\s*NT\$\s*([\d.]+)\s*T[NR]", flat, re.I):
         row["fx_assets_ntd_tn"] = float(m.group(1))
 
-    row.update(pair_by_position(page, STRUCTURE_LABELS))
-    row.update(pair_by_position(page, SPLIT_LABELS))
+    # One combined pass: the structure and exposure pies sit on the same page,
+    # and in 2024-25 vintages the structure pie's values are graphics with no
+    # text layer. Run separately, the value-less structure captions can claim
+    # the exposure pie's wedges and mislabel its 69/31. With all captions
+    # competing at once, each wedge goes to its nearest caption and the
+    # exposure values land on the exposure fields.
+    row.update(pair_by_position(page, {**STRUCTURE_LABELS, **SPLIT_LABELS}))
 
-    # narrative cross-check line
-    if m := re.search(r"hedging cost was ([\d.]+)\s*%", flat, re.I):
-        row["hedging_cost_pct_narrative"] = float(m.group(1))
+    # narrative / labelled cost line — wording varies by era:
+    #   "1H26 hedging cost was 1.21%"   (2026)
+    #   "1H25 Hedging cost 1.45%"       (2024-25, with its period label)
+    if m := re.search(r"((?:FY|1H|9M|[1-4]Q)\d\d)?\s*hedging cost(?: was)?\s*(?:of\s*)?([\d.]+)\s*%", flat, re.I):
+        row["hedging_cost_pct_narrative"] = float(m.group(2))
+        if m.group(1):
+            row["hedging_cost_period"] = m.group(1)
     if m := re.search(r"FX volatility reserve.*?to NT\$([\d,.]+)\s*bn", flat, re.I):
         row["fx_volatility_reserve_ntd_bn_narrative"] = float(m.group(1).replace(",", ""))
+
+    # snapshot as-of date: some vintages date the structure pie to a month end
+    # that is not the reporting quarter end (the March 2026 deck says 2026/1/31)
+    if m := re.search(r"(20\d\d/\d{1,2}/\d{1,2})\s*FX asset hedging structure", flat, re.I):
+        row["structure_asof"] = m.group(1)
+
+    # validity: the three structure shares should account for the whole pie
+    shares = [row.get(k) for k in ("hedge_cs_ndf_pct", "hedge_proxy_open_pct", "hedge_fvoci_pct")]
+    if all(v is not None for v in shares):
+        row["structure_sums_to"] = round(sum(shares), 1)
 
     # period-labelled history strips
     periods = re.findall(r"\b((?:FY|1H|9M|[1-4]Q)\d{2})\b", flat)
@@ -195,11 +211,44 @@ def extract(doc, page_no: int) -> dict:
     return row
 
 
+def validate(row: dict) -> dict:
+    """Keep only field values that pass era-independent plausibility rules.
+
+    The wedge binding is geometric and occasionally captures a nearby yield or
+    cost figure into a share field. Shares are only published when their pie
+    closes (sums to ~100), except CS & NDF alone, which is kept when it is
+    unambiguously share-sized. Costs are kept only from the labelled or
+    narrative sentence forms, which are regex-anchored rather than geometric.
+    """
+    out: dict = {"fx_page": row.get("fx_page")}
+    if v := row.get("fx_assets_ntd_tn"):
+        out["fx_assets_ntd_tn"] = v
+    exp, pol = row.get("fx_risk_exposure_pct"), row.get("fx_policy_reserve_pct")
+    if exp is not None and pol is not None and 95 <= exp + pol <= 105:
+        out["fx_risk_exposure_pct"], out["fx_policy_reserve_pct"] = exp, pol
+    shares = [row.get(k) for k in ("hedge_cs_ndf_pct", "hedge_proxy_open_pct", "hedge_fvoci_pct")]
+    if all(v is not None for v in shares) and 95 <= sum(shares) <= 105:
+        out["hedge_cs_ndf_pct"], out["hedge_proxy_open_pct"], out["hedge_fvoci_pct"] = shares
+    elif (v := row.get("hedge_cs_ndf_pct")) is not None and 30 <= v <= 85:
+        out["hedge_cs_ndf_pct"] = v
+    if (c := row.get("hedging_cost_pct_narrative")) is not None and 0.1 <= c <= 3.5:
+        out["hedging_cost_pct"] = c
+        if row.get("hedging_cost_period"):
+            out["hedging_cost_period"] = row["hedging_cost_period"]
+    if (r := row.get("fx_volatility_reserve_ntd_bn_narrative")) is not None:
+        out["fx_volatility_reserve_ntd_bn"] = r
+    if row.get("structure_asof"):
+        out["structure_asof"] = row["structure_asof"]
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--index", action="store_true", help="refresh the deck index and exit")
     ap.add_argument("--limit", type=int, default=6)
     ap.add_argument("--lang", default="en", choices=("en", "zh"))
+    ap.add_argument("--csv", action="store_true",
+                    help="write validated rows to data/cathay_deck_fx.csv")
     args = ap.parse_args()
 
     if args.index or not INDEX.exists():
@@ -211,8 +260,9 @@ def main() -> int:
         recs = json.loads(INDEX.read_text(encoding="utf-8"))
 
     picked = [r for r in recs if r["lang"] == args.lang][: args.limit]
-    print(f"{'deck':<12}{'pg':>4}{'FX assets':>11}{'CS+NDF':>8}{'proxy':>7}{'FVOCI':>7}"
-          f"{'exp%':>6}{'pol%':>6}{'cost%':>7}{'reserve':>9}")
+    emitted: list[dict] = []
+    print(f"{'deck':<12}{'pg':>4}{'FX assets':>11}{'CS+NDF':>8}{'proxy':>7}{'FVOCI':>7}{'sum':>6}"
+          f"{'exp%':>6}{'pol%':>6}{'cost%':>7}{'reserve':>9}  asof")
     for rec in picked:
         try:
             doc = pymupdf.open(stream=deck_bytes(rec), filetype="pdf")
@@ -223,12 +273,32 @@ def main() -> int:
         if pg is None:
             print(f"{rec['date']:<12}   —  (no FX hedging page matched)")
             continue
-        r = extract(doc, pg)
+        raw = extract(doc, pg)
+        r = validate(raw) if args.csv else raw
+        if args.csv:
+            r = {"deck_date": rec["date"].replace("/", "-"), "deck_title": rec["title"],
+                 "pdf_url": rec["pdf"], **r}
+            emitted.append(r)
         f = lambda k, s="": f"{r[k]:g}{s}" if k in r else "—"
         print(f"{rec['date']:<12}{r['fx_page']:>4}{f('fx_assets_ntd_tn','tn'):>11}"
               f"{f('hedge_cs_ndf_pct','%'):>8}{f('hedge_proxy_open_pct','%'):>7}{f('hedge_fvoci_pct','%'):>7}"
+              f"{f('structure_sums_to'):>6}"
               f"{f('fx_risk_exposure_pct','%'):>6}{f('fx_policy_reserve_pct','%'):>6}"
-              f"{f('hedging_cost_pct_narrative','%'):>7}{f('fx_volatility_reserve_ntd_bn_narrative','bn'):>9}")
+              f"{f('hedging_cost_pct_narrative','%') if not args.csv else f('hedging_cost_pct','%'):>7}"
+              f"{f('fx_volatility_reserve_ntd_bn_narrative','bn') if not args.csv else f('fx_volatility_reserve_ntd_bn','bn'):>9}"
+              f"  {r.get('structure_asof','')}")
+    if args.csv and emitted:
+        import csv as _csv
+        out = ROOT / "data" / "cathay_deck_fx.csv"
+        cols = ["deck_date", "fx_page", "fx_assets_ntd_tn", "hedge_cs_ndf_pct",
+                "hedge_proxy_open_pct", "hedge_fvoci_pct", "fx_risk_exposure_pct",
+                "fx_policy_reserve_pct", "hedging_cost_pct", "hedging_cost_period",
+                "fx_volatility_reserve_ntd_bn", "structure_asof", "deck_title", "pdf_url"]
+        with out.open("w", newline="", encoding="utf-8") as fh:
+            w = _csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
+            w.writeheader()
+            w.writerows(emitted)
+        print(f"csv: {out.relative_to(ROOT)} ({len(emitted)} rows)")
     return 0
 
 

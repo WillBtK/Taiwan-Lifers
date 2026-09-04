@@ -943,3 +943,50 @@ statements may make the primary-statement lines trivially parseable and should
 be tried before any PDF table work.
 
 **Files.** none yet (finding only; the extractor comes next).
+
+### 3.7 Cathay deck run: 44 quarters extracted; FX assets and shares solid, costs provisional
+
+**Decision.** `stage3_cathay_decks.py --csv` now runs all English decks and emits
+`data/cathay_deck_fx.csv` through a validity layer, 44 rows, 2014-03 → 2026-08.
+Fields are published at three confidence tiers rather than uniformly.
+
+**Page selection, fixed.** Most decks carry two qualifying pages: the quarterly
+body page (~p23–28) and a "Dynamic hedging strategy" appendix whose long-history
+chart has **no numeric text layer** (only "FY" axis ticks and glyph-degraded
+captions survive). The body page always precedes the appendix, so the selector
+takes the *first* page naming the FX asset base beside an instrument caption;
+keyword scoring, which preferred the appendix in four vintages, is gone. The
+2013 decks and five others (2014×2, 2017-08, 2019×2) have no qualifying page and
+are recorded as gaps, not failures.
+
+**Field tiers.**
+
+1. **Solid — regex-anchored text.** `fx_assets_ntd_tn`: all 44 rows, 1.66tn →
+   5.54tn, a continuous 12-year quarterly denominator ("NT$…TN", "TR" in 2024).
+   Also the 2026 narrative reserve figures and the labelled costs
+   ("1H25 Hedging cost 1.45%") from 2024 on.
+2. **Conditional — geometric, kept only when the pie closes.** The 74/26
+   exposure-vs-FX-policy split (kept when the pair sums 95–105; ~24 rows, stable
+   69–76 / 24–31 across a decade) and the full structure split (kept when the
+   three shares close; 2026-08 only, after the 2024–25 vintages turned out to
+   draw the structure values as vector graphics with no text). CS & NDF alone is
+   kept when share-sized (30–85%): ~24 rows, 49% (2015) → 63–67% (2020–24) →
+   36% (1H26).
+3. **Provisional — do not publish downstream yet.** `hedging_cost_pct` outside
+   the labelled/narrative rows: the loose regex can catch a delta or an
+   unrelated ratio, and 0.14% (2023-03 deck, FY22) and 0.49% (2023-11) are
+   almost certainly such captures. Cross-validation against the FY strips the
+   2026-08 deck itself carries (FY23 0.96, FY24 1.56, 1H25 1.45, FY25 1.57) and
+   against the Chinese decks is the follow-up.
+
+**The two mis-binding lessons are recorded in the code:** captions wrap across
+text blocks, so caption matching uses fragments; and the two pies' captions must
+compete in a single pairing pass, otherwise the value-less structure captions
+claim the exposure wedges.
+
+**What this yields analytically, already:** Cathay's CS & NDF share halved
+between FY24 (~63%) and 1H26 (36%) while the exposure/policy split barely moved
+— the firm-level counterpart of the sector ratio's 66% → 43% fall, and the
+denominator series to divide the statement-side buffers by.
+
+**Files.** `scripts/stage3_cathay_decks.py`, `data/cathay_deck_fx.csv`.
