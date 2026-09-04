@@ -118,6 +118,11 @@ Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
 - **Flow items are YTD** as published (`flows_are_ytd`). Monthly flows are a
   derivation for `derived_series`.
 - **2026 profit/equity figures are IFRS 17** and not comparable with 2025.
+- **The 41億 year-end reserve gap is closed** (decisions 4.8): our two
+  sector channels agree exactly at 2025-12 (613,700 NT$ mn), the four firms
+  we hold sum to 59.86% of it in line with their asset share, and the gap is
+  a 0.67% artefact of a third-party tabulation that no published series
+  depends on.
 - **Firm statements (v2 clean source):** Cathay's 2Q26 deck shows the FX
   volatility reserve at NT$130.9bn, matching the press tabulation of the Q2
   statements (1,309.3億); the 20-firm aggregate (6,997.3億) matches the June

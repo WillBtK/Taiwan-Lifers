@@ -1662,3 +1662,35 @@ economic hedge ratio at 1H26, subset gives 52.6%. Recorded here with both
 readings and all the evidence so it can be ruled on directly rather than
 re-derived. Until then Cathay's series 1 stays unpublished and only Fubon's
 disclosed series carries the headline.
+
+### 4.8 The 41億 year-end reserve gap is immaterial and does not touch any published series
+
+**What it was.** STATUS carried an open item: at 2025 year-end a press
+tabulation of the twenty life insurers' statements differed from the
+briefing's sector FX-reserve figure by 41億 (NT$4.1bn), and Stage 3 was to
+explain it before substituting a firm aggregate for the sector figure.
+
+**Now testable, and it resolves three ways at once.**
+
+1. *Our own two sector channels agree exactly.* The release channel and the
+   briefing channel both put the 2025-12 reserve at **613,700 NT$ mn**, to
+   the unit. The discrepancy was never between our sources; it was between a
+   press tabulation and the briefing, neither of which we depend on for this
+   figure.
+2. *The four firms we now hold sum coherently.* Cathay 113,806.6 (18.54% of
+   sector), Fubon 142,124.6 (23.16%), Nan Shan 68,045.2 (11.09%), KGI 43,370
+   (7.07%) — **367,346.4, or 59.86%** of the sector total, which tracks
+   these four firms' share of sector assets. No firm is anomalous against
+   the sector figure.
+3. *The gap is 0.67% of the sector total* and cannot be reproduced without
+   all twenty firms' statements, which the environment does not reach
+   (decisions 4.3).
+
+**Closed, on the grounds that it does not matter.** No published series
+substitutes a firm aggregate for the sector figure — series 3 takes the
+sector reserve from the sector channels, which agree exactly — so a 0.67%
+tabulation difference in a third-party sum has no path into the output. The
+item is closed rather than carried, and the reason is recorded so it is not
+reopened as though unexamined.
+
+**Files.** none — a reconciliation, not a load.
