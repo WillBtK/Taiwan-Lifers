@@ -57,19 +57,39 @@ One direct negative worth recording: cnyes 4510085 (2020-07-30) is the monthly
 FSC write-up for June 2020 and gives 兌換損益, 避險工具損益, 避險工具換匯成本 and
 外匯價格變動準備金 — **but no ratio**. That is the release's own field set.
 
-**Inference, not fact.** The ratio appears to have entered the monthly press
-write-up somewhere between mid-2020 and early 2024, later than the statistic
-itself, which Economic Daily dates to ROC 109. A single 2020 article is weak
-evidence; the honest reading is that the *series* starts 2020 but *monthly press
-reporting of it* starts later, and the recoverable history is correspondingly
-shorter. Pinning that transition month is the next useful piece of work.
+### Bisection result (decisions 1.11)
+
+Bisecting 2020-06 → 2024-04 shows a **precision gradient**, not an on/off switch:
+
+| Period | How the ratio appears | Source |
+|---|---|---|
+| 2020-06 | absent from the monthly write-up | cnyes 4510085 |
+| 2021–22 | spoken range, "一般都在 60%～70% 以上" (壽險公會) | cnyes 4900483 |
+| 2023–25 | spoken range in commissioned research, "約六至七成" | udn 9297709 |
+| 2024-04 | whole percent, "66%", from the Bureau | cnyes 5577871 |
+| 2025-04 → | two decimals, 63.07% … 42.94% | cnyes 6000672 etc. |
+
+Only the last two rows are the regulatory series. **Treat 2024-04 as its
+practical start.**
+
+The search index does reach cnyes's 2021–23 output (it returns 4748550, 4800682,
+4900483, 5116875), so the absence of a monthly ratio write-up there is evidence
+rather than a failure to look — but not proof, since cnyes articles are fetchable
+by id yet not enumerable while `api.cnyes.com` is blocked. Exact-figure queries
+built from the release channel's own reserve balances (2,289億 for 2022-12,
+920億 for 2023-12) did not break through either.
+
+## Also closed
+
+`www.ib.gov.tw`, the Insurance Bureau's own site, carries the FSC monthly
+release verbatim — a mirror, not a second channel. The two supervisory research
+PDFs that would plausibly hold a historical series (`www.tigf.org.tw`,
+`www.tpefx.com.tw`) are both 403 at the proxy.
 
 ## Next queries worth running
 
-1. `完全不避險` restricted to cnyes, paired with each of 2023 / 2024 — to find
-   where monthly reporting of the ratio begins.
-2. Year-end anchors for 2020, 2021, 2022, 2023 — reported retrospectively, and
+1. Year-end anchors for 2020, 2021, 2022, 2023 — reported retrospectively, and
    the only months that also carry the denominator.
-3. Ratings-agency pieces (中華信評 / Fitch) — 6300469 gives a sector ratio of
+2. Ratings-agency pieces (中華信評 / Fitch) — 6300469 gives a sector ratio of
    "約 57%" as at late 2025 and 5941594 discusses 2024–25 exposure; these carry
    sector aggregates that may date earlier figures.

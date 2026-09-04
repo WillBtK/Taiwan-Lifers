@@ -570,3 +570,50 @@ an untested claim that a figure exists.
 **Files.** `config/briefing_press.json`, `config/allowlist.tsv`,
 `docs/briefing_coverage.md`, `scripts/probe_briefing_article.py` (replaces the
 two earlier backfill scripts), `STATUS.md`, `BACKFILL_HANDOFF.md`.
+
+### 1.11 Bisection result: the ratio is reported as a spoken range before 2024, not a figure
+
+**Decision.** Treat 2024-04 as the practical start of the regulatory ratio
+series. Pre-2024 press mentions are spoken ranges and must not be substituted
+for it (the rule already stated in `BACKFILL_HANDOFF.md`). The
+`docs/briefing_coverage.md` "searched without result" window is closed for
+2020-01 → 2024-03 by ordinary press search in this environment.
+
+**Reason.** Bisecting between cnyes 4510085 (2020-07-30, June 2020 write-up,
+release field set, no ratio) and cnyes 5577871 (2024-05-28, April 2024, "66% 的
+避險比率" attributed to 保險局副局長蔡火炎) shows a *precision gradient*, not a
+simple on/off:
+
+| Period | How the ratio appears | Source |
+|---|---|---|
+| 2020-06 | absent from the monthly write-up | cnyes 4510085 |
+| 2021–22 | spoken range, "一般都在 60%～70% 以上", attributed to 壽險公會 | cnyes 4900483 |
+| 2023–25 | spoken range in commissioned research, "約六至七成" | udn 9297709 |
+| 2024-04 | whole percent, "66%", attributed to the Bureau | cnyes 5577871 |
+| 2025-04 → | two decimals, 63.07% … 42.94% | cnyes 6000672 etc. |
+
+So the figure firms up from association commentary, to a Bureau round number,
+to a published statistic. Only the last two are the regulatory series.
+
+**Method limit, stated plainly.** The search index does reach cnyes's 2021–23
+output — it returned 4748550 (2021), 4800682 and 4900483 (2022), 5116875 (2023)
+— so the absence of a monthly ratio write-up in that window is evidence, not
+merely a failure to look. It is not proof: cnyes articles are fetchable by
+direct id but not enumerable, because `api.cnyes.com` is 403 at the proxy, so a
+precise monthly figure published in an article the index will not surface cannot
+be excluded. Exact-figure queries built from the release channel's own reserve
+balances (2,289億 for 2022-12, 920億 for 2023-12, etc.) returned the same
+recent-article set and did not break through.
+
+**Also closed.** `www.ib.gov.tw` — the Insurance Bureau's own site — carries the
+monthly release verbatim (same title, same fields, 避險損益 and
+外匯價格變動準備金 present, 避險比率 and 曝險 absent), so it is a mirror, not a
+second channel. The two supervisory research PDFs that would plausibly tabulate
+a historical series (`www.tigf.org.tw`, `www.tpefx.com.tw`) are both 403 at the
+proxy.
+
+**Consequence.** Stage 2 should treat the sector ratio as beginning 2024-04,
+with 2024-12 and 2025-12 as the only denominator-bearing anchors, and derive
+pre-2024 sector series 1/2/5 from the six-firm panel rather than the briefing.
+
+**Files.** `docs/briefing_coverage.md`, `config/allowlist.tsv`, `STATUS.md`.

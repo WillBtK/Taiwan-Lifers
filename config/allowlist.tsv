@@ -45,3 +45,6 @@ news.cts.com.tw	3	https://news.cts.com.tw/cna/money/202605/202605283037334.html	
 www.cfr.org	3	https://www.cfr.org/		Reference (Setser), not ingested
 concentratedambiguity.wordpress.com	3	https://concentratedambiguity.wordpress.com/		Reference (S.T.W. 2019), not ingested
 api.cnyes.com	3	https://api.cnyes.com/media/api/v1/search/news	blocked	403 at proxy (CONNECT policy denial) 2026-09-03 — cnyes on-site search is client-rendered off this host, so site search is unusable; harvest cnyes via domain-restricted web search and fetch news.cnyes.com/news/id/{id} directly
+www.ib.gov.tw	3	https://www.ib.gov.tw/ch/home.jsp?id=239&mcustomize=news_view.jsp&dataserno=202508280002&dtable=News	reachable	Insurance Bureau own site — carries the FSC monthly release verbatim (mirror, not a second channel); no hedge ratio, decisions 1.11
+www.tigf.org.tw	3	https://www.tigf.org.tw/	blocked	403 at proxy 2026-09-03 — hosts the FSC-commissioned FX risk supervision study that may tabulate a historical hedge-ratio series
+www.tpefx.com.tw	3	https://www.tpefx.com.tw/	blocked	403 at proxy 2026-09-03 — Taipei FX Market Development Foundation research on currency risk in the life sector
