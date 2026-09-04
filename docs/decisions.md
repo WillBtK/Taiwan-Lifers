@@ -1319,3 +1319,28 @@ NT$153.7bn).
 
 **Files.** `scripts/stage3_fubon_decks.py`, `data/fubon_deck_fx.csv`,
 `config/fubon_conference_decks.json`.
+
+### 3.16 KGI deck series extracted: hedging cost, yield, FX-reserve path, structure — 2020 → 1H26
+
+**Extraction.** `scripts/stage3_kgi_decks.py` over the CDF/KGI corpus
+(cdf.irpro.co): **28 rows / 14 deck periods (1Q23 → 1H26 editions), carrying
+chart series back to 2020**, `data/kgi_deck_fx.csv`. The KGI-era page is a
+2×2 grid of small bar charts (pre-hedge recurring yield %, hedging cost %,
+外匯價格變動準備金 NT$ bn, hedge-structure pie). Binding: block-scoped
+x-pairing where a word belongs to the rightmost left-aligned caption left of
+it, stacked same-x captions split by vertical distance, and a caption is only
+the pattern plus a units suffix — prose mentioning 避險成本 (headers,
+footnotes) must not anchor a block; that hijack was the main bug class.
+
+**Series (cross-deck agreed, zero conflicts).** Hedging cost %: 2020 1.53 →
+2022 0.64 → 2023 1.53 → 2024 1.09 → 1H25 3.06 → 2025 2.56 → 1H26 1.17.
+FX reserve NT$bn: 4.02 (2020) → 9.77 (2023) → 30.71 (2024) → **2.44 at 1H25
+(drawn down absorbing the TWD shock) → 43.37 (2025) → 48.99 (1H26)**.
+Structure at 1H26: CS&NDF 37%, naked USD+other 59%, overseas equity 4%; FX
+risk exposure 73% / FX policy 27% — the same post-shock low-hedge pattern as
+Fubon (3.14/3.15). KGI's "Hedging Cost" is its own labelled series (unlike
+Fubon's all-in headline); whether it is recurring-only is still to be pinned
+before cross-firm comparison.
+
+**Files.** `scripts/stage3_kgi_decks.py`, `data/kgi_deck_fx.csv`,
+`config/kgi_conference_decks.json`.
