@@ -1619,3 +1619,46 @@ so the rule is now "nearest caption above", and the cost series is restored
 
 **Files.** `scripts/stage3_kgi_decks.py`, `scripts/stage3_load_decks.py`,
 `data/kgi_deck_fx.csv`.
+
+### 4.7 The Cathay pie-base question: both tests from 4.2 run, evidence strengthened, judgement still withheld
+
+Both tests named in 4.2 have now been run against the full 110-deck cache.
+
+**Test 1 — a wedge printed in NT$: no.** Only four hedging pages in the whole
+archive carry more than one NT$ amount, and in every case the extras are the
+FX volatility reserve and its change (e.g. 2026-08-28: NT$5.54TN FX assets,
+NT$17.1bn YTD change, NT$130.9bn balance). No edition prices a wedge, so the
+base is never stated arithmetically.
+
+**Test 2 — an instrument share exceeding the FX-risk share: no, and the near
+misses are the informative part.** On the 12 quarters where the wedge-colour
+extractor binds both figures, CS&NDF never exceeds FX-risk, and the gap is
+bounded in a narrow 4–12pp band for eleven consecutive quarters (2019-03 →
+2023-11) before jumping to 38pp at 1H26 — exactly when the deck documents the
+1M26 reclassification of AC bonds into "proxy & open".
+
+That clustering is what moves the odds. On the *total-assets* reading the gap
+is a meaningful quantity — the share of FX-risk-bearing assets left unhedged
+by derivatives — and a book that is nearly fully hedged should hug its
+ceiling, which is what the data does. On the *subset* reading CS&NDF is a
+share of a different base, algebraically free of FX-risk%, and hugging it for
+eleven quarters would be coincidence. The subset reading also implies Cathay
+ran a ~24.5% open FX position in 2Q22 (≈NT$1.3tn) while the sector regulatory
+ratio was near 66% — hard to credit for the most conservative large lifer.
+
+**Still not published, and why.** This is strong circumstantial evidence, not
+a stated base, and it does not meet the standard Fubon's labelled wedge met
+(4.2) — where the wedge names 外幣保單 among its own contents and settles the
+question outright. The counter-evidence also survives: Cathay's layout is
+structurally the same as Fubon's *2026* layout, and there Fubon labels the
+large wedge 未避險 ("unhedged") while drawing the policy split separately,
+which on a total-assets base would put policy-backed assets inside a wedge
+called unhedged. Cathay's own wedge names ("proxy & open", not "unhedged")
+weaken that objection without removing it.
+
+**This is the single open judgement with the largest effect on the
+headline**, and it is the user's to make: total-assets gives Cathay a 62%
+economic hedge ratio at 1H26, subset gives 52.6%. Recorded here with both
+readings and all the evidence so it can be ruled on directly rather than
+re-derived. Until then Cathay's series 1 stays unpublished and only Fubon's
+disclosed series carries the headline.
