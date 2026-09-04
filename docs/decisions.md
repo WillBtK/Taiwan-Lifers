@@ -903,3 +903,43 @@ reclassification the deck dates to 1M26. Flagging an unverified tension is
 correct; overwriting a sourced figure with a worse-sourced one is not.
 
 **Files.** `README.md`.
+
+### 3.6 The notional test, run on a current statement: the panel needs both documents per quarter
+
+**Question.** Can statutory filings alone yield the firm hedge ratio (3.2's open
+question), or are the decks' rounded labels the only firm-level source?
+
+**Answer: neither alone — the panel is statement + deck per quarter.** Run on
+Cathay Life's Q1 2026 consolidated report (201 pages, 249k chars of extractable
+text, fetched from the cathayholdings quarterly-reports page, which lists **58
+quarters of Cathay Life statements, each with PDF and Excel**).
+
+**What the statement carries, at NT$-thousand precision:**
+
+- **The denominator.** The significant-FX-exposure note (p.183) gives assets by
+  currency: USD monetary NT$5,089,493mn, USD non-monetary NT$265,552mn, AUD
+  NT$149,027mn at 115.3.31 — totalling ≈NT$5.5tn, consistent with the deck's
+  rounded "FX asset NT$5.54TN".
+- **The buffers.** The FX price-fluctuation reserve reconciliation (p.100):
+  opening NT$113,806,568k, fixed and volatility provisions itemised, closing
+  NT$123,945,812k — which **ties exactly to the deck's 1Q26 strip (123.9bn)**.
+  Series 3 at firm level comes from here, not from chart labels.
+- Hedge-accounting notionals for the *designated* sliver only: IRS ≈NT$26.4bn,
+  FX forwards NT$44.4bn (p.161–163), with maturity buckets and contracted rates.
+
+**What it does not carry.** The economic hedge book. CS/NDF (~NT$2tn implied by
+the deck's 36% of NT$5.54tn) sits at FVTPL, and FVTPL derivatives are disclosed
+at fair value, not notional. 避險比率 appears only as policy language (p.100)
+and in the Y-reserve formula (p.116), never as a figure. Consistent with the
+2012 vintage (3.4): across fourteen years and two accounting regimes, the
+statements have never disclosed the total hedge notional.
+
+**Design consequence for Stage 3.** Per firm-quarter: denominator and buffers
+from the statement (precise, audited); ratio and composition from the deck
+(stated but rounded); the reserve balance as the join check between them — it
+ties exactly where tested. The `firm_quarterly` schema already tolerates this
+split via its `basis`/missing-field design. The Excel companions to the
+statements may make the primary-statement lines trivially parseable and should
+be tried before any PDF table work.
+
+**Files.** none yet (finding only; the extractor comes next).
