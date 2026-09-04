@@ -38,7 +38,8 @@ Every row below verifies: each figure was located in its own cited article by
 | 2024-12 | 66.39% | udn 9292493 | 2026-01-27 | year-end anchor; carries denominator 15.6兆 |
 | 2025-04 | 63.07% | cnyes 6000672 | 2025-05-29 | reserve 1,648億 ties exactly to the release |
 | 2025-08 | 62.25% | udn 9039413 | 2025-09-30 | reserve ties to release |
-| 2025-10 | 58.55% | udn 9167271 | 2025-11-27 | first sub-60%; reserve ties to release |
+| 2025-09 | — (denominator 15.1兆 only) | cnyes 6260090 | 2025-12-03 | legislator citing FSC data at the Finance Committee |
+| 2025-10 | 58.55% | udn 9167271 + udn 9209554 | 2025-11-27 / 12-17 | first sub-60%; reserve ties to release; **carries denominator 15.2兆 and foreign investments 22.3兆** from the FSC's written report to the Legislature — the first non-year-end denominator |
 | 2025-12 | 50.23% | cnyes 6323663 | 2026-01-27 | year-end anchor; denominator 15.4兆 |
 | 2026-01 → 2026-07 | 47% → 42.94% | mixed | — | monthly, from Stage 1 |
 
@@ -86,10 +87,20 @@ release verbatim — a mirror, not a second channel. The two supervisory researc
 PDFs that would plausibly hold a historical series (`www.tigf.org.tw`,
 `www.tpefx.com.tw`) are both 403 at the proxy.
 
-## Next queries worth running
+## Year-end anchors 2020–2023: closed as exhausted through press
 
-1. Year-end anchors for 2020, 2021, 2022, 2023 — reported retrospectively, and
-   the only months that also carry the denominator.
-2. Ratings-agency pieces (中華信評 / Fitch) — 6300469 gives a sector ratio of
-   "約 57%" as at late 2025 and 5941594 discusses 2024–25 exposure; these carry
-   sector aggregates that may date earlier figures.
+A second bounded pass (2026-09-04) recovered no pre-2024 year-end value:
+retrospective queries on cnyes return the same recent-article set; the
+ratings-agency pieces (6300469, 5941594) carry qualitative statements only; the
+Finance Committee article (6260090) and the FSC written-report article (9209554)
+yielded 2025 monthly denominators instead — a better prize, but not history.
+The route to any pre-2024 sector figure, if one exists, is the two blocked
+government sources (`ins-info.ib.gov.tw`, `data.gov.tw`) or documents outside
+this environment's egress. Do not spend further press searches on it.
+
+## Derivable now
+
+Hedge principal = ratio × denominator at the denominator-bearing months:
+2024-12 NT$10.36tn → 2025-10 8.90tn → 2025-12 7.74tn. The traditional hedge
+book shrank ~NT$2.6tn in twelve months; 2025-09's denominator (15.1兆) awaits a
+ratio for that month.

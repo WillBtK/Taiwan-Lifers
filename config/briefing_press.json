@@ -81,6 +81,22 @@
       "note": "Reserve balance agrees with the August 2025 release (3,726億). NDF cost quoted only as '高掛4%'; not stored."
     },
     {
+      "obs_month": "2025-09-01",
+      "reported_by": "立法院財政委員會（立委林德福引述金管會數據）",
+      "sources": [
+        {
+          "url": "https://news.cnyes.com/news/id/6260090",
+          "published": "2025-12-03",
+          "outlet": "鉅亨網",
+          "fields": {
+            "regulatory_fx_exposure": "15.1兆元"
+          },
+          "quote": "國民黨立委林德福引述相關數據指出，截至 9 月底，壽險業國外投資 (扣除外幣保單) 的淨曝險額高達 15.1 兆元。"
+        }
+      ],
+      "note": "Denominator only; no ratio stated for the month. The legislator's wording is 淨曝險額, but the construction described — foreign investment less FX-policy liabilities — is the regulatory exposure (denominator), consistent with 15.2兆 at 2025-10 and 15.4兆 at 2025-12; stored as regulatory_fx_exposure with that caveat. Attribution is a legislator citing FSC data at the Finance Committee, one step further from the Bureau than the usual briefing quote."
+    },
+    {
       "obs_month": "2025-10-01",
       "reported_by": "金管會保險局",
       "sources": [
@@ -93,9 +109,19 @@
             "fx_reserve_total": "3,845億元"
           },
           "quote": "10月的避險比率58.55%，不僅比上月減少，亦為109年以來最低；而截至今年10月底為止，壽險業外匯價格變動準備金的累積餘額為3,845億元"
+        },
+        {
+          "url": "https://money.udn.com/money/story/5613/9209554",
+          "published": "2025-12-17",
+          "outlet": "經濟日報",
+          "fields": {
+            "foreign_investments": "22.3兆元",
+            "regulatory_fx_exposure": "15.2兆元"
+          },
+          "quote": "金管會出爐的書面報告指出，截至今年10月底，壽險業國外投資金額高達22.3兆元，扣除外幣保單後的曝險金額為15.2兆元，就15.2兆元部位進行避險比例約占6成。"
         }
       ],
-      "note": "Reserve balance agrees with the October 2025 release (3,845億). The article states the briefing series starts in ROC 109 (2020)."
+      "note": "Reserve balance agrees with the October 2025 release (3,845億). The article states the briefing series starts in ROC 109 (2020). Denominator and foreign-investment total for the month are from the FSC's written report to the Legislative Yuan as quoted by Economic Daily — the first non-year-end denominator recovered; the report's '約6成' rounds the same month's 58.55%."
     },
     {
       "obs_month": "2025-12-01",
