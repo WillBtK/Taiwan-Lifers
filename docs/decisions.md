@@ -1014,10 +1014,13 @@ order as the CSV. Do not use `…en` for anything.
 channel carries those months, and the loader inserts on the shared natural key
 with the CSV rows taking precedence, so the table is complete.
 
-**The series itself**: foreign assets NT$74mn at 1987-05, NT$121bn at 2000-12,
-NT$21.9tn at 2026-07 — the sector's foreign book grew five orders of magnitude
-in four decades, and the pre-2000 stub documents that the pre-liberalisation
-base was effectively zero.
+**The series itself**: the table runs from 1987-05, and foreign assets first
+appear at **1988-11, NT$74mn** (earlier months carry the line as null — the
+pre-liberalisation base was literally nothing), NT$121bn at 2000-12, NT$21.9tn
+at 2026-07: five orders of magnitude in under four decades. *(Corrected
+in-session: first written as "NT$74mn at 1987-05" — an off-by-one from a
+hard-coded label in a diagnostic print, caught when the loaded table returned
+null for 1987-05 and the CSV was re-read.)*
 
 **Loading convention.** Bulk rows are loaded through the compact
 labels/vals CTE form (one INSERT…SELECT per batch), not the emitted

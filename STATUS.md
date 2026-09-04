@@ -2,8 +2,12 @@
 
 Current state only. History lives in `docs/decisions.md`.
 
-**Stage 1 (FSC sector series) — complete, 2026-09-03.** Stage 0 complete.
-Stages 2–7 not started.
+**Stage 1 complete (2026-09-03). Stage 2 data complete (2026-09-04):** the
+sector balance sheet is loaded monthly from 1987-05; series 1/2/5 derivation
+waits on the FSC/CBC foreign-asset basis question (decisions 2.1). **Stage 3 in
+progress:** Cathay's deck series is extracted and merged (47 quarters); the
+statement archive is mapped; five firms and the statement-side extraction
+remain. Stages 4–7 not started.
 
 ## What runs
 
@@ -14,7 +18,7 @@ Stages 2–7 not started.
 | `python3 scripts/stage2_cbc_balance_sheet.py [--refresh]` | Parses CBC table 8 CSV (Big5, rolling window) into long format, runs the three balance-sheet identities, writes `data/sector_balance_sheet.csv`, `out/stage2_cbc_*.sql`, report | Working: 30 months, 96/96 checks |
 | `python3 scripts/stage2_cbc_history.py [--refresh]` | Fetches CBC statistics-database API item EF67M01 (monthly, 1987-05→), validates identities and exact agreement with the CSV channel, writes `data/sector_balance_sheet_history.csv`, `out/stage2b_*.sql`, report | Working: 471 months, 1316/1316 checks |
 | `python3 scripts/stage3_cathay_decks.py [--csv] [--limit N]` | Indexes Cathay's 112 results decks, extracts the FX hedging page (wedge-bound pies, tiered validity), writes `data/cathay_deck_fx.csv` | Working: 44 quarters extracted |
-| `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 13 months, 16/16 checks |
+| `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 14 months, 16/16 checks |
 
 Write path: the scripts emit idempotent SQL (`insert … on conflict do
 nothing` on the natural key); it is applied with the Supabase MCP or psql.
@@ -28,16 +32,24 @@ Import via `sys.path.insert(0, 'src')`.
 
 ## What is populated
 
-`tlfx.sector_monthly` — 104 rows in two channels (select on
-`reporting_channel`; from 2024-04 a month can carry both):
+`tlfx.sector_monthly` — 105 rows in two channels (select on
+`reporting_channel`; from 2024-04 a month can carry both). `tlfx.
+sector_balance_sheet` — **6,967 rows, 471 months, 1987-05 → 2026-07** (CBC
+table 8: statistics-database API for history, rolling CSV for the current
+window; the two agree exactly on every overlapping cell, and the CSV row wins
+the shared key). Loads are checksum-verified server-side against the local CSVs
+(row count, total sum, spot values, identities — decisions 2.2).
 
 | Channel | Rows | Months | Basis | Carries |
 |---|---|---|---|---|
 | `release` | 91 | 2018-05 → 2025-12 (no 2019-03; 2020-03 lacks profit/equity) | `disclosed` | pre-tax profit, equity (life / non-life / total), FX table (FX P&L, hedging P&L — split from 2020-01, reserve net change, total), life FX reserve balance, TWD move YTD, net foreign-investment income (2020-09→) |
-| `briefing_press` | 13 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; year-end denominators for 2024 and 2025 |
+| `briefing_press` | 14 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-09, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; denominators at 2024-12, 2025-09, 2025-10, 2025-12 — hedge principal derivable at the ratio-bearing three: 10.36tn → 8.90tn → 7.74tn NT$ |
 
 Migrations applied: `0001`–`0004`. `0003` adds the release fields, `0004`
-puts `reporting_channel` in the primary key. All other tables remain empty.
+puts `reporting_channel` in the primary key. Firm-level deck data lives in
+`data/cathay_fx_quarterly.csv` (47 quarters, en/zh cross-confirmed, one flagged
+conflict) pending an `entities`/`firm_quarterly` load design. Other tables
+remain empty.
 Run logs and check rows are in `tlfx.run_log`, `run_source_status`,
 `run_reconciliation`.
 
@@ -97,9 +109,14 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
    ranges ("6~7成"), not the regulatory figure, so pre-2024 sector series 1/2/5
    go to the six-firm panel. Remaining: the 2020–2023 year-end anchors, the only
    months that also carry a denominator, and ratings-agency aggregates.
-3. Stage 2 (CBC table 8) next; Stage 3 should verify the §10 disclosures
-   against Cathay's and Fubon's statutory Q2 2026 statements (deck seen, not
-   the statement) and resolve the 41億 year-end gap above.
+3. Stage 2 series derivation is gated on the FSC/CBC foreign-asset gap
+   (2.30% → 3.48% over 2025, definitional — decisions 2.1/2.2); test the
+   國際板債券 hypothesis before pairing the CBC denominator with FSC ratios.
+4. Stage 3 next steps: read the 2023-03 deck page to resolve the one flagged
+   CS & NDF conflict; design `entities`/`firm_quarterly` load for the Cathay
+   series; statement-side extraction (Excel companions first — 58 quarters on
+   cathayholdings); then Fubon, Nan Shan, KGI, Taiwan Life, Shin Kong. The
+   41億 year-end reserve gap remains Stage 3's to explain.
 
 The gold re-step is applied in the spec (all three `:root` blocks, §7/§10);
 decisions 0.3's "not applied" was superseded in Stage 0 — see 1.8.
