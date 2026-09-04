@@ -1344,3 +1344,26 @@ before cross-firm comparison.
 
 **Files.** `scripts/stage3_kgi_decks.py`, `data/kgi_deck_fx.csv`,
 `config/kgi_conference_decks.json`.
+
+### 3.17 Fubon recurring hedge cost attributed by legend-colour binding — 68 periods, and a falsified shortcut
+
+**Decision.** `scripts/stage3_fubon_recurring.py` binds the stacked cost
+components (recurring hedge cost / FX G&L & reserve provisioning / one-off
+provisioning) by colour: the legend swatch beside each caption gives the
+series colour; a value binds to the series whose colour fills the bar segment
+containing it. **68 periods attributed, 55 fully sum-verified against the
+all-in totals, zero conflicts** (`data/fubon_recurring_cost.csv`). The
+recurring series tracks the US–TW differential as it should: −52bp (2016) →
+−134 (2018) → −48 (2020) → −21 (2021) → −160 (2023) → −175 (2024) → −116
+(1Q25) → −48 (1H26, half-year).
+
+**A falsified shortcut, kept on the record.** A stack-order fallback (legend
+x-order = segment order from the axis) was tried for the 13 periods whose
+decks draw bars outside `get_drawings()`: it CONTRADICTED colour-bound values
+across 2018–19 (27 conflicts) and was removed. Ordering is not evidence;
+colour and sum identities are. The 13 partially-attributed periods (2020,
+2021, 2025 among them) stay flagged `sum_ties_total=False` and their
+unattributed pairs live only in `fubon_deck_fx.csv`'s `cost_components`.
+
+**Files.** `scripts/stage3_fubon_recurring.py`,
+`data/fubon_recurring_cost.csv`.
