@@ -7,15 +7,17 @@ sector balance sheet is loaded monthly from 1987-05, and the monthly FSC-basis
 foreign-investment denominator is loaded 2017-01 → 2026-04 (`ib_indicators`
 channel); the FSC/CBC basis question is settled — a stable 2.4–4.2%
 classification wedge (decisions 2.3/2.4), so series 1/2/5 derivation is
-unblocked. **Stage 3 in progress:** Cathay is done in both channels (deck 47
-quarters, statements 26); the Fubon deck series is extracted (49 periods,
-2011 → 1H26, `data/fubon_deck_fx.csv`); KGI's deck corpus is indexed and
-downloading (extractable 2023 →); the MOPS t164sb01 fetcher is grinding the
-statement backfill for five codes plus Cathay 2013–2019 (WAF-paced, hours;
-`cache/mops_fetch.log`), with the inline-XBRL parser ready
-(`stage3_mops_parse.py`). Remaining: MOPS-load once fetched, Fubon
-recurring-cost colour pass and era A/B, KGI extractor, Taiwan Life / Shin
-Kong decks. Stages 4–7 not started.
+unblocked. **Stage 3 deck side effectively done:** Cathay (both channels),
+Fubon (49 periods incl. colour-bound recurring cost and a 2005→1Q07 era-A
+backfill) and KGI (20 periods) are extracted, loaded and checksum-verified;
+out of scope with reasons on record: Fubon 2008-13 (ING-merger panels,
+multi-column era — 3.15/3.19), KGI pre-2023 (no archive), Taiwan Life / Shin
+Kong decks (holdco IR hosts proxy-blocked). **Statement side in flight:** the
+MOPS t164sb01 fetcher grinds the backfill for five codes plus Cathay
+2013–2019 (WAF-paced, ~days; `cache/mops_fetch.log`), parser ready
+(`stage3_mops_parse.py`); statement loads, the 41億 gap and the KGI cost
+definition wait on it. Stages 4–7 not started; series 1/2/5 derivation is
+the next unblocked build.
 
 ## What runs
 
