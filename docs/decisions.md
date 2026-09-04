@@ -1367,3 +1367,28 @@ unattributed pairs live only in `fubon_deck_fx.csv`'s `cost_components`.
 
 **Files.** `scripts/stage3_fubon_recurring.py`,
 `data/fubon_recurring_cost.csv`.
+
+### 3.18 Fubon and KGI deck series loaded — semantics carried faithfully, not force-fitted
+
+**Decision.** Migration `0007` (additive) gives `firm_quarterly` a
+`deck_composition jsonb` (each deck's pie under canonical keys — category
+semantics differ by firm and era, so cross-firm reads must go through key
+names) and `total_fx_cost_bp` (the all-in FX result, Fubon's headline —
+distinct from `hedge_cost_bp`, which stays recurring-only and comparable).
+`scripts/stage3_load_decks.py` consolidates the sibling-agreed CSVs into one
+row per (entity, period): **fubon_life 49 rows (2013-Q4 → 2026-Q2), kgi_life
+20 rows (2020-Q4 → 2026-Q2)**, loaded and checksum-verified.
+
+**Sign discipline.** Totals are sign-normalised negative-=-cost via the
+verified component sums (which carry true signs even where a deck prints the
+total unsigned); a bare unsigned-positive total with no verified components is
+ambiguous between the 2014-era print convention and a genuine 2022-style net
+gain, so four such rows (1Q14/1H14/9M14/2013) load without a total rather
+than with a guessed sign. `hedge_cost_bp` (positive-=-cost, Cathay
+convention) fills only from the 55 sum-verified colour-bound periods (3.17);
+KGI's 避險成本 stays out of the DB entirely until its definition is pinned
+(3.16). Rates are annualised in-source (cumulative ≈ average of quarters),
+so no annualisation was applied.
+
+**Files.** `supabase/migrations/0007_firm_quarterly_deck_composition.sql`,
+`scripts/stage3_load_decks.py`, `out/stage3_decks_20260904.sql`.

@@ -57,12 +57,17 @@ the shared key). Loads are checksum-verified server-side against the local CSVs
 | `ib_indicators` | 112 | 2017-01 → 2026-04, complete | `disclosed` | FSC-basis 國外投資 (the regulatory hedge-ratio denominator) and 資產總額, monthly, from 表17-1 of the Bureau's key-indicators PDFs; each month's column label proven by a CBC total-assets tie; vintage = PDF upload date; 2026 figures are IFRS 17 and current-year figures unaudited per the table's own note |
 | `briefing_press` | 14 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-09, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; denominators at 2024-12, 2025-09, 2025-10, 2025-12 — hedge principal derivable at the ratio-bearing three: 10.36tn → 8.90tn → 7.74tn NT$ |
 
-Migrations applied: `0001`–`0006`. `0003` adds the release fields, `0004`
+Migrations applied: `0001`–`0007`. `0003` adds the release fields, `0004`
 puts `reporting_channel` in the primary key, `0005` admits the
 `ib_indicators` channel, `0006` adds deck share columns and the
-`source_channel` key to `firm_quarterly`.
+`source_channel` key to `firm_quarterly`, `0007` adds `deck_composition`
+and `total_fx_cost_bp`.
 `tlfx.entities` holds the six firms (decisions 3.10). `tlfx.firm_quarterly`
-holds Cathay in both channels: **deck — 47 quarters, 2013-Q4 → 2026-Q2**
+holds three firms' deck series — Cathay 47 quarters, **Fubon 49 (2013-Q4 →
+2026-Q2, all-in FX cost + colour-bound recurring cost + composition —
+decisions 3.15/3.17/3.18), KGI 20 (2020-Q4 → 2026-Q2, yield, FX-reserve
+path, composition; its cost series stays CSV-only pending definition —
+3.16)** — plus Cathay in both channels: **deck — 47 quarters, 2013-Q4 → 2026-Q2**
 (shares, cost in bp, FX volatility reserve; en/zh cross-confirmed — decisions
 3.11) and **statement — 26 quarters, 2020-Q1 → 2026-Q2** (FX volatility
 reserve, total assets, equity at NT$-thousand precision from the Excel
