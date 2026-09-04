@@ -617,3 +617,59 @@ with 2024-12 and 2025-12 as the only denominator-bearing anchors, and derive
 pre-2024 sector series 1/2/5 from the six-firm panel rather than the briefing.
 
 **Files.** `docs/briefing_coverage.md`, `config/allowlist.tsv`, `STATUS.md`.
+
+---
+
+## Stage 2 — Sector balance sheet from the CBC (2026-09-04)
+
+### 2.1 Table 8 parsed; the CBC and FSC populations are the same, so the foreign-asset gap is definitional
+
+**Decision.** `scripts/stage2_cbc_balance_sheet.py` ingests CBC Financial
+Statistics Monthly appendix table 8 into `sector_balance_sheet`: 30 months
+(2016-12 year-ends, then monthly 2024-10 → 2026-07), 450 long-format rows, 15
+line codes, 96/96 checks. CBC foreign assets are adopted as the sector
+foreign-asset series; the FSC's 國外投資金額 is kept as a separate, differently
+defined measure rather than reconciled away.
+
+**Parsing notes.** The file is Big5 with a flattened bilingual multi-row header,
+a ROC year stated once per block and carried forward beneath it, and blank
+separator rows. It is already in NT$ million, the repo's storage unit, so no
+coercion is applied. Year-end and monthly blocks overlap at 2024-12 and 2025-12;
+the values agree exactly and are stored once. Three identities hold to NT$ 1 mn
+on all 30 rows and are the stage's checks: asset components = total assets;
+liabilities + equity = total assets; the three non-financial portfolio parts =
+their subtotal.
+
+**Vintage for a rolling file.** The CSV path is stable while its contents roll
+monthly and it carries no publication stamp, so the edition is identified by its
+latest observation month (here 2026-07). This is deliberate: the natural key is
+`(obs_month, line_code, vintage)`, and a retrieval-date vintage would mint a
+fresh copy of every row on each run.
+
+**The population question, settled.** CBC equity ties to FSC equity across all
+23 overlapping months at 0.00–0.03%: 2018-12 → 2025-12 against channel
+`release`, and 2026-05/06 against `briefing_press`. The tie holds across the
+IFRS 17 / TW-ICS transition, so table 8 is on the same accounting basis as the
+FSC figures throughout. Two consequences: the Stage 2 parse is independently
+validated against a pipeline that shares no code with it, and the two agencies
+are measuring the same set of companies.
+
+**Therefore the foreign-asset gap is definitional, not coverage.**
+
+| Year-end | FSC 國外投資 | CBC 國外資產 | Gap | Rel |
+|---|---|---|---|---|
+| 2024-12 | 23.000兆 | 22.472兆 | 0.528兆 | 2.30% |
+| 2025-12 | 22.800兆 | 22.009兆 | 0.791兆 | 3.47% |
+
+The 2025-12 gap breaches the repo's 3% tolerance and it is widening. Because
+equity ties exactly, this cannot be explained by a different company set.
+Candidate explanations, none yet verified: differing treatment of 國際板債券
+(foreign-currency bonds issued domestically by non-resident issuers, which have
+their own status under the Insurance Act's overseas cap); a valuation-basis
+difference; or the FSC figure being a supervisory aggregate rather than a
+balance-sheet line. **The two must not be substituted for one another until this
+is resolved** — in particular the regulatory denominator is defined off the FSC
+measure, so pairing it with a CBC foreign-asset series would mix bases.
+
+**Files.** `scripts/stage2_cbc_balance_sheet.py`, `data/sector_balance_sheet.csv`,
+`out/stage2_cbc_*.sql`, `reports/stage2_cbc_*.json`, `STATUS.md`.
