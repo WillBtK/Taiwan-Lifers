@@ -861,3 +861,45 @@ Also reachable and publishing statutory material: `www.fubon.com` (a structured
 from `portal-api/File/{id}`), `www.kgilife.com.tw`.
 
 **Files.** `config/allowlist.tsv`.
+
+### 3.5 README reviewed and corrected: sourcing hierarchy, entity codes, stage order
+
+**Decision.** The README is a working document, not a fixed spec. Ten corrections
+made, the substantive ones being a stated sourcing hierarchy and the firm filing
+codes.
+
+**1 — §4 now opens with a sourcing hierarchy** (open data → regulator's portal →
+statutory filing → IR material → press), with the rule that tiers 4 and 5 are
+presentation layers, that stopping short of the top tier must be recorded, and
+that an unreachable higher-tier source is a finding to escalate rather than a
+reason to silently drop a tier. Its absence is what let the project build series
+4 off newspapers without anyone first checking 保險業公開資訊觀測站.
+
+**2 — §4.5 had holding-company codes labelled as life companies.** It listed
+"Cathay Life (2882), Fubon Life (2881), KGI Life (2883)"; those are the holdcos,
+whose financials consolidate banking and securities. The insurers file separately:
+Cathay Life 5846, Fubon Life 5865, Nan Shan 5874, KGI Life 2823 (2823 verified
+against MOPS, the others taken from the companies' own filed documents). Querying
+a filing system with the holdco code returns the wrong entity, silently.
+
+**The rest.** §4.1 puts the Bureau's portal ahead of the press channel and states
+that channel's two measured limits (udn purges at ~12 months; the ratio series
+starts 2024-04). §4.5 puts statutory filings ahead of decks, corrects the MOPS
+characterisation, and records that the one statement parsed gives fair values
+rather than notionals. §7 inverts the Stage 2/3 order with the basis reason, and
+withdraws the OCR budget for 2013–2019. §3 corrects series 1/2/4 start dates
+(sector 2024-04, not 2020) and firm dates to 2011. §8 re-rates Stage 1 to Opus
+and splits Stage 2, both having been rated on an assumption of mechanical work
+that did not hold. §5 reconciles the allowlist block with measured reality, adds
+the press hosts it never listed, and points at `config/allowlist.tsv` as the
+operational source of truth. §9 corrects the MOPS pitfall and flags Cathay's Q1
+2026 CS/NDF figure against the 1H26 reading of 36%. §10 corrects 90 editions to
+91. §6 records `reporting_channel` in the natural key.
+
+**Not changed.** §1, §2 and the interpretation notes other than the two above.
+The Cathay Q1 2026 figure is flagged, not corrected: my own Q1 extraction was
+unreliable and a 33pp move inside one quarter is possible given the AC
+reclassification the deck dates to 1M26. Flagging an unverified tension is
+correct; overwriting a sourced figure with a worse-sourced one is not.
+
+**Files.** `README.md`.

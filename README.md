@@ -29,13 +29,13 @@ Setser and S.T.W. (2019) established the accounting: lifers hedged ~USD 250bn of
 
 | # | Series | Definition | Level | Freq. | Start |
 |---|--------|------------|-------|-------|-------|
-| 1 | **Economic hedge ratio** (headline) | (derivative hedges + FX-denominated policy liabilities) / foreign-currency assets | sector + firm | M (sector), Q (firm) | 2013 (firm), 2020 (sector) |
-| 2 | **Net open FX position** | foreign-currency assets − FX policy liabilities − derivative hedges, stored in NT$ million. USD, % GDP, % assets and × capital are presentations of the same series, selected in the artifact by a unit toggle — never a second y-axis | sector + firm | M / Q | 2020 / 2013 |
+| 1 | **Economic hedge ratio** (headline) | (derivative hedges + FX-denominated policy liabilities) / foreign-currency assets | sector + firm | M (sector), Q (firm) | 2011 (firm); sector 2024-04, gated by the ratio — see §4.1 |
+| 2 | **Net open FX position** | foreign-currency assets − FX policy liabilities − derivative hedges, stored in NT$ million. USD, % GDP, % assets and × capital are presentations of the same series, selected in the artifact by a unit toggle — never a second y-axis | sector + firm | M / Q | sector 2024-04 / firm 2011 |
 | 3 | **Buffer coverage** | tiers as % of net open FX position and as implied absorbable TWD appreciation. v1 (to 2025): (a) FX price-fluctuation reserve; (b) + equity. v2 (2026→, four named buckets of the Feb 2026 notice): (a) 波動準備金 + 固定準備金 (liability side, offset FX losses); (b) + 特別盈餘公積–外匯風險固定準備 (equity); (c) 特別盈餘公積–外匯風險強化準備 shown separately as restricted capital — it cannot offset losses; (d) memo: unamortised FX differences, not loss-absorbing | sector + firm | M / Q | 2020 |
-| 4 | **Regulatory hedge ratio** | FSC definition (2026 notice §(九)): traditional hedge principal / (foreign investments − FX-policy liabilities − unhedged non-FVTPL equities and funds). Stated at the Insurance Bureau's monthly press briefing and reported by the press — never printed in the monthly release (Stage 1, decisions 1.2). Press-reported for its whole life; v1/v2 is a definitional break at the Feb 2026 notice, not a channel break | sector | M | 2020 (briefing series; 2024-12 and 2025-08→ ingested so far) |
-| 5 | **Gross hedge ratio** | derivative hedges / foreign assets (the figure most sell-side and press quote) | sector + firm | M / Q | 2013 |
-| 6 | **Hedge composition** | CS, NDF, proxy, FX policy, open — shares and NT$ | firm | Q | 2013 |
-| 7 | **Hedge cost** | reported annualised hedging cost (bp of foreign assets) vs market 3m CS/NDF implied cost | firm + market | Q / M | 2013 |
+| 4 | **Regulatory hedge ratio** | FSC definition (2026 notice §(九)): traditional hedge principal / (foreign investments − FX-policy liabilities − unhedged non-FVTPL equities and funds). Never printed in the monthly release (decisions 1.2); the Bureau's own portal is the source of record, the press briefing the current fallback. v1/v2 is a definitional break at the Feb 2026 notice, not a channel break | sector | M | **2024-04** in practice — earlier press mentions are spoken ranges, not the figure (decisions 1.11) |
+| 5 | **Gross hedge ratio** | derivative hedges / foreign assets (the figure most sell-side and press quote) | sector + firm | M / Q | firm 2011; sector gated as series 1 |
+| 6 | **Hedge composition** | CS, NDF, proxy, FX policy, open — shares and NT$ | firm | Q | 2011 |
+| 7 | **Hedge cost** | reported annualised hedging cost (bp of foreign assets) vs market 3m CS/NDF implied cost | firm + market | Q / M | 2011 |
 | 8 | **Counterparty residual** | lifer hedges − bank supply (BIS LBS + CBC net FX position) − CBC swap book (disclosed) → residual to foreign/other | sector | Q | 2010 |
 | 9 | **Flow diagnostics** | net foreign bond purchases (BoP other-sector debt securities), Formosa and bond-ETF holdings, new FX-policy premiums, lifer USD sub-debt issuance | sector | M / Q | 2010 |
 
@@ -51,6 +51,29 @@ Reconciliation checks (fail the run if breached by > 3%):
 
 ## 4. Data sources
 
+**Sourcing hierarchy — work down it, and record why when you stop short.**
+
+1. **Structured open data** published by the agency (`data.gov.tw`, agency CSV/XBRL endpoints).
+2. **The regulator's own disclosure portal** — for insurers this is
+   保險業公開資訊觀測站 (`ins-info.ib.gov.tw`), the Insurance Bureau's statutory
+   platform, and for listed entities the legacy MOPS (`mopsov.twse.com.tw`).
+3. **Statutory filings** on the filer's own site (financial statements, published
+   under 人身保險業辦理資訊公開管理辦法).
+4. **Investor-relations material** — decks and presentations.
+5. **Press reporting** of a briefing.
+
+Tiers 4 and 5 are presentation layers: a deck states a rounded chart label where
+the filing states an audited amount, and a newspaper states what a journalist
+heard. Use them where the higher tiers genuinely do not carry the figure, say so
+explicitly in `docs/decisions.md`, and prefer the highest tier that does.
+
+This was learned the expensive way. Stage 1 built the hedge-ratio series off
+press articles without first checking the regulator's own disclosure portal;
+`money.udn.com` then turned out to purge at twelve months, and the recoverable
+press series began in 2024 rather than 2020 (decisions 1.9–1.11, 3.2–3.4). An
+unreachable higher-tier source is a finding to record and escalate, not a reason
+to silently drop a tier.
+
 ### 4.1 Sector-level (FSC / Insurance Bureau)
 Monthly press release "Profit/loss, net value and exchange gains/losses of the insurance industry". **Measured at Stage 1 across all 91 editions:** it carries pre-tax profit and owners' equity (life / non-life / total), FX gains/losses, hedging P&L (instrument P&L and swap cost, split from 2020-01), the reserve's net change, the life insurers' FX price-fluctuation reserve balance, the TWD move YTD and (2020-09→) net foreign-investment income. It does **not** carry the hedge ratio, a hedging-cost rate, the foreign-investment total, the regulatory exposure or the reserve buckets — those are stated at the Insurance Bureau's monthly briefing and reach the public through the press (see "Briefing channel" below). English and Chinese versions; Chinese carries more detail. Parser: `src/tlfx/fsc_parse.py`; ingestion: `scripts/stage1_sector_monthly.py`.
 - English press list: `https://www.fsc.gov.tw/en/home.jsp?id=54&parentpath=0,2`
@@ -64,7 +87,46 @@ Both press lists are the same CMS and expose a POST search form (`keyword`,
 title — never by page position, since the list interleaves banking, securities
 and insurance releases. `src/tlfx/fsc.py` implements this against both channels.
 
-**Briefing channel (series 4 and, from 2026, the reserve buckets).** The Insurance Bureau briefs reporters the day each month's figures are ready — the same day the release used to be posted — and the hedge ratio, buckets and net exposure reach the public through Economic Daily (`money.udn.com`), cnyes and CNA (carried by CTS). This has been the only channel for the hedge ratio since the briefing series began in 2020. Ingested so far (`config/briefing_press.json`, verified against the fetched articles by `scripts/stage1_briefing_press.py`, stored with `basis = 'press_reported'`, `reporting_channel = 'briefing_press'`): 66.39% (Dec 2024), 62.25% (Aug 2025), 58.55% (Oct 2025), 50.23% (Dec 2025), 47% (Jan 2026), 45.1% (Feb), 45.15% (Mar), 44.31% (Apr), 43.66% (May), 42.89% (Jun), 42.94% (Jul); FX reserve + special reserves NT$915.6bn (Feb) → NT$1,083.3bn (Jul); net FX exposure NT$8.61tn (Mar) → NT$9.04tn (Jul). `money.udn.com`, `news.cnyes.com` and `news.cts.com.tw` fetch directly; `udn.com` apex, `www.cna.com.tw` and other outlets are blocked at the sandbox egress. The 2020-01 → 2025-07 monthly backfill is an open task. The Life Insurance Association publishes no hedge or FX data. Firm financial statements carry the mandated disclosures quarterly (notice §10) and are the provenance-clean v2 source (Stage 3).
+**The Insurance Bureau's own disclosure portal — try this before the press.**
+保險業公開資訊觀測站, `https://ins-info.ib.gov.tw/`, is the statutory disclosure
+platform for insurers: per-company pages (`customer/life.aspx?UID=…`,
+`Info2-2.aspx`, `Info2-3.aspx`) and aggregate tables, among them 表06021011
+財務報告彙總 and 表06161610 壽險財務業務指標. Every insurer publishes there under
+人身保險業辦理資訊公開管理辦法. The same indicators are also on `data.gov.tw`
+(dataset 7191, 壽險財務業務指標) as structured open data.
+
+**Both are currently unreachable from the sandbox** — `ins-info` drops the https
+tunnel at ~12 s and answers 503 over http; `data.gov.tw` is a 403 CONNECT policy
+denial (decisions 3.4). That is an egress problem to escalate, not a reason to
+drop to the press tier permanently. Re-probe both at the start of any stage that
+needs firm or sector disclosure.
+
+**Briefing channel (fallback for series 4 and, from 2026, the reserve buckets).**
+The Insurance Bureau briefs reporters the day each month's figures are ready and
+the hedge ratio, buckets and net exposure reach the public through Economic Daily
+(`money.udn.com`), cnyes and CNA (carried by CTS). Ingested
+(`config/briefing_press.json`, verified against the fetched articles by
+`scripts/stage1_briefing_press.py`, `basis = 'press_reported'`,
+`reporting_channel = 'briefing_press'`): 66% (Apr 2024), 66.39% (Dec 2024),
+63.07% (Apr 2025), 62.25% (Aug 2025), 58.55% (Oct 2025), 50.23% (Dec 2025), 47%
+(Jan 2026), 45.1% (Feb), 45.15% (Mar), 44.31% (Apr), 43.66% (May), 42.89% (Jun),
+42.94% (Jul); FX reserve + special reserves NT$915.6bn (Feb) → NT$1,083.3bn
+(Jul); net FX exposure NT$8.61tn (Mar) → NT$9.04tn (Jul).
+
+Two measured properties of this channel that bound what it can deliver
+(decisions 1.10–1.11, ledger in `docs/briefing_coverage.md`):
+
+- **`money.udn.com` purges at about twelve months.** Search engines still serve
+  cached snippets of purged stories, so an old article looks reachable and 404s
+  on fetch. `news.cnyes.com` retains to 2020 and is the archive channel.
+- **The ratio series effectively starts 2024-04.** Before that the press gives
+  spoken ranges ("約六至七成"), which are commentary and must never be stored as
+  the regulatory figure. A pre-2024 sector ratio therefore does not exist in this
+  channel at all, whatever the briefing series' own start date.
+
+The Life Insurance Association publishes no hedge or FX data. Firm financial
+statements carry the mandated disclosures quarterly (notice §10) and are the
+provenance-clean source (§4.5).
 
 **Coverage, measured 2026-09-03.** The monthly release
 (`{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金`)
@@ -100,15 +162,56 @@ Life insurance statistics (fund utilisation, foreign investment share, monthly p
 - Database service: `https://insdb.tii.org.tw/`
 - Regulations database: `https://law.tii.org.tw/`
 
-### 4.5 Firm-level (quarterly investor presentations, annual reports)
-Six-firm panel: Cathay Life (2882), Fubon Life (2881), Shin Kong Life / TS Financial (2887, formerly 2888), KGI Life (2883), Taiwan Life / CTBC (2891), Nan Shan Life (unlisted; annual report and public disclosures).
-- Cathay: `https://www.cathayholdings.com/holdings/eng/ir` (IR hosting also at `https://www.ir-cloud.com/taiwan/2882/`)
-- Fubon: `https://www.fubon.com/financialholdings/en/` (monthly PDFs at `https://www.irpro.co/2881/`)
+### 4.5 Firm-level (statutory filings first, IR decks second)
+
+**Use the life company's own filing code, not its holding company's.** The
+holdco financials consolidate banking and securities and are not the insurer.
+The two were conflated in an earlier draft of this section.
+
+| Life company | Filing code | Holding company | Holdco code |
+|---|---|---|---|
+| 國泰人壽 Cathay Life | **5846** | Cathay FHC | 2882 |
+| 富邦人壽 Fubon Life | **5865** | Fubon FHC | 2881 |
+| 南山人壽 Nan Shan Life | **5874** | — (unlisted) | — |
+| 凱基人壽 KGI Life (ex-China Life) | **2823** | KGI FHC | 2883 |
+| 新光人壽 Shin Kong Life | — | TS Financial (merged) | 2887, formerly 2888 |
+| 台灣人壽 Taiwan Life | — | CTBC FHC | 2891 |
+
+2823 was verified directly against MOPS; 5846, 5865 and 5874 appear on the
+companies' own filed documents.
+
+**Statutory statements.** Reach them through the legacy MOPS, which serves plain
+HTML and accepts POST — the new `mops.twse.com.tw` returns an 800-byte JS shell,
+and an earlier note dismissing "MOPS" wholesale as JS-rendered was wrong about
+the legacy host and closed off this route for a whole stage. The sequence, and
+the download gate that still blocks the last step, are in decisions 3.3.
+Insurers also publish the same statements on their own sites under
+人身保險業辦理資訊公開管理辦法, which avoids MOPS entirely and is usually easier.
+
+- Legacy MOPS: `https://mopsov.twse.com.tw/` (English `https://emops.twse.com.tw/`)
+- Statement documents: `https://doc.twse.com.tw/server-java/t57sb01` (index reachable by GET; file download gated)
+
+**What a statement actually carries** — check before designing around it. The one
+Cathay Life statement parsed so far gives derivative **fair values** by
+instrument family and discloses 名目本金 only for related-party trades, not the
+total book. A fair value is not a hedge notional, so that vintage cannot yield a
+hedge ratio on its own. Whether current filings can, under IFRS 9 hedge
+accounting and notice §10, is unresolved and is the first thing to test.
+
+**IR decks.** A presentation layer, but the only place a firm-level hedge *ratio*
+is currently known to be stated. Cathay's "FX hedging strategy" page carries the
+FX asset base, the hedging structure split, the FX-policy split, a hedging-cost
+strip and an FX volatility reserve strip. 112 decks back to 2011 Q4, and **all
+sampled vintages are machine-readable text**. Values are rounded chart labels and
+must be bound to their captions through the pie wedge, not by proximity
+(decisions 3.1).
+
+- Cathay: `https://www.cathayholdings.com/holdings/ir/financial_information/results_presentation` (also hosts Cathay Life statutory statements; `www.cathaylife.com.tw` is 403 at the sandbox egress, `www.ir-cloud.com` blocks automated clients)
+- Fubon: `https://www.fubon.com/life/Investors/public-info/` (structured 財務概況 disclosure section); `https://www.irpro.co/2881/` blocks automated clients
+- Nan Shan: `https://www.nanshanlife.com.tw/` — quarterly 財務概況 PDFs at `portal-api/File/{id}`
+- KGI Life: `https://www.kgilife.com.tw/`
 - TS Financial: `https://www.tsholdings.com.tw/`
-- KGI Financial: `https://www.kgi.com/en/`; KGI Life: `https://www.kgilife.com.tw/`
-- CTBC: `https://ir.ctbcholding.com/html/index` (PDFs at `https://media-ctbc.todayir.com/`); note `www.ctbcholding.com` blocks automated access via robots.txt
-- Nan Shan: `https://www.nanshanlife.com.tw/` (unverified — check on first run)
-- Filings: MOPS `https://mops.twse.com.tw/` (JavaScript-rendered and rate-limited; legacy `https://mopsov.twse.com.tw/`, English `https://emops.twse.com.tw/`)
+- CTBC: `https://ir.ctbcholding.com/html/index`; `media-ctbc.todayir.com` and `www.ctbcholding.com` block automated access
 
 Panel-continuity notes: (i) Shin Kong pre-2026 series continues under the merged entity — keep `entity_id` stable and record the merger as a break; (ii) IFRS 17 / TW-ICS change the presentation of investments and equity from Q1 2026 — store both bases where firms provide them; (iii) Cathay and Fubon disclose hedge composition (CS/NDF/proxy) and hedging cost; others disclose less — schema must tolerate missing fields.
 
@@ -127,30 +230,44 @@ Panel-continuity notes: (i) Shin Kong pre-2026 series continues under the merged
 
 ## 5. Network allowlist
 
-Wildcards are needed where an organisation serves data from several hosts. † = fetched and confirmed live during scoping (September 2026); ‡ = surfaced in search, not fetched; ? = unverified.
+Wildcards are needed where an organisation serves data from several hosts. † = fetched and confirmed live; ‡ = surfaced in search, not fetched; ? = unverified. **`config/allowlist.tsv` is the operational source of truth** — it carries one probe URL per host with a measured status, and `scripts/check_allowlist.py` re-probes it. Its columns are `host / tier / probe_url / expect / note`, where `expect` is blank or an integer status code; status words belong in the note.
 
 ```
 # Regulators and official statistics (Taiwan)
 *.fsc.gov.tw          # www (en/ch press releases) †
-*.ib.gov.tw           # Insurance Bureau ‡
+*.ib.gov.tw           # Insurance Bureau † — BUT ins-info.ib.gov.tw (the statutory
+                      #   disclosure portal, tier 2 of the §4 hierarchy) is UNREACHABLE:
+                      #   https tunnel drops ~12s, http 503. Escalate, re-probe each stage
+data.gov.tw           # open data; dataset 7191 = 壽險財務業務指標 — 403 CONNECT policy denial.
+                      #   Highest tier of the §4 hierarchy; unblocking it removes scraping
 *.cbc.gov.tw          # www (stats, FX ops), cpx (database), law †
-*.tii.org.tw          # www, sv, insdb, law †
+*.tii.org.tw          # www, sv, insdb, law † (insdb needs a member login)
 *.stat.gov.tw         # DGBAS ‡
 *.dgbas.gov.tw        # DGBAS alternate host ?
 *.tpex.org.tw         # Formosa bonds, bond ETFs ‡
-*.twse.com.tw         # mops, mopsov, mopsfin, emops ‡ (JS-rendered; expect blocks)
+*.twse.com.tw         # mopsov † serves PLAIN HTML and accepts POST — use it.
+                      #   mops (new) is an 800-byte JS shell; doc.twse.com.tw serves the
+                      #   statement index by GET but gates the file download. Rate-limited
 
 # Insurers / holding companies
-*.cathayholdings.com  # Cathay IR ‡
-*.ir-cloud.com        # Cathay IR hosting ‡
-*.fubon.com           # Fubon IR ‡
-*.irpro.co            # Fubon monthly PDFs ‡
+*.cathayholdings.com  # Cathay IR † — also hosts Cathay Life statutory statements
+*.cathaylife.com.tw   # Cathay Life own site — 403 at the sandbox egress; use cathayholdings
+*.ir-cloud.com        # Cathay IR hosting — 403 to automated clients
+*.fubon.com           # Fubon IR † (life 財務概況 under /life/Investors/public-info/)
+*.irpro.co            # Fubon monthly PDFs — 403 to automated clients
 *.tsholdings.com.tw   # TS Financial (Shin Kong Life) ‡
 *.kgi.com             # KGI Financial ‡
-*.kgilife.com.tw      # KGI Life ‡
+*.kgilife.com.tw      # KGI Life †
 ir.ctbcholding.com    # CTBC IR † (www.ctbcholding.com is robots-blocked — deliberately excluded)
-*.todayir.com         # CTBC PDFs (media-ctbc.todayir.com) †
-*.nanshanlife.com.tw  # Nan Shan ?
+*.todayir.com         # CTBC PDFs (media-ctbc.todayir.com) — 403 to automated clients
+*.nanshanlife.com.tw  # Nan Shan † — quarterly 財務概況 at portal-api/File/{id}
+
+# Press (fallback tier only — see the §4 hierarchy)
+money.udn.com         # Economic Daily † — PURGES AT ~12 MONTHS; search still serves
+                      #   cached snippets of purged stories, which 404 on fetch
+news.cnyes.com        # cnyes † — retains to 2020; the archive channel. api.cnyes.com is
+                      #   403, so cnyes site search cannot be driven server-side
+news.cts.com.tw       # CNA via CTS † (www.cna.com.tw and udn.com apex are 403)
 
 # International data
 *.bis.org             # www, data, stats ‡
@@ -176,7 +293,7 @@ Apex vs www: every Taiwanese official site redirects apex to `www`; the insurer 
 Schema `tlfx`, all tables with `source_url`, `source_doc`, `retrieved_at`, `vintage` columns for provenance.
 
 - `entities` — `entity_id`, name (en/zh), ticker, holding company, `valid_from`, `valid_to`, `successor_entity_id`.
-- `sector_monthly` — FSC monthly: foreign investments, regulatory FX exposure, hedge ratio, hedge cost, FX reserve buckets (p, q, x, y), fixed special reserve, FX gains/losses, hedging gains/losses, equity.
+- `sector_monthly` — FSC monthly: foreign investments, regulatory FX exposure, hedge ratio, hedge cost, FX reserve buckets (p, q, x, y), fixed special reserve, FX gains/losses, hedging gains/losses, equity. `reporting_channel` is part of the natural key alongside `(obs_month, vintage)` — one month can carry both a `release` and a `briefing_press` row, on different bases (migration 0004, decisions 1.3).
 - `sector_balance_sheet` — CBC table 8 line items, monthly.
 - `firm_quarterly` — foreign assets, FX policy liabilities (or reserves), traditional hedge (CS, NDF), proxy hedge, open position, hedge cost bp, recurring yield pre/post hedge, FX reserve balance, equity, RBC/ICS ratio; `basis` column (IFRS4 / IFRS17).
 - `cbc_fx_ops` — swap balance, FX call loans, net FX purchases, IRFCL forward leg, reserves.
@@ -195,9 +312,25 @@ Each stage ends with: a runnable script, a populated table, a reconciliation rep
 
 **Stage 1 — Sector series from the FSC (2020–present).** Parse the monthly press release (Chinese primary, English fallback) into `sector_monthly`; build series 4, 3(a), and the FX-policy-backed asset figure; reconciliation checks. Backfill from the FSC press archive. Stop.
 
-**Stage 2 — Sector balance sheet from the CBC.** Ingest table 8 CSV monthly and the statistics database for history to 2000; derive foreign assets and equity; combine with Stage 1 to produce series 1, 2, 5 at sector level. Stop.
+**Stage 2 — Sector balance sheet from the CBC.** Ingest table 8 CSV monthly and the statistics database for history to 2000; derive foreign assets and equity. Table 8 is done (`scripts/stage2_cbc_balance_sheet.py`; 2016-12 year-ends, monthly 2024-10→, three identities exact on every row); `cpx.cbc.gov.tw` history is outstanding. Stop.
 
-**Stage 3 — Firm panel (2013–present).** Scrape quarterly investor presentations for the six firms; hand-code the 2013–2019 history where PDFs are not machine-readable; produce series 1, 2, 5, 6, 7 at firm level; asset-weighted sector cross-check. Handle the Shin Kong merger and the IFRS 17 basis change. Stop.
+**Stage 2/3 ordering — inverted in practice, and the reason matters.** Sector
+series 1, 2 and 5 were to be derived here by combining Stage 1's ratio with a
+CBC denominator. That does not work: the ratio only exists from 2024-04
+(decisions 1.11), and CBC 國外資產 differs from the FSC 國外投資 the regulatory
+ratio is defined against by 2.3% at 2024-12 widening to 3.47% at 2025-12 — past
+the 3% tolerance, and definitional rather than coverage, since CBC and FSC equity
+tie to 0.00–0.03% across all 23 overlapping months (decisions 2.1). Pairing the
+two mixes bases. **Run Stage 3 before deriving sector series 1/2/5**, and resolve
+the foreign-asset gap first.
+
+**Stage 3 — Firm panel (2011–present).** Statutory filings first, IR decks second
+(§4.5). Produce series 1, 2, 5, 6, 7 at firm level; asset-weighted sector
+cross-check. Handle the Shin Kong merger and the IFRS 17 basis change. **Do not
+budget for hand-coding**: an earlier draft assumed 2013–2019 PDFs would not be
+machine-readable, and every deck vintage sampled from 2014 to 2026 extracts as
+text (19k–38k characters). What does need work is layout variance across
+vintages, not OCR. Stop.
 
 **Stage 4 — Buffers.** Add reserve buckets and equity tiers; produce series 3 fully; implied absorbable appreciation. Requires the February 2026 four-bucket guidelines to define P/Q/X/Y precisely. Stop.
 
@@ -216,9 +349,9 @@ Stage 0 runs on Opus 5: the schema, the provenance and `basis`-flag conventions,
 | Stage | Model | Rationale |
 |---|---|---|
 | 0 Scaffold | **Opus 5** | Schema and conventions are load-bearing |
-| 1 FSC sector | Sonnet 5 | Bounded parsing against a stable release format |
-| 2 CBC balance sheet | Sonnet 5 | Fixed CSV paths, mechanical |
-| 3 Firm panel | **Opus 5** for the extraction schema, the Shin Kong merger and the IFRS 17 break; **Sonnet 5** for the per-firm scrapers once one works end-to-end | Six heterogeneous disclosure formats, two structural breaks |
+| 1 FSC sector | **Opus 5** | Rated Sonnet on the assumption of bounded parsing. It was not: establishing which fields the release does *not* carry, and that the press ratio series starts 2024 not 2020, was the substance of the stage |
+| 2 CBC balance sheet | Sonnet 5 for table 8; **Opus 5** for the basis question | Table 8 is mechanical. Deciding whether CBC 國外資產 may stand in for FSC 國外投資 is not, and it gates series 1/2/5 |
+| 3 Firm panel | **Opus 5** for the extraction schema, the Shin Kong merger and the IFRS 17 break; **Sonnet 5** for the per-firm scrapers once one works end-to-end | Six heterogeneous disclosure formats, two structural breaks. No OCR budget needed — see Stage 3 |
 | 4 Buffers | **Opus 5** | Judgement on which buckets are loss-absorbing on a going-concern basis |
 | 5 Counterparty leg | **Opus 5** | BIS dimension selection; splicing disclosed against estimated CBC series |
 | 6 Flows + artifact | **Opus 5** for artifact structure and copy; **Sonnet 5** for the verbatim chrome and the `#data-blob` export | The spec fixes the chrome but leaves section order, chart-type selection and all prose to the author (spec §§8–9) — the editorial half is a judgement task |
@@ -239,10 +372,10 @@ Use **Haiku 4.5** inside stages for repetitive work — re-running a proven scra
 - FX policies are a balance-sheet match, not a behavioural one: surrender periods and charges are short, so a sharp TWD rally could see policyholders redenominate. Carry a stressed variant that haircuts the policy match.
 - The 2026 amortisation rule applies only to amortised-cost bonds with no designated FX hedge. It defers recognition; it does not absorb losses. Never count unamortised FX differences as a buffer.
 - Remaining hedges are mostly short-dated and marked to market while the hedged assets are not; this creates a further incentive to reduce hedging (Setser 2026, fn.).
-- The hedge ratio is strongly carry-sensitive: Cathay ran CS/NDF at ~15% in 2022 and ~69% in Q1 2025 and Q1 2026. Model it as a function of the 3m differential, basis, reserve headroom and regime, not as a slow-moving preference.
+- The hedge ratio is strongly carry-sensitive: Cathay ran CS/NDF at ~15% in 2022 and ~69% in Q1 2025 and Q1 2026. Model it as a function of the 3m differential, basis, reserve headroom and regime, not as a slow-moving preference. **Verify the Q1 2026 figure before publishing it:** the 1H26 deck reads CS & NDF at 36% of FX assets with proxy & open at 60% (extracted and checked against the page, decisions 3.1), so either the reclassification into AC — which the deck dates to 1M26 — moved ~33pp inside one quarter, or the Q1 number is on a different base. Both are possible; neither is established.
 - CBC disclosure changed in stages (swap balance from 2020; quarterly IRFCL and intervention from 2026). Do not splice disclosed and estimated series without a `basis` flag.
 - Taiwan is not an IMF member; there is no IMF IRFCL page for Taiwan — the template is published by the CBC itself.
-- MOPS is JavaScript-rendered and rate-limits scrapers; prefer holding-company IR sites and fall back to MOPS only for statutory statements.
+- **Legacy MOPS (`mopsov.twse.com.tw`) serves plain HTML and accepts POST;** only the new `mops.twse.com.tw` is JS-rendered. An earlier blanket note here said otherwise and pushed the project onto IR decks for a whole stage. MOPS does rate-limit (a 307 to a security page), so pace requests. Prefer, in order: the Insurance Bureau's own portal, the insurer's own statutory publication, legacy MOPS, then IR material.
 
 ---
 
@@ -250,7 +383,7 @@ Use **Haiku 4.5** inside stages for repetitive work — re-running a proven scra
 
 - Financial Supervisory Commission. 2025. "FSC announces proposed amendments to the Regulations Governing the Preparation of Financial Reports by Insurance Enterprises as concerns foreign exchange gains and losses." Press release, 23 December 2025.
 - Financial Supervisory Commission. 2026. 人身保險業外匯價格變動準備金應注意事項修正規定. Notice, 12 February 2026. Saved as `docs/sources/fsc_2026-02-12_fx_reserve_notice.pdf`.
-- Financial Supervisory Commission. 2018–2026. "{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金." Monthly press releases, May 2018 – December 2025 (90 editions; the series has no 2026 edition on either the FSC or Insurance Bureau press channel as at 3 September 2026).
+- Financial Supervisory Commission. 2018–2026. "{ROC year}年{month}月保險業損益、淨值，以及兌換損益、避險損益與外匯價格變動準備金." Monthly press releases, May 2018 – December 2025 (91 editions; the series has no 2026 edition on either the FSC or Insurance Bureau press channel as at 3 September 2026).
 - Setser, Brad W. 2026. "Taiwan's Backdoor Currency Manipulation." Follow the Money, Council on Foreign Relations, 26 January 2026.
 - Setser, Brad W., and Joshua Younger. 2025. "How Taiwan became a quiet bond market superpower." Financial Times, May 2025.
 - Setser, Brad W., and S.T.W. 2019. "Shadow FX Intervention in Taiwan: Solving a USD 100+ bn Enigma." Council on Foreign Relations / Concentrated Ambiguity, October 2019.
