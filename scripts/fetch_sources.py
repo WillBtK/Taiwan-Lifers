@@ -87,6 +87,8 @@ def fetch(url, needs_relay, needs_cert, timeout=60):
 
 
 def newest_existing(d, name, ext):
+    # sorted() puts "name_20260905-2.ext" after "name_20260905.ext", so the
+    # newest same-day variant wins the comparison, which is what dedupe wants
     files = sorted(d.glob(f"{name}_*.{ext}"))
     return files[-1] if files else None
 
@@ -123,7 +125,16 @@ def main():
             unchanged += 1
             print(f"UNCHANGED   {name} (== {prev.name})")
         else:
+            # Never clobber an existing snapshot that shares today's stamp but
+            # differs in content. That case is not a re-fetch, it is two
+            # different observations of the same day -- a hand-couriered file
+            # and an automated one, or a source that changed mid-day -- and
+            # destroying either loses the provenance that justifies the row.
             path = d / f"{name}_{stamp}.{ext}"
+            n = 1
+            while path.exists() and hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                n += 1
+                path = d / f"{name}_{stamp}-{n}.{ext}"
             path.write_bytes(body)
             entry.update(status="written", sha256=digest, bytes=len(body),
                          path=str(path.relative_to(ROOT)))

@@ -2446,3 +2446,31 @@ had to leave as an upper bound — moves from "ask the user" to "add a URL to
 `SOURCES`". That is the next thing worth doing on this channel.
 
 **Files.** `ops/taiwan-relay/README.md`.
+
+### 4.25 The automated route reproduces the courier route exactly
+
+With the secrets in place the workflow fetched both portal files itself:
+`written 2, unchanged 4, unavailable 0`. The machine-fetched files are ~15-18%
+smaller than the hand-delivered ones, which looked wrong and is not.
+
+**Verified rather than assumed.** Parsing both and comparing record sets:
+06021011 has 52 records either way and the sets are **identical**; 06161610 has
+30 records either way and the sets are **identical**. The size gap is entirely
+my own doing — the couriered payloads were saved through
+`json.dump(..., indent=1)`, so they carry pretty-printing the origin does not.
+Worth noting because the docs described those files as stored "verbatim" and
+they were not; the automated ones genuinely are, being the response bytes
+unmodified. So the courier route is not merely redundant, it is provably
+equivalent, which is the strongest form the retirement could take.
+
+**A real fault the comparison exposed.** The fetch overwrote
+`json-06021011_20260905.json`, a hand-couriered file sharing that day's stamp.
+Content was identical so nothing was lost this time, but the mechanism was
+unsafe: a same-day file with *different* content is not a re-fetch, it is a
+second observation — two channels on one day, or a source that changed between
+them — and silently replacing either destroys the provenance that justifies
+the rows built from it. The writer now keeps both, suffixing `-2`, `-3` and so
+on, and only rewrites a path whose content already matches. Dedupe still works
+because the suffixed name sorts after the plain one.
+
+**Files.** `scripts/fetch_sources.py`.

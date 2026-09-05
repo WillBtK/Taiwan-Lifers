@@ -175,6 +175,15 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
 1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
    (`FRED_API_KEY` is). Writes go through the MCP for now.
+1a-. **INGESTION IS FULLY AUTOMATED** (4.24/4.25). The Taiwan relay is
+   deployed and the weekly workflow fetches every source including the
+   Insurance Bureau's portal; the machine-fetched payloads reproduce the
+   couriered ones record for record. The courier queue below is retired —
+   kept only as a documented fallback. Next on this channel: add the
+   per-company disclosures to `SOURCES` (fund utilisation by firm, capital
+   adequacy, and the special-reserve note that would split the buffer bucket
+   4.19 carries as an upper bound).
+
 1a0. **No reachable open-data host replaces ins-info** (4.14): TII's 139 tables
    are catalogued in `config/tii_tables.tsv`, and its 38 firm-level tables are
    business volume only. Firm financials come from MOPS XBRL or ins-info,
