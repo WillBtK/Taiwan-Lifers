@@ -3102,3 +3102,107 @@ cheap route is exhausted and the next step costs a round trip.
 Recorded now so the next pass starts from "fetch the 07011010 rendering page
 through the relay to name AMOUNT0–6" rather than from "find out whether
 07011010 exists".
+
+### 4.34 How Setser did it, and the number that was in the cache all along
+
+**The challenge, fairly put.** Setser and S.T.W. and the sell-side publish
+long hedge-ratio histories; this project, after days of work, had thirteen
+published months and a reconstruction to 2019. The paper was read in full
+(`Shadow FX intervention in Taiwan`, CFR, October 2019). Its §II.D names
+exactly two sources for the lifers' hedge book, and neither is obscure:
+
+1. **Holdco disclosures, extrapolated.** The hedge share from the listed
+   insurers' statements and investor decks (60–70% of sector assets),
+   applied to the CBC's sector foreign-asset series. Quarterly, from the early
+   2010s. This project has extracted precisely these decks — Cathay 47
+   quarters, Fubon 49, KGI 20 — and never assembled them into the composite.
+2. **A footnote on the CBC's own life-insurer balance sheet** (Financial
+   Statistics Monthly, appendix 8) stating the sector's outstanding hedge
+   transactions. Monthly. Setser: "historical footnotes are not part of the
+   CBC's statistical database, so quite some extrapolation is required to use
+   the small number of historical values obtained."
+
+**The footnote was in `cache/cbc/065_EF67_A4L.csv` from 4 September**, line
+63: 「115年7月底全體人壽保險公司換匯交易等避險交易餘額為52,180億元」. The
+Stage 2 parser read the table body and discarded the notes. Every assertion in
+this log that "no hedge amount is published anywhere" (4.26, the backfill
+spec) was wrong, and wrong in a way a reading of the one paper the user had
+named would have prevented on day two. **A table's notes are part of the
+table.** That is the whole lesson and it is not a subtle one.
+
+**Recovering the history.** The CBC overwrites the file monthly and keeps no
+archive; the Internet Archive holds thirteen distinct captures of the table
+from 2011, and the 2011 editions have no such footnote, so the series begins
+between mid-2011 and 2012-03. One PDF hid its footnote behind CJK
+compatibility ideographs (保 as U+F9E0), invisible to the eye and to a regex
+until NFKC-normalised. Eleven points result:
+
+| month | hedged, NT$ bn | 國外資產, NT$ bn | ratio | FSC principal | CBC ÷ FSC |
+|---|---|---|---|---|---|
+| 2012-03 | 2,447 | 4,388 | **55.8%** | — | — |
+| 2015-07 | 4,140 | 9,059 | 45.7% | — | — |
+| 2019-09 | 6,451 | 16,870 | 38.2% | — | — |
+| 2022-06 | 6,816 | 19,721 | 34.6% | — | — |
+| 2022-09 | 7,161 | 20,458 | 35.0% | — | — |
+| 2022-11 | 6,790 | 20,749 | 32.7% | — | — |
+| 2023-04 | 6,516 | 20,832 | 31.3% | — | — |
+| 2024-03 | 6,623 | 21,822 | 30.3% | — | — |
+| 2024-08 | 6,458 | 21,935 | 29.4% | — | — |
+| 2024-12 | 6,463 | 22,472 | 28.8% | 10,357 | **0.62** |
+| 2026-07 | 5,218 | 21,906 | **23.8%** | 6,804 | **0.77** |
+
+**What it measures, now pinned.** 換匯交易等 — swap-type transactions. At
+2024-12 it is 62% of the FSC's regulatory hedge principal; the press has
+currency swaps at 「逾7成」 of lifers' hedges and NDFs at 「低於3成」. So the
+CBC counts the **onshore swap book and not offshore NDFs** — the ambiguity
+Setser could only flag is settled by the overlap. Two corollaries follow.
+The CBC ratio sits below every other measure by construction (narrower
+numerator, wider denominator), so Setser's Fig. 14, where "the
+micro-constructed series continuously exceeds the CBC indication", is
+explained rather than puzzling. And the CBC÷FSC share rising from 0.62 to
+0.77 in nineteen months says the 2025 cut fell disproportionately on NDFs,
+the expensive, opportunistic leg — the composition of the retreat, from two
+public numbers.
+
+**The four measures, reconciled at the anchor dates.**
+
+| | CBC footnote ÷ 國外資產 | P&L-implied (4.29) | Cathay CS+NDF share | FSC regulatory |
+|---|---|---|---|---|
+| 2015-07 | 45.7% | — | 60% | — |
+| 2019-09 | 38.2% | 74.6% | 61% | — |
+| 2022-09 | 35.0% | 75.9% | 56% | — |
+| 2024-03 | 30.3% | 68.9% | — | 66.0% |
+| 2024-12 | 28.8% | — | 68% | 66.4% |
+| 2026-07 | 23.8% | — | — | 42.9% |
+
+They are four different quantities and they tell one story: onshore swaps
+against all foreign assets, ~56% → 24%; the whole derivative book against the
+P&L-scope base, ~80% → 59%; a firm's CS+NDF over its FX-risk-bearing assets,
+60% → 36% (1H26); the regulator's own, 66% → 43%. Every one of them falls by
+roughly a third or more from its start, and the timing agrees. **The long
+history the user asked for exists, from 2012, on the CBC's own authority, and
+the three constructions built here validate against it rather than replace
+it.**
+
+**Two leads not yet run down, stated so they are not rediscovered.**
+Bloomberg (2025-12-16) quotes a quarterly "derivatives covered 52.3% of
+overseas assets … lowest since the comparable data became available in
+2013" — a series this project does not hold, and one Setser attributes to the
+Taiwan Insurance Institute, whose web statistics (not its open-data API,
+which has no hedge table, 4.32) were unreachable today (connection reset,
+503). And Bloomberg (2026-01-27) calls the FSC's monthly ratio "the lowest
+since at least 2020", against this log's finding (1.11) that the figure was
+not published before 2024-04. Both are worth one more attempt each and no
+more.
+
+**Closed.** `json-07011010` (4.33) is 表07011010 壽險業務概況表, a life
+*business overview* — premiums and policy counts by company — and not a
+currency split. The third FX-policy candidate, the FSC's own 外幣保單
+statistics, remains.
+
+**Files.** `scripts/stage5_cbc_hedge_footnote.py`,
+`data/cbc_hedge_footnote.csv`, `data/raw/cbc-table8-footnote/footnotes.json`,
+`out/stage5_cbc_footnote_20260905.sql`. Loaded to `derived_series` series 5,
+keys `hedge_outstanding_cbc_footnote` (disclosed) and
+`hedge_ratio_cbc_footnote`, `definition_version = cbc_footnote`, 11 rows each,
+verified.

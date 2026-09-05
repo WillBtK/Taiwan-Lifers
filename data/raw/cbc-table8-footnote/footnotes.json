@@ -1,0 +1,101 @@
+[
+ {
+  "obs_month": "2012-03-01",
+  "hedge_outstanding_ntd_mn": 2447000.0,
+  "foreign_assets_ntd_mn": 4387778.0,
+  "ratio": 0.5577,
+  "vintage": "2012-05-23",
+  "source": "https://web.archive.org/web/20120523101305/http://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20120523101305_2IHN3EFB.pdf"
+ },
+ {
+  "obs_month": "2015-07-01",
+  "hedge_outstanding_ntd_mn": 4139800.0,
+  "foreign_assets_ntd_mn": 9059442.0,
+  "ratio": 0.457,
+  "vintage": "2015-09-16",
+  "source": "https://web.archive.org/web/20150916010626/http://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20150916010626_OSYSN2OZ.pdf"
+ },
+ {
+  "obs_month": "2019-09-01",
+  "hedge_outstanding_ntd_mn": 6450600.0,
+  "foreign_assets_ntd_mn": 16870340.0,
+  "ratio": 0.3824,
+  "vintage": "2019-11-17",
+  "source": "https://web.archive.org/web/20191117162359/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20191117162359_34U4CBLR.pdf"
+ },
+ {
+  "obs_month": "2022-06-01",
+  "hedge_outstanding_ntd_mn": 6816200.0,
+  "foreign_assets_ntd_mn": 19721232.0,
+  "ratio": 0.3456,
+  "vintage": "2022-08-02",
+  "source": "https://web.archive.org/web/20220802085802/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20220802085802_2HNKRWMS.pdf"
+ },
+ {
+  "obs_month": "2022-09-01",
+  "hedge_outstanding_ntd_mn": 7161000.0,
+  "foreign_assets_ntd_mn": 20458202.0,
+  "ratio": 0.35,
+  "vintage": "2022-11-11",
+  "source": "https://web.archive.org/web/20221111130939/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20221111130939_SO4JI5EM.pdf"
+ },
+ {
+  "obs_month": "2022-11-01",
+  "hedge_outstanding_ntd_mn": 6790200.0,
+  "foreign_assets_ntd_mn": 20748561.0,
+  "ratio": 0.3273,
+  "vintage": "2023-01-28",
+  "source": "https://web.archive.org/web/20230128032825/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20230128032825_XKXDVDX2.pdf"
+ },
+ {
+  "obs_month": "2023-04-01",
+  "hedge_outstanding_ntd_mn": 6515700.0,
+  "foreign_assets_ntd_mn": 20832402.0,
+  "ratio": 0.3128,
+  "vintage": "2023-06-05",
+  "source": "https://web.archive.org/web/20230605122629/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20230605122629_MHLDWN4F.pdf"
+ },
+ {
+  "obs_month": "2024-03-01",
+  "hedge_outstanding_ntd_mn": 6622900.0,
+  "foreign_assets_ntd_mn": 21821848.0,
+  "ratio": 0.3035,
+  "vintage": "2024-05-13",
+  "source": "https://web.archive.org/web/20240513011916/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv",
+  "file": "20240513011916_YYNOZJXU.csv"
+ },
+ {
+  "obs_month": "2024-08-01",
+  "hedge_outstanding_ntd_mn": 6458100.0,
+  "foreign_assets_ntd_mn": 21934723.0,
+  "ratio": 0.2944,
+  "vintage": "2024-10-03",
+  "source": "https://web.archive.org/web/20241003034541/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20241003034541_YX3O5QP7.pdf"
+ },
+ {
+  "obs_month": "2024-12-01",
+  "hedge_outstanding_ntd_mn": 6463000.0,
+  "foreign_assets_ntd_mn": 22471627.0,
+  "ratio": 0.2876,
+  "vintage": "2025-02-17",
+  "source": "https://web.archive.org/web/20250217072249/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf",
+  "file": "20250217072249_7SJ7JHQE.pdf"
+ },
+ {
+  "obs_month": "2026-07-01",
+  "hedge_outstanding_ntd_mn": 5218000.0,
+  "foreign_assets_ntd_mn": 21905542.0,
+  "ratio": 0.2382,
+  "vintage": "2026-09-04",
+  "source": "https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv",
+  "file": "065_EF67_A4L.csv"
+ }
+]

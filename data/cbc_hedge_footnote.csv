@@ -1,0 +1,12 @@
+obs_month,hedge_outstanding_ntd_mn,foreign_assets_ntd_mn,ratio,vintage,source,file
+2012-03-01,2447000.0,4387778.0,0.5577,2012-05-23,https://web.archive.org/web/20120523101305/http://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20120523101305_2IHN3EFB.pdf
+2015-07-01,4139800.0,9059442.0,0.457,2015-09-16,https://web.archive.org/web/20150916010626/http://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20150916010626_OSYSN2OZ.pdf
+2019-09-01,6450600.0,16870340.0,0.3824,2019-11-17,https://web.archive.org/web/20191117162359/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20191117162359_34U4CBLR.pdf
+2022-06-01,6816200.0,19721232.0,0.3456,2022-08-02,https://web.archive.org/web/20220802085802/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20220802085802_2HNKRWMS.pdf
+2022-09-01,7161000.0,20458202.0,0.35,2022-11-11,https://web.archive.org/web/20221111130939/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20221111130939_SO4JI5EM.pdf
+2022-11-01,6790200.0,20748561.0,0.3273,2023-01-28,https://web.archive.org/web/20230128032825/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20230128032825_XKXDVDX2.pdf
+2023-04-01,6515700.0,20832402.0,0.3128,2023-06-05,https://web.archive.org/web/20230605122629/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20230605122629_MHLDWN4F.pdf
+2024-03-01,6622900.0,21821848.0,0.3035,2024-05-13,https://web.archive.org/web/20240513011916/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv,20240513011916_YYNOZJXU.csv
+2024-08-01,6458100.0,21934723.0,0.2944,2024-10-03,https://web.archive.org/web/20241003034541/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20241003034541_YX3O5QP7.pdf
+2024-12-01,6463000.0,22471627.0,0.2876,2025-02-17,https://web.archive.org/web/20250217072249/https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.pdf,20250217072249_7SJ7JHQE.pdf
+2026-07-01,5218000.0,21905542.0,0.2382,2026-09-04,https://www.cbc.gov.tw/public/data/EBOOKXLS/065_EF67_A4L.csv,065_EF67_A4L.csv
