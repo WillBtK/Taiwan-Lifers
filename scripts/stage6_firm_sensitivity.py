@@ -1,0 +1,369 @@
+#!/usr/bin/env python3
+"""Per-firm interest-rate and FX sensitivity, from the statutory statements.
+
+WHY A SECOND MOPS SCRIPT
+------------------------
+`stage3_mops_statements.py` looked for the insurers under holding-company
+subsidiary codes (28880001 and the like) and found nothing, because MOPS does
+not serve those. The right codes were already established in decisions 3.13 and
+are in README section 4: each insurer is a public company in its own right — it
+issues subordinated debt, so it is 公開發行 and files quarterly. TWSE's open
+registry lists ten, effectively the whole sector:
+
+    2823 凱基人壽   2833 台灣人壽   2867 三商美邦   2876 宏泰人壽
+    5846 國泰人壽   5865 富邦人壽   5873 全球人壽   5874 南山人壽
+    6025 臺銀人壽   6985 新光人壽
+
+What is new here is the index parsing. The filing table no longer contains the
+readfile() javascript the old parser scraped — the filenames sit in the table
+cells themselves, which is why the earlier run found zero filings even for codes
+that work. The download step (step=9 on the same endpoint) is recorded in 3.3 as
+gated; it is attempted here and the result is reported rather than assumed.
+
+WHAT IS EXTRACTED AND WHY IT IS THE RIGHT NUMBER
+------------------------------------------------
+Two tables in the financial-risk note:
+
+  利率風險敏感度分析表 — the change in P&L and in EQUITY for a 1bp parallel
+  shift in each currency's yield curve. This is a DV01, disclosed by the firm,
+  by currency. It is the direct measure of how much duration risk is actually
+  carried on the balance sheet, and it is far better than any inference from
+  asset mix, because it is net of hedges and reflects the firm's own accounting
+  classification.
+
+  匯率風險敏感度分析表 — the change in P&L, in EQUITY and in the FX volatility
+  reserve for a 1% move in each currency. The reserve column is the one this
+  project has spent most effort on from the sector side; here it is per firm.
+
+THE CLASSIFICATION TRAP, WHICH IS THE POINT
+-------------------------------------------
+Equity DV01 covers only the assets carried at fair value through OCI. Bonds at
+amortised cost do not move equity, so a firm that holds its long bonds at AC
+reports a small equity DV01 while carrying the same economic duration. That
+makes the series a measure of DISCLOSED balance-sheet sensitivity, not of
+economic duration — and it makes changes in it informative in their own right:
+Cathay's USD equity DV01 nearly doubled between 2025Q1 and 2026Q1 while its
+strategy deck describes "redesignation of AC assets to FVOCI". The number moved
+because the accounting moved. Both facts belong in the series, so the loaded
+rows are labelled as disclosed sensitivity and never as duration.
+
+UNITS
+-----
+Statements are in NT$ thousands. Values are converted to NT$ mn on load.
+
+RATE
+----
+TWSE resets connections under load. One request every REQUEST_GAP seconds,
+everything cached to disk, cache consulted first, so a re-run is free and a
+partial run resumes.
+"""
+import json
+import re
+import sys
+import time
+import unicodedata
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+CACHE = ROOT / "cache" / "mops_stmt"
+PDFS = ROOT / "cache" / "mops_pdf"
+OUT = ROOT / "data" / "firm_sensitivity.csv"
+DOC = "https://doc.twse.com.tw/server-java/t57sb01"
+UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/124 Safari/537.36")
+REQUEST_GAP = 8.0
+# The WAF answers 200 with a "FOR SECURITY REASONS" page rather than a 4xx. A
+# first pass at 3s between requests hit it, and — worse — cached the block page,
+# so a rate-limited company-year became a permanent "0 filings". Blocked
+# responses are now recognised, never cached, and retried after a long pause;
+# purge() clears any that an earlier run stored.
+BLOCKED = "FOR SECURITY REASONS"
+BLOCK_WAIT = 90.0
+
+FIRMS = {"2823": "kgi_life", "2833": "taiwan_life", "2867": "mercuries_life",
+         "2876": "hontai_life", "5846": "cathay_life", "5865": "fubon_life",
+         "5873": "transglobe_life", "5874": "nanshan_life",
+         "6025": "banktaiwan_life", "6985": "shinkong_life"}
+QUARTER = {"第一季": 1, "第二季": 2, "第三季": 3, "第四季": 4}
+
+_last = [0.0]
+
+
+def _sleep():
+    gap = REQUEST_GAP - (time.time() - _last[0])
+    if gap > 0:
+        time.sleep(gap)
+
+
+def post(**form):
+    """One cached, rate-limited POST to the MOPS document server (HTML)."""
+    key = urllib.parse.urlencode(sorted(form.items()))
+    p = CACHE / (re.sub(r"[^A-Za-z0-9_=&.-]+", "_", key)[:150] + ".html")
+    if p.exists():
+        return p.read_text(encoding="utf-8", errors="replace")
+    _sleep()
+    req = urllib.request.Request(
+        DOC, data=urllib.parse.urlencode(form).encode(),
+        headers={"User-Agent": UA, "Referer": "https://doc.twse.com.tw/",
+                 "Content-Type": "application/x-www-form-urlencoded"})
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                body = r.read()
+            _last[0] = time.time()
+            text = body.decode("big5", "replace")
+            if BLOCKED in text or "ｅ" == text[:1]:
+                print(f"    ~ WAF block, pausing {BLOCK_WAIT:.0f}s")
+                time.sleep(BLOCK_WAIT)
+                _last[0] = time.time()
+                continue
+            CACHE.mkdir(parents=True, exist_ok=True)
+            p.write_text(text, encoding="utf-8")
+            return text
+        except Exception as e:
+            _last[0] = time.time()
+            if attempt == 3:
+                return f"__ERROR__ {type(e).__name__}: {e}"
+            time.sleep(5 * (attempt + 1))
+    return "__ERROR__ blocked by WAF after 4 attempts"
+
+
+def purge():
+    """Drop cached WAF block pages left by an earlier run."""
+    n = 0
+    for f in CACHE.glob("*.html"):
+        try:
+            if BLOCKED in f.read_text(encoding="utf-8", errors="replace"):
+                f.unlink()
+                n += 1
+        except OSError:
+            pass
+    if n:
+        print(f"  purged {n} cached block pages")
+
+
+def rows_of(text):
+    out = []
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", text, re.S | re.I):
+        c = [re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", x)).replace("\xa0", " ").strip()
+             for x in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S | re.I)]
+        c = [x for x in c if x]
+        if c:
+            out.append(c)
+    return out
+
+
+def index(co_id, roc_year):
+    """Filing rows for one company-year. The filename sits in the table itself;
+    the readfile() javascript the older page used is gone from this template,
+    which is why the earlier attempt found nothing here."""
+    t = post(step="1", colorchg="1", co_id=co_id, year=str(roc_year), seamon="",
+             mtype="A")
+    if t.startswith("__ERROR__"):
+        return [], t
+    out = []
+    for c in rows_of(t):
+        if len(c) < 8 or c[0] != co_id:
+            continue
+        m = re.search(r"第[一二三四]季", c[1])
+        fn = next((x for x in c if x.endswith(".pdf")), None)
+        if not (m and fn):
+            continue
+        out.append({"co_id": co_id, "roc_year": int(re.search(r"\d+", c[1]).group()),
+                    "quarter": QUARTER[m.group()], "kind": c[5], "filename": fn})
+    return out, None
+
+
+def pdf(co_id, filename):
+    """Fetch one filing. step=9 on the same endpoint streams the PDF."""
+    PDFS.mkdir(parents=True, exist_ok=True)
+    p = PDFS / filename
+    if p.exists() and p.stat().st_size > 10000:
+        return p
+    _sleep()
+    form = {"step": "9", "kind": "A", "co_id": co_id, "filename": filename}
+    req = urllib.request.Request(
+        DOC, data=urllib.parse.urlencode(form).encode(),
+        headers={"User-Agent": UA, "Referer": "https://doc.twse.com.tw/",
+                 "Content-Type": "application/x-www-form-urlencoded"})
+    try:
+        with urllib.request.urlopen(req, timeout=300) as r:
+            body = r.read()
+        _last[0] = time.time()
+    except Exception as e:
+        _last[0] = time.time()
+        print(f"    ! {filename}: {type(e).__name__}")
+        return None
+    if body[:4] != b"%PDF":
+        print(f"    ! {filename}: not a PDF ({len(body)}b)")
+        return None
+    p.write_bytes(body)
+    return p
+
+
+# ------------------------------------------------------------------ parsing
+# The PDF emits CJK table headers one glyph per line, so the text is flattened
+# to a single whitespace-collapsed string before anything is matched. Numbers
+# arrive as "( $ 144,217 )" split across lines; a bare "-" is nil, not missing.
+BLOCK = re.compile(r"(利率|匯率)\s*風\s*險\s*敏\s*感\s*度\s*分\s*析\s*表")
+PERIOD = re.compile(r"(\d{2,3})\s*年\s*(\d{1,2})\s*月\s*\d{1,2}\s*日\s*至\s*"
+                    r"(\d{1,2})\s*月\s*(\d{1,2})\s*日")
+RATE_ROW = re.compile(r"殖利率曲線\s*\(\s*([^)]+?)\s*\)\s*平移上升\s*(\d+)\s*bp")
+FX_ROW = re.compile(r"([一-鿿]{2,4})兌([一-鿿]{2,4})升值\s*(\d+)\s*%")
+NUM = re.compile(r"\(\s*\$?\s*([\d,]+)\s*\)|\$?\s*(-)(?![\d,])|\$?\s*([\d,]+)")
+
+
+def numbers(seg, n):
+    out = []
+    for m in NUM.finditer(seg):
+        neg, nil, pos = m.groups()
+        if nil is not None:
+            out.append(0.0)
+        elif neg is not None:
+            out.append(-float(neg.replace(",", "")))
+        else:
+            out.append(float(pos.replace(",", "")))
+        if len(out) == n:
+            break
+    return out
+
+
+def sensitivities(path):
+    """Every 利率/匯率 sensitivity row in one filing, both periods it prints."""
+    import pymupdf
+    doc = pymupdf.open(path)
+    pages = [unicodedata.normalize("NFKC", p.get_text()) for p in doc]
+    text = "\n".join(t for t in pages if "敏感度分析表" in t)
+    if not text:
+        return []
+    flat = re.sub(r"\s+", " ", text)
+    marks = [m for m in BLOCK.finditer(flat)]
+    out = []
+    for i, m in enumerate(marks):
+        # bound each block at the next one, or a stray tail duplicates the rows
+        # of the following block under this block's period
+        seg = flat[m.start(): marks[i + 1].start() if i + 1 < len(marks) else len(flat)]
+        per = PERIOD.search(seg)
+        if not per:
+            continue
+        yr, _, m2, d2 = per.groups()
+        end = f"{1911 + int(yr)}-{int(m2):02d}-{int(d2):02d}"
+        kind = "rate" if m.group(1) == "利率" else "fx"
+        # the FX table carries a third column (the FX volatility reserve) only
+        # where the firm runs one; read the column count off the header
+        ncol = 3 if (kind == "fx" and "準" in seg[:220]) else 2
+        pat = RATE_ROW if kind == "rate" else FX_ROW
+        body = seg[per.end():]
+        hits = list(pat.finditer(body))
+        for j, h in enumerate(hits):
+            stop = hits[j + 1].start() if j + 1 < len(hits) else min(len(body),
+                                                                     h.end() + 140)
+            vals = numbers(body[h.end():stop], ncol)
+            if len(vals) < 2:
+                continue
+            row = {"period_end": end, "table": kind,
+                   "label": h.group(1) if kind == "rate"
+                            else f"{h.group(1)}/{h.group(2)}",
+                   "shock": h.group(2) + ("bp" if kind == "rate" else ""),
+                   "pnl_ntd_k": vals[0], "equity_ntd_k": vals[1],
+                   "fx_reserve_ntd_k": vals[2] if len(vals) > 2 else None}
+            if kind == "fx":
+                row["shock"] = h.group(3) + "pct"
+            out.append(row)
+    # a filing prints the current and comparative periods; identical rows can
+    # appear twice when a table straddles a page break
+    seen, uniq = set(), []
+    for r in out:
+        k = (r["period_end"], r["table"], r["label"])
+        if k not in seen:
+            seen.add(k)
+            uniq.append(r)
+    return uniq
+
+
+IDX = ROOT / "reports" / "mops_filing_index.json"
+
+
+def build_index(years):
+    purge()
+    idx = json.loads(IDX.read_text(encoding="utf-8")) if IDX.exists() else {}
+    for co, name in FIRMS.items():
+        got = {(r["roc_year"], r["quarter"], r["filename"]): r
+               for r in idx.get(co, [])}
+        for y in years:
+            rows, err = index(co, y)
+            if err:
+                print(f"  {co} {name} {y}: ERROR {err[:60]}")
+                continue
+            for r in rows:
+                got[(r["roc_year"], r["quarter"], r["filename"])] = r
+        idx[co] = sorted(got.values(), key=lambda r: (r["roc_year"], r["quarter"]))
+        qs = sorted({(r["roc_year"], r["quarter"]) for r in idx[co]})
+        print(f"  {co} {name:<16} {len(idx[co]):>3} filings  "
+              + " ".join(f"{y}Q{q}" for y, q in qs))
+        IDX.parent.mkdir(exist_ok=True)
+        IDX.write_text(json.dumps(idx, indent=1, ensure_ascii=False), encoding="utf-8")
+    print(f"\nindex: {IDX.relative_to(ROOT)}")
+    return idx
+
+
+def pull():
+    """Download the consolidated filings named in the index and parse them."""
+    import csv
+    idx = json.loads(IDX.read_text(encoding="utf-8"))
+    rows = []
+    for co, name in FIRMS.items():
+        for f in idx.get(co, []):
+            # the consolidated report (合併財報) is the one with the risk note;
+            # the parent-only 個體財報 duplicates it for a smaller entity
+            if "合併" not in f["kind"]:
+                continue
+            p = pdf(co, f["filename"])
+            if not p:
+                continue
+            got = sensitivities(p)
+            print(f"  {name:<16} {f['roc_year']}Q{f['quarter']} "
+                  f"{f['filename']:<24} {len(got):>3} rows")
+            for r in got:
+                rows.append({"entity_id": name, "co_id": co,
+                             "filing": f["filename"], **r})
+    if not rows:
+        print("  no rows parsed")
+        return rows
+    seen, uniq = set(), []
+    for r in sorted(rows, key=lambda r: (r["entity_id"], r["period_end"],
+                                         r["table"], r["label"], r["filing"])):
+        k = (r["entity_id"], r["period_end"], r["table"], r["label"])
+        if k in seen:      # a later filing restates the same comparative period
+            continue
+        seen.add(k)
+        uniq.append(r)
+    OUT.parent.mkdir(exist_ok=True)
+    with open(OUT, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(uniq[0].keys()))
+        w.writeheader()
+        w.writerows(uniq)
+    print(f"\n{len(uniq)} unique observations -> {OUT.relative_to(ROOT)}")
+    usd = [r for r in uniq if r["table"] == "rate" and r["label"] == "美金"]
+    if usd:
+        print("\nUSD DV01 ON EQUITY, NT$ mn per bp (disclosed sensitivity, "
+              "fair-valued assets only)")
+        for r in sorted(usd, key=lambda r: (r["entity_id"], r["period_end"])):
+            print(f"  {r['entity_id']:<16} {r['period_end']}  "
+                  f"{-r['equity_ntd_k'] / 1000:>10,.1f}")
+    return uniq
+
+
+def main():
+    args = sys.argv[1:]
+    if args and args[0] == "pull":
+        pull()
+        return 0
+    build_index([int(y) for y in (args or ["115", "114", "113", "112"])])
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
