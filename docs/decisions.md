@@ -2136,3 +2136,47 @@ denominator decomposed, not as a loaded series.
 **Files.** `supabase/migrations/0011_sector_soundness_and_holdings.sql`,
 `scripts/stage2d_sector_series.py`, `scripts/fetch_sources.py` (CBC added to
 the weekly fetch), `data/raw/cbc/`, `out/stage2d_sector_20260905.sql`.
+
+### 4.17 KGI's own 2025Q4 filing arrives: a deck base becomes a statement base, and "do nothing" becomes a fill-only upsert
+
+The targeted MOPS queue (4.3) returned KGI's 2025Q4 filing on 2026-09-05.
+Two consequences, one analytic and one about how loads are written.
+
+**The recovery is now independently confirmed, and KGI is promoted.** The
+2026 FX-reserve balances for every firm are derived, not printed: the IFRS-17
+condensed balance sheet folds the line into other liabilities, so the balance
+is the firm's own 2025Q4 figure less the cash-flow statement's year-to-date
+net change (3.12/4.5). KGI was the one firm whose base came from its own deck
+rather than a filing, which is why its reserve had been left in the deck
+channel. The filing now puts that base at **43,372.327** against the deck's
+printed 43.37bn — a 0.005% gap that is the deck's own rounding to NT$ bn. The
+derived balances move by 2.3mn, to 44,834.091 and 48,993.847, and still tie
+the decks at 44.83 and 48.99. So the arithmetic recovery is now verified
+against three firms on two independent channels, and KGI's reserve moves into
+the statement channel where its provenance belongs.
+
+**The load pattern had a hole.** Every loader in this project writes
+`on conflict do nothing`, which is right for re-running an unchanged extract
+and wrong here: KGI's 2026 rows were already stored with a NULL reserve,
+because the base had not been fetched when they were written. A "do nothing"
+insert would have reported success and changed nothing, and the improvement
+would have existed only in the CSV. The load now uses a **fill-only upsert** —
+`set col = coalesce(firm_quarterly.col, excluded.col)` — which can turn a NULL
+into a figure and can never replace one figure with a different one. That
+distinction is the point: filling a gap at the same vintage is a *correction*,
+and it is safe; changing a stored value would be a *revision*, and the
+project's contract says a revision gets a new vintage and keeps the old row
+(migration 0001). The upsert cannot do the second thing even by accident.
+
+The general lesson, worth applying to the other loaders when they next touch
+a partially-populated quarter: a row is often written before every field is
+obtainable, so "insert once" is the wrong default for any table whose columns
+arrive from different sources at different times.
+
+**Queue state.** Fetching remains slow against the WAF, roughly one filing per
+nine-minute foreground window, so the remaining anchors (Taiwan Life and KGI
+2025Q4 done; the 2024Q4 set outstanding) continue across check-ins rather than
+blocking anything.
+
+**Files.** `scripts/stage3_load_mops.py`, `data/mops_statements.csv`,
+`out/stage3_mops_load_20260905.sql`, `cache/mops/`.

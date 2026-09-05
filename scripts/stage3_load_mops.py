@@ -17,10 +17,12 @@ independent firms (decisions 4.5):
     KGI       43,370 (deck FY25) + 1,461.764 = 44,831.8 vs deck 44.83 (1Q26)
                                    + 5,621.52 = 48,991.5 vs deck 48.99 (1H26)
 
-Only reserve balances whose base is a *statement* are loaded (Fubon, Nan
-Shan). KGI's base is its own deck, so its reserve stays in the deck channel
-where it already sits and the tie above serves as validation, not as a second
-copy of the same number.
+Only reserve balances whose base is a *statement* are loaded. That was Fubon
+and Nan Shan until KGI's own 2025Q4 filing arrived (2026-09-05), which both
+promotes KGI into this channel and independently confirms the recovery: the
+statement puts the base at 43,372.327 against the deck's printed 43.37bn, a
+0.005% gap that is the deck's own rounding. The derived 2026 balances move by
+2.3mn and still tie the decks at 44.83 and 48.99.
 """
 import csv
 import datetime as dt
@@ -92,7 +94,21 @@ insert into tlfx.firm_quarterly
 select entity_id, obs_quarter::date, vintage::date, basis::tlfx.accounting_basis,
   'statement', res, ta, eq, '{URL}', doc, note, '{now}'::timestamptz
 from vals
-on conflict (entity_id, obs_quarter, basis, source_channel, vintage) do nothing;
+-- Fill-only upsert, not "do nothing". A quarter's row is often written before
+-- every field is obtainable: KGI's 2026 rows landed with a NULL reserve
+-- because the 2025Q4 base had not been fetched, and the base arriving later
+-- must be able to complete them. coalesce keeps the stored value wherever one
+-- exists, so this can only turn NULL into a figure, never overwrite a figure
+-- with a different one -- a correction at the same vintage, which is what
+-- this is, and not a revision, which would need a new vintage.
+on conflict (entity_id, obs_quarter, basis, source_channel, vintage) do update set
+  fx_reserve_balance = coalesce(firm_quarterly.fx_reserve_balance, excluded.fx_reserve_balance),
+  total_assets       = coalesce(firm_quarterly.total_assets,       excluded.total_assets),
+  owners_equity      = coalesce(firm_quarterly.owners_equity,      excluded.owners_equity),
+  source_note        = case when firm_quarterly.fx_reserve_balance is null
+                              and excluded.fx_reserve_balance is not null
+                            then excluded.source_note
+                            else firm_quarterly.source_note end;
 commit;
 """
     tag = dt.date.today().strftime("%Y%m%d")
