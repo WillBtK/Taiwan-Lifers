@@ -3288,3 +3288,86 @@ fetched.
 `gross_hedge_ratio_deck_composite` (series 5) and
 `economic_hedge_ratio_deck_composite` (series 1), `definition_version =
 deck_composite`, 31 rows each, verified.
+
+### 4.36 A supplied source map, checked link by link — and one find that overturns 4.26
+
+The user supplied `Taiwan_Life_Insurance_FX_Hedging_Data_Sources.docx`. Every
+link was fetched and every figure tested against the source it cites. Eleven of
+fourteen links resolve; the three that do not fail for reasons outside the
+document (ins-info is geo-blocked from this sandbox as always, one Cathay media
+path 404s, Scribd refuses the proxy).
+
+**The find that matters, verified exactly.** Shin Kong Life's quarterly
+statutory statements disclose the **notional principal of its FX hedges**, in
+the currency-risk note:
+
+  「新光人壽保險公司及其子公司使用遠期外匯合約及匯率交換合約以減輕匯率暴險，
+   其名目本金共計新台幣 1,030,311,472 仟元、999,262,416 仟元及
+   1,047,453,988 仟元」
+
+— 2021-03-31, 2020-12-31, 2020-03-31. The document's three figures are right to
+six significant figures. **This overturns 4.26**, which recorded that no hedge
+amount is published for any insurer. That was true of the *portal*; it is false
+of the *statutory filings*.
+
+It is also better than the document claims. The derivatives note on the same
+filing gives the split in USD — 匯率交換合約 USD 19,827mn and 遠期外匯合約
+USD 16,285mn at 2021-03-31 — and the two disclosures **reconcile at the
+period-end spot rate to four decimals**: 1,030,311,472 ÷ 36,112,000 = 28.5310,
+the 2021-03-31 rate; 999,262,416 ÷ 35,052,000 = 28.5080; 1,047,453,988 ÷
+34,622,000 = 30.2540. Three independent ties. So the filings yield hedge
+notional *and* its currency-swap/forward composition, quarterly, three periods
+per filing.
+
+**The document's extraction warning is correct, and I verified both sides.** It
+warns against taking the table headed 避險工具 because under IFRS that means
+only derivatives designated for hedge accounting. Cathay's 2024Q1 statement
+shows 遠期外匯合約 名目本金 NT$49.2bn — against NT$5,470bn of foreign assets,
+about 0.9%; its 2021Q1 shows only 換匯換利 at NT$8.6bn. Shin Kong is usable
+precisely because it states 「並未採用避險會計」, so its economic hedges appear
+in the currency-risk note instead. This is the same trap already recorded from
+Fubon's XBRL (`ifrs-full:HedgingInstrumentAssets` NT$0.7bn against NT$3.4tn).
+
+**Where the document overstates.** It cites Cathay's statements as giving
+"usable historical depth" for hedge notionals immediately before the warning
+that would disqualify them. Cathay's statement notional is the designated-hedge
+figure and is not a substitute for Shin Kong's; the two paragraphs read as
+though they describe the same quantity and they do not.
+
+**Two of its figures catch gaps in my own extraction, not in the document.**
+Cathay's FY2022 deck does print 外幣資產 NT$5.11兆, 具外匯風險資產 68%,
+外幣保單負債 **32%** — the value my extract left blank at FY22 (the legend on
+the same page, "Proxy & Open / Currency Swap & NDF / FVOCI & FVTPL (overlay)",
+independently confirms 4.35's reading that Cathay's pie is over the FX-risk
+subset). And Fubon's 1Q2026 deck prints 具外匯風險資產 **77.6%** /
+外幣保單負債 **22.4%** alongside 外匯交換、無本金遠期外匯 **23.9%**, FVOCI
+7.2%, FVTPL 5.3%, 未避險 63.7%. My extract had three of those four wedges and
+neither bar. **That fixes the Fubon problem of 4.35 for 2026**: the wedge label
+drops 外幣保單 in 2026, so the pie is over the risk subset like Cathay's and
+Fubon can join the gross composite — 0.239 × 0.776 = 18.5% gross, 40.9%
+economic at 1Q26.
+
+**Checked and correct:** data.gov dataset 10767 is 人壽保險公司資產負債統計表
+(the CBC life-insurer balance sheet, EF67 — already loaded from 1987-05);
+dataset 7190 is 保險公司財務報表摘要, whose resource is the json-06021011
+endpoint already loaded as `firm_statutory_balance` (4.11). The direct CBC
+`EF67M01.csv` link resolves (147KB) and is an alternative channel to the one
+Stage 2 uses. The closing statement — that no single regulator download carries
+company-level hedge notional and FX-policy liabilities together — matches this
+project's own finding.
+
+**What this opens, in priority order.**
+1. Shin Kong's hedge notional is the best per-firm source found so far: exact,
+   quarterly, with the swap/forward split, and three periods per filing so the
+   archive walks back cheaply. Shin Kong is ~11% of sector foreign investment.
+   The filing URLs carry an opaque path segment (`/financial/85/`), so the
+   index must be walked rather than guessed — probing ROC-year filenames
+   returned 404 on all ten attempts.
+2. Test whether Nan Shan, Taiwan Life and KGI disclose the same way. Any firm
+   not applying hedge accounting should, and that is most of them.
+3. Patch the two extraction gaps above (Cathay FY22 bar, Fubon 2026 bar + CS/NDF
+   wedge) and re-run 4.35.
+
+**Files.** No code change in this entry; the supplied document is recorded at
+`docs/sources/supplied/fx_hedging_data_sources.md` with the verification result
+against each claim.
