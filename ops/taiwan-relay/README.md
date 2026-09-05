@@ -33,24 +33,26 @@ The build takes a few minutes. Keep the tab or app in the foreground while it
 runs — a backgrounded mobile session can drop the connection. If it does, the
 build continues server-side and re-running the command is safe either way.
 
-One line, so it can be pasted on a phone or tablet as easily as a laptop.
-Cloud Shell usually opens with a project already selected and `deploy.sh`
-uses whatever is set, so try this first:
+**This repository is private, so do not clone it in Cloud Shell.** `git clone`
+over https will stop at a `Username for 'https://github.com'` prompt, which is
+a dead end without a personal access token. Paste **`oneliner.sh`** instead: it
+writes the three files itself, deploys, prints the two secret values, and then
+runs the origin check in the same command, so the geolocation question is
+answered in one pass rather than two.
 
 ```
-rm -rf ~/tlfx && git clone -q https://github.com/WillBtK/Taiwan-Lifers.git ~/tlfx && bash ~/tlfx/ops/taiwan-relay/deploy.sh
+cat ops/taiwan-relay/oneliner.sh   # copy its contents into Cloud Shell
 ```
 
-If it stops because no project is set, find yours — the Cloud Shell prompt
-shows it in brackets, or run `gcloud config get-value project`, or
-`gcloud projects list` for all of them. It is the lowercase hyphenated id,
-not the display name and not the numeric project number. Then prefix the
-line above with `gcloud config set project YOUR_PROJECT_ID &&`. An empty
-`projects list` means there is no project yet, and creating one with billing
-attached is the only genuinely fiddly step on a phone.
+Cloud Shell usually opens with a project already selected, and the vocab-app
+sort of project already carrying billing is the right one to reuse — a Cloud
+Run service sits alongside whatever else is there. To find the id: the prompt
+shows it in brackets, or run `gcloud projects list` and read the `PROJECT_ID`
+column (lowercase and hyphenated, not the display name and not the number).
+Set it with `gcloud config set project YOUR_PROJECT_ID` before pasting.
 
-It re-clones into `~/tlfx` each time so a repeat run always deploys current
-code, and Cloud Shell's home directory persists between sessions.
+`deploy.sh` does the same thing from a checkout, for anyone working from a
+clone rather than a paste.
 
 `deploy.sh` enables the two required APIs, deploys from source to Cloud Run in
 `asia-east1`, and prints the service URL and a generated token. It is safe to

@@ -2312,3 +2312,27 @@ earnings, not a stock question about a reserve. That is the framing Stage 6
 should carry.
 
 **Files.** none — a reading of data loaded in 4.17-4.19.
+
+### 4.21 The private-repo trap in the deploy path
+
+The documented deploy told the user to `git clone` the repository in Cloud
+Shell. The repository is private, so the clone stopped at a
+`Username for 'https://github.com'` prompt — a dead end on a tablet, and one
+that would have hit anybody following the instructions.
+
+Cloning was never necessary. The relay is three small files, so
+`ops/taiwan-relay/oneliner.sh` writes them with a quoted heredoc, deploys, and
+runs the origin check in the same paste. That removes the GitHub credential
+from the path entirely and also folds `verify.sh` into the same run, so the
+question the deployment cannot answer in advance — whether Cloud Run's shared
+egress is read as Taiwanese — is answered in one pass instead of two.
+
+The heredoc was tested locally by executing the file-writing half and parsing
+the result, rather than trusted to transcribe correctly.
+
+The general point, worth applying to any future runbook here: instructions
+that assume repository access are only valid for people who already have it,
+and the deployment path is used precisely by someone standing outside the
+repository.
+
+**Files.** `ops/taiwan-relay/oneliner.sh`, `ops/taiwan-relay/README.md`.
