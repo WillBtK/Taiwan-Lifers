@@ -3817,3 +3817,68 @@ away.
 `derived_series` series 11, `definition_version = tpex_register`: 55 rows, sum
 of the USD-mn rows 1,279,000.070, maturity ladder summing to 216,801.688 =
 218,214.688 less the 1,413.0 of perpetuals. Both verified server-side.
+
+---
+
+### 4.42 Correction to 4.40: the agency-MBS decline is rotation and price, not liquidation — and Taiwan is a sixth of the marginal foreign bid for US corporate bonds
+
+Two things came out of extending the TIC pull by one vintage and doing the
+increment arithmetic. The first corrects 4.40; the second is the number the
+research question actually asked for.
+
+**The correction.** 4.40 read the fall in Taiwan's agency-ABS holdings — USD
+265bn (2019) to 192bn (2024) — as "Taiwan did not merely stop adding; it shrank
+the book in absolute terms". That overstates it. **TIC holdings are at market
+value, so a change in the level mixes price with flow and is not a transactions
+series.** Agency MBS repriced heavily downward over exactly that window, and
+the project already holds a transactions measure that excludes valuation: the
+BoP series from 4.39 shows the sector was a net BUYER of long-term foreign debt
+in every one of those years — 41.6, 13.4, 41.0, 16.4, 15.1 and 19.3 USD bn for
+2019 through 2024, about USD 147bn cumulative. Against that, Taiwan's measured
+US long-term debt holdings rose only 554 → 632bn. The wedge is valuation and
+non-US allocation. So the correct reading of 2019-2024 is **rotation out of
+agency MBS into corporate credit, inside a book that was still growing** — not
+a retreat. The genuine net selling is a 2025 event and it is the BoP that shows
+it, not this table.
+
+**The 2025 survey, the first observation after the May TWD shock, supports that
+reading rather than the earlier one.** As of 30 June 2025 (USD bn, prior year in
+brackets): total LT debt **677** (632), Treasuries **304** (265), agency ABS
+**184** (192), corporate bonds **186** (173), equities **172** (146). The stock
+went UP, not down, through the shock quarter. Three things are happening at
+once and only the third is the lifers retreating: the CBC's reserve build shows
+up in Treasuries (+39bn); the lifers keep adding corporate credit (+13bn); and
+agency MBS keeps shrinking (−8bn). Taiwan's share of all foreign-held US agency
+ABS falls again to 14.0%, and its corporate share dips for the first time, 4.4%
+to 4.1%.
+
+The caution this leaves on the record: TIC is a country, June-dated, and at
+market value; the BoP is a sector, quarterly, and at transaction value. Where
+they disagree the BoP answers questions about behaviour and TIC answers
+questions about composition. Neither is a substitute for the other and 4.40
+used TIC for a behavioural claim it cannot support.
+
+**The marginal-buyer arithmetic, which is what the question asked.** Taiwan's
+share of the CHANGE in all foreign holdings, computed in SQL from the stored
+primitives:
+
+| segment | Taiwan Δ, USD bn | all foreign Δ, USD bn | Taiwan share of the increment |
+|---|---|---|---|
+| agency ABS 2013-2019 | +139 | +420 | **33.1%** |
+| agency ABS 2019-2024 | −73 | +214 | −34.2% |
+| corporate bonds 2013-2024 | +138 | +1,683 | 8.2% |
+| **corporate bonds 2019-2024** | **+58** | **+347** | **16.7%** |
+
+Subject to the same market-value caveat — these are changes in stock, not
+purchases — this is the answer to "what role have Taiwanese lifers played as a
+source of duration demand in USD bonds". Through 2013-2019 Taiwan absorbed
+**one third of the entire increase in foreign holdings of US agency MBS**. Over
+2019-2024 it took **one sixth of the increase in foreign holdings of US
+corporate bonds**. One economy of USD 800bn, at the margin, in the two
+longest-duration segments of the US market that foreigners buy. And the
+valuation caveat biases these DOWN rather than up over a period of rising
+yields, because Taiwan's book is longer than the average foreign holder's, so
+price falls cut its measured stock harder.
+
+**Files.** `scripts/stage6_tic_holdings.py` extended to 2025; series 10 now
+187 rows, sum 534,388,186 USD mn, verified server-side against the generator.

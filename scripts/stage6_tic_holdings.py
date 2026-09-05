@@ -61,7 +61,8 @@ OUT = ROOT / "data" / "tic_taiwan_holdings.csv"
 BASE = "https://ticdata.treasury.gov/resource-center/data-chart-center/tic/Documents/"
 UA = {"User-Agent": "Mozilla/5.0 (compatible; TLFX/1.0)"}
 # the file name alternates between shlNNNNr.pdf and shlaNNNNr.pdf across years
-YEARS = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+YEARS = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023,
+         2024, 2025]
 COUNTRY = "Taiwan"
 # seven cells, always in this order, under group headers Total / Agency / Corporate
 COLS = ["lt_total", "equities", "treasuries",
