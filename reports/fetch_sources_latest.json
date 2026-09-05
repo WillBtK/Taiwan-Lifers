@@ -1,12 +1,14 @@
 {
- "run_at": "2026-09-05T00:40:46.605540+00:00",
+ "run_at": "2026-09-05T00:41:54.332345+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
    "url": "https://www.tigf.org.tw/content/2025/file/%E4%BF%9D%E9%9A%AA%E6%A5%AD%E6%8A%95%E8%B3%87%E5%9C%8B%E5%85%A7%E5%A4%96%E8%82%A1%E7%A5%A8%E5%8F%8A%E5%82%B5%E5%88%B8%E9%87%91%E9%A1%8D.csv",
    "needs_relay": false,
-   "status": "unavailable",
-   "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+   "status": "written",
+   "sha256": "2c703e733ac1f90951fe1d3a86d19c7083b1eecac7107928e11d6abdb74dc4d1",
+   "bytes": 719,
+   "path": "data/raw/tigf/tigf_holdings_20260905.csv"
   },
   {
    "name": "tii_I171",
@@ -42,8 +44,8 @@
   }
  ],
  "summary": {
-  "written": 2,
+  "written": 3,
   "unchanged": 0,
-  "unavailable": 3
+  "unavailable": 2
  }
 }
