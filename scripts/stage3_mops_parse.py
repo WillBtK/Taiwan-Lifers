@@ -58,6 +58,12 @@ def parse_file(path: Path):
            "report": rid, "obs_quarter": f"{y}-{q * 3 - 2:02d}-01"}
     for name, ctx, v in facts(html):
         short = name.split(":")[-1]
+        # equity-statement facts are dimensioned: the same concept is reported
+        # once per equity component, and only the SpecialReserve column is the
+        # movement in that reserve (the mirror sits in retained earnings)
+        name_ctx = ctx
+        if "_" in ctx:
+            ctx = ctx.split("_")[0]
         if ctx == asof and short in ("Assets", "Liabilities", "Equity"):
             # keep the first occurrence (statement body; later ones are notes)
             row.setdefault(short.lower() + "_mn", round(v / 1000, 3))
@@ -65,6 +71,20 @@ def parse_file(path: Path):
             row.setdefault("fx_reserve_mn", round(v / 1000, 3))
         elif ctx == ytd and "NetChangeInReserveForForeignExchangeValuation" in short:
             row.setdefault("fx_reserve_net_change_ytd_mn", round(v / 1000, 3))
+        elif ctx == asof and short == "SpecialReserve":
+            # 特別盈餘公積, the EQUITY-side special surplus reserve. Two of the
+            # four buckets of the Feb-2026 notice live here (README section 3,
+            # series 3 v2), so omitting it left the buffer stack incomplete —
+            # at Fubon 2025Q4 it is NT$333.9bn against a NT$142.1bn FX reserve.
+            # It is NOT all FX-designated: other statutory appropriations share
+            # the line, so it is an upper bound until the notes are parsed.
+            row.setdefault("special_reserve_equity_mn", round(v / 1000, 3))
+        elif ctx == asof and short == "StatutoryReserve":
+            row.setdefault("statutory_reserve_mn", round(v / 1000, 3))
+        elif ctx == ytd and short == "SpecialReserveAppropriated" and "SpecialReserveMember" in name_ctx:
+            row.setdefault("special_reserve_appropriated_mn", round(v / 1000, 3))
+        elif ctx == ytd and short == "ReversalOfSpecialReserve" and "SpecialReserveMember" in name_ctx:
+            row.setdefault("special_reserve_reversal_mn", round(v / 1000, 3))
     return row
 
 
@@ -80,7 +100,9 @@ def main():
             problems.append(f"{r['co_id']} {r['year']}Q{r['q']}: A != L+E")
     cols = ["co_id", "entity_id", "year", "q", "report", "obs_quarter",
             "assets_mn", "liabilities_mn", "equity_mn", "fx_reserve_mn",
-            "fx_reserve_net_change_ytd_mn"]
+            "fx_reserve_net_change_ytd_mn", "special_reserve_equity_mn",
+            "statutory_reserve_mn", "special_reserve_appropriated_mn",
+            "special_reserve_reversal_mn"]
     with open(OUT, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()

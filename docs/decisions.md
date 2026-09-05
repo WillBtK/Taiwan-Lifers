@@ -2226,3 +2226,54 @@ reserve from their own filing rather than a deck.
 
 **Files.** `data/mops_statements.csv`, `out/stage3_mops_load_20260905.sql`,
 `cache/mops/`.
+
+### 4.19 Half the buffer stack was missing: the equity-side special reserve
+
+Chasing the NT$8.0bn residual in Fubon's reserve build (4.18) did not close
+that residual, but it turned up something larger. Enumerating every
+reserve-like XBRL concept in the 2025 filing — rather than the one family the
+parser matched — found seventeen, of which four matter and none were being
+read.
+
+**The finding.** The project's buffer series was built entirely on
+`ReserveForForeignExchangeValuation`, the liability-side FX reserve. But the
+February 2026 notice defines **four** buckets (README §3, series 3 v2) and two
+of them are appropriations of retained earnings into 特別盈餘公積, which sits in
+equity and is reported under a different concept. Its size:
+
+| NT$ mn, 2025Q4 | FX reserve (liability) | Special reserve (equity) |
+|---|---|---|
+| Fubon Life | 142,125 | 333,917 |
+| Taiwan Life | 27,933 | 54,099 |
+
+The equity side is **2.3x the liability side at Fubon and 1.9x at Taiwan
+Life**. Every buffer-coverage number the project could have produced before
+today understated loss-absorbing capacity by more than half.
+
+**Verified, not assumed.** The statement of changes in equity reports the
+year's appropriation and reversal dimensioned by equity component, so the
+movement can be reconciled against the balance-sheet line. For Fubon 2025:
+appropriated 70,481.532, reversal −3,013.707, sum **67,467.825**, against a
+balance movement of 333,917.207 − 266,449.382 = **67,467.825**. Exact. That
+identity is now a loader check (15/15), and it is what guards the parse: the
+concept is reported once per equity column, so a dimension filter that picked
+the wrong column would break the reconciliation immediately.
+
+**The caveat that must travel with the number.** `special_reserve_equity` is
+the whole 特別盈餘公積 line, so it is an **upper bound** on the FX-designated
+portion — other statutory appropriations share it. And within the FX portion,
+the notice's 強化準備 bucket is restricted capital that **cannot** offset
+losses, so it belongs in the stack as a separate tier, not in the total.
+Splitting the line needs the notes to the accounts rather than the face of the
+statements. Until then the column comment forbids adding it to the FX reserve
+and calling the sum loss-absorbing capacity.
+
+**The original residual stays open.** The 8.0bn gap between Fubon's FX-reserve
+balance movement and its cash-flow net change is not explained by any of
+this — the equity appropriation is a separate account, not a transfer into the
+FX reserve line. It remains a live question against that column.
+
+**Files.** `supabase/migrations/0012_firm_quarterly_reserve_stack.sql`,
+`scripts/stage3_mops_parse.py` (four concepts, dimension-aware context
+matching), `scripts/stage3_load_mops.py` (four columns, reconciliation check),
+`data/mops_statements.csv`.

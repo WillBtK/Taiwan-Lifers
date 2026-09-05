@@ -75,12 +75,13 @@ the shared key). Loads are checksum-verified server-side against the local CSVs
 | `ib_indicators` | 112 | 2017-01 → 2026-04, complete | `disclosed` | FSC-basis 國外投資 (the regulatory hedge-ratio denominator) and 資產總額, monthly, from 表17-1 of the Bureau's key-indicators PDFs; each month's column label proven by a CBC total-assets tie; vintage = PDF upload date; 2026 figures are IFRS 17 and current-year figures unaudited per the table's own note |
 | `briefing_press` | 14 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-09, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; denominators at 2024-12, 2025-09, 2025-10, 2025-12 — hedge principal derivable at the ratio-bearing three: 10.36tn → 8.90tn → 7.74tn NT$ |
 
-Migrations applied: `0001`–`0011`. `0003` adds the release fields, `0004`
+Migrations applied: `0001`–`0012`. `0003` adds the release fields, `0004`
 puts `reporting_channel` in the primary key, `0005` admits the
 `ib_indicators` channel, `0006` adds deck share columns and the
 `source_channel` key to `firm_quarterly`, `0007` adds `deck_composition`
 and `total_fx_cost_bp`, `0008` adds `firm_statutory_indicators`, `0009` `firm_statutory_balance`, `0010` corrects two indicator
-column comments, `0011` adds the sector soundness and holdings tables.
+column comments, `0011` adds the sector soundness and holdings tables, `0012` the equity-side
+reserve stack on `firm_quarterly`.
 `tlfx.entities` holds the six firms (decisions 3.10). `tlfx.firm_quarterly`
 holds three firms' deck series — Cathay 47 quarters, **Fubon 49 (2013-Q4 →
 2026-Q2, all-in FX cost + colour-bound recurring cost + composition —
