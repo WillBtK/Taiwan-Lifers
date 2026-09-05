@@ -1,0 +1,29 @@
+# Diagnostic: can a GitHub-hosted runner reach the sources this sandbox cannot?
+# ins-info.ib.gov.tw does not route from the agent sandbox (docs/decisions.md 4.9),
+# which forced a manual courier route (4.10/4.11). If a runner can reach it, the
+# whole ingestion becomes a scheduled workflow and the courier route retires.
+name: probe-sources
+on:
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths: ['.github/workflows/probe-sources.yml']
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe each source host
+        run: |
+          probe () {
+            printf '%-58s ' "$1"
+            curl -sS --max-time 25 -o /tmp/body -w 'http=%{http_code} tls=%{time_appconnect} size=%{size_download}\n' \
+              -H 'User-Agent: Mozilla/5.0' "$1" 2>&1 | tail -1
+            head -c 160 /tmp/body | tr '\n' ' '; echo; echo
+          }
+          probe 'https://ins-info.ib.gov.tw/opendata/json-06161610.aspx'
+          probe 'https://ins-info.ib.gov.tw/opendata/json-06021011.aspx'
+          probe 'https://ins-info.ib.gov.tw/customer/checkrpt.aspx'
+          probe 'https://www.tigf.org.tw/content/2025/file/%E4%BF%9D%E9%9A%AA%E6%A5%AD%E6%8A%95%E8%B3%87%E5%9C%8B%E5%85%A7%E5%A4%96%E8%82%A1%E7%A5%A8%E5%8F%8A%E5%82%B5%E5%88%B8%E9%87%91%E9%A1%8D.csv'
+          probe 'https://data.gov.tw/api/front/dataset/detail?nid=7191'
+          probe 'https://openapi.tii.org.tw/TIIOPENDATA/API/CSV_EXPORT?TableID=I171'
+          echo "runner egress IP:"; curl -sS --max-time 20 https://api.ipify.org || true; echo
