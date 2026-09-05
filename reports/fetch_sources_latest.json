@@ -1,14 +1,21 @@
 {
- "run_at": "2026-09-05T00:45:09.903135+00:00",
+ "run_at": "2026-09-05T03:05:08.801112+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
    "url": "https://www.tigf.org.tw/content/2025/file/%E4%BF%9D%E9%9A%AA%E6%A5%AD%E6%8A%95%E8%B3%87%E5%9C%8B%E5%85%A7%E5%A4%96%E8%82%A1%E7%A5%A8%E5%8F%8A%E5%82%B5%E5%88%B8%E9%87%91%E9%A1%8D.csv",
    "needs_relay": false,
-   "status": "written",
+   "status": "unchanged",
    "sha256": "2c703e733ac1f90951fe1d3a86d19c7083b1eecac7107928e11d6abdb74dc4d1",
-   "bytes": 719,
-   "path": "data/raw/tigf/tigf_holdings_20260905.csv"
+   "matches": "tigf_holdings_20260905.csv"
+  },
+  {
+   "name": "FSI_life",
+   "url": "https://www.cbc.gov.tw/public/data/opendata/financialstability/FSI-%E5%A3%BD%E9%9A%AA%E5%85%AC%E5%8F%B8.csv",
+   "needs_relay": false,
+   "status": "unchanged",
+   "sha256": "39d7663a2df86e09f75bea31583c9a9ce7f886e7c9c23b8f822d33085164f76f",
+   "matches": "FSI_life_20260905.csv"
   },
   {
    "name": "tii_I171",
@@ -42,8 +49,8 @@
   }
  ],
  "summary": {
-  "written": 1,
-  "unchanged": 2,
+  "written": 0,
+  "unchanged": 4,
   "unavailable": 2
  }
 }
