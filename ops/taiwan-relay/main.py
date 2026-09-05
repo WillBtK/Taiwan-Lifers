@@ -13,6 +13,7 @@ an open relay someone else can point at arbitrary hosts:
 Requests failing either check are refused without being forwarded.
 """
 import os
+import ssl
 import urllib.parse
 import urllib.request
 
@@ -23,6 +24,20 @@ app = Flask(__name__)
 ALLOWED_HOSTS = {"ins-info.ib.gov.tw"}
 MAX_BYTES = 32 * 1024 * 1024
 UA = "Mozilla/5.0 (compatible; TLFX/1.0)"
+
+# Python 3.13 turned on VERIFY_X509_STRICT in create_default_context(), which
+# enforces RFC 5280 requirements that many older certificates do not meet.
+# ins-info.ib.gov.tw serves one of them and fails with "Missing Subject Key
+# Identifier", so a relay running on a current interpreter cannot fetch it.
+#
+# Clearing that one flag is NOT disabling TLS verification, and the difference
+# matters: the certificate chain is still built and verified to a trusted root,
+# and the hostname is still checked. What is relaxed is only the strictness
+# about optional extensions being present, which is the pre-3.13 default and
+# what every browser reaching this site already does. Verification proper
+# stays on; if the chain or the hostname were wrong, this would still refuse.
+CTX = ssl.create_default_context()
+CTX.verify_flags &= ~ssl.VERIFY_X509_STRICT
 
 
 @app.get("/health")
@@ -47,7 +62,7 @@ def fetch():
 
     req = urllib.request.Request(target, headers={"User-Agent": UA})
     try:
-        with urllib.request.urlopen(req, timeout=90) as r:
+        with urllib.request.urlopen(req, timeout=90, context=CTX) as r:
             body = r.read(MAX_BYTES + 1)
             ctype = r.headers.get("Content-Type", "application/octet-stream")
     except Exception as e:

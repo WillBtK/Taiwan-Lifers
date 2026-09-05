@@ -17,11 +17,12 @@ head -c 200 /tmp/relay_body; echo; echo
 case "$code" in
   200) echo "PASS - the origin accepts this egress. Add the two secrets and the"
        echo "       weekly workflow will collect these sources from now on." ;;
-  502) echo "FAIL - the relay reached the origin and the origin refused or timed"
-       echo "       out. Cloud Run's shared egress is not being read as Taiwan."
-       echo "       Fallback: a Compute Engine e2-micro in asia-east1 with its own"
-       echo "       external address, running the same app, geolocates reliably."
-       echo "       That costs roughly USD 7-10/month; check current pricing." ;;
+  502) echo "The relay ran; the fetch failed. READ THE BODY ABOVE. A connect"
+       echo "       timeout means the egress is not read as Taiwan, and the"
+       echo "       fallback is an e2-micro in asia-east1 with its own address"
+       echo "       (roughly USD 7-10/month; check current pricing). A TLS or"
+       echo "       certificate error means the origin ANSWERED - the geography"
+       echo "       works and only the client needs fixing." ;;
   403) echo "FAIL - token mismatch between RELAY_TOKEN here and the deployed service." ;;
   000) echo "INCONCLUSIVE - no response from the relay at all. Check the URL and"
        echo "       that the service deployed; this says nothing about the origin." ;;

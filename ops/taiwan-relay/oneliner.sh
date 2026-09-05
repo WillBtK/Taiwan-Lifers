@@ -91,8 +91,11 @@ code=$(curl -sS --max-time 120 -o /tmp/relay_body -w '%{http_code}' -H "X-Relay-
 echo "http=$code"; head -c 200 /tmp/relay_body; echo
 case "$code" in
   200) echo "PASS - add the two values above as GitHub secrets." ;;
-  502) echo "FAIL - the relay ran and the origin refused it. Cloud Run's shared"
-       echo "       egress is not read as Taiwan; the VM fallback is needed." ;;
+  502) echo "The relay ran; the fetch failed. READ THE BODY ABOVE before"
+       echo "       concluding anything. A connect timeout means the egress is"
+       echo "       not read as Taiwan and the VM fallback is needed. Any TLS or"
+       echo "       certificate error means the OPPOSITE - the origin answered,"
+       echo "       so the geography is fine and only the client needs fixing." ;;
   *)   echo "INCONCLUSIVE ($code) - the relay itself did not answer properly;"
        echo "       this says nothing about the origin. Check the service logs." ;;
 esac

@@ -2372,3 +2372,45 @@ wrong architectural decision taken on its authority. Every check in this
 project that ends in a verdict should be readable against that test.
 
 **Files.** `ops/taiwan-relay/oneliner.sh`, `deploy.sh`, `verify.sh`.
+
+### 4.23 The relay works: the geography was never the problem, and my check said it was — twice
+
+The service deployed to `asia-east1` and the fetch returned 502 with the body
+`SSL: CERTIFICATE_VERIFY_FAILED ... Missing Subject Key Identifier`.
+
+**That is a success disguised as a failure, and the distinction is the whole
+finding.** A certificate error can only occur after a TCP connection is
+established and the server presents a certificate. The portal *answered* the
+relay. Every prior attempt from every other network died at
+`time_appconnect=0.000`, with no handshake at all (4.13). So Cloud Run's
+`asia-east1` egress **is** accepted as Taiwanese, the architecture is right,
+and the VM fallback is not needed. The remaining fault is entirely
+client-side.
+
+**The client fault.** Python 3.13 enabled `VERIFY_X509_STRICT` in
+`create_default_context()`, which enforces RFC 5280 requirements that older
+certificates often miss. The portal serves such a certificate, so a relay on a
+current interpreter cannot fetch it. Clearing that one flag is **not**
+disabling TLS verification: the chain is still built and verified to a trusted
+root and the hostname is still checked; only the strictness about optional
+extensions is relaxed, which is the pre-3.13 default and what every browser
+reaching this site already does.
+
+**The part worth being uncomfortable about.** This is the second time in one
+sitting that my own diagnostic announced a conclusion it had not tested. First
+it reported a failed build as an egress verdict (4.22). Then, having been
+fixed, it reported *this* — a certificate error proving the egress works — as
+`FAIL: egress not read as Taiwan; the VM fallback is needed`. Both times the
+error was the same shape: a `case` arm matching a status code and asserting a
+cause, when the status code alone could not distinguish the causes. Both times
+the false verdict pointed at the same expensive wrong action, provisioning a
+virtual machine.
+
+The fix is not a better message but a different discipline: **a check may only
+name a cause it has actually discriminated.** The 502 arm now refuses to
+choose and says what to look for instead — a connect timeout means the
+geography failed, a TLS error means the geography worked. Where the evidence
+does not separate the hypotheses, the honest output is the evidence.
+
+**Files.** `ops/taiwan-relay/main.py` (ssl context), `oneliner.sh`,
+`verify.sh`.
