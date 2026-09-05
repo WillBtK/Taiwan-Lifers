@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T04:51:16.033016+00:00",
+ "run_at": "2026-09-05T05:14:40.295391+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -1824,6 +1824,192 @@
     "03557017": "t功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-12.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
    },
    "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 各項財務業務指標"
+  },
+  {
+   "note": "Info2-5 fubon, Year param",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&Year=114",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22788,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&amp;Year=114",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "Info2-5 fubon, BYear+BQuarter",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&BYear=114&BQuarter=4",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22804,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&amp;BYear=114&amp;BQuarter=4",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "Info2-5 fubon, Season param",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&Year=114&Season=4",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22801,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&amp;Year=114&amp;Season=4",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "Info2-5 fubon, YM param",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&YM=11412",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22788,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&amp;YM=11412",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "Info2-5 fubon, OccurSeason param",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&OccurSeason=114",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22795,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&amp;OccurSeason=114",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "Info2-5 fubon, baseline (no period)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22775,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
   }
  ]
 }
