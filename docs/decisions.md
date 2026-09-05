@@ -4209,3 +4209,43 @@ that instruction is in the `basis_note` of every row.
 mode regenerates the load SQL from the script's own CSV so the rolling fits can
 be loaded without re-piping the year-to-date input. 42 rows per key, sums
 32.7237 and 37.3899, verified server-side against the generator.
+
+---
+
+### 4.47 Which hedge ratio is the referenced one — evidenced, and a README claim withdrawn
+
+Asked which of the seven ratios is most commonly referenced, the README's own
+answer was wrong. Its series-5 row described the **gross** ratio as "the figure
+most sell-side and press quote". That was unsourced, and the primary evidence
+points the other way.
+
+**The referenced figure is series 4, the FSC's regulatory 匯率避險比率.** The
+CBC's *Financial Stability Report* (第20期, May 2026, p.80) states:
+
+> 114年底壽險公司匯率避險比率降至50.23%，為歷史新低
+
+**50.23% ties `reg_hedge_ratio` at 2025-12 (0.5023) to the basis point** — the
+central bank's flagship publication quoting the same series this project stores,
+with no adjustment. It is also the only hedge ratio any Taiwanese authority
+publishes, the figure given at the FSC's monthly briefings, and the measure
+industry guidance (~40%) is expressed against. Decisions 0.12 and 1.2 already
+recorded it as press-reported for its whole life; nothing recorded the gross
+ratio as press-quoted at all.
+
+**Two things to carry whenever it is quoted.** It is mechanically the highest of
+the seven, because its denominator strips FX-policy liabilities and unhedged
+non-FVTPL equity — roughly a third of foreign investments. And the CBC's "record
+low" has already been surpassed: 50.23% (2025-12) → **42.94% (2026-07)**, a
+further 7.3 points.
+
+**Artifacts.** Two pages published for the user: the seven-construction
+comparison, and a focused page on this series alone with the CBC quotation as
+its evidence.
+
+**MOPS download, status.** The mechanism from 4.46's next step is now understood
+and fixed in code: `step=9` does not stream the filing, it returns an HTML page
+linking to `/pdf/<name>_<timestamp>.pdf` with a per-request timestamp, so the URL
+cannot be constructed. One filing's link page was retrieved successfully, proving
+the route. The WAF has since re-blocked the endpoint, so no PDF has yet landed —
+a rate limit, not a defect. The firm-statement route to hedge ratios back to 2013
+remains the open path.
