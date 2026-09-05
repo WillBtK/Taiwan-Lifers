@@ -32,6 +32,28 @@ jobs:
         with:
           ref: claude/stage-1-fsc-sector-monthly-jh1pkf
 
+      # Report whether the relay secrets reached the job, without printing them.
+      # "no TAIWAN_RELAY_URL configured" in the fetch output is ambiguous on its
+      # own: it cannot tell a missing secret from a misnamed one from a secret
+      # scoped somewhere the job cannot see. This line settles it.
+      - name: Relay configuration
+        env:
+          TAIWAN_RELAY_URL: ${{ secrets.TAIWAN_RELAY_URL }}
+          TAIWAN_RELAY_TOKEN: ${{ secrets.TAIWAN_RELAY_TOKEN }}
+        run: |
+          echo "TAIWAN_RELAY_URL   set: ${TAIWAN_RELAY_URL:+yes}${TAIWAN_RELAY_URL:-NO}"
+          echo "TAIWAN_RELAY_TOKEN set: ${TAIWAN_RELAY_TOKEN:+yes}${TAIWAN_RELAY_TOKEN:-NO}"
+          if [ -n "$TAIWAN_RELAY_URL" ]; then
+            echo "host: $(printf '%s' "$TAIWAN_RELAY_URL" | sed -E 's#^https?://([^/]+).*#\1#')"
+            echo -n "relay /health: "
+            curl -sS --max-time 30 "$TAIWAN_RELAY_URL/health" || echo "(unreachable)"
+            echo
+          else
+            echo "Nothing named TAIWAN_RELAY_URL reached this job. Check that the"
+            echo "secrets exist on THIS repository under Settings -> Secrets and"
+            echo "variables -> Actions, as repository secrets, spelled exactly."
+          fi
+
       - name: Fetch sources
         env:
           TAIWAN_RELAY_URL: ${{ secrets.TAIWAN_RELAY_URL }}
