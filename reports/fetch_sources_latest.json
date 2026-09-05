@@ -1,12 +1,13 @@
 {
- "run_at": "2026-09-05T04:30:43.196835+00:00",
+ "run_at": "2026-09-05T04:31:21.949584+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
    "url": "https://www.tigf.org.tw/content/2025/file/%E4%BF%9D%E9%9A%AA%E6%A5%AD%E6%8A%95%E8%B3%87%E5%9C%8B%E5%85%A7%E5%A4%96%E8%82%A1%E7%A5%A8%E5%8F%8A%E5%82%B5%E5%88%B8%E9%87%91%E9%A1%8D.csv",
    "needs_relay": false,
-   "status": "unavailable",
-   "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+   "status": "unchanged",
+   "sha256": "2c703e733ac1f90951fe1d3a86d19c7083b1eecac7107928e11d6abdb74dc4d1",
+   "matches": "tigf_holdings_20260905.csv"
   },
   {
    "name": "FSI_life",
@@ -36,20 +37,22 @@
    "name": "json-06161610",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161610.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: no TAIWAN_RELAY_URL configured (Taiwan egress unavailable)"
+   "status": "unchanged",
+   "sha256": "052ec8bd169e1188c351dedd040c33641171de29d04e81f2b887730837c850ba",
+   "matches": "json-06161610_20260905.json"
   },
   {
    "name": "json-06021011",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06021011.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: no TAIWAN_RELAY_URL configured (Taiwan egress unavailable)"
+   "status": "unchanged",
+   "sha256": "a4b4fad25e8ba73e05e91cddb69b99ca56e7e1a62defaebd9e7e7c7ebe282e27",
+   "matches": "json-06021011_20260905.json"
   }
  ],
  "summary": {
   "written": 0,
-  "unchanged": 3,
-  "unavailable": 3
+  "unchanged": 6,
+  "unavailable": 0
  }
 }
