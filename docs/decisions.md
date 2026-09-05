@@ -1824,3 +1824,103 @@ per-company pages reachable.
 `data/ib_firm_indicators.csv`, `scripts/stage3_ib_firm_indicators.py`,
 `supabase/migrations/0008_firm_statutory_indicators.sql`,
 `out/stage3_ib_firm_20260904.sql`.
+
+### 4.11 The second courier file: 表06021011 財務報告彙總 ties the statement channel exactly for all six firms
+
+**What arrived.** `ins-info.ib.gov.tw/opendata/json-06021011.aspx`, fetched by
+the user on 2026-09-05 and committed as
+`data/raw/ins-info/json-06021011_20260905.json`. 52 records — every insurer
+the Bureau supervises, 30 life and 22 non-life, active names at 115Q2 and
+defunct ones frozen at their last filing — with `OccurSeason`, `INSURER_Name`,
+`AMOUNT1..3`, `ActualCapital`, `AMOUNT4..8`. No data.gov.tw dataset carries
+this table (the catalogue search finds 7191/7192 for the indicators and the
+TII/保發中心 aggregates, nothing for 06021011), so there is no field list to
+lean on.
+
+**What the data itself pins.** `AMOUNT1 − AMOUNT2 = AMOUNT3` holds to the
+NT$ thousand on all 52 records, so the three are total assets, total
+liabilities and owners' equity. Then the decisive check: for the six panel
+firms the figures tie **exactly, to the NT$ thousand**, to what the project
+already holds in the statement channel — Fubon, Nan Shan, KGI, Taiwan Life and
+Shin Kong from MOPS XBRL, Cathay from the statement Excel:
+
+| firm | assets NT$ mn (Bureau = statement) | equity NT$ mn |
+|---|---|---|
+| Cathay | 9,335,881.239 | 959,968.690 |
+| Fubon | 6,604,842.795 | 890,933.026 |
+| Nan Shan | 5,776,294.449 | 562,964.165 |
+| KGI | 2,644,052.380 | 348,748.523 |
+| Taiwan Life | 2,538,026.754 | 352,376.941 |
+| Shin Kong (2026) | 4,209,479.534 | 403,634.560 |
+
+Six for six. That is the first fully independent, regulator-published
+confirmation of the MOPS parse (3.12/4.5 verified the *reserve* recovery
+against decks; this verifies the balance-sheet totals against the Bureau).
+It also settles a small question left open in the entities seed: the Bureau
+reports the merged Shin Kong Life at exactly the figures MOPS files under
+6985, so the 2026 statement rows are the right entity. The pre-merger Shin
+Kong row (114Q4: assets 3,696,948.541 mn, equity 178,468.515 mn) has no
+statement counterpart because that filing code was never verified; it is
+loaded and linked to `shinkong_life` on the continuity convention, and now
+supplies the 2025Q4 balance-sheet anchor the MOPS queue could not.
+
+`ActualCapital` is paid-in capital by its own field name (Cathay 63,515 mn,
+Fubon 118,420 mn — the familiar figures). `AMOUNT4..8` are **not named**: no
+in-data identity pins them, the blank pattern (AMOUNT4 populated only on
+pre-2026 and defunct rows, AMOUNT5/6 almost never) suggests discontinued
+items, and AMOUNT7/8 are small ratios with no obvious denominator (Fubon
+0.02 / 5,692; 三商美邦 0.01 / 18,648). Guessing would put a wrong label on a
+regulator column; they are stored verbatim as `amount4..amount8` with the
+whole record in `raw_record`, and the portal's column headers for 表06021011
+join the courier list.
+
+**Storage.** `tlfx.firm_statutory_balance` (migration 0009), keyed on
+(`insurer_name`, `obs_quarter`, `vintage`) with `sector` life/non-life from
+the published name (亞洲保險 is the one general insurer without 產物 in its
+name; 中華郵政 is life). Units are **NT$ thousand as published** — a deliberate
+exception to the NT$ mn convention, because this is a regulator table kept
+verbatim; the A = L + E identity is a CHECK constraint. Loader
+`scripts/stage3_ib_firm_balance.py` prints the statement ties and per-column
+checksums; the load is verified against them server-side.
+
+**Files.** `data/raw/ins-info/json-06021011_20260905.json`,
+`data/ib_firm_balance.csv`, `scripts/stage3_ib_firm_balance.py`,
+`supabase/migrations/0009_firm_statutory_balance.sql`,
+`out/stage3_ib_balance_20260905.sql`.
+
+### 4.12 Catalogue by-products: the CBC's life-insurer soundness indicators are open, stat.fsc.gov.tw answers, TIGF stays blocked
+
+Searching data.gov.tw for the 06021011 table turned up three hosts the
+project had not probed.
+
+**`www.cbc.gov.tw` — 金融健全參考指標 – 壽險公司 (dataset 132163), reachable
+(tier-1 host).** A 41-row CSV, quarterly 2016-03 → 2026-03: life-insurer
+assets/GDP, ROA, ROE pre- and post-tax, **RBC capital-adequacy ratio
+(semi-annual, 278% in 2016-06 → 315% in 2025-12)** and equity/investment
+assets. Sector-level, CBC-published, and directly decision-relevant for the
+capital-buffer framing of Stages 5–6: the RBC path through the 2025 shock
+(312% at 2025-06, 315% at 2025-12) and the assets/GDP ratio falling from 143%
+(2024-12) to 111% (2026-03) are both new to the project. Cached as
+`cache/cbc/FSI_life_20260905.csv`; not loaded yet — it needs a small
+sector-quarterly table of its own rather than a forced fit into
+`sector_monthly`, and that is queued with Stage 5 rather than done in passing.
+
+**`stat.fsc.gov.tw` — the FSC's statistics API, reachable.** Dataset 27947
+exports from `api/v1/public/datasets/27947/export` without a key. The
+particular dataset is stale (annual 2008–2017, announced 2020), but the host
+is the FSC's structured-statistics channel and worth a systematic look at the
+Insurance Bureau's other 300 catalogue entries; recorded on the allowlist.
+
+**`www.tigf.org.tw` — still a 403 policy denial.** Dataset 172653 (壽險 /
+產險 monthly stock and bond holdings, NT$ 100 mn, updated monthly) lives there;
+it would give the sector's foreign-bond stock at monthly frequency from the
+guaranty fund. Courier candidate.
+
+**TII K47 (dataset 24606).** Two-year sector balance sheet by line item, NT$
+thousand: 2024 assets 36,922,374,356 — 0.06% off the CBC table-8 figure the
+project carries (36,900,485 mn), the same vintage effect as 4.9. Cached as
+`cache/tii/K47_20260905.csv` for reference only.
+
+**Files.** `cache/cbc/FSI_life_20260905.csv`, `cache/tii/K47_20260905.csv`,
+`cache/fsc/stat27947_20260905.csv` (all gitignored caches; the URLs are in
+`config/allowlist.tsv`).
