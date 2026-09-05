@@ -127,3 +127,15 @@ Info2-5 fubon, Season param	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID
 Info2-5 fubon, YM param	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&YM=11412
 Info2-5 fubon, OccurSeason param	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&OccurSeason=114
 Info2-5 fubon, baseline (no period)	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073
+#
+# Pass 7 (2026-09-05). The question on the table: does the portal carry a
+# HEDGE measure per firm, or only the denominator? Info2-1 gives 國外投資 for
+# every insurer but its derivatives row is blank. Two pages have not been
+# looked at and both could carry it: the income statement (兌換損益 / 避險
+# lines) and the per-company indicator table. Fetching for one large firm
+# settles what the portal can and cannot answer.
+Info2-3 income statement, Fubon	https://ins-info.ib.gov.tw/customer/Info2-3.aspx?UID=27935073
+Info2-12 indicators, Fubon	https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=27935073
+Info2-4 equity changes, Fubon	https://ins-info.ib.gov.tw/customer/Info2-4.aspx?UID=27935073
+Info2-9 cash flow, Fubon	https://ins-info.ib.gov.tw/customer/Info2-9.aspx?UID=27935073
+Info2-2 balance sheet, Fubon (derivative lines?)	https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=27935073
