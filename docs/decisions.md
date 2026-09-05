@@ -3371,3 +3371,84 @@ project's own finding.
 **Files.** No code change in this entry; the supplied document is recorded at
 `docs/sources/supplied/fx_hedging_data_sources.md` with the verification result
 against each claim.
+
+### 4.37 The supplied DATA_SOURCES.md reset — adopted, with three corrections
+
+The user supplied a directive source map that overrides earlier guidance. Every
+checkable claim in it was tested. **The structure is right and is adopted**: the
+six target variables (a)–(e), the acceptance test (company level before 2020 or
+sector level before 2010), the extraction rules in §3.2, and the order of work
+in §5. The extraction rules in particular are already independently confirmed —
+§3.2 rule 1 (notionals from the derivatives note, never the 避險工具
+hedge-accounting table) is exactly what 4.36 verified on Cathay, and all three
+of its §3.3 reference-value sets were verified there too.
+
+**Three claims are wrong and would have cost time.**
+
+*§1.2, the FSC statistics API as "the cleaner route to (a) and (c)".* The API is
+real, documented and reachable — `stat.fsc.gov.tw/api/v1/public/datasets`
+returns 165 datasets with JSON query and CSV export. It carries **none of the
+six target variables**. Searching all 165 names for 財務報表摘要, 財務業務指標,
+資金運用, 國外投資, 避險 and 外幣 returns **zero** on every term. Its insurance
+holdings are agent-registration counts, exam schedules and association member
+lists at 3–48 rows each; the only balance-sheet item is 壽險業總資產統計,
+**annual, ten rows, 2008–2017**, against a monthly sector series this project
+has held from 1987. The claim that it serves the families behind data.gov.tw
+7190 and 7191 is false. Marked ‡ in the document (surfaced, not opened), and
+opening it is what settles it.
+
+*§1.1, `checkrpt.aspx` as the "multi-company aggregation query (彙計表) — select
+table + period → all companies in one table".* It is a **menu page**. Its entire
+body is ten links to `RPT-05010111` … `RPT-07090901`, the same ten report pages
+already mapped at 4.26. There is no period selector and no company selector on
+it. The aggregation query is each `RPT-*` page, which carries 公司名稱 and
+日期區間起迄 controls. The document's procedure is right in substance and wrong
+in address; the depth question it poses is real and still unanswered, and is now
+the highest-value open test in the project.
+
+*§2.2, "scrape the monthly PDF versions of table 8 from the index for every
+month available".* The CBC publishes **one file that each month overwrites**;
+the index exposes no per-month archive, so this instruction cannot be followed
+as written. The problem was already solved differently at 4.34 — the Internet
+Archive's captures are the archive, and eleven editions from 2012-03 to 2026-07
+are loaded.
+
+**One material omission.** The document attributes the ins-info access problem
+to robots exclusion and prescribes "a browser-like User-Agent, session cookies,
+and a rate limit". The actual blocker is **geographic** (4.13): the host answers
+only from Taiwan, and no header or cookie changes that. This project already
+runs a Taiwan-egress relay for it (4.15). The same applies to
+`www.ib.gov.tw/ch/home.jsp?id=181` in §1.1 step 1, which fails from here. Also,
+all three TII hosts in §2.3 are marked † (confirmed opened) but **none is
+reachable from this environment** — `www.tii.org.tw`, `sv.tii.org.tw` and
+`insdb.tii.org.tw` all fail to connect, and `insprod.tii.org.tw` returns 503.
+That is an environment fact rather than a document error, but it makes §2.3
+unavailable without a route the project does not yet have.
+
+**One number to check.** The target panel is given as 20 entities; this log had
+recorded 23 life insurers on the portal. The IB company list is unreachable from
+here, so the discrepancy is left open rather than resolved either way.
+
+**Where the framing overstates.** The hard rule says FSC releases "start in
+2020, are aggregate-only, and are the reason the last three days were wasted".
+The release channel is aggregate-only and its *regulatory hedge ratio* does
+effectively start 2024-04 (1.11), so the caution is warranted for (a)–(e). But
+that channel is also the source of the 兌換損益 / 避險工具損益 / 換匯成本 lines
+from 2018-05 that produced the validated hedge-ratio reconstruction to 2019-05
+(4.29, MAE 4.4pp against the published anchors) — and §2.5 explicitly permits
+loading it for exactly those fields, so there is no actual conflict with the
+rule as written. Similarly §5 defers investor presentations to last, which is
+sound sequencing, but the deck composite already built (4.35) validates against
+the CBC footnote at a stable 0.79 across eight points and is not superseded by
+anything the reset proposes.
+
+**Net.** It helps, and its main contribution is a correct diagnosis of the
+project's real gap: there is no company-level panel of (a)–(e) with pre-2020
+history, and the statutory filings are the only route to (e). That is the same
+conclusion 4.36 reached from Shin Kong's disclosure. The single test that would
+now settle the largest question — how deep the Observation Station's period
+selector goes on `RPT-06021011` — needs a POST through the Taiwan relay, which
+currently forwards GET only.
+
+**Files.** `docs/sources/supplied/DATA_SOURCES.md` (verbatim, with the
+verification result recorded against each disputed claim).
