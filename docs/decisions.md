@@ -3503,6 +3503,15 @@ deliverable and an NDF is not, the FSC's traditional-hedge definition
 enumerates instruments, and the whole CBC-versus-FSC gap (4.34) turns on that
 split.
 
+A second bug was caught by the load rather than by any check: the generated
+SQL named a **four**-column conflict target against `firm_quarterly`'s
+**five**-column primary key, which omits `basis`. Postgres refuses that
+outright — "no unique or exclusion constraint matching the ON CONFLICT
+specification" — so the transaction rolled back whole and wrote nothing. The
+failure mode is the good one: an idempotent load that cannot name its own key
+fails loudly instead of inserting duplicates. All six quarters predate the 2026
+transition, so `basis` is IFRS4.
+
 A unit slip was caught by the tie itself — the first version multiplied a
 NT$-million total by 1,000 against a USD-million split and produced implied
 rates of 30,254. Six identical failures at exactly 1000× is a units bug

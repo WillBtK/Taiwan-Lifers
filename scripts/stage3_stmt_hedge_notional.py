@@ -89,9 +89,14 @@ with vals(entity_id, obs_quarter, hedge_cs, hedge_fx_forward, hedge_notional_tot
 as (values
   {vals})
 insert into tlfx.firm_quarterly
-  (entity_id, obs_quarter, source_channel, hedge_cs, hedge_fx_forward,
+  (entity_id, obs_quarter, basis, source_channel, hedge_cs, hedge_fx_forward,
    hedge_notional_total, source_url, source_doc, retrieved_at, vintage)
-select entity_id, obs_quarter::date, 'statement', hedge_cs, hedge_fx_forward,
+-- basis is part of the primary key and every one of these quarters predates the
+-- 2026 IFRS 17 / TW-ICS transition, so all six are IFRS4. Omitting it is what
+-- made the first attempt fail: a four-column conflict target against a
+-- five-column key matches no constraint and Postgres rejects the statement.
+select entity_id, obs_quarter::date, 'IFRS4'::tlfx.accounting_basis, 'statement',
+  hedge_cs, hedge_fx_forward,
   hedge_notional_total, src,
   'Quarterly statutory financial statement, currency-risk note '
   '(「使用遠期外匯合約及匯率交換合約以減輕匯率暴險，其名目本金共計新台幣…仟元」) '
@@ -102,7 +107,7 @@ select entity_id, obs_quarter::date, 'statement', hedge_cs, hedge_fx_forward,
   'within 0.4% on all six quarters (decisions 4.36, 4.38).',
   '{now}'::timestamptz, obs_quarter::date
 from vals
-on conflict (entity_id, obs_quarter, source_channel, vintage) do update set
+on conflict (entity_id, obs_quarter, basis, source_channel, vintage) do update set
   hedge_cs             = coalesce(tlfx.firm_quarterly.hedge_cs, excluded.hedge_cs),
   hedge_fx_forward     = coalesce(tlfx.firm_quarterly.hedge_fx_forward, excluded.hedge_fx_forward),
   hedge_notional_total = coalesce(tlfx.firm_quarterly.hedge_notional_total, excluded.hedge_notional_total);
