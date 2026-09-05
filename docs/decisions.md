@@ -2535,3 +2535,42 @@ than plumbing.
 **Files.** `scripts/discover_ins_info.py`,
 `.github/workflows/discover-ins-info.yml`, `config/ins_info_targets.tsv`,
 `config/firm_uids.tsv`, `scripts/fetch_sources.py`, `reports/ins_info_map.json`.
+
+### 4.27 Fund utilisation per firm: the denominator the project never had
+
+`Info2-1` parsed and loaded (migration 0013). Twenty-eight rows: seven
+registration numbers — the six panel firms plus the pre-merger Shin Kong
+company — at four periods each, the latest month of the current ROC year and
+three preceding year-ends.
+
+**What it is.** 國外投資 by insurer, monthly. The project has carried this for
+the sector since Stage 2 (表17-1) and for three firms from investor decks; it
+has never had it published for all six, and never at monthly frequency. The
+page is also the freshest thing in the repository — dated **2026-08**, where
+the statutory filings stop at 2026Q2 and the sector table at 2026-05.
+
+**Verified, not assumed.** The nine components must sum to the printed total.
+That identity holds for **28 of 28** firm-periods, and is asserted in the
+loader and re-checked in the database rather than trusted, because a
+mis-parsed row here would flow straight into a denominator. The coverage
+cross-check is the second test: the six firms sum to NT$18.17tn against a
+sector NT$22.15tn (2026-05), or **82%** — the right order for a panel that is
+about four fifths of life-sector assets. Wrong by a factor, or above 100%,
+would have shown here.
+
+**The trap this column sits next to.** 國外投資 is *not* the FSC regulatory
+hedge-ratio denominator, which nets FX-policy liabilities and unhedged
+non-FVTPL equities and runs about 68% of it (decisions 4.1). Pairing a
+disclosed hedge ratio with this figure would restate the ratio by roughly a
+third. The column comment says so, since the two are one word apart in Chinese
+and the mistake would be invisible in the output.
+
+**What it unlocks.** Firm-level series 1, 2 and 5 stop depending on deck
+disclosure: net open position and gross hedge ratio can now be computed for
+all six from published data, wherever a hedge principal exists. That is the
+next derivation, and it is the first time the six-firm panel has had a common
+published denominator rather than three deck-derived ones and three gaps.
+
+**Files.** `scripts/stage3_ib_firm_funds.py`,
+`supabase/migrations/0013_firm_fund_utilisation.sql`,
+`data/ib_firm_funds.csv`, `out/stage3_ib_funds_20260905.sql`.

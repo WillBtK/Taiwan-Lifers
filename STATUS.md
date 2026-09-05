@@ -44,6 +44,8 @@ Stages 5–7 not started.
 | `python3 scripts/stage3_load_cathay.py` | Maps `data/cathay_fx_quarterly.csv` (merged deck series) into `firm_quarterly` SQL — period → quarter, tn/bn → mn, % → bp, IFRS17 from 2026 | Working: 47 rows |
 | `python3 scripts/stage3_cathay_statements.py` | Parses the cached Cathay Life statement Excels (2020→), extracts FX volatility reserve / total assets / equity, derives 2026 reserve via cash-flow net change, joins the deck series, emits CSV + `firm_quarterly` SQL | Working: 26 quarters, 28/28 checks |
 | `python3 scripts/stage3_ib_firm_indicators.py` | Maps every couriered `data/raw/ins-info/json-06161610_YYYYMMDD.json` (dataset 7191 payload) into `firm_statutory_indicators` SQL, positional AMOUNT mapping, collision guard, per-column checksums | Working: 30 rows, 1 snapshot |
+| `python3 scripts/stage3_ib_firm_funds.py` | Parses the Bureau's per-company 資金運用表 (`Info2-1`) into firm-level fund utilisation incl. 國外投資, asserts the nine components sum to the printed total | Working: 28 rows, 28/28 checks |
+| `python3 scripts/discover_ins_info.py` | Maps the ins-info portal through the relay (run by the `discover-ins-info` workflow); targets in `config/ins_info_targets.tsv` | Working |
 | `python3 scripts/stage2d_sector_series.py` | Loads the CBC life-insurer soundness series (quarterly ROA/ROE/RBC/assets-GDP) and the guaranty-fund stock/bond holdings (monthly) from `data/raw/`, converts 億元 to NT$ mn, asserts the RBC semi-annual publication pattern | Working: 41 + 40 rows, 4/4 checks |
 | `python3 scripts/fetch_sources.py` | Fetches every source the current egress can reach, writes payloads verbatim to `data/raw/<source>/`, dedupes on content hash; run weekly by the `fetch-sources` workflow | Working |
 | `python3 scripts/stage3_ib_firm_balance.py` | Maps couriered `json-06021011_YYYYMMDD.json` (表06021011 財務報告彙總) into `firm_statutory_balance` SQL; A=L+E on every record, exact statement ties for the panel firms, checksums | Working: 52 rows, ties 6/6 |
@@ -75,13 +77,13 @@ the shared key). Loads are checksum-verified server-side against the local CSVs
 | `ib_indicators` | 112 | 2017-01 → 2026-04, complete | `disclosed` | FSC-basis 國外投資 (the regulatory hedge-ratio denominator) and 資產總額, monthly, from 表17-1 of the Bureau's key-indicators PDFs; each month's column label proven by a CBC total-assets tie; vintage = PDF upload date; 2026 figures are IFRS 17 and current-year figures unaudited per the table's own note |
 | `briefing_press` | 14 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-09, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; denominators at 2024-12, 2025-09, 2025-10, 2025-12 — hedge principal derivable at the ratio-bearing three: 10.36tn → 8.90tn → 7.74tn NT$ |
 
-Migrations applied: `0001`–`0012`. `0003` adds the release fields, `0004`
+Migrations applied: `0001`–`0013`. `0003` adds the release fields, `0004`
 puts `reporting_channel` in the primary key, `0005` admits the
 `ib_indicators` channel, `0006` adds deck share columns and the
 `source_channel` key to `firm_quarterly`, `0007` adds `deck_composition`
 and `total_fx_cost_bp`, `0008` adds `firm_statutory_indicators`, `0009` `firm_statutory_balance`, `0010` corrects two indicator
 column comments, `0011` adds the sector soundness and holdings tables, `0012` the equity-side
-reserve stack on `firm_quarterly`.
+reserve stack on `firm_quarterly`, `0013` per-firm fund utilisation.
 `tlfx.entities` holds the six firms (decisions 3.10). `tlfx.firm_quarterly`
 holds three firms' deck series — Cathay 47 quarters, **Fubon 49 (2013-Q4 →
 2026-Q2, all-in FX cost + colour-bound recurring cost + composition —
