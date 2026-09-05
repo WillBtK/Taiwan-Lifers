@@ -125,6 +125,13 @@ def main():
         try:
             status, ctype, body = via_relay(url)
             text = decode(body)
+            # keep the body: a summary answers "does this page exist", but the
+            # question is usually "what is on it", and a second workflow run to
+            # find out costs more than the disk
+            keep = ROOT / "data" / "raw" / "ins-info-probe"
+            keep.mkdir(parents=True, exist_ok=True)
+            safe = re.sub(r"[^A-Za-z0-9._-]+", "_", note)[:70]
+            (keep / f"{safe}.html").write_text(text, encoding="utf-8")
             entry.update(status=status, content_type=ctype, bytes=len(body),
                          **summarise(url, text, ctype))
             ok += 1
