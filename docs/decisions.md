@@ -2336,3 +2336,39 @@ and the deployment path is used precisely by someone standing outside the
 repository.
 
 **Files.** `ops/taiwan-relay/oneliner.sh`, `ops/taiwan-relay/README.md`.
+
+### 4.22 A failed build reported as an egress verdict
+
+The first real deployment attempt failed, and the script said the wrong thing
+about why. Two separate faults.
+
+**The build failure.** Google changed the defaults in 2024: a project created
+since then does not grant the Compute Engine default service account the roles
+Cloud Build needs, so `gcloud run deploy --source` dies at
+`could not resolve source ... IAM permission denied for service account
+<num>-compute@developer.gserviceaccount.com` while uploading. The fix is one
+grant of `roles/cloudbuild.builds.builder`, now issued by both `deploy.sh` and
+`oneliner.sh` before deploying; it is a no-op where the role is already held.
+Worth knowing that this is not exotic — it is the default state of any recent
+project, so the runbook was broken for the most likely user.
+
+**The worse fault: the verdict.** The script ran its origin check regardless of
+whether the deploy had produced a service, so with an empty `$URL` curl failed
+on a malformed request and the run printed *"FAIL — Cloud Run egress is not
+read as Taiwan; the VM fallback is needed."* That is a confident, specific,
+and completely unfounded claim: the egress had never been tested. It would
+have sent the user to provision a virtual machine to solve a problem that did
+not exist.
+
+The check now refuses to render a verdict it has not earned. An empty URL
+stops with "the egress question is untested, not answered"; only a 502 — the
+relay running and the origin refusing — is reported as the geographic failure;
+anything else is INCONCLUSIVE and says so. `verify.sh` got the same treatment.
+
+**The general rule this belongs to.** A diagnostic that cannot distinguish
+"the thing failed" from "the thing was never attempted" will eventually assert
+the first when the second is true, and the cost is not a wasted run but a
+wrong architectural decision taken on its authority. Every check in this
+project that ends in a verdict should be readable against that test.
+
+**Files.** `ops/taiwan-relay/oneliner.sh`, `deploy.sh`, `verify.sh`.

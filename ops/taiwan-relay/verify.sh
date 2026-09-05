@@ -23,5 +23,9 @@ case "$code" in
        echo "       external address, running the same app, geolocates reliably."
        echo "       That costs roughly USD 7-10/month; check current pricing." ;;
   403) echo "FAIL - token mismatch between RELAY_TOKEN here and the deployed service." ;;
-  *)   echo "FAIL - unexpected status $code; check 'gcloud run services logs read taiwan-relay --region asia-east1'." ;;
+  000) echo "INCONCLUSIVE - no response from the relay at all. Check the URL and"
+       echo "       that the service deployed; this says nothing about the origin." ;;
+  *)   echo "INCONCLUSIVE - unexpected status $code from the relay, so the origin"
+       echo "       was not actually tested. Check 'gcloud run services logs read"
+       echo "       taiwan-relay --region asia-east1'." ;;
 esac

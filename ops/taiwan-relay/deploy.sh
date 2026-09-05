@@ -23,6 +23,16 @@ echo "project=$PROJECT region=$REGION service=$SERVICE"
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com \
   --project "$PROJECT" --quiet
 
+# Projects created after Google's 2024 change do not give the default Compute
+# Engine service account the roles Cloud Build needs; the build then dies on
+# "could not resolve source" while uploading. This grant is the documented fix
+# and is a no-op where the role is already held.
+NUM=$(gcloud projects describe "$PROJECT" --format='value(projectNumber)')
+gcloud projects add-iam-policy-binding "$PROJECT" \
+  --member="serviceAccount:$NUM-compute@developer.gserviceaccount.com" \
+  --role=roles/cloudbuild.builds.builder --condition=None --quiet >/dev/null
+sleep 20   # IAM changes take a few seconds to reach Cloud Build
+
 gcloud run deploy "$SERVICE" \
   --source "$(dirname "$0")" \
   --project "$PROJECT" \
@@ -32,7 +42,11 @@ gcloud run deploy "$SERVICE" \
   --quiet
 
 URL=$(gcloud run services describe "$SERVICE" --project "$PROJECT" \
-        --region "$REGION" --format='value(status.url)')
+        --region "$REGION" --format='value(status.url)' 2>/dev/null)
+if [ -z "$URL" ]; then
+  echo "Deploy failed - no service URL. Read the error above." >&2
+  exit 1
+fi
 
 cat <<EOF
 
