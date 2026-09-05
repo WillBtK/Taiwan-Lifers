@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T07:12:04.772811+00:00",
+ "run_at": "2026-09-05T07:14:33.606325+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -2169,32 +2169,77 @@
   {
    "note": "Nan Shan IR",
    "url": "https://www.nanshanlife.com.tw/",
-   "error": "HTTPError: HTTP Error 400: Bad Request"
+   "status": 200,
+   "content_type": "text/html; charset=UTF-8",
+   "bytes": 480750,
+   "kind": "html",
+   "aspx_links": [],
+   "aspx_link_count": 0,
+   "uids": [],
+   "table_codes": [
+    "00117164",
+    "00158786",
+    "00869784"
+   ],
+   "select_names": [],
+   "webforms_postback": false,
+   "id_contexts": {
+    "00158786": "043 6 0.734784 6 1V2H5C3.67441 2.00159 2.40356 2.52888 1.46622 3.46622C0.528882 4.40356 0.00158786 5.67441 0 7L0 19C0.00158786 20.3256 0.528882 21.5964 1.46622 22.5338C2.40356 23.4711 3.67",
+    "00869784": "C0.624139 4.90313 0.372834 4.84219 0.260003 4.66289L0.0548559 4.33828C-0.057975 4.15898 0.00869784 3.9293 0.20487 3.82617L1.76912 3L0.20487 2.175C0.00869784 2.07188 -0.057975 1.84219 0.054",
+    "00117164": "117V0.801171C15.128 0.588998 15.0437 0.385515 14.8937 0.235486C14.7437 0.085457 14.5402 0.00117164 14.328 0.00117164C14.1158 0.00117164 13.9123 0.085457 13.7623 0.235486C13.6123 0.385515 1"
+   },
+   "title": "南山人壽企業網站 : 和您一起做好人生保險規劃｜南山人壽"
   },
   {
    "note": "Nan Shan investor page",
    "url": "https://www.nanshanlife.com.tw/NSWeb/about/investor",
-   "error": "HTTPError: HTTP Error 400: Bad Request"
+   "error": "HTTPError: HTTP Error 404: Not Found"
   },
   {
    "note": "Taiwan Life IR",
    "url": "https://www.taiwanlife.com/",
-   "error": "HTTPError: HTTP Error 400: Bad Request"
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 207681,
+   "kind": "html",
+   "aspx_links": [],
+   "aspx_link_count": 0,
+   "uids": [],
+   "table_codes": [
+    "00000033"
+   ],
+   "select_names": [],
+   "webforms_postback": false,
+   "id_contexts": {
+    "00000033": "px}}@media (max-width:767px){.index-planning__content[_ngcontent-sc360]{border:1px solid #00000033;background:linear-gradient(191deg,#e5f4f4 2.76%,rgba(229,244,244,0) 96.37%);box-shadow:10"
+   },
+   "title": "首頁 ｜ 台灣人壽"
   },
   {
    "note": "CTBC holdings IR (Taiwan Life parent)",
    "url": "https://www.ctbcholding.com/",
-   "error": "HTTPError: HTTP Error 400: Bad Request"
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 20452,
+   "kind": "html",
+   "aspx_links": [],
+   "aspx_link_count": 0,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": false,
+   "id_contexts": {},
+   "title": "金控首頁 - 中國信託"
   },
   {
    "note": "Shin Kong Life",
    "url": "https://www.skl.com.tw/",
-   "error": "HTTPError: HTTP Error 400: Bad Request"
+   "error": "URLError: <urlopen error timed out>"
   },
   {
    "note": "TS Financial holdings IR (Shin Kong parent)",
    "url": "https://www.tsfhc.com.tw/",
-   "error": "HTTPError: HTTP Error 400: Bad Request"
+   "error": "URLError: <urlopen error [Errno -2] Name or service not known>"
   }
  ]
 }
