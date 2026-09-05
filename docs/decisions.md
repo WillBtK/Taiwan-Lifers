@@ -3882,3 +3882,78 @@ price falls cut its measured stock harder.
 
 **Files.** `scripts/stage6_tic_holdings.py` extended to 2025; series 10 now
 187 rows, sum 534,388,186 USD mn, verified server-side against the generator.
+
+---
+
+### 4.43 Cathay Life's own disclosed rate sensitivity — and why it is not the net economic exposure
+
+The statutory filings carry two tables the project had not used: 利率風險敏感度
+分析表 (change in P&L and in EQUITY per 1bp parallel shift, by currency — a
+disclosed DV01) and 匯率風險敏感度分析表 (per 1% FX move, with the FX
+volatility reserve as a third column). `scripts/stage6_firm_sensitivity.py`
+parses both. Cathay Life's Q1 filing (合併, 民國115年第1季, code 5846) gives, in
+NT$ mn:
+
+| USD curve +1bp | 2026-03-31 | 2025-03-31 |
+|---|---|---|
+| P&L | −144 | 0 |
+| **equity** | **−2,530** | **−1,376** |
+
+| USD +1% vs TWD | 2026-03-31 | 2025-03-31 |
+|---|---|---|
+| P&L | 0 | +5,104 |
+| equity | +9,201 | +10,500 |
+| FX volatility reserve | +500 | +7,656 |
+
+**The headline arithmetic, and the caveat that must travel with it.** NT$2,530mn
+per bp against total equity of NT$626,792mn means a 100bp parallel rise in the
+USD curve moves an amount equal to **40% of Cathay Life's equity**. That is the
+right order of magnitude for the exposure and it needs no duration assumption —
+it is the firm's own number. But it is an ASSET-SIDE figure and must not be
+read as the net economic hit. The same filing's OCI statement shows insurance
+finance income of +NT$136,211mn in the quarter against FVOCI debt losses of
+−NT$55,771mn: under IFRS 17 the liability discount-rate effect also runs through
+OCI and, in that quarter, more than offset the asset move. A disclosed
+sensitivity that is negative for a rate RISE is therefore gross of the liability
+offset. Quote it as the scale of the fair-valued USD rate position, never as
+the net.
+
+**The change is the more interesting number.** The USD equity DV01 nearly
+doubled in a year, and the balance sheet says why: on 1 January 2026 Cathay
+reclassified on a vast scale — FVOCI NT$889bn → NT$3,289bn, amortised cost
+NT$4,079bn → NT$2,679bn, FVTPL NT$1,587bn → NT$497bn — and the strategy deck
+(2Q26, p46) describes exactly this: "redesignation of AC assets to FVOCI to
+better align with liability measurement". The sensitivity moved because the
+accounting moved. **So the series measures DISCLOSED balance-sheet sensitivity,
+not economic duration**, and that is how it is labelled.
+
+**A duration inference was attempted and is rejected.** Dividing the equity DV01
+by the FVOCI foreign-bond carrying value (note 九: 國外債券 NT$1,967,342mn at
+2026-03-31, NT$583,305mn at 2025-03-31) gives implied durations of 12.9 and
+**23.6** years. Twelve is plausible; twenty-four is not, for a book of agency
+MBS and callable credit. The two years cannot both be right, so the mapping from
+"equity DV01" to "FVOCI foreign bonds" is not established — the sensitivity
+evidently covers a different or wider set of instruments. **No duration number
+is derived from this and none is loaded.** Establishing the right denominator —
+the currency split of FVOCI debt, and whether the disclosure nets the liability
+— is the next step before any duration claim is made from these tables.
+
+**Two further observations from the same filing, both on the vulnerability
+question.** First, the FX volatility reserve's marginal absorption has
+collapsed: a 1% USD move moved the reserve by NT$7,656mn a year ago and
+NT$500mn now, a fifteenfold drop, which is what a depleted and re-based reserve
+looks like from the firm side. Second, the derivative maturity ladder (note on
+liquidity risk) puts **84% of Cathay's FX swap contractual outflows inside
+twelve months** and none beyond two years, against an asset book whose Formosa
+component alone has a 28-year weighted original tenor. The rollover mismatch is
+not an inference; it is in the maturity table.
+
+**And the equity itself.** Total equity fell from NT$781,558mn (2025-03-31) to
+NT$626,792mn (2026-03-31), −20% in a year, with 其他權益 swinging from
+−NT$5,066mn to −NT$340,260mn. A NT$335bn move in OCI reserves in four quarters
+is the buffer question stated in the firm's own numbers.
+
+**Scope.** One firm, two periods. The panel across the other nine insurers is
+running: MOPS answers with a WAF block page far more often than not, so the
+crawl is paced at one request per eight seconds with a ninety-second pause on
+each block, and it is slow rather than stuck.
