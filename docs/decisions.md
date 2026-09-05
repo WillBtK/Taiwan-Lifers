@@ -3206,3 +3206,85 @@ statistics, remains.
 keys `hedge_outstanding_cbc_footnote` (disclosed) and
 `hedge_ratio_cbc_footnote`, `definition_version = cbc_footnote`, 11 rows each,
 verified.
+
+### 4.35 The deck composite: Setser's method 1, built — 2014-12 to 2026-06, quarterly
+
+**Built from data already extracted.** Cathay's 47 quarters, Fubon's 49 and
+KGI's 20 have been in `data/*_deck_fx.csv` for weeks. Assembling them into the
+composite Setser & S.T.W. describe (§II.D, method 1) took one script.
+
+**The pie-base question, settled per firm.** Each deck draws a BAR splitting
+foreign assets into FX-risk-bearing and FX-policy-backed, and a PIE of
+instrument shares summing to 100. Cathay's pie is CS/NDF + proxy&open +
+FVOCI-equity; KGI's is CS/NDF + naked + overseas equity. Neither names FX
+policy, and policy-backed assets carry no derivative by construction, so both
+pies are over the **FX-risk-bearing subset**:
+`gross = pie × bar`, `economic = gross + policy share`. Fubon's wedge is named
+「外匯交換、無本金遠期外匯、外幣保單」 and so is over **total** FX assets
+(4.2). Same page, two different denominators.
+
+**Fubon is reported beside the composite, not inside it,** for two independent
+reasons. Its wedge cannot be split into derivatives and policy, so it can never
+join the gross composite, and putting it in the economic one alone would leave
+the two composites resting on different panels and unable to be differenced.
+Worse, Fubon's own base moves: through 2016 the pie carries a separate
+股票/共同基金 wedge of 11–15%, and from 2017 it is gone — so the firm reads
+76.6% in 2014 and 95.2% in 2018 with no behavioural change that large.
+Restating the early years onto the later base lines them up almost exactly
+(2017Q2 96.9% restated against 2018Q1's published 95.2%), which confirms the
+diagnosis but does not license blending: the equity wedge is extracted in 21 of
+173 rows and its absence cannot be distinguished from a genuine zero. Mixing
+two definitions into one line is the error at 4.2 and again at 4.30. Not a
+third time.
+
+**A fallback tried and removed.** Where Fubon's wedge is unpublished it is
+tempting to take 100 minus the naked and equity wedges. That silently treats a
+missing equity wedge as zero, and returned **95.5%** for 2017Q1. Only the
+published wedge is used.
+
+**The series.** 31 quarters. Gross (CS+NDF ÷ total FX assets): 37.2% (2014-12)
+→ 48.3% (2018-09) → 46.1% (2020-12) → 45.5% (2022-03) → 38.0% (2023-03) →
+35.4% (2024-09) → 26.7% (2026-06). Economic (+ FX policies): 61.2% (2014-12) →
+78.3% (2018-09) → 75.5% (2022-03) → 67.4% (2024-09) → 53.0% (2026-06).
+
+**Validation, and it is the good one.** Composite gross × sector 國外投資
+against the CBC's published hedge amount (4.34), eight overlapping points
+2019-09 → 2024-12: the ratio sits at **0.73–0.86, mean 0.79**, exactly the
+onshore-swap share the CBC/FSC overlap independently established at 0.62–0.77.
+Two constructions with no input in common — one from firms' own pie charts,
+one from a central-bank footnote — agree on level to within a stable NDF wedge
+and move together. That is the strongest cross-check this project has produced.
+
+Against the sector gross ratio from the FSC's own principal the test is weak:
+n=2, +8.9pp and −3.7pp. Both fall in quarters where the composite is one firm.
+
+**The weakness, stated plainly. 28 of 31 quarters rest on a single firm.**
+Cathay carries 2014–2024; KGI joins from 2023; only three quarters have two.
+Where the panel composition changes between quarters the level jumps for that
+reason and not for an economic one — 2025 reads 43.6 / 28.8 / 44.2 / 42.9
+because the contributing firm alternates. Firm dispersion where measurable is
+5.5pp on the gross ratio and up to 14.1pp. So this is best read as **Cathay's
+hedge ratio, quarterly, with KGI alongside from 2023** — roughly a quarter of
+the sector — and its *shape* is what carries weight, corroborated by the CBC
+footnote's independent level. Setser's own caveat was the same: "extrapolations
+based on the limited sample may not exactly represent the FX management across
+all insurers." Widening the panel needs Nan Shan, Taiwan Life and Shin Kong
+decks, whose IR hosts are reachable from a GitHub runner and are not yet
+fetched.
+
+**Where the history now stands** — five independent constructions, 2012 to
+2026:
+
+| construction | basis | frequency | span |
+|---|---|---|---|
+| CBC table-8 footnote (4.34) | disclosed | monthly, sparse | **2012-03 → 2026-07** |
+| Deck composite, gross and economic (this entry) | firm-disclosed | quarterly | **2014-12 → 2026-06** |
+| Fubon disclosed economic, base break at 2017 | firm-disclosed | quarterly | 2014-06 → 2025-12 |
+| P&L-implied regulatory ratio (4.29) | estimated | monthly | 2019-05 → 2025-11 |
+| FSC regulatory ratio | published | monthly | 2024-04 → 2026-07 |
+
+**Files.** `scripts/stage5_deck_composite.py`, `data/deck_composite.csv`,
+`out/stage5_deck_composite_20260905.sql`. Loaded to `derived_series` as
+`gross_hedge_ratio_deck_composite` (series 5) and
+`economic_hedge_ratio_deck_composite` (series 1), `definition_version =
+deck_composite`, 31 rows each, verified.
