@@ -90,3 +90,22 @@ Info2-15 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-15.aspx?UID=03
 Info2-16 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-16.aspx?UID=03557115
 Info2-2 with a LIFE insurer's 統編	https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557017
 Info2-1 with a LIFE insurer's 統編	https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017
+#
+# Pass 5 (2026-09-05). Pass 4 mapped the whole per-company menu and confirmed
+# UID = 統一編號 (台灣人壽's 03557017 returns its 資金運用表 and 資產負債表):
+#   Info2-1  資金運用表          <- the hedge-ratio denominator PER FIRM
+#   Info2-2  資產負債表          Info2-3  綜合損益表      Info2-4  權益變動表
+#   Info2-5  準備金              <- may split the special-reserve buckets (4.19)
+#   Info2-9  現金流量表          Info2-12 各項財務業務指標
+#   Info2-14 其他負債項下之服務合約負債、特別準備及其他準備   <- likewise
+#
+# What is missing is the other five firms' 統編. The portal root's dropdown
+# lists only the 22 non-life insurers, so the life list must be reachable
+# another way: a type parameter on the root, or the company selector on a
+# page that is already showing a life insurer.
+root with a life type parameter	https://ins-info.ib.gov.tw/index.aspx?type=1
+root with kind parameter	https://ins-info.ib.gov.tw/index.aspx?kind=1
+company dropdown while showing a life insurer	https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017
+reserves page, life insurer	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017
+other-liability reserves, life insurer	https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017
+indicators page, life insurer	https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=03557017
