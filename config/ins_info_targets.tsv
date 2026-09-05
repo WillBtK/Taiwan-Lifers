@@ -20,3 +20,26 @@ per-company entry (alt casing)	https://ins-info.ib.gov.tw/customer/Life.aspx
 company list	https://ins-info.ib.gov.tw/customer/complist.aspx
 disclosure index 2-2	https://ins-info.ib.gov.tw/customer/Info2-2.aspx
 disclosure index 2-3	https://ins-info.ib.gov.tw/customer/Info2-3.aspx
+#
+# Pass 2 (2026-09-05). Pass 1 found ten aggregate tables (彙計表), each with a
+# customer/RPT-<code>.aspx page, but only three with a known opendata JSON
+# endpoint. If the json-<code>.aspx pattern holds for all ten, seven more
+# machine-readable tables land at once. openData.aspx should say so
+# authoritatively rather than by inference from a naming pattern.
+open-data index (authoritative endpoint list)	https://ins-info.ib.gov.tw/customer/openData.aspx
+json 05010111?	https://ins-info.ib.gov.tw/opendata/json-05010111.aspx
+json 05020511?	https://ins-info.ib.gov.tw/opendata/json-05020511.aspx
+json 05030310?	https://ins-info.ib.gov.tw/opendata/json-05030310.aspx
+json 05030311?	https://ins-info.ib.gov.tw/opendata/json-05030311.aspx
+json 07010801?	https://ins-info.ib.gov.tw/opendata/json-07010801.aspx
+json 07011010?	https://ins-info.ib.gov.tw/opendata/json-07011010.aspx
+json 07090901?	https://ins-info.ib.gov.tw/opendata/json-07090901.aspx
+# The report page itself: its form controls show how a table is parameterised
+# by year and quarter, which is the route to HISTORY rather than the latest
+# snapshot the JSON endpoints return.
+report page 06161610 (indicators)	https://ins-info.ib.gov.tw/customer/RPT-06161610.aspx
+report page 06021011 (financial summary)	https://ins-info.ib.gov.tw/customer/RPT-06021011.aspx
+# Where the per-company disclosures live. The portal root prints 8-digit
+# company ids; id_contexts will show how they are addressed.
+information page	https://ins-info.ib.gov.tw/customer/Information.aspx
+announcements	https://ins-info.ib.gov.tw/customer/announceinfo.aspx

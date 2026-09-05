@@ -82,6 +82,18 @@ def summarise(url, text, ctype):
     info["table_codes"] = sorted({m for m in re.findall(r'\b(0\d{7})\b', text)})[:60]
     # form controls reveal how a report is parameterised (year, quarter, firm)
     info["select_names"] = sorted({m for m in re.findall(r'<select[^>]*name="([^"]+)"', text, re.I)})[:40]
+    # the surrounding markup for each 8-digit id, which is what reveals how a
+    # company or a report is addressed (the id alone does not say whether it
+    # is a query parameter, a path segment, or just printed text)
+    ctx = {}
+    for m in re.finditer(r'\b(0\d{7})\b', text):
+        i = m.group(1)
+        if i not in ctx:
+            lo, hi = max(0, m.start() - 90), min(len(text), m.end() + 90)
+            ctx[i] = re.sub(r"\s+", " ", text[lo:hi])
+        if len(ctx) >= 12:
+            break
+    info["id_contexts"] = ctx
     titles = re.findall(r"<title>(.*?)</title>", text, re.I | re.S)
     info["title"] = titles[0].strip()[:120] if titles else None
     return info
