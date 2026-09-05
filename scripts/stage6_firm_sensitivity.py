@@ -71,6 +71,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "cache" / "mops_stmt"
 PDFS = ROOT / "cache" / "mops_pdf"
 OUT = ROOT / "data" / "firm_sensitivity.csv"
+NOTIONAL_OUT = ROOT / "data" / "firm_hedge_notional.csv"
 DOC = "https://doc.twse.com.tw/server-java/t57sb01"
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
@@ -332,6 +333,66 @@ def sensitivities(path):
     return uniq
 
 
+# ------------------------------------------------- hedge notionals
+# THE TRAP, WHICH IS THE WHOLE REASON THIS IS LABELLED RATHER THAN SUMMED.
+# A filing can disclose FX derivative notionals in two different notes and they
+# mean different things:
+#
+#   designated   — the 避險活動 / 避險會計 note lists ONLY instruments formally
+#                  designated for hedge accounting. Cathay's designated forward
+#                  notional is NT$44bn against a ~NT$5tn foreign book, so summing
+#                  this across firms understates the sector by two orders of
+#                  magnitude for any firm that designates (decisions 4.36).
+#   currency_risk — the 外幣/匯率風險 note, where a firm stating 並未採用避險會計
+#                  reports its ECONOMIC hedges. This is the one that corresponds
+#                  to 傳統避險本金 in the FSC notice §三(九).
+#
+# So every row carries note_kind, and nothing is aggregated here. A firm that
+# discloses only `designated` has NOT disclosed its hedge principal, and must be
+# recorded as unknown rather than as a small number.
+INSTR = re.compile(r"(遠期外匯合約|換匯換利合約|換匯合約|貨幣交換合約|"
+                   r"無本金交割遠期外匯|利率交換合約)")
+DESIG = re.compile(r"避險活動|避險會計|避險工具之明細|現金流量避險|公允價值避險")
+CCYRISK = re.compile(r"匯率風險|外幣.{0,6}風險|未避險|並未採用避險會計")
+
+
+def notionals(path):
+    """Every disclosed derivative notional, labelled by the note it came from."""
+    import pymupdf
+    doc = pymupdf.open(path)
+    out = []
+    for page in doc:
+        raw = unicodedata.normalize("NFKC", page.get_text())
+        if not INSTR.search(raw) or not re.search(r"名目|合約金額|契約金額", raw):
+            continue
+        kind = ("designated" if DESIG.search(raw)
+                else "currency_risk" if CCYRISK.search(raw) else "unclassified")
+        flat = re.sub(r"\s+", " ", raw)
+        # One page carries the current period AND its comparatives, each under
+        # its own date header. Attributing every row to the page's first date
+        # would silently stamp last year's numbers with this year's date, so
+        # each row takes the nearest date header ABOVE it.
+        heads = [(m.start(),
+                  f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-{int(m.group(3)):02d}")
+                 for m in re.finditer(r"(\d{2,3})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日", flat)]
+        for h in INSTR.finditer(flat):
+            tail = flat[h.end():h.end() + 160]
+            v = numbers(tail, 1)
+            if not (v and v[0] > 0):
+                continue
+            asof = next((d for pos, d in reversed(heads) if pos < h.start()), None)
+            out.append({"as_of": asof, "note_kind": kind,
+                        "instrument": h.group(1), "notional_ntd_k": v[0],
+                        "page": page.number + 1})
+    seen, uniq = set(), []
+    for r in out:
+        k = (r["as_of"], r["note_kind"], r["instrument"], r["notional_ntd_k"])
+        if k not in seen:
+            seen.add(k)
+            uniq.append(r)
+    return uniq
+
+
 IDX = ROOT / "reports" / "mops_filing_index.json"
 
 
@@ -362,7 +423,7 @@ def pull():
     """Download the consolidated filings named in the index and parse them."""
     import csv
     idx = json.loads(IDX.read_text(encoding="utf-8"))
-    rows = []
+    rows, notional_rows = [], []
     # One filing per firm-quarter. Insurers with subsidiaries file 合併財報 and
     # that is the one to take; several file only 個別/個體財報, which carries the
     # same risk note for an entity with nothing to consolidate. The 英文版 is a
@@ -386,13 +447,41 @@ def pull():
             if not p:
                 continue
             got = sensitivities(p)
+            nots = notionals(p)
             print(f"  {name:<16} {f['roc_year']}Q{f['quarter']} "
-                  f"{f['filename']:<24} {len(got):>3} rows")
+                  f"{f['filename']:<24} {len(got):>3} sens  {len(nots):>3} notional")
             for r in got:
                 rows.append({"entity_id": name, "co_id": co,
                              "filing": f["filename"], **r})
+            for r in nots:
+                notional_rows.append({"entity_id": name, "co_id": co,
+                                      "filing": f["filename"], **r})
+    # Written before the sensitivity guard: a run that finds notionals but no
+    # sensitivity tables must still keep the notionals.
+    if notional_rows:
+        seen, uniq = set(), []
+        for r in sorted(notional_rows, key=lambda r: (r["entity_id"], r["as_of"] or "",
+                                                      r["note_kind"], r["instrument"])):
+            k = (r["entity_id"], r["as_of"], r["note_kind"], r["instrument"],
+                 r["notional_ntd_k"])
+            if k in seen:
+                continue
+            seen.add(k)
+            uniq.append(r)
+        NOTIONAL_OUT.parent.mkdir(exist_ok=True)
+        with open(NOTIONAL_OUT, "w", newline="", encoding="utf-8") as fh:
+            w = csv.DictWriter(fh, fieldnames=list(uniq[0].keys()))
+            w.writeheader()
+            w.writerows(uniq)
+        print(f"\n{len(uniq)} notional rows -> {NOTIONAL_OUT.relative_to(ROOT)}")
+        by_kind = {}
+        for r in uniq:
+            by_kind[r["note_kind"]] = by_kind.get(r["note_kind"], 0) + 1
+        print("  by note: " + ", ".join(f"{k} {v}" for k, v in sorted(by_kind.items()))
+              + "   (only currency_risk corresponds to 傳統避險本金)")
+
     if not rows:
-        print("  no rows parsed")
+        print("  no sensitivity rows parsed")
         return rows
     seen, uniq = set(), []
     for r in sorted(rows, key=lambda r: (r["entity_id"], r["period_end"],
