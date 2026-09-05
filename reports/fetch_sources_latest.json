@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T04:25:44.388848+00:00",
+ "run_at": "2026-09-05T04:28:35.886147+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
@@ -37,20 +37,24 @@
    "name": "json-06161610",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161610.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: no TAIWAN_RELAY_URL configured (Taiwan egress unavailable)"
+   "status": "written",
+   "sha256": "052ec8bd169e1188c351dedd040c33641171de29d04e81f2b887730837c850ba",
+   "bytes": 14793,
+   "path": "data/raw/ins-info/json-06161610_20260905.json"
   },
   {
    "name": "json-06021011",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06021011.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: no TAIWAN_RELAY_URL configured (Taiwan egress unavailable)"
+   "status": "written",
+   "sha256": "a4b4fad25e8ba73e05e91cddb69b99ca56e7e1a62defaebd9e7e7c7ebe282e27",
+   "bytes": 14572,
+   "path": "data/raw/ins-info/json-06021011_20260905.json"
   }
  ],
  "summary": {
-  "written": 0,
+  "written": 2,
   "unchanged": 4,
-  "unavailable": 2
+  "unavailable": 0
  }
 }
