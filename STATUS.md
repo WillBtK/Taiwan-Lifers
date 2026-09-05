@@ -73,11 +73,12 @@ the shared key). Loads are checksum-verified server-side against the local CSVs
 | `ib_indicators` | 112 | 2017-01 → 2026-04, complete | `disclosed` | FSC-basis 國外投資 (the regulatory hedge-ratio denominator) and 資產總額, monthly, from 表17-1 of the Bureau's key-indicators PDFs; each month's column label proven by a CBC total-assets tie; vintage = PDF upload date; 2026 figures are IFRS 17 and current-year figures unaudited per the table's own note |
 | `briefing_press` | 14 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-09, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; denominators at 2024-12, 2025-09, 2025-10, 2025-12 — hedge principal derivable at the ratio-bearing three: 10.36tn → 8.90tn → 7.74tn NT$ |
 
-Migrations applied: `0001`–`0009`. `0003` adds the release fields, `0004`
+Migrations applied: `0001`–`0010`. `0003` adds the release fields, `0004`
 puts `reporting_channel` in the primary key, `0005` admits the
 `ib_indicators` channel, `0006` adds deck share columns and the
 `source_channel` key to `firm_quarterly`, `0007` adds `deck_composition`
-and `total_fx_cost_bp`, `0008` adds `firm_statutory_indicators`, `0009` `firm_statutory_balance`.
+and `total_fx_cost_bp`, `0008` adds `firm_statutory_indicators`, `0009` `firm_statutory_balance`, `0010` corrects two indicator
+column comments.
 `tlfx.entities` holds the six firms (decisions 3.10). `tlfx.firm_quarterly`
 holds three firms' deck series — Cathay 47 quarters, **Fubon 49 (2013-Q4 →
 2026-Q2, all-in FX cost + colour-bound recurring cost + composition —
@@ -174,13 +175,13 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 1a. **ins-info courier queue (for the user):** `data.gov.tw` is open (4.9);
    `ins-info.ib.gov.tw` is allowlisted but does not route to this egress, so
    its files arrive by courier (4.10). Next asks, in value order: the portal's
-   指標說明 page for 表06161610 (settles the 2026 growth-field definition), the
-   column headers of 表06021011 (names `amount4..8` — 4.11), the historical
-   query for either table per firm (turns the snapshots into panels), one
-   per-company page (`customer/life.aspx?UID=…`) to see what else the portal
-   carries, and `www.tigf.org.tw`'s monthly stock/bond holdings CSV
-   (data.gov.tw 172653; host is a 403 policy denial — 4.12). 表06021011
-   itself landed 2026-09-05 (4.11). Insurer sites (`www.cathaylife.com.tw`, `www.taiwanlife.com`,
+   column headers of 表06021011, which would name `amount4..8` (4.11); the
+   historical query for either table per firm, which would turn the snapshots
+   into panels; one per-company page (`customer/life.aspx?UID=…`) to see what
+   else the portal carries; and `www.tigf.org.tw`'s monthly stock/bond
+   holdings CSV (data.gov.tw 172653; host is a 403 policy denial — 4.12).
+   The 指標說明 page is **no longer needed**: the growth-field functional form
+   was settled from the data itself (4.10 revised). Insurer sites (`www.cathaylife.com.tw`, `www.taiwanlife.com`,
    `www.skl.com.tw`, `www.taishinlife.com.tw`, `www.tsfl.com.tw`) remain
    proxy-blocked.
 2. Hedge-ratio backfill: the start of the series is now pinned — **2024-04**

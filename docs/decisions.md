@@ -1772,31 +1772,45 @@ query pages, which is the next courier ask. Each record carries
 `ClaimYear` (ROC), `ClaimQuarter`, `INSURER_Name` and 23 positional
 `AMOUNT` fields.
 
-**Mapping AMOUNT1..23.** The catalogue's `data_fields` describe only the three
-key fields; the AMOUNTs have no per-field description. The dataset `content`
-string, however, lists exactly 23 indicators in order (負債占資產比率 …
-不動產投資與不動產抵押放款對資產比率), and the positional reading is corroborated
-on every indicator whose range is unambiguous: AMOUNT1 liabilities/assets
-86–95% across the six panel firms; AMOUNT2 reserves/assets 72–91%; AMOUNT12
-資金運用比率 96–99%; AMOUNT13 13-month persistency 93–97%; AMOUNT22 EPS −3.13
-for Shin Kong Life's loss-making 2025; AMOUNT23 real-estate share ~7%. The
-mapping is therefore an inference, recorded as such in the migration and
-loader, and the verbatim record is stored alongside (`raw_record`) so a
-re-mapping never needs the source again.
+**Mapping AMOUNT1..23 — now verified, not merely inferred.** The catalogue's
+`data_fields` describe only the three key fields; the AMOUNTs have no
+per-field description. The dataset `content` string lists exactly 23
+indicators in order (負債占資產比率 … 不動產投資與不動產抵押放款對資產比率), and the
+second courier file (4.11) turns that reading into an arithmetic identity:
+**AMOUNT1 equals total liabilities ÷ total assets from 表06021011 on all 30
+records** (Taiwan Life 86.13 vs 86.12, KGI 86.81 vs 86.81, 三商美邦 92.76 vs
+92.76, 國華 2861.78 vs 2861.78 …). Two independently published tables can only
+agree on that relation if the first AMOUNT is the first listed indicator, so
+the whole positional ordering is pinned. Four large firms carry residuals
+(Cathay +0.10, Nan Shan +0.09, Shin Kong +0.02, Fubon +0.83pp), most likely
+consolidation scope or a different refresh date between the two tables —
+unresolved, and small enough not to disturb the mapping. The reading is
+further corroborated on every indicator whose range is unambiguous: AMOUNT2
+reserves/assets 72–91%; AMOUNT12 資金運用比率 96–99%; AMOUNT13 13-month
+persistency 93–97%; AMOUNT22 EPS −3.13 for Shin Kong Life's loss-making 2025;
+AMOUNT23 real-estate share ~7%. Those alone would have left the mapping an
+inference; the AMOUNT1 identity makes it a verified fact. The verbatim record
+is stored alongside (`raw_record`) so a re-mapping never needs the source
+again.
 
 **Two features to respect when reading it.** (i) The 2026 (IFRS 17) rows
 publish only the balance-sheet and business ratios; ROA, ROE, yields,
 margins, EPS and the real-estate share are `N/A` for every active insurer,
 while the 2025 Shin Kong row carries the full set. Whether that is a
 half-year convention or an IFRS-17 transition gap is not knowable from the
-file. (ii) The growth fields behave differently across the two eras:
-保費收入變動率 and 淨利變動率 on the 2026 rows cluster around 100 (Taiwan Life
-99.25 / 101.39, Cathay 90.02 / 98.13, KGI 62.69 / 101.13), while the 2025
-Shin Kong row prints signed changes (−0.35, 360.18). The 2026 values read as
-an index (this period ÷ prior period × 100) rather than a percentage change,
-but that is a reading, not a definition; the columns are loaded as published
-and the two column comments say so. The portal's 指標說明 page settles it and
-is on the courier list. `N/A` and blank are distinct in the source (blank
+file. (ii) The growth fields are signed percentage changes, in both eras.
+**This corrects the first reading of them, which was wrong.** Looking only at
+the six panel firms, 保費收入變動率 and 淨利變動率 cluster near 100 (Taiwan Life
+99.25 / 101.39, Cathay 90.02 / 98.13, KGI 62.69 / 101.13) and read as an
+index of this period over prior period. The full 30-insurer cross-section
+kills that: AMOUNT9 runs −7.91 (安聯) to 485.93 (宏泰) and AMOUNT11 reaches
+−140.36 (蘇黎世 106Q4), and an index level cannot be negative. The lesson is
+procedural — a functional-form question was left open because the test was
+run on the six rows of interest rather than on the whole column. What stays
+open is narrower and does not need the source: net-income change between 86
+and 109 for *every* active insurer in one half-year is not how net income
+behaves, so that column's base is unusual even though its sign convention is
+settled. `N/A` and blank are distinct in the source (blank
 marks indicators the 2026 rows do not carry at all: 5, 6, 7, 14); both load
 as NULL and both survive in `raw_record`.
 
