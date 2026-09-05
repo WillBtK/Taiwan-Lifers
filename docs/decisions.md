@@ -3957,3 +3957,93 @@ is the buffer question stated in the firm's own numbers.
 running: MOPS answers with a WAF block page far more often than not, so the
 crawl is paced at one request per eight seconds with a ninety-second pause on
 each block, and it is slow rather than stuck.
+
+---
+
+### 4.44 Withdrawal: the TIC lines cannot be attributed to the lifers. The CBC's balance sheet, now loaded, is why
+
+The user objected that the TIC survey measures a country, that it therefore
+contains the central bank, and that none of it can be attributed to the life
+insurers without knowing the CBC's balance sheet. **The objection is correct and
+the attribution in 4.40 and 4.42 is withdrawn.** Three pieces of evidence, in
+order of how badly each damages the earlier reading.
+
+**1. TIC publishes no official/private split by country, at any frequency.**
+Checked: the annual SHL survey gives one global "of which: holdings of FOI"
+line and no country breakdown of it; the monthly SLT country tables
+(`slt1d_globl.csv`, US LT securities by country split Treasury / agency /
+corporate bonds / corporate stocks) contain no official column at all; Major
+Foreign Holders covers Treasuries only and does not split by holder type
+either. So the question could not have been answered from TIC even in
+principle, and 4.40 should have said so instead of arguing around it.
+
+**2. The specific argument used in 4.40 is factually wrong.** It said a reserve
+manager does not run a corporate-credit or MBS book, so agency ABS and
+corporates could be read as private. TIC's own global figures at June 2025
+refute it: foreign OFFICIAL institutions held **USD 524bn of US agency paper**
+against USD 829bn held by foreign private holders — official money is 39% of
+the foreign-held agency stock. Central banks buy agency MBS in size. (The
+argument is better for corporates, where official holdings are USD 241bn of
+about 4.3tn, but "better" is not "established".)
+
+**3. The CBC's balance sheet, fetched and loaded, closes it.** The CBC has
+published the IMF/BIS **IRFCL data template quarterly since 2021Q4**, and it
+gives what is needed to bound the official share:
+
+| | reserve assets | of which securities | deposits | FX forward/swap SHORT |
+|---|---|---|---|---|
+| 2021-12-30 | 553,984 | 506,266 (91.4%) | 42,142 | 91,905 |
+| 2023-06-30 | 569,797 | 532,233 (93.4%) | 32,601 | 85,825 |
+| 2024-12-31 | 581,411 | 544,033 (93.6%) | 32,644 | 77,061 |
+| **2025-06-30** | **603,745** | **554,686 (91.9%)** | 43,746 | 79,231 |
+| 2026-03-31 | 601,720 | 561,270 (93.3%) | 35,616 | 76,087 |
+
+At 30 June 2025 — the exact date of the TIC survey — **the CBC held USD 554.7bn
+of securities against a TIC-measured Taiwanese holding of USD 677bn of US
+long-term debt** (849bn including equities). The official sector is capable of
+accounting for most of that row. The residual left for private holders cannot
+be pinned down from published data, because the template gives securities
+versus deposits and nothing about security type or currency.
+
+**What is withdrawn and what stands.**
+
+*Withdrawn:* every attribution of a TIC line to the life insurers. The
+statements "Taiwan held 26.2% of all foreign-held US agency MBS" and "Taiwan
+absorbed 33% of the increase in foreign agency-MBS holdings 2013-19" and "17%
+of the increase in foreign corporate-bond holdings 2019-24" remain true **of
+Taiwan as a country** and are useful as such. They are not lifer statements and
+must not be presented as answering "what role have Taiwanese life insurers
+played", which is the question that was asked.
+
+*Stands:* the sector-identified evidence, which was always the better basis and
+should have led. The IIP/BoP series (series 9) reports portfolio-investment debt
+holdings by holding sector, and **reserve assets are a separate IIP line by
+construction**, so the central bank is excluded before the series begins. That
+gives other-financial-institutions foreign debt holdings of USD 778bn at
+end-2025 and the quarterly purchase flow by tenor. The Formosa register (series
+11) is a market measure and is likewise unaffected.
+
+**A reconciliation puzzle worth recording rather than papering over.** OFI alone
+holds USD 778bn of foreign debt securities (IIP, end-2025); the CBC holds
+554.7bn of securities; banks hold a further 199bn. Taiwan's entire TIC-measured
+US long-term debt position is 677bn. The sums do not fit unless a large part of
+Taiwanese holdings is either not US-issued — the Formosa book of USD 218bn is
+exactly that — or is attributed to another country by TIC's custodial rule.
+**So TIC both mixes holders AND undercounts Taiwan.** Two independent reasons
+not to build lifer claims on it.
+
+**The unexpected return.** Section II of the same template gives the aggregate
+SHORT position in FX forwards and futures against the domestic currency,
+including the forward leg of currency swaps, by residual maturity — **the CBC
+swap book**. Setser & S.T.W. (2019) could only estimate it, at USD 130bn with a
+60-200bn interval. It is now published: **USD 91.9bn (2021Q4) falling steadily
+to 76.1bn (2026Q1)**, at the low end of their interval and shrinking. That is a
+direct input to series 8, which had been carrying the estimate.
+
+**Files.** `scripts/stage6_cbc_irfcl.py`, `data/cbc_irfcl.csv`,
+`out/stage6_irfcl_20260905.sql`. Loaded to `derived_series` series 12,
+`definition_version = irfcl`: 11 quarters, 77 rows, sum 20,413,024 USD mn,
+verified server-side. Every row passes two template identities (reserves = FX
+reserves + gold; FX reserves = securities + deposits) and the swap figure is
+identified by finding the run of four numbers where the total equals its three
+maturity buckets, which is both the locator and the check.
