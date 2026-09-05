@@ -19,16 +19,29 @@ refused, and only the allowlisted https target is forwarded.
 
 ## Deploy
 
-Use **Google Cloud Shell** — open <https://console.cloud.google.com> and click
-the `>_` icon. `gcloud` is installed and already authenticated there, so
-nothing is needed on your own machine.
+Use **Google Cloud Shell**: `gcloud` is installed and already authenticated
+there, so nothing is needed on your own machine.
+
+- **Desktop or iPad:** open <https://console.cloud.google.com> and tap the
+  `>_` icon. On iPad, Safari serves the desktop console by default and the
+  terminal behaves normally.
+- **iPhone:** the browser terminal is cramped; the Google Cloud iOS app has a
+  built-in Cloud Shell with a control-key row, which is easier on a small
+  screen.
+
+The build takes a few minutes. Keep the tab or app in the foreground while it
+runs — a backgrounded mobile session can drop the connection. If it does, the
+build continues server-side and re-running the command is safe either way.
+
+One line, so it can be pasted on a phone or tablet as easily as a laptop.
+Replace `YOUR_PROJECT_ID` and paste:
 
 ```
-git clone https://github.com/WillBtK/Taiwan-Lifers.git
-cd Taiwan-Lifers
-gcloud config set project YOUR_PROJECT_ID
-bash ops/taiwan-relay/deploy.sh
+gcloud config set project YOUR_PROJECT_ID && rm -rf ~/tlfx && git clone -q https://github.com/WillBtK/Taiwan-Lifers.git ~/tlfx && bash ~/tlfx/ops/taiwan-relay/deploy.sh
 ```
+
+It re-clones into `~/tlfx` each time so a repeat run always deploys current
+code, and Cloud Shell's home directory persists between sessions.
 
 `deploy.sh` enables the two required APIs, deploys from source to Cloud Run in
 `asia-east1`, and prints the service URL and a generated token. It is safe to
