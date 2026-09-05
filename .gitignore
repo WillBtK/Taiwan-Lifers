@@ -6,6 +6,7 @@ venv/
 .env.*
 !.env.example
 reports/*.json
+!reports/fetch_sources_latest.json
 reports/*.html
 data/raw/*
 # couriered ins-info payloads are the only copy we can reach (decisions 4.10)

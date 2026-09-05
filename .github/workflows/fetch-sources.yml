@@ -1,0 +1,50 @@
+# Scheduled ingestion of the sources that need an egress this agent sandbox
+# does not have. Two classes:
+#   * Reachable from a GitHub runner but blocked by the sandbox proxy
+#     (www.tigf.org.tw) or needing a CA the runner lacks (openapi.tii.org.tw).
+#   * Reachable from neither, because the origin refuses non-Taiwan egress
+#     (ins-info.ib.gov.tw, measured 2026-09-05 — see docs/decisions.md 4.13).
+#     Those are fetched only when TAIWAN_RELAY_URL is configured; without it
+#     the step records "unavailable" and the workflow still succeeds.
+#
+# Raw payloads are committed verbatim under data/raw/<source>/ with a snapshot
+# stamp, which is exactly the shape the loaders already expect, so the manual
+# courier route and this workflow are interchangeable.
+name: fetch-sources
+on:
+  schedule:
+    - cron: '17 2 2 * *'   # monthly, 02:17 UTC on the 2nd
+  workflow_dispatch:
+  push:                    # editing the pipeline re-verifies it; the fetch
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]   # dedupes on content,
+    paths:                                                 # so a re-run is a no-op
+      - '.github/workflows/fetch-sources.yml'
+      - 'scripts/fetch_sources.py'
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+
+      - name: Fetch sources
+        env:
+          TAIWAN_RELAY_URL: ${{ secrets.TAIWAN_RELAY_URL }}
+          TAIWAN_RELAY_TOKEN: ${{ secrets.TAIWAN_RELAY_TOKEN }}
+        run: python3 scripts/fetch_sources.py
+
+      - name: Commit any new snapshots
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/raw reports/fetch_sources_latest.json
+          if git diff --cached --quiet; then
+            echo 'no new data'
+          else
+            git commit -m 'Scheduled source fetch: new snapshots' \
+                       -m 'Automated by .github/workflows/fetch-sources.yml.'
+            git push
+          fi

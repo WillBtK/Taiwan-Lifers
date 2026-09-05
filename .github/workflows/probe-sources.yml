@@ -3,10 +3,8 @@
 # which forced a manual courier route (4.10/4.11). If a runner can reach it, the
 # whole ingestion becomes a scheduled workflow and the courier route retires.
 name: probe-sources
+# Diagnostic only: run it by hand when a host's reachability is in question.
 on:
-  push:
-    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
-    paths: ['.github/workflows/probe-sources.yml']
   workflow_dispatch:
 jobs:
   probe:

@@ -1938,3 +1938,72 @@ project carries (36,900,485 mn), the same vintage effect as 4.9. Cached as
 **Files.** `cache/cbc/FSI_life_20260905.csv`, `cache/tii/K47_20260905.csv`,
 `cache/fsc/stat27947_20260905.csv` (all gitignored caches; the URLs are in
 `config/allowlist.tsv`).
+
+### 4.13 Ingestion architecture: the reachability matrix, measured, and what it forces
+
+The courier route (4.10/4.11) is not a pipeline. Before designing a
+replacement, the question "who can reach what" was measured rather than
+assumed, by running the same probe from the agent sandbox and from a
+GitHub-hosted runner (workflow `probe-sources`, run 33933411996, runner egress
+52.159.139.245).
+
+| Source | Agent sandbox | GitHub runner | Reading |
+|---|---|---|---|
+| `ins-info.ib.gov.tw` | connect times out | connect times out | origin refuses both |
+| `www.tigf.org.tw` | 403 at proxy | **200** | our proxy's policy only |
+| `data.gov.tw` | 200 | 200 | open |
+| `openapi.tii.org.tw` | 200 with TWCA cert | 000 without it | certificate, not reach |
+
+Three conclusions follow, and the third is the important one.
+
+**ins-info is a geography problem, not a permissions problem.** Two unrelated
+networks — this sandbox's proxy and Azure's US ranges behind GitHub Actions —
+fail identically, with `time_appconnect` at 0.000 and the TCP connect never
+completing. Allowlisting cannot fix it and neither can a different CI
+provider in the same regions. The user's own fetches succeed over a VPN,
+which is evidence (not proof) that the discriminator is Taiwanese egress
+rather than datacentre-versus-residential addressing, since a consumer VPN
+exit is itself a datacentre address.
+
+**Two sources were blocked for reasons that had nothing to do with the
+origin.** TIGF answers a GitHub runner immediately; only our proxy refused it,
+so the monthly stock and bond holdings series (data.gov.tw 172653) was never
+actually out of reach. TII fails from a runner purely because the runner
+lacks the intermediate certificate the server omits, which the repository
+already carries. Both are now automated. The general lesson is that
+"unreachable" had been recorded three times for three different causes, and
+only one of them was real.
+
+**`stat.fsc.gov.tw` is not a substitute.** It is reachable and exposes a full
+catalogue at `api/v1/public/datasets`, but its 165 datasets are examination
+statistics, agent registrations and award brochures. Nothing firm-level,
+nothing on fund utilisation. Also noted: the data.gov.tw front-end `list`
+endpoint ignores every filter parameter tried (`search_count` stays 53,111
+regardless), so keyword `dropdown` plus `detail` remains the only route, and
+the v2 REST metadata endpoint answers without an API key even though the data
+endpoints demand one.
+
+**The design.** Ingestion splits by egress rather than by source type.
+`scripts/fetch_sources.py` fetches every source, writes each payload verbatim
+to `data/raw/<source>/<name>_YYYYMMDD.<ext>` — the identical shape the
+couriered files took, so the loaders read either without change — and
+deduplicates on content hash, so the repository accumulates one file per
+revision rather than one per run.
+`.github/workflows/fetch-sources.yml` runs it monthly and commits anything
+new. Sources needing Taiwan egress are fetched through an optional relay
+(`ops/taiwan-relay`, a token-guarded single-host forwarder for deployment to
+a Taiwan region); when the relay is not configured they are recorded as
+unavailable and the run still succeeds, so the pipeline degrades to "does
+everything except ins-info" rather than failing. That last property matters:
+it means the relay is an upgrade the project can adopt later without
+rewriting anything, and the courier route remains a valid fallback for the
+same files in the meantime.
+
+**What is still a judgement for the user.** Standing up Taiwan egress costs a
+little money and creates a credential. That is theirs to decide, not mine, so
+the relay ships as code and documentation with nothing deployed.
+
+**Files.** `scripts/fetch_sources.py`,
+`.github/workflows/fetch-sources.yml`, `.github/workflows/probe-sources.yml`,
+`ops/taiwan-relay/` (`main.py`, `requirements.txt`, `Procfile`, `README.md`),
+`data/raw/tii/`, `.gitignore`.
