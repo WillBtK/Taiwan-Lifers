@@ -1,0 +1,22 @@
+# Discovery targets for scripts/discover_ins_info.py, fetched through the
+# Taiwan relay by .github/workflows/discover-ins-info.yml.
+# Format: note<TAB>url   (a line with no tab is treated as the url itself)
+#
+# Pass 1 (2026-09-05) maps the portal's entry points. The goal is the
+# FIRM-LEVEL disclosures behind the per-company menu — fund utilisation by
+# insurer (the hedge-ratio denominator per firm rather than for the sector),
+# capital adequacy, and the note that would split 特別盈餘公積 into its
+# FX-designated buckets, which decisions 4.19 can currently only bound.
+#
+# Known-good endpoints are included as controls: if they fail, the relay or
+# the portal is at fault and nothing else in the pass means anything.
+control: 壽險財務業務指標 (known good)	https://ins-info.ib.gov.tw/opendata/json-06161610.aspx
+control: 財務報告彙總 (known good)	https://ins-info.ib.gov.tw/opendata/json-06021011.aspx
+產險財務業務指標 (data.gov.tw 7192)	https://ins-info.ib.gov.tw/opendata/json-06161601.aspx
+portal root	https://ins-info.ib.gov.tw/
+report menu (cited in README section 4)	https://ins-info.ib.gov.tw/customer/checkrpt.aspx
+per-company entry	https://ins-info.ib.gov.tw/customer/life.aspx
+per-company entry (alt casing)	https://ins-info.ib.gov.tw/customer/Life.aspx
+company list	https://ins-info.ib.gov.tw/customer/complist.aspx
+disclosure index 2-2	https://ins-info.ib.gov.tw/customer/Info2-2.aspx
+disclosure index 2-3	https://ins-info.ib.gov.tw/customer/Info2-3.aspx

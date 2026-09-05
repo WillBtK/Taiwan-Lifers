@@ -1,0 +1,36 @@
+# Exploration of the Insurance Bureau's portal, which only the relay can reach.
+# Neither this repo's agent sandbox nor a runner can call portal and relay in
+# one place — the sandbox's proxy refuses *.run.app — so mapping the site runs
+# here and reports back through a committed file (decisions 4.26).
+# Read-only: it fetches and describes, and writes nothing outside reports/.
+name: discover-ins-info
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - 'config/ins_info_targets.tsv'
+      - 'scripts/discover_ins_info.py'
+permissions:
+  contents: write
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - name: Map the portal
+        env:
+          TAIWAN_RELAY_URL: ${{ secrets.TAIWAN_RELAY_URL }}
+          TAIWAN_RELAY_TOKEN: ${{ secrets.TAIWAN_RELAY_TOKEN }}
+        run: python3 scripts/discover_ins_info.py
+      - name: Commit the map
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add reports/ins_info_map.json
+          if git diff --cached --quiet; then echo 'map unchanged'; else
+            git commit -m 'Discovery pass: ins-info portal map'
+            git push
+          fi
