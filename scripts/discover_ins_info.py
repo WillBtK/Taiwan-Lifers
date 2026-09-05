@@ -82,6 +82,15 @@ def summarise(url, text, ctype):
     info["table_codes"] = sorted({m for m in re.findall(r'\b(0\d{7})\b', text)})[:60]
     # form controls reveal how a report is parameterised (year, quarter, firm)
     info["select_names"] = sorted({m for m in re.findall(r'<select[^>]*name="([^"]+)"', text, re.I)})[:40]
+    # every <option value=id>label</option>: on the portal root this is the
+    # complete company-to-identifier map, which is the key the per-company
+    # disclosures are addressed by and is not published anywhere else
+    opts = re.findall(r'<option[^>]*value="(0?\d{7,8})"[^>]*>([^<]{2,60})</option>', text)
+    if opts:
+        info["options"] = {v: lbl.strip() for v, lbl in opts}
+    # ASP.NET WebForms pages need a POST carrying these; their presence is what
+    # says a page cannot be parameterised by query string alone
+    info["webforms_postback"] = "__VIEWSTATE" in text
     # the surrounding markup for each 8-digit id, which is what reveals how a
     # company or a report is addressed (the id alone does not say whether it
     # is a query parameter, a path segment, or just printed text)
@@ -91,7 +100,7 @@ def summarise(url, text, ctype):
         if i not in ctx:
             lo, hi = max(0, m.start() - 90), min(len(text), m.end() + 90)
             ctx[i] = re.sub(r"\s+", " ", text[lo:hi])
-        if len(ctx) >= 12:
+        if len(ctx) >= 4:
             break
     info["id_contexts"] = ctx
     titles = re.findall(r"<title>(.*?)</title>", text, re.I | re.S)

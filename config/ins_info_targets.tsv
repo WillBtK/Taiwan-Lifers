@@ -43,3 +43,19 @@ report page 06021011 (financial summary)	https://ins-info.ib.gov.tw/customer/RPT
 # company ids; id_contexts will show how they are addressed.
 information page	https://ins-info.ib.gov.tw/customer/Information.aspx
 announcements	https://ins-info.ib.gov.tw/customer/announceinfo.aspx
+#
+# Pass 3 (2026-09-05). Pass 2 result: all ten aggregate tables have JSON
+# endpoints (seven new), but NONE is fund utilisation or capital adequacy per
+# firm — those live behind the per-company menu, and every page carrying it is
+# an ASP.NET WebForms postback that a GET-only relay cannot parameterise.
+#
+# One opening: customer/life.aspx returned a NULL-REFERENCE error, not a 404,
+# so it exists and expects a parameter. If it takes UID by query string the
+# per-company disclosures are reachable without POST at all. 03557115 is a
+# real UID (臺灣產物, from the shareholder table); the root dropdown gives the
+# rest, captured this pass as a full company-to-UID map.
+life.aspx with a known UID	https://ins-info.ib.gov.tw/customer/life.aspx?UID=03557115
+life.aspx lowercase param	https://ins-info.ib.gov.tw/customer/life.aspx?uid=03557115
+company page by UID	https://ins-info.ib.gov.tw/customer/company.aspx?UID=03557115
+Info2-2 with UID	https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557115
+announceinfo with UID	https://ins-info.ib.gov.tw/customer/announceinfo.aspx?UID=03557115
