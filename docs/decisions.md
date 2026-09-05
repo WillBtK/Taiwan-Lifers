@@ -3725,3 +3725,95 @@ book is the next step.
 all-foreign-holder denominators (stored as primitives so a share is computed in
 SQL, never frozen at parse time), and `us_lt_debt_holdings` 2007-2024. 172 rows,
 sum 464,613,186 USD mn, verified server-side against the generator.
+
+---
+
+### 4.41 The Formosa book: USD 218bn of 28-year callable credit that no US statistic sees
+
+4.40 closed on a gap. From 2019 the lifers' own foreign debt stock (OFI IIP,
+USD 749bn at end-2024) exceeds Taiwan's ENTIRE country-wide holding of US
+long-term debt (632bn, June 2024) — before setting aside the part of that which
+is the CBC's reserves. A large share of the lifers' USD book is therefore not
+US-issued, and the TIC survey is blind to it by construction.
+
+國際板債券 — Formosa bonds — are the explanation. Foreign issuers list
+USD-denominated paper on the Taipei Exchange and sell it to professional
+investors. It is USD credit risk and USD duration; the issuers are not US
+residents, so it appears in no TIC table. TPEx publishes the register of listed
+issues through its OpenAPI, and `scripts/stage6_formosa_register.py` reads it.
+
+**The market, 5 September 2026, 938 listed issues:**
+
+| currency | issues | face at issue, USD bn | share |
+|---|---|---|---|
+| **USD** | **863** | **218.2** | **92.6%** |
+| ZAR | 18 | 7.7 | 3.3% |
+| CNY | 10 | 7.1 | 3.0% |
+| AUD | 46 | 2.7 | 1.2% |
+
+Taiwanese issuers are USD 7.6bn of the USD book, 3.5% — TSMC, the banks, and
+(worth noting for series 9) USD 0.43bn of Cathay Life's and Taiwan Life's own
+USD sub-debt. The other 96.5% is foreign credit.
+
+**The shape of the paper is the finding.** Amount-weighted ORIGINAL tenor is
+**28.0 years**, perpetuals excluded:
+
+| original tenor | USD bn | share |
+|---|---|---|
+| ≤10y | 36.6 | 16.9% |
+| 11-20y | 9.6 | 4.4% |
+| **21-30y** | **107.1** | **49.4%** |
+| **>30y** | **63.5** | **29.3%** |
+
+and after a decade of ageing the book has barely shortened, because it was
+issued so long: **74.5% still has 20 years or more to run** (USD 161.5bn), and
+only 5.5% matures inside three years. The roll-off ladder is concentrated in
+2047-2051 (USD 94.3bn, the 30-year 2017-2021 vintage) and 2060-2061 (USD
+38.3bn, the 40-years).
+
+**And the investor is short the call on three-quarters of it.** USD 165.6bn,
+**75.9%** of the USD book, is issuer-callable, and the dominant structure is
+5-year non-call then callable annually (324 issues), i.e. a 30-year bond the
+issuer can retire from year five. That is the same negative convexity as the
+agency-MBS position in 4.40, deliberately taken for spread: the buyer earns the
+option premium and accepts that the position shortens when rates fall and
+extends when they rise. Both legs of the lifers' USD duration bid — 192bn of
+agency ABS and 166bn of callable Formosa — are short convexity. That is not a
+coincidence; it is the same reach for yield expressed twice.
+
+**Largest issuers, USD bn:** Qatar 17.0, Citigroup 7.1, MDGH (Mubadala) 6.8,
+Verizon 6.4, First Abu Dhabi Bank 6.3, JPMorgan 6.2, Barclays 5.7, QNB 5.6,
+Bank of Nova Scotia 5.5, AT&T 5.3. Gulf sovereigns and quasi-sovereigns,
+global bank holdcos, US telecoms — long-dated USD corporate and quasi-sovereign
+credit, which is precisely the segment the research question named.
+
+**What this file cannot do, and it matters.** Three limits, all recorded in the
+`basis_note` of every loaded row:
+
+1. It is a snapshot, not a history. Matured and called issues are gone, so
+   amounts by issue year are "issued then and STILL LISTED now" and are heavily
+   survivorship-biased — the 2020-21 rally saw callable issues redeemed en
+   masse, which is why 2019 (14bn surviving) looks smaller than 2020 (54bn).
+   They are not an issuance series and are not loaded as one.
+2. Amounts are face at issue, not amount outstanding. Partial redemptions do
+   not show, so each line is an upper bound.
+3. **The register carries no holder information.** It says what exists, not who
+   owns it. Attributing the bulk to the lifers rests on regulatory history and
+   supervisors' statements, not on this file. Nothing loaded here claims lifer
+   ownership, and the open item is now explicit: a sourced series for lifer
+   holdings of 國際板債券 is still missing, and until it exists the link from
+   market size to lifer exposure is inference, not measurement.
+
+**Two failure modes caught in parsing.** TPEx codes a perpetual as tenor 99.9
+maturing 2910-12-31; left alone that added half a year to the weighted-average
+tenor and printed a maturity bucket in the thirtieth century. Seven issues, USD
+1.413bn, now separated. And the `_org` register — nominally foreign issuers not
+publicly offering equity in Taiwan — in fact contains domestic banks' USD paper,
+which is why the Taiwanese-issuer split above is reported rather than assumed
+away.
+
+**Files.** `scripts/stage6_formosa_register.py`, `data/formosa_register.csv`
+(938 issues, full register), `out/stage6_formosa_20260905.sql`. Loaded to
+`derived_series` series 11, `definition_version = tpex_register`: 55 rows, sum
+of the USD-mn rows 1,279,000.070, maturity ladder summing to 216,801.688 =
+218,214.688 less the 1,413.0 of perpetuals. Both verified server-side.
