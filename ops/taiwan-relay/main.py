@@ -42,34 +42,82 @@ CTX.verify_flags &= ~ssl.VERIFY_X509_STRICT
 
 @app.get("/health")
 def health():
-    return {"ok": True, "allowed_hosts": sorted(ALLOWED_HOSTS)}
+    return {"ok": True, "allowed_hosts": sorted(ALLOWED_HOSTS), "post": True}
 
 
-@app.get("/fetch")
-def fetch():
+def _check(target):
+    """Shared guard. Returns an error tuple, or None when the target is allowed."""
     expected = os.environ.get("RELAY_TOKEN", "")
     if not expected:
         return {"error": "relay misconfigured: RELAY_TOKEN unset"}, 500
     if request.headers.get("X-Relay-Token", "") != expected:
         return {"error": "forbidden"}, 403
-
-    target = request.args.get("url", "")
     parts = urllib.parse.urlparse(target)
     if parts.scheme != "https":
         return {"error": f"scheme not allowed: {parts.scheme or '(none)'}"}, 400
     if parts.hostname not in ALLOWED_HOSTS:
         return {"error": f"host not allowed: {parts.hostname}"}, 400
+    return None
 
-    req = urllib.request.Request(target, headers={"User-Agent": UA})
+
+def _forward(target, data=None, cookie=None):
+    """Fetch the target and mirror the bytes back, with the cookie both ways.
+
+    The cookie matters and is the reason this is not a pure byte pipe. The
+    portal's report pages are ASP.NET WebForms: a query is a POST carrying
+    __VIEWSTATE and __EVENTVALIDATION obtained from a prior GET, and the server
+    ties those tokens to the session cookie it set on that GET. Relaying the
+    POST without the cookie gets a viewstate-validation failure that looks
+    exactly like a malformed request. So Set-Cookie is passed back to the
+    caller and Cookie is passed forward, and the caller keeps the session.
+    """
+    headers = {"User-Agent": UA}
+    if cookie:
+        headers["Cookie"] = cookie
+    if data is not None:
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+    req = urllib.request.Request(target, data=data, headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=90, context=CTX) as r:
             body = r.read(MAX_BYTES + 1)
             ctype = r.headers.get("Content-Type", "application/octet-stream")
+            setc = r.headers.get_all("Set-Cookie") or []
     except Exception as e:
         return {"error": f"{type(e).__name__}: {e}"}, 502
     if len(body) > MAX_BYTES:
         return {"error": "response too large"}, 502
-    return Response(body, content_type=ctype)
+    resp = Response(body, content_type=ctype)
+    if setc:
+        # one header the caller can hand straight back as Cookie, rather than
+        # making every caller reimplement cookie-jar parsing
+        resp.headers["X-Relay-Set-Cookie"] = "; ".join(c.split(";", 1)[0] for c in setc)
+    return resp
+
+
+@app.get("/fetch")
+def fetch():
+    target = request.args.get("url", "")
+    bad = _check(target)
+    if bad:
+        return bad
+    return _forward(target, cookie=request.headers.get("X-Relay-Cookie"))
+
+
+@app.post("/post")
+def post():
+    """Relay a form POST. Body is the urlencoded form, verbatim.
+
+    Same two guards as /fetch — allowlisted host, shared token — so this widens
+    what can be *asked* of the one permitted host, not which hosts can be
+    reached. That distinction is the whole security argument for the relay and
+    it is unchanged: this is still not an open proxy.
+    """
+    target = request.args.get("url", "")
+    bad = _check(target)
+    if bad:
+        return bad
+    return _forward(target, data=request.get_data(),
+                    cookie=request.headers.get("X-Relay-Cookie"))
 
 
 if __name__ == "__main__":

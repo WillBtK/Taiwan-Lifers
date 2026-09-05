@@ -1,0 +1,35 @@
+# The Observation Station's company x quarter panel lives behind an ASP.NET
+# form whose period selectors offer ROC 98-115 (2009-2026). Only Taiwan can
+# reach the portal, and only a runner can reach the relay, so the query runs
+# here and reports back through a committed file (decisions 4.26, 4.38).
+name: probe-rpt-panel
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - 'scripts/probe_rpt_panel.py'
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - name: Query the panel
+        env:
+          TAIWAN_RELAY_URL: ${{ secrets.TAIWAN_RELAY_URL }}
+          TAIWAN_RELAY_TOKEN: ${{ secrets.TAIWAN_RELAY_TOKEN }}
+        run: python3 scripts/probe_rpt_panel.py
+      - name: Commit the result
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add reports/rpt_panel_probe.json data/raw/ins-info-rpt
+          if git diff --cached --quiet; then echo 'unchanged'; else
+            git commit -m 'Probe: RPT-06021011 company x quarter panel'
+            git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true
+            git push
+          fi
