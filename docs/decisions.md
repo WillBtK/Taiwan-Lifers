@@ -2781,3 +2781,324 @@ available a month before it was.
 
 **Files.** `scripts/stage5_implied_hedge_ratio.py`,
 `data/implied_hedge_ratio.csv`, `out/stage5_implied_20260905.sql`.
+
+### 4.30 The hedging cost, back to 1992 — and a counterparty check that closes
+
+**Why this and not something else.** 4.29 established that the sector hedge
+ratio fell about 20pp over six years. The first candidate for why is price: a
+lifer hedges while the carry is bearable. The project's only cost series came
+from investor decks — three firms, 2013 on, firm-reported — which is too short
+to say whether the current cost is unusual and too dependent on each firm's
+own definition to say what it measures. The CBC publishes USD/TWD forwards by
+tenor from **1991-11** and spot from **1992-01**, so the market-implied cost
+is directly observable, monthly, for thirty-four years.
+
+**The construction, and the small choice inside it.** A lifer holding USD
+sells USD forward, so it deals at the price a bank *buys* USD — 買入匯率 — and
+its cost is that forward's shortfall against spot, annualised:
+`(S_bid − F_bid) / S_bid × 360/days`. Both legs are bank-buys-USD prices, so
+the dealer's spread cancels and what remains is carry. Pairing a bid forward
+against a mid or interbank spot would fold half a spread into the cost —
+about 10bp at current levels. Small, but the wrong sign of error to carry in a
+series whose entire purpose is comparison across decades.
+
+**The 90-day cost, annual means.** −0.99% (1992), −2.67% (1993), −0.93%
+(1997), +1.96% (2000), **+3.86% (2006)**, +0.68% (2012), **+0.33% (2021)**,
++2.17% (2022), **+4.34% (2023)**, +4.02% (2024), +2.40% (2025).
+
+Two things this settles. First, **hedging used to pay**: through the 1990s the
+carry was negative, because TWD rates sat above USD rates. The current regime
+is not the only one that has existed, and a model calibrated on the last
+decade assumes away half the history. Second, **2023-24 was the most expensive
+hedging environment in the series**, more expensive than 2006-07, and it
+overlaps the period in which 4.29's reconstruction has the hedge ratio falling
+hardest.
+
+That second point looked like support for the price explanation and **it does
+not survive testing — see 4.31, which was the whole reason for building this
+series and which returns a negative.** The overlap is real; the causal reading
+of it is not.
+
+**Validation, and what it caught.** Set against what the firms say they paid:
+
+| | quarters | mean reported/market | range | reading |
+|---|---|---|---|---|
+| Fubon | 26 | **0.51** | 0.15–1.71 | consistent |
+| Cathay | 11 | 1.22 | 0.25–**4.39** | not the same measure |
+
+Fubon behaves exactly as an all-in ex-ante carry cost must: it moves with the
+market throughout and sits below it, because only the currency-swap and NDF
+part of the book pays the market rate while the proxy-hedged, policy-backed
+and open parts pay less or nothing. Two quarters exceed market, and the
+larger, 2025Q2, is explicable and interesting on its own — the forward curve
+repriced in the shock faster than an existing book could be rolled.
+
+**Cathay does not validate, and that is the finding.** It exceeds the market
+cost in three of eleven quarters, including 4.39x in 2015Q1 and 3.04x in
+2021Q1 — quarters where Fubon reads 1.13 and 0.56 against the same market
+cost. Because the divergence is firm-specific in the *same* quarters, the
+fault is not in the market construction; the two firms' "hedging cost"
+disclosures are not on the same definition. Series 7 currently pools them.
+**It should not**, and the artifact must not draw them as one line. This is
+the second Cathay deck-extraction finding after 3.9, and it points the same
+way: that firm's disclosed series needs its definition pinned before it is
+used, not after.
+
+**A dating error of my own, corrected before it drew a conclusion.** The first
+comparison scored each firm's *quarterly* figure against the market cost in
+the quarter's first month alone. In a quarter like 2022Q3 the 90-day cost ran
+0.9% to 3.4%, so the choice of month moved the ratio by a factor of three.
+Quarterly averaging changed Fubon's 2022Q3 reading from 0.19 to 0.15 and
+Cathay's 2015Q1 from 3.67 to 4.39 — the conclusion survived, but it was not
+entitled to until the comparison was on matched periods.
+
+**Two bad cells in 2,581, and the test that should not have been a filter.**
+The 1994-05 120-day ask prints 26.270 in a ladder running 27.150 / 27.240 /
+27.250 / 27.260 / **26.270** / 27.300 — a transposed digit — and the 2026-01
+180-day bid prints 31.530 against a ladder falling 31.389 → 31.112. Both are
+caught by one test that cannot produce a false positive: a bid above its own
+ask is arithmetically impossible in a real quote. My first instinct was a
+different test — all seven tenors price off one interest differential, so a
+tenor disagreeing with the month's median must be bad — and it threw out
+**312 cells**. Two reasons, and the second is worth more than the test was:
+annualising a 10-day forward multiplies a 0.001 rounding by 36, so the
+tolerance has to live in price space; and once it does, the largest surviving
+deviations are not defects but **2025-06**, where five of seven tenors leave a
+straight line. That is the curve genuinely going non-linear in the month after
+the TWD shock. The flat-differential assumption fails precisely in the
+stressed months that matter most, so it is kept as a reported diagnostic and
+never as a filter. **A cleaning rule that fires hardest on the most
+interesting month is not cleaning the data; it is deleting the finding.** The
+raw values load unchanged either way (4.11); only the derived cost drops the
+two impossible cells.
+
+**The counterparty leg, which closes better than expected.** EG47M01 carries
+daily-average FX turnover by market and instrument from 1994, and the whole
+banking system's end-period net FX position. Two results:
+
+- The **banking system's entire net FX position** has run between −USD 737mn
+  and +USD 890mn across thirty-two years, and about +USD 450mn now — against a
+  lifer foreign book near USD 700bn. Roughly **0.06%**. The banks intermediate;
+  they do not warehouse. That is the Setser and S.T.W. (2019) claim as
+  arithmetic rather than as an argument.
+- A hedge book of USD 211–316bn rolled at three months implies USD 3.4–5.0bn
+  of turnover a day. Observed customer swap plus forward turnover is USD
+  3.2–4.3bn. The **ratio sits at 0.74–1.24, centred on 1.0**. Since that
+  market also carries corporate and other financial flow, this is an upper
+  bound on the lifer share rather than a measurement — but a ratio near 1
+  constrains the mix: either the average tenor is longer than three months, or
+  a material part of the book is rolled where CBC customer turnover does not
+  see it, which is the offshore NDF leg.
+
+Also loaded, and not yet used: customer swap turnover has gone from USD 12mn a
+day (1998) to about USD 3bn (2025), a 250x growth that is the market being
+built around this hedging demand.
+
+**Loaded.** `tlfx.fx_market_monthly` (migration 0015), long format keeping the
+CBC's own Table1/Table2 labels unmodified so a row is checkable against the
+publication without a mapping. 18,405 observations parsed, **12,901 loaded**:
+the published 年增率 sub-item is held in the CSV but not the table, because it
+is an exact transform of the level series sitting beside it and the schema's
+own convention is raw as published on ingest with conversions in
+`derived_series`. Row width is asserted against items × sub-items on parse,
+because a changed dimension would misalign every column and still parse
+cleanly.
+
+**A loading constraint that had to be designed around, and will recur.** The
+first load emitted one `VALUES` row per observation: 18,405 rows, 1.9MB, five
+chunked files. None of them applied. The reason is not Postgres — the SQL
+never reached it. The load text travels as a tool-call argument, so the binding
+limit is the size of the text itself, and row-wise chunking makes that worse
+rather than better: it multiplies the calls without removing a byte, and most
+of those bytes were the same Chinese label and date format repeated 18,405
+times.
+
+The fix is to send each series ONCE as a dense monthly array and let Postgres
+expand it with `unnest … with ordinality`, reconstructing each month from the
+array position. **1.9MB became 90KB in two files** — a factor of twenty-one,
+with nothing dropped but repetition. This is now the pattern for the remaining
+CBC series (EG49, EG01, EG46, BPP2 with its 402 series, BPF4), none of which
+would have loaded the old way.
+
+One property of that encoding is load-bearing and is commented as such: the
+array must stay **dense**, with NULL where the source publishes nothing,
+because the month comes from the position. Compacting it would date every
+later value wrongly and still load without error — precisely the failure the
+reserve parser made in 4.28. The nulls are dropped after the dates are fixed,
+never before.
+
+**And the chunking earned its keep for a reason I had not intended.** Even at
+45KB a part takes minutes to apply. I misread that latency as a stall and
+interrupted the load mid-way through part 2 — an unforced error, and the sort
+that normally leaves a table half-populated and quietly wrong. It did not,
+because each part is a separate `begin … commit` that is idempotent on the
+natural key: part 1 had committed whole (EG47M01 complete, checksum exact),
+part 2 had committed nothing, and finishing meant re-running part 2 rather
+than working out what had survived. **Splitting a load into independently
+committed, individually idempotent parts is not only a size workaround; it is
+what makes an interrupted load recoverable by repetition instead of by
+forensics.** The lesson about my own behaviour is the plainer one: slow is not
+stuck, and the way to tell them apart is to ask the process, which I did only
+after killing it.
+
+**Files.** `scripts/stage5_cbc_fx_market.py`,
+`supabase/migrations/0015_fx_market_monthly.sql`, `data/cbc_fx_market.csv`,
+`data/fx_hedge_cost_market.csv`, `out/stage5_cbc_fx_20260905_p1..p5.sql`.
+
+### 4.31 The price explanation for the falling hedge ratio does not survive a trend control
+
+**The test the last two entries existed to make possible.** 4.29 reconstructed
+the hedge ratio to 2019; 4.30 built the market cost of hedging to 1992. The
+obvious hypothesis, and the one the project has been carrying implicitly since
+the README's §9 note that "the hedge ratio is strongly carry-sensitive", is
+that lifers hedge less because hedging got dearer. With both series in hand
+that is now a regression rather than an assertion.
+
+**It fails at the first hurdle: timing.** The contemporaneous cost explains
+nothing (t = −0.54). Only the **24-month trailing mean** cost has any
+relationship with the hedge ratio, which is already a warning — a
+two-year-smoothed regressor over a six-year sample is close to a trend by
+construction.
+
+| dependent = derivative hedge ratio, regressor = 24m mean cost | slope, pp per pp | t | R² | n |
+|---|---|---|---|---|
+| all observations | −2.32 | −2.27 | 0.23 | 19 |
+| excluding the carry-assumed 2019 months | −2.39 | −2.29 | 0.26 | 17 |
+| 2022 on, excluding the near-floor 2024-01 | −2.65 | −2.83 | 0.38 | 15 |
+
+Taken alone this looks like a result: a percentage point of sustained carry
+costs about two and a half points of hedge ratio, robust across subsamples.
+
+**Then control for time, and it disappears.**
+
+| regressor | slope | t | R² |
+|---|---|---|---|
+| 24m mean cost alone | −2.32 pp/pp | −2.27 | **0.23** |
+| a linear time trend alone | −0.214 pp/month | −3.89 | **0.47** |
+| cost, on the hedge ratio's residual from that trend | −0.43 pp/pp | **−0.51** | **0.02** |
+
+Time explains twice what cost does, and cost retains essentially nothing once
+the trend is removed. The earlier regression was reading the calendar.
+
+**The obvious objection, and why it fails.** If cost and time were near-
+identical regressors, neither would survive controlling for the other and the
+sample simply could not tell them apart — in which case rejecting the price
+story would be overreach. So the test has to be run **both ways**, and it is
+asymmetric:
+
+| | slope | t | R² |
+|---|---|---|---|
+| cost, on the hedge ratio's residual from time | −0.43 pp/pp | −0.51 | 0.02 |
+| time, on the hedge ratio's residual from cost | −0.128 pp/month | **−2.19** | **0.22** |
+
+Time survives the control; cost does not. And the two are only moderately
+collinear (cost on time, R² 0.33, r = +0.57) — far from the near-collinearity
+that would make the question unanswerable. The sample **can** separate them,
+and it separates them against cost.
+
+**One observation kills the price story on its own, without any regression.**
+Between 2024-08 and 2025-11 the 24-month mean cost **fell** from 4.27% to
+3.28%, and over exactly that stretch the hedge ratio fell from **75.9% to
+59.2%** — its steepest decline in the sample. The lifers hedged sharply less
+as hedging got cheaper. A carry-sensitivity story has to explain that, and it
+cannot.
+
+**The buffer-inclusive series behaves the same way, which is confirmation not
+duplication.** Total P&L insulation (hedges plus the FX volatility reserve)
+has no relationship with cost at any lag, on the raw series or on the
+time-residual (t = 0.16, R² 0.00). It does not need one: 4.29 already showed
+it flat near 88-90% for six years. A measure that does not move cannot be
+explained by a regressor that does, and the two results are consistent — the
+sector holds protection constant and changes only the instrument.
+
+**What this leaves, and it is the more interesting answer.** The substitution
+away from derivative hedging is a **steady structural trend, not a price
+response**. Its rate is remarkably even at about 0.21pp a month, or 2.6pp a
+year, sustained across regimes in which carry was 0.3% and 4.3%. That pattern
+fits a policy and accounting driver rather than a market one — the FX
+volatility reserve regime being built out over exactly this period (4.19,
+4.20, 4.28 all document the reserve building 6.6x to 7.5x at firm level), the
+push into FX-denominated policies, and the IFRS 17 / TW-ICS transition — and
+it is the reading the user's own framing anticipated.
+
+**How much of this to believe.** Nineteen observations, irregularly spaced,
+with a two-year smoothed regressor: the standard errors are optimistic and the
+sample cannot separate finely-spaced hypotheses. What it CAN do is reject a
+strong version of the price story, because the rejection rests on a sign that
+goes the wrong way in the most recent third of the sample rather than on a
+marginal significance level. The claim recorded here is therefore the negative
+one — cost does not explain the decline — and not a positive claim about
+which policy channel does. Distinguishing the reserve regime from the FX-policy
+push from IFRS 17 needs the FX-policy liability series that the backfill spec
+lists as a genuine gap, and that gap is now the binding constraint on the
+project's second research question rather than a loose end.
+
+**Correction.** 4.30 as first written said the cost and ratio overlap "is the
+ordering the price story requires, and it would have been fatal to that story
+had it come out the other way". That was true and too generous: an overlap
+that survives no control is not evidence for the story it was invoked to
+support. That paragraph now points here. README §9's "strongly carry-sensitive"
+claim is corrected in the same pass — it was inherited from sell-side
+commentary and had never been tested against the project's own data.
+
+**Files.** No new script: the test runs on `data/implied_hedge_ratio.csv`
+(4.29) and `data/fx_hedge_cost_market.csv` (4.30).
+
+### 4.32 TII does not carry the FX-policy split — one of three candidates eliminated
+
+4.31 made the FX-denominated policy liability series the binding constraint on
+the second research question rather than a loose end, so its three candidate
+sources (backfill spec, "the two genuine gaps") are now worth testing rather
+than listing. The first is settled negatively and cheaply, from the catalogue
+already held in `config/tii_tables.tsv`:
+
+**No TII table has a currency dimension.** Across all 147 catalogued tables,
+the strings 外幣, 幣別 and 美元 appear **zero** times. The premium tables cut
+by line, by channel (K21 來源別), by company, by individual/group and by
+investment-linked/traditional — never by currency. The balance-sheet and fund
+-utilisation tables (I14, I171, K47) are the same aggregates the project
+already has monthly from the Insurance Bureau, without a currency split.
+
+So TII is out, and the remaining candidates are the Insurance Bureau's
+business-overview tables (`json-07011010`) and the FSC's own 外幣保單
+statistics, both of which need the relay and are the next thing to test. This
+is a negative worth recording because it is cheap to re-derive and expensive to
+re-discover: the catalogue is 147 rows and the answer is in a grep, but without
+it written down the next pass fetches tables to find out.
+
+**One weaker candidate noted, not pursued yet.** 投資型 (investment-linked)
+tables K28-K31, K51-K54 give five-year histories of unit-linked policy account
+values. That is not the FX-policy series — investment-linked and
+FX-denominated are different cuts and overlap only partly — but it is the
+closest thing TII has, and if the direct sources fail it is a bound rather than
+nothing. Recording it so that judgement is made deliberately rather than by
+forgetting the option exists.
+
+### 4.33 The second FX-policy candidate exists but is unlabelled — parked with the reason
+
+Following 4.32, the second of the three candidates for the FX-denominated
+policy liability series is `json-07011010` on the Bureau's open-data endpoint.
+It is **reachable and answers**: 200, 30 records, annual (114年度), one row per
+life insurer. But its fields are `OccurSeason`, `INSURER_Name` and
+`AMOUNT0`–`AMOUNT6` — seven unlabelled numeric columns, the same positional-
+mapping problem as dataset 7191 in 4.10.
+
+What the values look like for 臺銀人壽 (114年度): AMOUNT0 `0.81` (a ratio),
+AMOUNT1 `21,306,825,776` and AMOUNT2 `28,419,182,043` (NT$ units, so ~21.3bn
+and ~28.4bn), AMOUNT3–6 `1,134,313` / `829,595` / `174,996` / `26,343`
+(counts). That shape — one ratio, two amounts, four counts — reads as a
+business overview, **not** a currency split, and nothing in it suggests an
+外幣 dimension. But reading a table by the shape of its numbers is exactly the
+inference 4.10 and 4.28 both punish, so this is not a conclusion.
+
+**Why it is parked rather than pushed.** Naming those columns needs the HTML
+page that renders the table with its headers, which needs the relay, which
+needs a workflow run. The open-data declaration page
+(`data/raw/ins-info-probe/open-data_index_authoritative_endpoint_list_.html`)
+was checked first on the chance it carried a code-to-title list: it does not —
+it is a licensing declaration and contains no `json-` codes at all. So the
+cheap route is exhausted and the next step costs a round trip.
+
+Recorded now so the next pass starts from "fetch the 07011010 rendering page
+through the relay to name AMOUNT0–6" rather than from "find out whether
+07011010 exists".

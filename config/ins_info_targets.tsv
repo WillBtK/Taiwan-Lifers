@@ -153,3 +153,10 @@ Taiwan Life IR	https://www.taiwanlife.com/
 CTBC holdings IR (Taiwan Life parent)	https://www.ctbcholding.com/
 Shin Kong Life	https://www.skl.com.tw/
 TS Financial holdings IR (Shin Kong parent)	https://www.tsfhc.com.tw/
+# --- 4.33: name the AMOUNT0-6 columns of json-07011010, the second candidate
+# for the FX-denominated policy liability series (4.31 makes that the binding
+# constraint on research question 2). The JSON answers but is positional; the
+# rendering page is what carries the headers.
+report page 07011010 (business overview, unlabelled AMOUNT0-6)	https://ins-info.ib.gov.tw/customer/RPT-07011010.aspx
+report page 07010801 (paired with 07011010 in the same family)	https://ins-info.ib.gov.tw/customer/RPT-07010801.aspx
+report page 07090901 (unlabelled B01-B03/A05-A10)	https://ins-info.ib.gov.tw/customer/RPT-07090901.aspx

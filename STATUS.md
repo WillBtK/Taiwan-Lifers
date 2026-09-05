@@ -29,7 +29,7 @@ and balance sheets landed by courier** (dataset 7191 → `firm_statutory_indicat
 4.10; 表06021011 → `firm_statutory_balance`, tying the statement channel exactly
 for all six firms, 4.11). The CBC's quarterly life-insurer RBC/ROA/ROE series
 is open and cached, queued for a sector-quarterly table with Stage 5 (4.12).
-**Stage 5 opened with the hedge-ratio reconstruction (4.29):** the regulatory ratio is now inferred from the release's own P&L lines back to **2019-05** — nineteen observations, validated against the published anchors at 4.4pp MAE and essentially unbiased (+0.8pp), loaded as `reg_hedge_ratio_pl_implied` alongside a buffer-inclusive `fx_offset_total_pl_implied`. The counterparty leg (series 8) and the CBC long-history series are the remainder of Stage 5. Stages 6–7 not started.
+**Stage 5 opened with the hedge-ratio reconstruction (4.29):** the regulatory ratio is now inferred from the release's own P&L lines back to **2019-05** — nineteen observations, validated against the published anchors at 4.4pp MAE and essentially unbiased (+0.8pp), loaded as `reg_hedge_ratio_pl_implied` alongside a buffer-inclusive `fx_offset_total_pl_implied`. **The market side is in (4.30):** the CBC's USD/TWD forwards, spot and FX turnover are loaded as `fx_market_monthly` (12,901 obs, migration 0015), giving a market-implied hedging cost back to **1992-01** — 2023-24 is the most expensive hedging environment in the series, which is the ordering the price story for the falling hedge ratio requires. Two counterparty results: the banking system's entire net FX position is ~0.06% of the lifers' foreign book, and the lifers' hedge rolling is the same order as the whole onshore customer swap and forward market. One caution recorded: the Fubon and Cathay hedge-cost series are not on one definition and must not be pooled. **The price explanation for the falling hedge ratio is then tested and rejected (4.31):** cost explains R² 0.23 alone, a time trend explains 0.47, and cost retains nothing once the trend is removed — the ratio's steepest fall (75.9% → 59.2%, 2024-08 to 2025-11) came as carry got *cheaper*. The decline is a steady ~2.6pp/year structural trend, which points at the reserve regime, the FX-policy push and IFRS 17. Separating those three now needs the FX-policy liability series, which the backfill spec lists as a genuine gap — **that gap is now the binding constraint on research question 2**, not a loose end. Remaining in Stage 5: the BIS/IRFCL legs of series 8 and the other CBC series (EG49, EG01, EG46, BPP2, BPF4) still cached but unparsed. Stages 6–7 not started.
 
 ## What runs
 
@@ -52,11 +52,22 @@ is open and cached, queued for a sector-quarterly table with Stage 5 (4.12).
 | `python3 scripts/stage3_ib_firm_balance.py` | Maps couriered `json-06021011_YYYYMMDD.json` (表06021011 財務報告彙總) into `firm_statutory_balance` SQL; A=L+E on every record, exact statement ties for the panel firms, checksums | Working: 52 rows, ties 6/6 |
 | `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 14 months, 16/16 checks |
 | `python3 scripts/stage5_implied_hedge_ratio.py < input.json` | Reconstructs the sector hedge ratio from the release's 兌換損益 and 避險工具損益 (the exchange rate cancels, so it needs no denominator series); validates against the published ratio, emits `data/implied_hedge_ratio.csv` and `derived_series` SQL. Input is the query in the script's `INPUT_SQL` | Working: 19 observations 2019-05 → 2025-11, MAE 4.4pp on the published anchors |
+| `python3 scripts/stage5_cbc_fx_market.py [< input.json]` | Parses the CBC's USD/TWD spot (EG51M01), forwards by tenor (EG55M01) and FX turnover + banking-system net position (EG47M01) into `fx_market_monthly`; derives the market-implied hedging cost, and with the optional stdin payload (`STDIN_SQL`) validates it against firm-reported cost and runs the counterparty roll check | Working: 18,405 obs, 2 defective source cells of 2,581 excluded from the derived cost |
 
 Write path: the scripts emit idempotent SQL (`insert … on conflict do
 nothing` on the natural key); it is applied with the Supabase MCP or psql.
 Schema `tlfx` is not exposed through PostgREST, so `--write` (direct POST)
 needs that setting changed before it can be used.
+
+**Load-size convention, learned at 4.30.** The SQL travels as a tool-call
+argument, so the binding limit is the size of the text, not anything Postgres
+objects to. A load of more than a few thousand rows must NOT emit one `VALUES`
+row per observation — chunking row-wise multiplies calls without removing a
+byte. Send each series once as a DENSE monthly array (NULL where the source
+publishes nothing) and expand it server-side with `unnest … with ordinality`.
+That took the CBC load from 1.9MB in five unloadable files to 90KB in two. The
+array must stay dense: the month comes from the array position, so compacting
+it misdates every later value and still loads without error (cf. 4.28).
 
 Library: `src/tlfx/fsc.py` (locate releases), `fsc_parse.py` (parse one
 edition), `emit.py` (CSV / SQL / report), `provenance.py` (`fetch`,
