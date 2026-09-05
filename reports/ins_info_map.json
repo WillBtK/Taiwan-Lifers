@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T06:56:32.599627+00:00",
+ "run_at": "2026-09-05T07:12:04.772811+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -2165,6 +2165,36 @@
    "webforms_postback": true,
    "id_contexts": {},
    "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資產負債表"
+  },
+  {
+   "note": "Nan Shan IR",
+   "url": "https://www.nanshanlife.com.tw/",
+   "error": "HTTPError: HTTP Error 400: Bad Request"
+  },
+  {
+   "note": "Nan Shan investor page",
+   "url": "https://www.nanshanlife.com.tw/NSWeb/about/investor",
+   "error": "HTTPError: HTTP Error 400: Bad Request"
+  },
+  {
+   "note": "Taiwan Life IR",
+   "url": "https://www.taiwanlife.com/",
+   "error": "HTTPError: HTTP Error 400: Bad Request"
+  },
+  {
+   "note": "CTBC holdings IR (Taiwan Life parent)",
+   "url": "https://www.ctbcholding.com/",
+   "error": "HTTPError: HTTP Error 400: Bad Request"
+  },
+  {
+   "note": "Shin Kong Life",
+   "url": "https://www.skl.com.tw/",
+   "error": "HTTPError: HTTP Error 400: Bad Request"
+  },
+  {
+   "note": "TS Financial holdings IR (Shin Kong parent)",
+   "url": "https://www.tsfhc.com.tw/",
+   "error": "HTTPError: HTTP Error 400: Bad Request"
   }
  ]
 }
