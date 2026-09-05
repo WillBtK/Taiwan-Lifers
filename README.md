@@ -12,6 +12,8 @@ Conventions follow the existing monitors: DS-Lite architecture, free public data
 
 ## 1. Questions the monitor answers
 
+**0. The duration-demand channel (primary, added 2026-09-05 at the user's direction — decisions 4.39).** How large a marginal buyer of long-dated USD credit are Taiwanese lifers, and how vulnerable is that stock and flow? They hold ~USD 700bn of foreign assets, ~95% USD-denominated, corporate- and agency-heavy, at an average duration the firms put beyond ten years, and they are **71-79% of all Taiwanese foreign debt-security holdings**. Their net purchases of long-term foreign debt ran USD 57bn in 2018 and **turned negative in 2025 (−USD 7.7bn), with −USD 12.4bn in 2025Q2 alone**, while the current-account surplus hit a record. The hedge ratio, the buffers and the accounting changes matter as *gates* on this channel; they are not the object. Questions 1 and 2 below are inputs to this one.
+
 1. **USD vulnerability.** How large is the unhedged USD position of Taiwanese lifers (level, share of assets, share of GDP, multiple of capital), what buffers sit against it, and how does that compare with Japanese and Korean lifers?
 2. **Structural demand for USD bonds.** How are regulatory and accounting changes (IAS 21 departure, FX volatility reserve mechanism, TW-ICS, FX-policy rules) and cyclical factors (carry, basis) changing the lifers' demand for foreign — overwhelmingly USD — bonds, and the hedging attached to it?
 
