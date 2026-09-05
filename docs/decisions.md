@@ -2649,6 +2649,25 @@ comparing against the printed header caught it. Alignment to a header must be
 positional; compaction before alignment is a silent date corruption that
 internal consistency checks cannot detect.
 
+**A second bug of the same family, caught by verification rather than by the
+checks.** The load succeeded and every sum balanced, but querying the stored
+keys showed the unlabelled rows filed as `row_1:&nbsp;` … `row_6:&nbsp;`
+rather than `item_1` … `item_6`. Cause: the portal writes empty cells as the
+literal entity `&nbsp;`, and I unescaped it when reading *numbers* but not
+when reading *labels*, so a blank label arrived as a truthy string and every
+unlabelled row was filed under a key asserting a label existed. Entities are
+now resolved once at the cell boundary, which is where they should always have
+been. The rows were replaced at the same vintage — a parser correction, not a
+source revision — with the numeric values verified unchanged across the round
+trip.
+
+Both bugs this entry records share a shape: neither was detectable by the
+component-sum checks, because both preserved internal arithmetic while
+corrupting meaning — one the dates, one the keys. Checks that test a table
+against itself cannot catch a table that is self-consistent and wrong. The
+ones that caught these were comparisons against the source's own header and
+against the stored result.
+
 **Files.** `scripts/stage3_ib_firm_reserves.py`,
 `supabase/migrations/0014_firm_reserves.sql`, `data/ib_firm_reserves.csv`,
 `config/ins_info_targets.tsv`, `out/stage3_ib_reserves_20260905.sql`.

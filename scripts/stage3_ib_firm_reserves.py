@@ -29,6 +29,7 @@ Every table states a total, checked against the sum of its components.
 """
 import csv
 import datetime as dt
+import html
 import json
 import re
 import sys
@@ -68,7 +69,7 @@ def sqlv(v):
 def num(s):
     # the portal writes empty cells as the literal entity "&nbsp;", not as the
     # character, so unescaping has to happen before the blank test
-    s = (s or "").replace("&nbsp;", "").replace("\xa0", "").replace(",", "").strip()
+    s = (s or "").replace("\xa0", "").replace(",", "").strip()
     if s in ("", "-", "N/A"):
         return None
     return float(s)
@@ -87,7 +88,16 @@ def uid_map():
 
 
 def cells(tr):
-    return [re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", c)).replace("\xa0", " ").strip()
+    """Cell text, entities resolved.
+
+    The portal writes empty cells as the literal string "&nbsp;". Unescaping
+    has to happen here rather than at each use site: the first version did it
+    only for numbers, so a blank LABEL arrived as the truthy string "&nbsp;"
+    and every unlabelled row was filed under a key that claimed a label
+    existed. Resolve once, at the boundary.
+    """
+    return [re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", c)))
+            .replace("\xa0", " ").strip()
             for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S | re.I)]
 
 
