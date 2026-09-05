@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T05:14:40.295391+00:00",
+ "run_at": "2026-09-05T06:54:26.050245+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -2010,6 +2010,161 @@
    "webforms_postback": true,
    "id_contexts": {},
    "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "Info2-3 income statement, Fubon",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-3.aspx?UID=27935073",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 39594,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-3.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 綜合損益表"
+  },
+  {
+   "note": "Info2-12 indicators, Fubon",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=27935073",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 67443,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 各項財務業務指標"
+  },
+  {
+   "note": "Info2-4 equity changes, Fubon",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-4.aspx?UID=27935073",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 44879,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-4.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 權益變動表"
+  },
+  {
+   "note": "Info2-9 cash flow, Fubon",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-9.aspx?UID=27935073",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 25461,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-9.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 現金流量表"
+  },
+  {
+   "note": "Info2-2 balance sheet, Fubon (derivative lines?)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=27935073",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 127637,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=27935073",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "27935073"
+   ],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資產負債表"
   }
  ]
 }
