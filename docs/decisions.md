@@ -2671,3 +2671,113 @@ against the stored result.
 **Files.** `scripts/stage3_ib_firm_reserves.py`,
 `supabase/migrations/0014_firm_reserves.sql`, `data/ib_firm_reserves.csv`,
 `config/ins_info_targets.tsv`, `out/stage3_ib_reserves_20260905.sql`.
+
+### 4.29 The hedge ratio, reconstructed to 2019 from the release's own P&L lines — and validated
+
+**The question this answers.** "How far back do we have the FX hedge ratio if
+we create a composite bottom-up, and can that construction be validated?" The
+published regulatory ratio starts 2024-04 and is sixteen observations long
+(4.1). It cannot be fetched further back because the disclosure did not exist,
+and the portal publishes no hedge amount for any insurer (4.26). So the ratio
+has to be *inferred* — and the only inference worth having is one that
+reproduces the published figure where both exist.
+
+**The identity, and why it is the right one.** The monthly release carries
+兌換損益 and, from 2020-01, 避險工具損益 separately from 換匯成本. Over a month
+in which the currency moves by Δ, the first is A·Δ and the second is −H·Δ,
+where A is the FX asset base whose translation reaches P&L and H the notional
+of derivatives marked through it. So
+
+    hedge ratio  =  −避險工具損益 / 兌換損益  =  H / A
+
+and **Δ cancels**. The estimator needs no exchange rate, no asset base and no
+view on the FX share of the book. That is not a convenience: the denominator is
+exactly where this project's scope traps live — the regulatory denominator is
+~68% of 國外投資 (4.1), and pairing the wrong one restates the ratio by a third
+(4.27). An estimator with no denominator series cannot make that mistake.
+
+**Two specifications tried and rejected, both instructive.**
+
+*Regressing 兌換損益 on (foreign assets × Δ).* Missed by **24.2pp**, negative on
+all six validation months. Cause: it assumes every foreign asset's translation
+reaches P&L. For FVOCI equity it does not, so the slope measures the unhedged
+share times an unknown scope factor. A specification that fails in one
+direction on every observation is not noise; it is a statement about the data,
+and the statement was "your asset base is wrong".
+
+*Regressing 避險損益 on 兌換損益.* Better (8.6pp) but still biased up, and for
+two reasons I had conflated. The first was mine: 避險損益 is the instrument
+result **plus the swap carry**, and carry does not scale with Δ, so including
+it makes the estimate a function of how violent the sample was. The second was
+subtler and is the more useful lesson —
+
+**The dating error, which is what most of the residual bias actually was.** A
+window fit weighted by fx² is not an estimate of its last month. Twelve months
+containing May 2025 — a 6% move, three times anything around it — is an
+estimate of *May 2025*. I had been comparing such estimates to the published
+ratio at the window's **end**, across months in which the ratio was falling
+about 2pp each, and reading the resulting gap as a level bias in the
+estimator. It was mostly the trend, measured over the distance between where
+an estimate came from and where I had filed it. Re-dating each rolling
+estimate to its own weighted centre cut the error from 8.4pp to 5.6pp; the
+rest is the rolling estimator's genuine lag on a trending series. Every
+rolling estimate now carries the centre it was really taken at. **A smoother
+applied to a trending series does not merely add noise — it adds a bias that
+looks exactly like a specification error, and I read it as one.**
+
+**The estimator that survived, and its validation.** One month at a time, no
+window, no smoothing, exact dating, and only months whose FX result exceeds
+NT$200bn. That floor is a signal-to-noise threshold, not a convention: single
+-month readings miss the published ratio by 3–5pp above NT$240bn and by 11pp
+and 39pp at NT$121bn and NT$130bn.
+
+| | n | MAE | mean error |
+|---|---|---|---|
+| exact published anchors clearing the floor | 3 | **4.4pp** | **+0.8pp** |
+| all months inside the published window | 6 | 4.9pp | +3.1pp |
+
+Essentially unbiased on the anchors; a small positive bias on the wider set,
+which is the residual scope gap between the P&L asset base and the regulatory
+denominator. It is **not calibrated out** — a scale factor fitted on six points
+and applied to seven years is fitting noise and calling it history.
+
+**The series, 2019-05 → 2025-11, nineteen observations.** 80% (2019) → 80%
+(2021-04) → 76-77% (2022) → 72-75% (2023) → 69-76% (2024) → 68%, 65%, 57%,
+59% (2025). The decline the published series shows over twenty months turns
+out to be the tail of a six-year drift, and it is far from monotonic: 2024
+sits *above* 2023 on this measure.
+
+**The finding that matters more than the ratio.** Adding the FX volatility
+reserve's net movement to the hedge result gives total P&L insulation from a
+currency move:
+
+    2019   93%, 85%       2022   88-90%       2024   86-90%
+    2021   88%            2023   89-91%       2025   87%, 91%, 100%, 102%
+
+**Six years, and it does not move.** The sector has held its total insulation
+near 88-90% throughout, and pushed it to and past 100% in late 2025. What
+changed is entirely the mix: derivative hedging fell roughly 20pp while the
+reserve took over, and in the two most recent readings the reserve alone
+absorbs more than 40pp. This is the substitution thesis, measured on one
+consistent basis over six years instead of asserted from twenty months of
+published ratios — and it reframes the question. The lifers did not reduce
+their protection. They changed who pays for it, from the swap market to their
+own equity, and the FSC's provisioning regime is what made that possible.
+
+**What is assumed, and flagged as such.** 2018-06 → 2019-10 publish one
+combined hedging line, so stripping the carry there means assuming it: NT$16.54bn
+a month, the 2019 full-year cost over twelve. The ratio moves ~5pp per NT$10bn
+of assumed carry, so those two rows (2019-05, 2019-10) carry the assumption in
+`basis_note` and are excluded from every validation figure above. 2018 itself
+produces no reading that clears the floor.
+
+**Loaded.** `derived_series` series 4, keys `reg_hedge_ratio_pl_implied` and
+`fx_offset_total_pl_implied`, `definition_version = v1_pl_implied`,
+`basis = estimated`, 19 rows each, verified server-side (sums 13.9034 and
+17.1709). Vintage is the **later** of the two release editions a month's
+estimate consumes, because differencing a year-to-date figure needs both, and
+dating it to the observation month's own release would claim the number was
+available a month before it was.
+
+**Files.** `scripts/stage5_implied_hedge_ratio.py`,
+`data/implied_hedge_ratio.csv`, `out/stage5_implied_20260905.sql`.
