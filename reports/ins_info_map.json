@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T07:14:33.606325+00:00",
+ "run_at": "2026-09-05T08:27:59.690049+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -2234,12 +2234,114 @@
   {
    "note": "Shin Kong Life",
    "url": "https://www.skl.com.tw/",
-   "error": "URLError: <urlopen error timed out>"
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 18480,
+   "kind": "html",
+   "aspx_links": [],
+   "aspx_link_count": 0,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": false,
+   "id_contexts": {},
+   "title": "新光人壽 官方網站"
   },
   {
    "note": "TS Financial holdings IR (Shin Kong parent)",
    "url": "https://www.tsfhc.com.tw/",
    "error": "URLError: <urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+   "note": "report page 07011010 (business overview, unlabelled AMOUNT0-6)",
+   "url": "https://ins-info.ib.gov.tw/customer/RPT-07011010.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 17758,
+   "kind": "html",
+   "aspx_links": [
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07011010.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx"
+   ],
+   "aspx_link_count": 5,
+   "uids": [],
+   "table_codes": [
+    "07011010"
+   ],
+   "select_names": [
+    "DropDownList_BYear",
+    "DropDownList_EYear",
+    "ddlComapnyName"
+   ],
+   "webforms_postback": true,
+   "id_contexts": {
+    "07011010": "使用時，請開啟瀏覽器JavaScript功能</div></noscript> <form name=\"form1\" method=\"post\" action=\"RPT-07011010.aspx\" id=\"form1\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 表07011010-壽險業務概況表"
+  },
+  {
+   "note": "report page 07010801 (paired with 07011010 in the same family)",
+   "url": "https://ins-info.ib.gov.tw/customer/RPT-07010801.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 16437,
+   "kind": "html",
+   "aspx_links": [
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07010801.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx"
+   ],
+   "aspx_link_count": 5,
+   "uids": [],
+   "table_codes": [
+    "07010801"
+   ],
+   "select_names": [
+    "DropDownList_BYear",
+    "DropDownList_EYear",
+    "ddlComapnyName"
+   ],
+   "webforms_postback": true,
+   "id_contexts": {
+    "07010801": "使用時，請開啟瀏覽器JavaScript功能</div></noscript> <form name=\"form1\" method=\"post\" action=\"RPT-07010801.aspx\" id=\"form1\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 表07010801-產險業務概況表"
+  },
+  {
+   "note": "report page 07090901 (unlabelled B01-B03/A05-A10)",
+   "url": "https://ins-info.ib.gov.tw/customer/RPT-07090901.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22204,
+   "kind": "html",
+   "aspx_links": [
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07090901.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx"
+   ],
+   "aspx_link_count": 5,
+   "uids": [],
+   "table_codes": [
+    "07090901"
+   ],
+   "select_names": [
+    "DropDownList_BYear",
+    "DropDownList_EYear",
+    "ddlComapnyName",
+    "ddlComapnyType"
+   ],
+   "webforms_postback": true,
+   "id_contexts": {
+    "07090901": "使用時，請開啟瀏覽器JavaScript功能</div></noscript> <form name=\"form1\" method=\"post\" action=\"RPT-07090901.aspx\" id=\"form1\"> <div> <input type=\"hidden\" name=\"__EVENTTARGET\" id=\"__EVENTTARGET\" va"
+   },
+   "title": "保險業公開資訊觀測站 - 表07090901及表07070710-申訴統計"
   }
  ]
 }
