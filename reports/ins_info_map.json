@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T04:39:59.048422+00:00",
+ "run_at": "2026-09-05T04:42:25.548218+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -207,6 +207,20 @@
    "select_names": [
     "ddl_S1_Company"
    ],
+   "id_contexts": {
+    "03557115": "s=\"form-control\"> <option selected=\"selected\" value=\"0\">請選擇</option> <option value=\"03557115\">臺灣產物保險股份有限公司</option> <option value=\"03090217\">兆豐產物保險股份有限公司</option> <option value",
+    "03090217": "alue=\"0\">請選擇</option> <option value=\"03557115\">臺灣產物保險股份有限公司</option> <option value=\"03090217\">兆豐產物保險股份有限公司</option> <option value=\"70826461\">富邦產物保險股份有限公司</option> <option value",
+    "03435009": "兆豐產物保險股份有限公司</option> <option value=\"70826461\">富邦產物保險股份有限公司</option> <option value=\"03435009\">和泰產物保險股份有限公司</option> <option value=\"03336704\">泰安產物保險股份有限公司</option> <option value",
+    "03336704": "富邦產物保險股份有限公司</option> <option value=\"03435009\">和泰產物保險股份有限公司</option> <option value=\"03336704\">泰安產物保險股份有限公司</option> <option value=\"07192904\">明台產物保險股份有限公司</option> <option value",
+    "07192904": "和泰產物保險股份有限公司</option> <option value=\"03336704\">泰安產物保險股份有限公司</option> <option value=\"07192904\">明台產物保險股份有限公司</option> <option value=\"11099303\">南山產物保險股份有限公司</option> <option value",
+    "03359109": "明台產物保險股份有限公司</option> <option value=\"11099303\">南山產物保險股份有限公司</option> <option value=\"03359109\">第一產物保險股份有限公司</option> <option value=\"03110001\">旺旺友聯產物保險股份有限公司</option> <option val",
+    "03110001": "南山產物保險股份有限公司</option> <option value=\"03359109\">第一產物保險股份有限公司</option> <option value=\"03110001\">旺旺友聯產物保險股份有限公司</option> <option value=\"03458403\">新光產物保險股份有限公司</option> <option val",
+    "03458403": "產物保險股份有限公司</option> <option value=\"03110001\">旺旺友聯產物保險股份有限公司</option> <option value=\"03458403\">新光產物保險股份有限公司</option> <option value=\"03415101\">華南產物保險股份有限公司</option> <option value",
+    "03415101": "友聯產物保險股份有限公司</option> <option value=\"03458403\">新光產物保險股份有限公司</option> <option value=\"03415101\">華南產物保險股份有限公司</option> <option value=\"84445772\">國泰世紀產物保險股份有限公司</option> <option val",
+    "04190875": "分公司</option> <option value=\"70777617\">法商法國巴黎產物保險股份有限公司台灣分公司</option> <option value=\"04190875\">有限責任台灣區漁船產物保險合作社</option> <option value=\"58027533\">比利時商裕利安宜產物保險股份有限公司台灣分公司</option> ",
+    "05010111": " <ul> <li><a href=\"/customer/RPT-05010111.aspx\" target=\"_blank\" tabindex=\"100\" title=\"表05010111-公司基本資料(另開新視窗)\">表05010111-公司基本資料(另開新",
+    "05020511": "新視窗)</a></li> <li><a href=\"/customer/RPT-05020511.aspx\" target=\"_blank\" tabindex=\"200\" title=\"表05020511-人力資源概況(另開新視窗)\">表05020511-人力資源概況(另開新"
+   },
    "title": "保險業公開資訊觀測站 - 首頁"
   },
   {
@@ -254,6 +268,18 @@
     "07090901"
    ],
    "select_names": [],
+   "id_contexts": {
+    "05010111": " <div class=\"col-md-12\">報表查詢</div> <div class=\"col-md-6\"><a href=\"RPT-05010111.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表05010111-公司基本資料</a></div> <div class=",
+    "05020511": "itle=\"(另開視窗)\">‧表05010111-公司基本資料</a></div> <div class=\"col-md-6\"><a href=\"RPT-05020511.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表05020511-人力資源概況</a></div> <div clas",
+    "05030310": "le=\"(另開視窗)\">‧表05020511-人力資源概況</a></div> <div class=\"col-md-6\"><a href=\"RPT-05030310.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表05030310-主要股東持股概況</a></div> <div clas",
+    "05030311": "le=\"(另開視窗)\">‧表05030310-主要股東持股概況</a></div> <div class=\"col-md-6\"><a href=\"RPT-05030311.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表05030311-主要股東持股質押比例超過50%概況</a></div> ",
+    "06021011": ">‧表05030311-主要股東持股質押比例超過50%概況</a></div> <div class=\"col-md-6\"><a href=\"RPT-06021011.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表06021011-財務報表摘要</a></div> <div class=",
+    "06161610": "itle=\"(另開視窗)\">‧表06021011-財務報表摘要</a></div> <div class=\"col-md-6\"><a href=\"RPT-06161610.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表06161610-壽險財務業務指標</a></div> <div cl",
+    "06161601": "=\"(另開視窗)\">‧表06161610-壽險財務業務指標</a></div> <div class=\"col-md-6\"><a href=\"RPT-06161601.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表06161601-產險財務業務指標</a></div> <div clas",
+    "07010801": "le=\"(另開視窗)\">‧表06161601-產險財務業務指標</a></div> <div class=\"col-md-6\"><a href=\"RPT-07010801.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表07010801-產險業務概況</a></div> <div clas",
+    "07011010": "le=\"(另開視窗)\">‧表07010801-產險業務概況</a></div> <div class=\"col-md-6\"><a href=\"RPT-07011010.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表07011010-壽險業務概況</a></div> <div class=",
+    "07090901": "itle=\"(另開視窗)\">‧表07011010-壽險業務概況</a></div> <div class=\"col-md-6\"><a href=\"RPT-07090901.aspx\" target=\"_blank\" title=\"(另開視窗)\">‧表07090901及表07070710-保險申請評議統計</a></div> "
+   },
    "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 (彙計表)"
   },
   {
@@ -280,6 +306,7 @@
    "uids": [],
    "table_codes": [],
    "select_names": [],
+   "id_contexts": {},
    "title": "保險業公開資訊觀測站"
   },
   {
@@ -306,6 +333,7 @@
    "uids": [],
    "table_codes": [],
    "select_names": [],
+   "id_contexts": {},
    "title": "保險業公開資訊觀測站"
   },
   {
@@ -320,6 +348,7 @@
    "uids": [],
    "table_codes": [],
    "select_names": [],
+   "id_contexts": {},
    "title": "保險業公開資訊觀測站 - 首頁"
   },
   {
@@ -346,6 +375,7 @@
    "uids": [],
    "table_codes": [],
    "select_names": [],
+   "id_contexts": {},
    "title": "保險業公開資訊觀測站"
   },
   {
@@ -372,7 +402,364 @@
    "uids": [],
    "table_codes": [],
    "select_names": [],
+   "id_contexts": {},
    "title": "保險業公開資訊觀測站"
+  },
+  {
+   "note": "open-data index (authoritative endpoint list)",
+   "url": "https://ins-info.ib.gov.tw/customer/openData.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 20914,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 10,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [],
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 本局網站資料開放宣告"
+  },
+  {
+   "note": "json 05010111?",
+   "url": "https://ins-info.ib.gov.tw/opendata/json-05010111.aspx",
+   "status": 200,
+   "content_type": "application/json; charset=utf-8",
+   "bytes": 17584,
+   "kind": "json",
+   "records": 52,
+   "fields": [
+    "INSURER_Name",
+    "EstablishDate",
+    "ManagerName1",
+    "ManagerName2",
+    "Tel",
+    "Fax",
+    "FreeLine",
+    "Address",
+    "WebAddress",
+    "Email"
+   ],
+   "first_record": {
+    "INSURER_Name": "兆豐產物保險股份有限公司",
+    "EstablishDate": "1931-11-01",
+    "ManagerName1": "梁正德",
+    "ManagerName2": "翁英豪",
+    "Tel": "02-23812727",
+    "Fax": "02-23814878",
+    "FreeLine": "0800-053588",
+    "Address": "台北市中正區武昌街一段58號",
+    "WebAddress": "www.cki.com.tw",
+    "Email": "e-service@cki.com.tw"
+   }
+  },
+  {
+   "note": "json 05020511?",
+   "url": "https://ins-info.ib.gov.tw/opendata/json-05020511.aspx",
+   "status": 200,
+   "content_type": "application/json; charset=utf-8",
+   "bytes": 8457,
+   "kind": "json",
+   "records": 52,
+   "fields": [
+    "OccurDate",
+    "INSURER_Name",
+    "Cnt2",
+    "Cnt3",
+    "Underwriting",
+    "Claim",
+    "Actuary"
+   ],
+   "first_record": {
+    "OccurDate": "2026-06-30",
+    "INSURER_Name": "兆豐產物保險股份有限公司",
+    "Cnt2": "395",
+    "Cnt3": "848",
+    "Underwriting": "133",
+    "Claim": "118",
+    "Actuary": "3"
+   }
+  },
+  {
+   "note": "json 05030310?",
+   "url": "https://ins-info.ib.gov.tw/opendata/json-05030310.aspx",
+   "status": 200,
+   "content_type": "application/json; charset=utf-8",
+   "bytes": 52286,
+   "kind": "json",
+   "records": 203,
+   "fields": [
+    "OccurDate",
+    "OccurSeason",
+    "INSURER_Name",
+    "StockholderName",
+    "Shares",
+    "SharesRatio",
+    "PledgeShares",
+    "PledgeSharesRatio"
+   ],
+   "first_record": {
+    "OccurDate": "2026-01-27",
+    "OccurSeason": "115年度第1季",
+    "INSURER_Name": "兆豐產物保險股份有限公司",
+    "StockholderName": "兆豐金融控股股份有限公司",
+    "Shares": "328607",
+    "SharesRatio": "100.000000",
+    "PledgeShares": "0",
+    "PledgeSharesRatio": "0.000000"
+   }
+  },
+  {
+   "note": "json 05030311?",
+   "url": "https://ins-info.ib.gov.tw/opendata/json-05030311.aspx",
+   "status": 200,
+   "content_type": "application/json; charset=utf-8",
+   "bytes": 5989,
+   "kind": "json",
+   "records": 21,
+   "fields": [
+    "OccurDate",
+    "OccurSeason",
+    "TransTYpe",
+    "UID",
+    "INSURER_Name",
+    "StockholderName",
+    "Shares",
+    "PledgeShares",
+    "PledgeSharesRatio"
+   ],
+   "first_record": {
+    "OccurDate": "2026-06-21",
+    "OccurSeason": "115年度第2季",
+    "TransTYpe": "上市",
+    "UID": "03557115",
+    "INSURER_Name": "臺灣產物保險股份有限公司",
+    "StockholderName": "巧儂投資股份有限公司",
+    "Shares": "8488",
+    "PledgeShares": "7637",
+    "PledgeSharesRatio": "89.970000"
+   }
+  },
+  {
+   "note": "json 07010801?",
+   "url": "https://ins-info.ib.gov.tw/opendata/json-07010801.aspx",
+   "status": 200,
+   "content_type": "application/json; charset=utf-8",
+   "bytes": 4962,
+   "kind": "json",
+   "records": 22,
+   "fields": [
+    "OccurSeason",
+    "INSURER_Name",
+    "MarketShare",
+    "Premium",
+    "Income",
+    "Payment",
+    "Amount1",
+    "Rpayment"
+   ],
+   "first_record": {
+    "OccurSeason": "114年度",
+    "INSURER_Name": "兆豐產物保險股份有限公司",
+    "MarketShare": "3.03",
+    "Premium": "12225833565",
+    "Income": "6165284535",
+    "Payment": "4670425655",
+    "Amount1": "2955614604",
+    "Rpayment": "6060549030"
+   }
+  },
+  {
+   "note": "json 07011010?",
+   "url": "https://ins-info.ib.gov.tw/opendata/json-07011010.aspx",
+   "status": 200,
+   "content_type": "application/json; charset=utf-8",
+   "bytes": 7295,
+   "kind": "json",
+   "records": 30,
+   "fields": [
+    "OccurSeason",
+    "INSURER_Name",
+    "AMOUNT0",
+    "AMOUNT1",
+    "AMOUNT2",
+    "AMOUNT3",
+    "AMOUNT4",
+    "AMOUNT5",
+    "AMOUNT6"
+   ],
+   "first_record": {
+    "OccurSeason": "114年度",
+    "INSURER_Name": "臺銀人壽保險股份有限公司",
+    "AMOUNT0": "0.81",
+    "AMOUNT1": "21306825776",
+    "AMOUNT2": "28419182043",
+    "AMOUNT3": "1134313.00",
+    "AMOUNT4": "829595.00",
+    "AMOUNT5": "174996.00",
+    "AMOUNT6": "26343.00"
+   }
+  },
+  {
+   "note": "json 07090901?",
+   "url": "https://ins-info.ib.gov.tw/opendata/json-07090901.aspx",
+   "status": 200,
+   "content_type": "application/json; charset=utf-8",
+   "bytes": 9591,
+   "kind": "json",
+   "records": 51,
+   "fields": [
+    "INSURER_NAME",
+    "B01",
+    "B02",
+    "B03",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10"
+   ],
+   "first_record": {
+    "INSURER_NAME": "兆豐產物保險股份有限公司",
+    "B01": "0.09517",
+    "B02": "0.01057",
+    "B03": "1",
+    "A05": "15",
+    "A06": "61500",
+    "A07": "0.0244",
+    "A08": "231",
+    "A09": "61500",
+    "A10": "0.3756"
+   }
+  },
+  {
+   "note": "report page 06161610 (indicators)",
+   "url": "https://ins-info.ib.gov.tw/customer/RPT-06161610.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 16422,
+   "kind": "html",
+   "aspx_links": [
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06161610.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx"
+   ],
+   "aspx_link_count": 5,
+   "uids": [],
+   "table_codes": [
+    "06161610"
+   ],
+   "select_names": [
+    "DropDownList_BQuarter",
+    "DropDownList_BYear",
+    "ddlComapnyName"
+   ],
+   "id_contexts": {
+    "06161610": "使用時，請開啟瀏覽器JavaScript功能</div></noscript> <form name=\"form1\" method=\"post\" action=\"RPT-06161610.aspx\" id=\"form1\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 表06161610-壽險財務業務指標"
+  },
+  {
+   "note": "report page 06021011 (financial summary)",
+   "url": "https://ins-info.ib.gov.tw/customer/RPT-06021011.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 23921,
+   "kind": "html",
+   "aspx_links": [
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06021011.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx"
+   ],
+   "aspx_link_count": 5,
+   "uids": [],
+   "table_codes": [
+    "06021011"
+   ],
+   "select_names": [
+    "DropDownList_BQuarter",
+    "DropDownList_BYear",
+    "DropDownList_EQuarter",
+    "DropDownList_EYear",
+    "ddlComapnyName",
+    "ddlComapnyType"
+   ],
+   "id_contexts": {
+    "06021011": "使用時，請開啟瀏覽器JavaScript功能</div></noscript> <form name=\"form1\" method=\"post\" action=\"RPT-06021011.aspx\" id=\"form1\"> <div> <input type=\"hidden\" name=\"__EVENTTARGET\" id=\"__EVENTTARGET\" va"
+   },
+   "title": "保險業公開資訊觀測站 - 表06021011-財務報表摘要表"
+  },
+  {
+   "note": "information page",
+   "url": "https://ins-info.ib.gov.tw/customer/Information.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 21844,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 10,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [],
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 金融監督管理委員會資訊安全政策"
+  },
+  {
+   "note": "announcements",
+   "url": "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 23153,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/checkrpt.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 11,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [
+    "ctl00$MainContent$ddlComapnyName",
+    "ctl00$MainContent$ddlComapnyType"
+   ],
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢"
   }
  ]
 }
