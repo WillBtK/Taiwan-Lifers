@@ -2414,3 +2414,35 @@ does not separate the hypotheses, the honest output is the evidence.
 
 **Files.** `ops/taiwan-relay/main.py` (ssl context), `oneliner.sh`,
 `verify.sh`.
+
+### 4.24 End to end: the portal is now machine-readable
+
+The relay fetched the full 表06021011 payload from Cloud Run `asia-east1` on
+2026-09-05 — HTTP 200, the same JSON the courier route had been delivering by
+hand. Both open questions close at once.
+
+**The geography works.** Cloud Run's shared egress addresses are not always
+geolocated to the region running the service, so a Taiwan region was necessary
+but not obviously sufficient, and no amount of reasoning could settle it
+(4.13). Measured: sufficient. That property belongs to Google's addressing
+rather than to anything here, so `verify.sh` stays in the runbook — it is
+cheap and it could change without notice.
+
+**The client fix works.** Clearing `VERIFY_X509_STRICT` was the whole
+remaining obstacle (4.23), with chain and hostname verification intact.
+
+**What this changes.** The last manual step in the project's ingestion is
+gone. Every source now has an automated path: the sandbox reaches most of
+them, a GitHub runner reaches TIGF, and the relay reaches the Insurance
+Bureau's portal. The courier route stays documented as a fallback because it
+produces byte-identical files, but nobody has to run it.
+
+**What it opens.** The portal is the tier-2 source the README's hierarchy has
+been pointing at since the start (§4). With it reachable on a schedule, the
+firm-level history behind the two snapshots becomes fetchable, and the
+per-company disclosure menu — fund utilisation by firm, the capital-adequacy
+table, the special-reserve breakdown that would split the buffer bucket 4.19
+had to leave as an upper bound — moves from "ask the user" to "add a URL to
+`SOURCES`". That is the next thing worth doing on this channel.
+
+**Files.** `ops/taiwan-relay/README.md`.

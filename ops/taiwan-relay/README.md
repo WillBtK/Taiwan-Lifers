@@ -68,14 +68,21 @@ this targets Google rather than being provider-neutral.
 RELAY_URL=... RELAY_TOKEN=... bash ops/taiwan-relay/verify.sh
 ```
 
-This matters more than it looks. Cloud Run egress uses shared Google-owned
-addresses that are **not always geolocated to the region running the
-service**, and the origin filters on geography. So whether this works cannot
-be established from the architecture; it has to be measured. `verify.sh`
-fetches a real payload and tells you which case you are in.
+**Resolved empirically on 2026-09-05: it works.** The concern was real — Cloud
+Run egress uses shared Google-owned addresses that are not always geolocated
+to the region running the service — but the deployed relay fetched a full
+payload from the portal, so `asia-east1` egress *is* accepted as Taiwanese and
+the VM fallback below is not needed. Keep running `verify.sh` after a deploy
+anyway: it is cheap, and the property it checks belongs to Google's addressing
+rather than to anything in this repository, so it could change without notice.
 
-- **PASS** — add the secrets below and the weekly workflow takes over.
-- **FAIL with 502** — the relay reached the origin and the origin refused.
+- **PASS** — add the secrets below and the weekly workflow takes over. This is
+  the observed case.
+- **502 with a TLS or certificate error** — the origin *answered*, so the
+  geography is fine and only the client needs fixing. Python 3.13's
+  `VERIFY_X509_STRICT` rejects this site's certificate; `main.py` clears that
+  one flag (chain and hostname verification stay on) for exactly this reason.
+- **502 with a connect timeout** — and only this — means the origin refused.
   Cloud Run's egress is not being read as Taiwanese. The fallback is a Compute
   Engine `e2-micro` in `asia-east1` with its own external address, running
   this same app; a dedicated regional address geolocates reliably where shared
