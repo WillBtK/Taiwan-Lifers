@@ -58,6 +58,7 @@ everything cached to disk, cache consulted first, so a re-run is free and a
 partial run resumes.
 """
 import json
+import os
 import re
 import sys
 import time
@@ -73,14 +74,14 @@ OUT = ROOT / "data" / "firm_sensitivity.csv"
 DOC = "https://doc.twse.com.tw/server-java/t57sb01"
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
-REQUEST_GAP = 8.0
+REQUEST_GAP = float(os.environ.get("TLFX_MOPS_GAP", "8"))
 # The WAF answers 200 with a "FOR SECURITY REASONS" page rather than a 4xx. A
 # first pass at 3s between requests hit it, and — worse — cached the block page,
 # so a rate-limited company-year became a permanent "0 filings". Blocked
 # responses are now recognised, never cached, and retried after a long pause;
 # purge() clears any that an earlier run stored.
 BLOCKED = "FOR SECURITY REASONS"
-BLOCK_WAIT = 90.0
+BLOCK_WAIT = float(os.environ.get("TLFX_MOPS_BLOCK_WAIT", "90"))
 
 FIRMS = {"2823": "kgi_life", "2833": "taiwan_life", "2867": "mercuries_life",
          "2876": "hontai_life", "5846": "cathay_life", "5865": "fubon_life",
