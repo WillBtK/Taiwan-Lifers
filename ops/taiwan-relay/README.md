@@ -34,11 +34,20 @@ runs — a backgrounded mobile session can drop the connection. If it does, the
 build continues server-side and re-running the command is safe either way.
 
 One line, so it can be pasted on a phone or tablet as easily as a laptop.
-Replace `YOUR_PROJECT_ID` and paste:
+Cloud Shell usually opens with a project already selected and `deploy.sh`
+uses whatever is set, so try this first:
 
 ```
-gcloud config set project YOUR_PROJECT_ID && rm -rf ~/tlfx && git clone -q https://github.com/WillBtK/Taiwan-Lifers.git ~/tlfx && bash ~/tlfx/ops/taiwan-relay/deploy.sh
+rm -rf ~/tlfx && git clone -q https://github.com/WillBtK/Taiwan-Lifers.git ~/tlfx && bash ~/tlfx/ops/taiwan-relay/deploy.sh
 ```
+
+If it stops because no project is set, find yours — the Cloud Shell prompt
+shows it in brackets, or run `gcloud config get-value project`, or
+`gcloud projects list` for all of them. It is the lowercase hyphenated id,
+not the display name and not the numeric project number. Then prefix the
+line above with `gcloud config set project YOUR_PROJECT_ID &&`. An empty
+`projects list` means there is no project yet, and creating one with billing
+attached is the only genuinely fiddly step on a phone.
 
 It re-clones into `~/tlfx` each time so a repeat run always deploys current
 code, and Cloud Shell's home directory persists between sessions.
