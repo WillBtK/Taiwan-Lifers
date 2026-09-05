@@ -4414,3 +4414,67 @@ relationship between two different measures, not as error bars on an estimate.
 `tlfx.derived_series` renamed in place, 61 rows; README §3 series 4 and the
 focused artifact updated to stop presenting the offset ratio as a hedge-ratio
 estimate.
+
+---
+
+### 4.50 No series is a bottom-up Σnotional ÷ Σdenominator, and that is the construction that should exist
+
+Asked whether the history is the industry sum of FX hedge notional over the
+appropriate denominator for companies where both are available: **no, and none
+of the seven series is that.** Precisely what each one is:
+
+| series | construction | firm-summed amounts? |
+|---|---|---|
+| `reg_hedge_ratio` | the FSC's own sector figure, transcribed from briefings | no — the regulator's aggregate, not built here |
+| `fx_pl_offset_ratio_month` / `_roll` | sector P&L identity | no — contains no notional at all |
+| `hedge_ratio_cbc_footnote` | the CBC's sector swap balance ÷ the same table's 國外資產 | no — the CBC's own sector aggregate |
+| `gross_/economic_hedge_ratio_deck_composite` | asset-weighted mean of **percentage** disclosures (pie wedge × risk bar), Cathay + KGI | firm-level, but it aggregates RATIOS, not amounts |
+| `economic_hedge_ratio` (Fubon) | one firm's disclosed percentage | no |
+
+**The composite is the closest and still is not it.** It takes a weighted mean
+of firm ratios. A weighted mean of ratios equals the ratio of sums only when the
+weights are exactly the denominators; 4.35 used asset weights, which
+approximates that but is not the same estimator. And its inputs are published
+*percentages*, so no notional ever enters the calculation.
+
+**Why the right construction has not been built: there is almost no data for it.**
+Exactly one insurer in the database has disclosed FX hedge notionals —
+Shin Kong Life, six quarters (4.36, 4.38), NT$1,047bn to NT$1,399bn. For five of
+those six quarters no denominator is present at all. For the sixth, 2023-12-31,
+`firm_fund_utilisation` holds **two conflicting rows** under the same
+(entity_id, obs_date, period_kind, vintage): 國外投資 of NT$2,371,855mn and of
+NT$110,971mn, same source_doc. The smaller total (NT$232,070mn against
+NT$3,446,464mn) looks like a separate account — plausibly the
+投資型保單專設帳簿 — loaded without a flag distinguishing it from the general
+account. Three such duplicate groups exist across the table, six rows. Until
+they carry an account dimension, a join on that table is unsafe.
+
+Taking the general-account row, the one number this construction currently
+yields is:
+
+    Shin Kong Life, 2023-12-31
+    hedge notional NT$1,369,091mn ÷ 國外投資 NT$2,371,855mn = 57.7%
+
+and that is a **floor** on its official-definition ratio, not the ratio, because
+§三(九)'s denominator is 國外投資總額 LESS 外幣收付之非投資型人身保險商品負債
+LESS 未避險且非以透過損益按公允價值衡量之股票與基金 — strictly smaller than the
+國外投資總額 used here. Neither subtrahend is in the database for this firm.
+
+**Why this matters more than the reconstruction did.** Σnotional ÷ Σdenominator
+IS the official definition, applied bottom-up. It needs no identity, no
+estimator and no validation window — only the two disclosed amounts per firm.
+It would produce a level directly comparable with `reg_hedge_ratio` where they
+overlap, and would extend as far back as the filings do, which is roughly 2013.
+It is the only construction on the table that could answer the pre-2024 level
+question the association's 60–70% and the offset ratio's 80–85% disagree about.
+
+**What it needs, concretely.** Per firm, per quarter, from the statutory
+statements: (a) the notional principal of 外幣兌新臺幣 forwards, FX swaps, CCS
+and NDFs, from the derivatives note — the disclosure 4.36 found in Shin Kong's
+filings; (b) 國外投資總額; (c) 外幣收付之非投資型人身保險商品負債; (d) the
+FVOCI/equity-method equity and fund positions. All four are statement items.
+That is the MOPS pull of 4.46/4.47, and this entry raises its priority: it is
+not one route among several, it is the only route to a defensible history.
+
+**Also recorded.** `firm_fund_utilisation` needs an account-type column and a
+uniqueness constraint; three duplicate groups are latent join hazards today.
