@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T04:45:40.475758+00:00",
+ "run_at": "2026-09-05T04:48:01.553080+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -933,6 +933,579 @@
     "03557115": "/div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"announceinfo.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__EVENTTARGET\" id=\"__EVENTTARGET\" va"
    },
    "title": "保險業公開資訊觀測站 - 保險資訊公開查詢"
+  },
+  {
+   "note": "Info2-1 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 29351,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-1.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資金運用表"
+  },
+  {
+   "note": "Info2-2 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 121678,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-2.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資產負債表"
+  },
+  {
+   "note": "Info2-3 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-3.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 40390,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-3.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-3.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 綜合損益表"
+  },
+  {
+   "note": "Info2-4 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-4.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 43144,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-4.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-4.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 權益變動表"
+  },
+  {
+   "note": "Info2-5 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22019,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-5.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "Info2-6 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-6.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 24937,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-6.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-6.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 放款總額／逾期放款／逾期放款比率／備抵呆帳金額／備抵呆帳覆蓋率"
+  },
+  {
+   "note": "Info2-7 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-7.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 61881,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-7.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-7.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 關係人交易明細表"
+  },
+  {
+   "note": "Info2-8 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-8.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 23079,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-8.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-8.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__EVENTTARGET\" id=\"__EVENTTARGET\" va"
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 會計師簽證或核閱財務報告及意見書"
+  },
+  {
+   "note": "Info2-9 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-9.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 24497,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-9.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-9.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 現金流量表"
+  },
+  {
+   "note": "Info2-10 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-10.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 28065,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-10.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "t功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-10.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 盈餘分配或虧損撥補之議決"
+  },
+  {
+   "note": "Info2-11 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-11.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 23995,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-11.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "t功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-11.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資產評估"
+  },
+  {
+   "note": "Info2-12 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 51850,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "t功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-12.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 各項財務業務指標"
+  },
+  {
+   "note": "Info2-13 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-13.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 3932,
+   "kind": "html",
+   "aspx_links": [],
+   "aspx_link_count": 0,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": false,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 首頁"
+  },
+  {
+   "note": "Info2-14 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 21637,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/customer/property.aspx?UID=03557115",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557115"
+   ],
+   "table_codes": [
+    "03557115"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "t功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-14.aspx?UID=03557115\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 其他負債項下之服務合約負債、特別準備及其他準備"
+  },
+  {
+   "note": "Info2-15 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-15.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 3932,
+   "kind": "html",
+   "aspx_links": [],
+   "aspx_link_count": 0,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": false,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 首頁"
+  },
+  {
+   "note": "Info2-16 (non-life UID)",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-16.aspx?UID=03557115",
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 3932,
+   "kind": "html",
+   "aspx_links": [],
+   "aspx_link_count": 0,
+   "uids": [],
+   "table_codes": [],
+   "select_names": [],
+   "webforms_postback": false,
+   "id_contexts": {},
+   "title": "保險業公開資訊觀測站 - 首頁"
+  },
+  {
+   "note": "Info2-2 with a LIFE insurer's 統編",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557017",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 129762,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557017"
+   ],
+   "table_codes": [
+    "03557017"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557017": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-2.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資產負債表"
+  },
+  {
+   "note": "Info2-1 with a LIFE insurer's 統編",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 31985,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557017"
+   ],
+   "table_codes": [
+    "03557017"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557017": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-1.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資金運用表"
   }
  ]
 }
