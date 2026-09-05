@@ -109,3 +109,21 @@ company dropdown while showing a life insurer	https://ins-info.ib.gov.tw/custome
 reserves page, life insurer	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017
 other-liability reserves, life insurer	https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017
 indicators page, life insurer	https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=03557017
+#
+# Pass 6 (2026-09-05). The reserve page has two layouts. A company whose
+# latest data is pre-IFRS17 (the absorbed Shin Kong, UID 03458902) renders the
+# OLD one: ten LABELLED rows across three years, including 外匯價格變動準備
+# explicitly. Active firms render the 2026 one: seven rows whose 項目 cells are
+# literally &nbsp; in the source, so the FX reserve is in there (the page title
+# says so) but cannot be identified -- no row matches any firm's known balance.
+#
+# If the layout follows the requested PERIOD rather than the company, then
+# asking an active firm for a pre-2026 period returns the labelled table and
+# with it a firm-level FX-reserve history. These are the plausible parameter
+# names; all are harmless if ignored.
+Info2-5 fubon, Year param	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&Year=114
+Info2-5 fubon, BYear+BQuarter	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&BYear=114&BQuarter=4
+Info2-5 fubon, Season param	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&Year=114&Season=4
+Info2-5 fubon, YM param	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&YM=11412
+Info2-5 fubon, OccurSeason param	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073&OccurSeason=114
+Info2-5 fubon, baseline (no period)	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073
