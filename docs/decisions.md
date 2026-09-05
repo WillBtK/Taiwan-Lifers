@@ -4319,3 +4319,98 @@ The firm-statement route of 4.46 is the candidate: firm-level 兌換損益 and
 避險工具損益 give the same identity per company, where the deck-disclosed hedge
 composition provides an independent level check for the same quarter. That is
 now the highest-value open item in the hedge-ratio workstream.
+
+---
+
+### 4.49 The official formula, read at last — and the reconstruction renamed because it does not estimate it
+
+Asked whether I actually knew how the official figure is calculated, the answer
+was no: the README carried a paraphrase and this log had never quoted the source.
+The source was in the repo the whole time —
+`docs/sources/fsc_2026-02-12_fx_reserve_notice.txt`, parsed for the reserve
+buckets in Stage 0 and never read for its definitions section.
+
+**§三(九), verbatim:**
+
+> 避險比率:指傳統避險本金金額除以(國外投資總額扣除外幣收付之非投資型人身
+> 保險商品負債及未避險且非以透過損益按公允價值衡量之股票與基金)之比值。
+
+with two definitions that decide everything:
+
+> (五)傳統避險:指包括外幣兌**新臺幣**之遠期外匯、換匯、換匯換利及無本金
+> 交割遠期外匯之避險交易工具。
+> (四)未避險且非以透過損益按公允價值衡量之股票與基金:指**匯率評價未影響
+> 損益**之股票及基金,包括會計類別為透過其他綜合損益按公允價值衡量及權益
+> 法之部位。
+
+**What this settles.**
+
+*The denominator was never the problem.* §三(四) excludes exactly the positions
+whose FX revaluation does not reach P&L — the same restriction the P&L identity
+imposes on itself. 4.48 guessed the denominators differed; they are close, and
+that guess is withdrawn.
+
+*The numerator is incommensurable.* The official numerator is 傳統避險**本金**
+— a NOTIONAL PRINCIPAL. The reconstruction's numerator is 避險工具**損益** — a
+MARK-TO-MARKET RESULT. −hgi/fx recovers notional/assets only if every hedge marks
+at notional × the same spot move that revalues the assets. That fails by
+construction for 換匯 (revalued on the forward curve, so its mark carries the
+swap points) and for 換匯換利 (whose mark carries an interest component) — and
+both are named in §三(五) as part of 傳統避險.
+
+*And the instrument scope differs.* §三(五) restricts 傳統避險 to instruments
+against **NEW TAIWAN DOLLARS**. Any proxy or cross-currency hedge whose mark
+lands in 避險工具損益 inflates the reconstruction's numerator while contributing
+nothing to the official one. That is a mechanism that pushes the estimate UP,
+which is the direction observed.
+
+**So the user is right: the gaps are too wide for the series to be useful as a
+proxy, and it was never an estimator of the official ratio.** Renamed in place:
+
+| was | is | n |
+|---|---|---|
+| `reg_hedge_ratio_pl_implied` | `fx_pl_offset_ratio_month` | 19 |
+| `reg_hedge_ratio_pl_rolling` | `fx_pl_offset_ratio_roll` | 42 |
+
+`definition_version` becomes `v2_pl_offset`, and every row's `basis_note` now
+opens with the warning that it must not be compared with `reg_hedge_ratio` as if
+it were the same quantity. The series still has a use — it is the share of the
+sector's reported FX result that the hedging line offset, which is a real
+question about earnings insulation — but it is not a hedge ratio and no longer
+claims to be. 4.29's validation statistics stand as descriptions of a
+relationship between two different measures, not as error bars on an estimate.
+
+**Two routes the regulation opens, both better than the reconstruction.**
+
+1. **§三(十一) is a historical anchor on the official definition.**
+   「避險比率基準:指人身保險業於中華民國一百十年至一百十四年各月底避險比率
+   之最高第九十百分位數」 — the benchmark is the **90th percentile of the
+   sector's month-end hedge ratios over 2021-2025**, computed on §三(九). A
+   single published value for it pins the upper tail of exactly the period where
+   this project has no official data, and would immediately adjudicate between
+   the reconstruction's 80-85% and the association's 60-70%. It is not stated in
+   the notice and §三's closing paragraph assigns only the COST rates (六 to 八)
+   to the 壽險公會, so the benchmark comes from supervisory data. Finding it is
+   now the highest-value open item.
+
+2. **§八 is invertible from firm disclosures.** The 特別盈餘公積-外匯風險強化
+   準備 provision equals the year's average of (國外投資總額 − 外幣收付之非投
+   資型人身保險商品負債 − 未避險且非以透過損益按公允價值衡量之股票與基金) ×
+   當年度避險比率差額 × 指定避險成本率, and §三(十三) fixes 指定避險成本率 at
+   **2.5%** absent a contrary order. So
+
+       避險比率差額 = provision / (average denominator × 0.025)
+
+   Every term but the differential is disclosed: §十 requires firms to publish
+   the reserve's accounting policy, hedging strategy and exposure, and the
+   denominator's components are balance-sheet items. **One firm disclosing both
+   its provision and its denominator therefore yields its own 當年度避險比率
+   差額, and given the benchmark, its ratio on the official definition** — or,
+   run the other way, a firm whose ratio is known pins the benchmark. This works
+   only from FY2026, when the mechanism starts, but it is exact arithmetic on
+   published figures rather than an estimator.
+
+**Files.** `docs/sources/fsc_2026-02-12_fx_reserve_notice.txt` (already held);
+`tlfx.derived_series` renamed in place, 61 rows; README §3 series 4 and the
+focused artifact updated to stop presenting the offset ratio as a hedge-ratio
+estimate.
