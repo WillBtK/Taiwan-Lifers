@@ -177,12 +177,32 @@ def index(co_id, roc_year):
     return out, None
 
 
+HREF = re.compile(r"href='(/pdf/[^']+\.pdf)'", re.I)
+
+
+def _get(url, ref):
+    """One paced GET, returning the body, or None on a WAF block."""
+    _sleep()
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Referer": ref})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        body = r.read()
+    _last[0] = time.time()
+    return body
+
+
 def pdf(co_id, filename):
-    """Fetch one filing. step=9 on the same endpoint streams the PDF — when the
-    WAF lets it through. It answers a block with HTTP 200 and the same
-    "FOR SECURITY REASONS" body as the index, so a short non-PDF response is a
-    throttle to wait out, not a missing file; only a body that is neither a PDF
-    nor a block page counts as genuinely unavailable."""
+    """Fetch one filing.
+
+    step=9 does NOT stream the PDF. It returns a small HTML page — 電子資料查詢
+    作業 — carrying a link to /pdf/<name>_<timestamp>.pdf, and the timestamp is
+    minted per request, so the URL cannot be constructed and the two-step is
+    unavoidable. An earlier version read that page as "not a PDF" and abandoned
+    the whole queue on the first filing; 3.3's note that the download is "gated"
+    appears to be the same misreading.
+
+    Two responses still mean wait rather than fail: the WAF's "FOR SECURITY
+    REASONS" page, and a transport error. Anything else is genuinely absent.
+    """
     PDFS.mkdir(parents=True, exist_ok=True)
     p = PDFS / filename
     if p.exists() and p.stat().st_size > 10000:
@@ -198,22 +218,37 @@ def pdf(co_id, filename):
             with urllib.request.urlopen(req, timeout=300) as r:
                 body = r.read()
             _last[0] = time.time()
+            if body[:4] == b"%PDF":              # not observed, but harmless
+                p.write_bytes(body)
+                return p
+            text = body.decode("big5", "replace")
+            if BLOCKED in text:
+                print(f"    ~ WAF block on {filename}, pausing {BLOCK_WAIT:.0f}s")
+                time.sleep(BLOCK_WAIT)
+                _last[0] = time.time()
+                continue
+            m = HREF.search(text)
+            if not m:
+                print(f"    ! {filename}: no download link in the step-9 page "
+                      f"({len(body)}b)")
+                return None
+            doc = _get("https://doc.twse.com.tw" + m.group(1), DOC)
+            if doc[:4] != b"%PDF":
+                if BLOCKED in doc.decode("big5", "replace"):
+                    print(f"    ~ WAF block fetching {filename}, "
+                          f"pausing {BLOCK_WAIT:.0f}s")
+                    time.sleep(BLOCK_WAIT)
+                    _last[0] = time.time()
+                    continue
+                print(f"    ! {filename}: link served {len(doc)}b, not a PDF")
+                return None
+            p.write_bytes(doc)
+            return p
         except Exception as e:
             _last[0] = time.time()
             print(f"    ! {filename}: {type(e).__name__}")
             time.sleep(5 * (attempt + 1))
-            continue
-        if body[:4] == b"%PDF":
-            p.write_bytes(body)
-            return p
-        if BLOCKED in body.decode("big5", "replace"):
-            print(f"    ~ WAF block on {filename}, pausing {BLOCK_WAIT:.0f}s")
-            time.sleep(BLOCK_WAIT)
-            _last[0] = time.time()
-            continue
-        print(f"    ! {filename}: not a PDF and not a block page ({len(body)}b)")
-        return None
-    print(f"    ! {filename}: blocked by WAF after 4 attempts")
+    print(f"    ! {filename}: gave up after 4 attempts")
     return None
 
 
