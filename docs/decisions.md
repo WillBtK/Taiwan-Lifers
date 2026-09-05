@@ -2047,3 +2047,44 @@ AMOUNT9 in the statutory indicators answers ambiguously (4.10). Queued
 rather than loaded: it is Stage 5 material, not Stage 3.
 
 **Files.** `scripts/discover_opendata_catalogue.py`, `config/tii_tables.tsv`.
+
+### 4.15 Standing up the relay: what I did, and the one thing I deliberately did not
+
+The user asked for the relay to be set up. Three parts of that were mine to
+do; one was not.
+
+**Verified rather than assumed.** The relay now has a test record instead of
+an argument: run locally against a real HTTP client, a missing token and a
+wrong token are both refused, a foreign host is refused, a plain-http target
+is refused, and the allowlisted target is forwarded and fails only because
+this sandbox cannot reach the origin — which is the behaviour the relay
+exists to fix. One error message was wrong (an http-scheme target reported
+"host not allowed"); fixed.
+
+**Reduced the human part to one command.** `deploy.sh` enables the APIs,
+deploys from source to `asia-east1` and prints the two secret values;
+`verify.sh` then fetches a real payload and reports which case the deployment
+is in. The README leads with Google Cloud Shell, so nothing has to be
+installed locally.
+
+**Named a risk the architecture hides.** Cloud Run egress uses shared
+Google-owned addresses that are not reliably geolocated to the region running
+the service, and the origin filters on geography. Deploying to a Taiwanese
+region is therefore necessary but possibly not sufficient, and no amount of
+reasoning settles it — hence `verify.sh` and a documented fallback (a
+`e2-micro` in the same region with its own external address, roughly USD 7-10
+a month, since Google's always-free tier excludes `asia-east1`). Promising
+that Cloud Run would work would have been the easy answer and an unfounded
+one.
+
+**What I did not do: deploy it.** This sandbox carries ambient cloud
+credentials (`CLOUDSDK_AUTH_ACCESS_TOKEN`, AWS keys) belonging to the
+execution environment, not to the user. Deploying with them would create a
+billable, internet-facing service in a third party's project, outside the
+user's control and invisible to them — an irreversible, outward-facing action
+on authority the user never granted. "Set up the relay" authorises deployment
+into *their* account, which needs their credentials. Everything short of that
+is done.
+
+**Files.** `ops/taiwan-relay/` (`main.py` scheme-check fix, `deploy.sh`,
+`verify.sh`, `README.md` rewritten).

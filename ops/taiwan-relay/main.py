@@ -40,7 +40,9 @@ def fetch():
 
     target = request.args.get("url", "")
     parts = urllib.parse.urlparse(target)
-    if parts.scheme != "https" or parts.hostname not in ALLOWED_HOSTS:
+    if parts.scheme != "https":
+        return {"error": f"scheme not allowed: {parts.scheme or '(none)'}"}, 400
+    if parts.hostname not in ALLOWED_HOSTS:
         return {"error": f"host not allowed: {parts.hostname}"}, 400
 
     req = urllib.request.Request(target, headers={"User-Agent": UA})

@@ -181,7 +181,12 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
    covering TIGF, TII and the data.gov.tw catalogue. Only `ins-info` still
    needs a human, because it refuses every egress CI has; deploying
    `ops/taiwan-relay/` to a Taiwan region and setting two repository secrets
-   removes that last manual step. Until then, the courier queue below stands.
+   removes that last manual step. The relay is tested and its deployment is
+   one command (`ops/taiwan-relay/deploy.sh`, run from Google Cloud Shell),
+   but it needs the user's own cloud account, so it is theirs to run (4.15).
+   Run `verify.sh` afterwards: Cloud Run's shared egress may not geolocate to
+   Taiwan, and the fallback is a small VM in the same region. Until the two
+   secrets exist, the courier queue below stands.
 
 1b. **ins-info courier queue (for the user):** `data.gov.tw` is open (4.9);
    `ins-info.ib.gov.tw` is allowlisted but does not route to this egress, so
