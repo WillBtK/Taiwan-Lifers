@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T04:48:01.553080+00:00",
+ "run_at": "2026-09-05T04:51:16.033016+00:00",
  "targets": [
   {
    "note": "control: 壽險財務業務指標 (known good)",
@@ -1506,6 +1506,324 @@
     "03557017": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-1.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
    },
    "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資金運用表"
+  },
+  {
+   "note": "root with a life type parameter",
+   "url": "https://ins-info.ib.gov.tw/index.aspx?type=1",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 50915,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05010111.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05020511.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05030310.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05030311.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06021011.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06161601.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06161610.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07010801.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07011010.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07090901.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx?type=1",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 20,
+   "uids": [],
+   "table_codes": [
+    "03090217",
+    "03110001",
+    "03336704",
+    "03359109",
+    "03415101",
+    "03435009",
+    "03458403",
+    "03557115",
+    "04190875",
+    "05010111",
+    "05020511",
+    "05030310",
+    "05030311",
+    "06021011",
+    "06161601",
+    "06161610",
+    "07010801",
+    "07011010",
+    "07090901",
+    "07192904"
+   ],
+   "select_names": [
+    "ddl_S1_Company"
+   ],
+   "options": {
+    "03557115": "臺灣產物保險股份有限公司",
+    "03090217": "兆豐產物保險股份有限公司",
+    "70826461": "富邦產物保險股份有限公司",
+    "03435009": "和泰產物保險股份有限公司",
+    "03336704": "泰安產物保險股份有限公司",
+    "07192904": "明台產物保險股份有限公司",
+    "11099303": "南山產物保險股份有限公司",
+    "03359109": "第一產物保險股份有限公司",
+    "03110001": "旺旺友聯產物保險股份有限公司",
+    "03458403": "新光產物保險股份有限公司",
+    "03415101": "華南產物保險股份有限公司",
+    "84445772": "國泰世紀產物保險股份有限公司",
+    "16834703": "新安東京海上產物保險股份有限公司",
+    "27938888": "中國信託產物保險股份有限公司",
+    "28437399": "法商科法斯產物保險股份有限公司台灣分公司",
+    "12366616": "美商安達產物保險股份有限公司台灣分公司",
+    "22419768": "美商聯邦產物保險股份有限公司台北分公司",
+    "24809691": "新加坡商美國國際產物保險股份有限公司台灣分公司",
+    "97161071": "香港商亞洲保險有限公司台灣分公司",
+    "70777617": "法商法國巴黎產物保險股份有限公司台灣分公司",
+    "04190875": "有限責任台灣區漁船產物保險合作社",
+    "58027533": "比利時商裕利安宜產物保險股份有限公司台灣分公司"
+   },
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "s=\"form-control\"> <option selected=\"selected\" value=\"0\">請選擇</option> <option value=\"03557115\">臺灣產物保險股份有限公司</option> <option value=\"03090217\">兆豐產物保險股份有限公司</option> <option value",
+    "03090217": "alue=\"0\">請選擇</option> <option value=\"03557115\">臺灣產物保險股份有限公司</option> <option value=\"03090217\">兆豐產物保險股份有限公司</option> <option value=\"70826461\">富邦產物保險股份有限公司</option> <option value",
+    "03435009": "兆豐產物保險股份有限公司</option> <option value=\"70826461\">富邦產物保險股份有限公司</option> <option value=\"03435009\">和泰產物保險股份有限公司</option> <option value=\"03336704\">泰安產物保險股份有限公司</option> <option value",
+    "03336704": "富邦產物保險股份有限公司</option> <option value=\"03435009\">和泰產物保險股份有限公司</option> <option value=\"03336704\">泰安產物保險股份有限公司</option> <option value=\"07192904\">明台產物保險股份有限公司</option> <option value"
+   },
+   "title": "保險業公開資訊觀測站 - 首頁"
+  },
+  {
+   "note": "root with kind parameter",
+   "url": "https://ins-info.ib.gov.tw/index.aspx?kind=1",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 50915,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05010111.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05020511.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05030310.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-05030311.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06021011.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06161601.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-06161610.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07010801.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07011010.aspx",
+    "https://ins-info.ib.gov.tw/customer/RPT-07090901.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx?kind=1",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 20,
+   "uids": [],
+   "table_codes": [
+    "03090217",
+    "03110001",
+    "03336704",
+    "03359109",
+    "03415101",
+    "03435009",
+    "03458403",
+    "03557115",
+    "04190875",
+    "05010111",
+    "05020511",
+    "05030310",
+    "05030311",
+    "06021011",
+    "06161601",
+    "06161610",
+    "07010801",
+    "07011010",
+    "07090901",
+    "07192904"
+   ],
+   "select_names": [
+    "ddl_S1_Company"
+   ],
+   "options": {
+    "03557115": "臺灣產物保險股份有限公司",
+    "03090217": "兆豐產物保險股份有限公司",
+    "70826461": "富邦產物保險股份有限公司",
+    "03435009": "和泰產物保險股份有限公司",
+    "03336704": "泰安產物保險股份有限公司",
+    "07192904": "明台產物保險股份有限公司",
+    "11099303": "南山產物保險股份有限公司",
+    "03359109": "第一產物保險股份有限公司",
+    "03110001": "旺旺友聯產物保險股份有限公司",
+    "03458403": "新光產物保險股份有限公司",
+    "03415101": "華南產物保險股份有限公司",
+    "84445772": "國泰世紀產物保險股份有限公司",
+    "16834703": "新安東京海上產物保險股份有限公司",
+    "27938888": "中國信託產物保險股份有限公司",
+    "28437399": "法商科法斯產物保險股份有限公司台灣分公司",
+    "12366616": "美商安達產物保險股份有限公司台灣分公司",
+    "22419768": "美商聯邦產物保險股份有限公司台北分公司",
+    "24809691": "新加坡商美國國際產物保險股份有限公司台灣分公司",
+    "97161071": "香港商亞洲保險有限公司台灣分公司",
+    "70777617": "法商法國巴黎產物保險股份有限公司台灣分公司",
+    "04190875": "有限責任台灣區漁船產物保險合作社",
+    "58027533": "比利時商裕利安宜產物保險股份有限公司台灣分公司"
+   },
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557115": "s=\"form-control\"> <option selected=\"selected\" value=\"0\">請選擇</option> <option value=\"03557115\">臺灣產物保險股份有限公司</option> <option value=\"03090217\">兆豐產物保險股份有限公司</option> <option value",
+    "03090217": "alue=\"0\">請選擇</option> <option value=\"03557115\">臺灣產物保險股份有限公司</option> <option value=\"03090217\">兆豐產物保險股份有限公司</option> <option value=\"70826461\">富邦產物保險股份有限公司</option> <option value",
+    "03435009": "兆豐產物保險股份有限公司</option> <option value=\"70826461\">富邦產物保險股份有限公司</option> <option value=\"03435009\">和泰產物保險股份有限公司</option> <option value=\"03336704\">泰安產物保險股份有限公司</option> <option value",
+    "03336704": "富邦產物保險股份有限公司</option> <option value=\"03435009\">和泰產物保險股份有限公司</option> <option value=\"03336704\">泰安產物保險股份有限公司</option> <option value=\"07192904\">明台產物保險股份有限公司</option> <option value"
+   },
+   "title": "保險業公開資訊觀測站 - 首頁"
+  },
+  {
+   "note": "company dropdown while showing a life insurer",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 31985,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557017"
+   ],
+   "table_codes": [
+    "03557017"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557017": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-1.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資金運用表"
+  },
+  {
+   "note": "reserves page, life insurer",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 22659,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557017"
+   ],
+   "table_codes": [
+    "03557017"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557017": "pt功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-5.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 準備金"
+  },
+  {
+   "note": "other-liability reserves, life insurer",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 21988,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557017"
+   ],
+   "table_codes": [
+    "03557017"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557017": "t功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-14.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 其他負債項下之服務合約負債、特別準備及其他準備"
+  },
+  {
+   "note": "indicators page, life insurer",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=03557017",
+   "status": 200,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 65724,
+   "kind": "html",
+   "aspx_links": [
+    "https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx",
+    "https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx",
+    "https://ins-info.ib.gov.tw/FSC/sales/login.aspx",
+    "https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/Information.aspx",
+    "https://ins-info.ib.gov.tw/customer/accountquery.aspx",
+    "https://ins-info.ib.gov.tw/customer/announceinfo.aspx",
+    "https://ins-info.ib.gov.tw/customer/life.aspx?UID=03557017",
+    "https://ins-info.ib.gov.tw/customer/openData.aspx",
+    "https://ins-info.ib.gov.tw/customer/privacy.aspx",
+    "https://ins-info.ib.gov.tw/index.aspx",
+    "https://rm.ib.gov.tw/Pages/index.aspx"
+   ],
+   "aspx_link_count": 12,
+   "uids": [
+    "03557017"
+   ],
+   "table_codes": [
+    "03557017"
+   ],
+   "select_names": [],
+   "webforms_postback": true,
+   "id_contexts": {
+    "03557017": "t功能</div></noscript> <form name=\"aspnetForm\" method=\"post\" action=\"Info2-12.aspx?UID=03557017\" id=\"aspnetForm\"> <div> <input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value="
+   },
+   "title": "保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 各項財務業務指標"
   }
  ]
 }
