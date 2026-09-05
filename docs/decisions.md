@@ -4047,3 +4047,64 @@ verified server-side. Every row passes two template identities (reserves = FX
 reserves + gold; FX reserves = securities + deposits) and the swap figure is
 identified by finding the run of four numbers where the total equals its three
 maturity buckets, which is both the locator and the check.
+
+---
+
+### 4.45 The CBC is the counterparty to roughly two-fifths of the sector's swap hedges, and its share is rising as the hedge ratio falls
+
+Series 8 — the counterparty residual — has carried an *estimate* of the CBC swap
+book since the project began, because Setser & S.T.W. (2019) could only infer it
+(USD 130bn, 90% interval 60-200bn). 4.44 found it published: Section II of the
+CBC's quarterly IRFCL template gives the aggregate short position in FX forwards
+and futures against TWD, including the forward leg of currency swaps. Setting it
+against the sector hedge amount from the CBC's own balance-sheet footnote
+(series 5, `hedge_outstanding_cbc_footnote`, NT$ converted at the same month's
+interbank closing rate):
+
+| | sector swap hedges, USD bn | CBC forward/swap short, USD bn | CBC as % |
+|---|---|---|---|
+| 2022-06 | 229 | 88 | 38.3 |
+| 2022-11 / 2022-12 | 220 | 85 | 38.7 |
+| 2023-04 / 2023-06 | 212 | 86 | 40.5 |
+| 2024-03 / 2023-12 | 207 | 87 | 41.9 |
+| 2024-08 / 2024-06 | 202 | 81 | 40.3 |
+| **2024-12** | **197** | **77** | **39.1** |
+| 2026-07 / 2026-03 | 162 | 76 | 47.1 |
+
+Pairs before 2022 are omitted: the IRFCL series starts 2021Q4, so anything
+earlier would be matched to a date years away. The last row pairs a July 2026
+hedge reading with a March 2026 swap reading and should be read as indicative.
+
+**Two readings, and the second is the one that matters.** The level is stable:
+through 2022-2024 the central bank's own forward book ran at a remarkably
+steady 38-42% of the life sector's outstanding swap-type hedges. And the share
+is RISING as the sector deleverages its hedges — the lifers' swap book fell
+from USD 229bn to 162bn while the CBC's fell only from 88bn to 76bn. The
+central bank is not withdrawing as fast as the private demand it was
+accommodating, so its share of what remains has gone up.
+
+**Three caveats, all material.**
+
+1. The CBC's forward book is its TOTAL short position against TWD, with all
+   counterparties and for all purposes. It is not a lifer facility, and nothing
+   here proves the lifer channel dominates it. Setser & S.T.W. argue it does;
+   this table is consistent with that but does not establish it.
+2. The denominator understates lifer hedging. The footnote counts 換匯交易等避險
+   交易 — swap-type hedges — which 4.34 established is 62-77% of the FSC's hedge
+   principal, NDFs excluded. Against ALL lifer hedges the CBC book is therefore
+   nearer **25-30%**, not 40%.
+3. The two series are not measured on the same dates, and the footnote series is
+   sparse (eleven observations since 2012). The pairs above are the only ones
+   where both sides fall within a quarter of each other.
+
+**Why this matters for the vulnerability question.** It puts a number on who
+absorbs the hedge when the lifers want one. If a quarter to two-fifths of the
+sector's hedging ultimately sits on the central bank's balance sheet, then the
+question "can the lifers re-hedge if TWD appreciates again" is partly a question
+about the CBC's willingness to expand a book it has been letting run down for
+four years. That is a policy variable, not a market one, and it should be
+tracked quarterly now that it is published.
+
+**No new rows.** This is a derivation from series 5 and series 12, both already
+loaded; it is recorded here rather than stored, because the pairing depends on a
+date-matching choice that a stored series would freeze.

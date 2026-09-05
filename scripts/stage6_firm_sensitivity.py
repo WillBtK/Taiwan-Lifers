@@ -177,30 +177,43 @@ def index(co_id, roc_year):
 
 
 def pdf(co_id, filename):
-    """Fetch one filing. step=9 on the same endpoint streams the PDF."""
+    """Fetch one filing. step=9 on the same endpoint streams the PDF — when the
+    WAF lets it through. It answers a block with HTTP 200 and the same
+    "FOR SECURITY REASONS" body as the index, so a short non-PDF response is a
+    throttle to wait out, not a missing file; only a body that is neither a PDF
+    nor a block page counts as genuinely unavailable."""
     PDFS.mkdir(parents=True, exist_ok=True)
     p = PDFS / filename
     if p.exists() and p.stat().st_size > 10000:
         return p
-    _sleep()
     form = {"step": "9", "kind": "A", "co_id": co_id, "filename": filename}
-    req = urllib.request.Request(
-        DOC, data=urllib.parse.urlencode(form).encode(),
-        headers={"User-Agent": UA, "Referer": "https://doc.twse.com.tw/",
-                 "Content-Type": "application/x-www-form-urlencoded"})
-    try:
-        with urllib.request.urlopen(req, timeout=300) as r:
-            body = r.read()
-        _last[0] = time.time()
-    except Exception as e:
-        _last[0] = time.time()
-        print(f"    ! {filename}: {type(e).__name__}")
+    for attempt in range(4):
+        _sleep()
+        req = urllib.request.Request(
+            DOC, data=urllib.parse.urlencode(form).encode(),
+            headers={"User-Agent": UA, "Referer": "https://doc.twse.com.tw/",
+                     "Content-Type": "application/x-www-form-urlencoded"})
+        try:
+            with urllib.request.urlopen(req, timeout=300) as r:
+                body = r.read()
+            _last[0] = time.time()
+        except Exception as e:
+            _last[0] = time.time()
+            print(f"    ! {filename}: {type(e).__name__}")
+            time.sleep(5 * (attempt + 1))
+            continue
+        if body[:4] == b"%PDF":
+            p.write_bytes(body)
+            return p
+        if BLOCKED in body.decode("big5", "replace"):
+            print(f"    ~ WAF block on {filename}, pausing {BLOCK_WAIT:.0f}s")
+            time.sleep(BLOCK_WAIT)
+            _last[0] = time.time()
+            continue
+        print(f"    ! {filename}: not a PDF and not a block page ({len(body)}b)")
         return None
-    if body[:4] != b"%PDF":
-        print(f"    ! {filename}: not a PDF ({len(body)}b)")
-        return None
-    p.write_bytes(body)
-    return p
+    print(f"    ! {filename}: blocked by WAF after 4 attempts")
+    return None
 
 
 # ------------------------------------------------------------------ parsing
@@ -314,12 +327,25 @@ def pull():
     import csv
     idx = json.loads(IDX.read_text(encoding="utf-8"))
     rows = []
+    # One filing per firm-quarter. Insurers with subsidiaries file 合併財報 and
+    # that is the one to take; several file only 個別/個體財報, which carries the
+    # same risk note for an entity with nothing to consolidate. The 英文版 is a
+    # translation of a filing already in the list and is never fetched.
+    def rank(kind):
+        return 0 if "合併" in kind else 1 if "個別" in kind else 2 if "個體" in kind else 9
+
     for co, name in FIRMS.items():
+        best = {}
         for f in idx.get(co, []):
-            # the consolidated report (合併財報) is the one with the risk note;
-            # the parent-only 個體財報 duplicates it for a smaller entity
-            if "合併" not in f["kind"]:
+            if "英文版" in f["kind"]:
                 continue
+            k = (f["roc_year"], f["quarter"])
+            if k not in best or rank(f["kind"]) < rank(best[k]["kind"]):
+                best[k] = f
+        # newest first: the WAF may cut the run short at any point, so the most
+        # recent periods should be the ones already on disk when it does
+        for f in sorted(best.values(),
+                        key=lambda r: (r["roc_year"], r["quarter"]), reverse=True):
             p = pdf(co, f["filename"])
             if not p:
                 continue
