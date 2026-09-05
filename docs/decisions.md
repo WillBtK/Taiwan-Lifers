@@ -2277,3 +2277,38 @@ FX reserve line. It remains a live question against that column.
 `scripts/stage3_mops_parse.py` (four concepts, dimension-aware context
 matching), `scripts/stage3_load_mops.py` (four columns, reconciliation check),
 `data/mops_statements.csv`.
+
+### 4.20 What the completed stack shows at Fubon: the buffer nearly doubled through the shock
+
+With the equity side captured (4.19) and the pre-shock anchor fetched (4.18),
+one firm now has the full identified reserve stack across the break. Fubon,
+NT$ mn:
+
+| | FX reserve (liability) | Special reserve (equity) | Identified stack | % of assets |
+|---|---|---|---|---|
+| 2024Q4 | 21,481 | 266,449 | 287,930 | 4.64% |
+| 2025Q4 | 142,125 | 333,917 | 476,042 | 7.45% |
+| 2026Q1 | 147,389 | 381,903 | 529,292 | — |
+| 2026Q2 | 153,677 | 420,247 | 573,924 | 8.69% |
+
+**+NT$286bn in eighteen months, and 4.64% of assets to 8.69%.** The buffer
+did not absorb the shock and shrink; it was rebuilt through and after it, and
+the rebuilding is still running two quarters into 2026 — the equity side alone
+added NT$86bn in the first half of 2026, faster than the liability side.
+
+Two things this is not. It is **not** loss-absorbing capacity: the equity line
+is an upper bound on the FX-designated portion, and one bucket inside it is
+restricted capital that cannot offset losses at all (4.19). And it is **not**
+yet a sector statement — Fubon is one firm of six and the only one holding
+both anchors, though Taiwan Life's 2025Q4 shows the same shape at smaller
+scale. Reading it as either would be exactly the overreach the column comments
+were written to prevent.
+
+What it does establish is direction and order of magnitude, and it reframes
+the monitor's buffer question. The interesting quantity is not "how much
+buffer was left after May 2025" but "how much earnings capacity is being
+diverted into buffer, and for how long" — a flow question about retained
+earnings, not a stock question about a reserve. That is the framing Stage 6
+should carry.
+
+**Files.** none — a reading of data loaded in 4.17-4.19.
