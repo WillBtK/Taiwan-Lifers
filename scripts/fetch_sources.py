@@ -38,6 +38,10 @@ SOURCES = [
      "%E4%BF%9D%E9%9A%AA%E6%A5%AD%E6%8A%95%E8%B3%87%E5%9C%8B%E5%85%A7%E5%A4%96"
      "%E8%82%A1%E7%A5%A8%E5%8F%8A%E5%82%B5%E5%88%B8%E9%87%91%E9%A1%8D.csv",
      "tigf", "csv", False, False),
+    ("FSI_life",
+     "https://www.cbc.gov.tw/public/data/opendata/financialstability/"
+     "FSI-%E5%A3%BD%E9%9A%AA%E5%85%AC%E5%8F%B8.csv",
+     "cbc", "csv", False, False),
     ("tii_I171", "https://openapi.tii.org.tw/TIIOPENDATA/API/CSV_EXPORT?TableID=I171",
      "tii", "csv", False, True),
     ("tii_K47", "https://openapi.tii.org.tw/TIIOpenData/API/CSV_EXPORT?TableID=K47",

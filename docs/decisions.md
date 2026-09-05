@@ -2088,3 +2088,51 @@ is done.
 
 **Files.** `ops/taiwan-relay/` (`main.py` scheme-check fix, `deploy.sh`,
 `verify.sh`, `README.md` rewritten).
+
+### 4.16 Two sector series from the pipeline, and the foreign-equity identity they open
+
+The weekly workflow's first useful cargo. Both are sector-level, both loaded
+into their own additive tables (migration 0011) because neither fits
+`sector_monthly`, which is keyed to the FSC release and its FX table.
+
+**CBC 金融健全參考指標 – 壽險公司 → `sector_soundness_quarterly`.** 41 quarters,
+2016-Q1 → 2026-Q1: assets/GDP, ROA, ROE pre- and post-tax, equity/investment
+assets, and — the reason it matters — **the RBC capital-adequacy ratio**, the
+project's first solvency series of any kind. It is semi-annual: published for
+June and December, a dash elsewhere, which loads as NULL. A loader that read
+the dash as zero would post a solvency ratio of nought on the sector in half
+its quarters, so the check asserts the publication pattern rather than trusting
+it (20 of 41, exactly the June/December rows).
+
+Two readings worth carrying into Stage 6. RBC held up through the shock —
+312.03% at 2025-06 and 315.09% at 2025-12, against 331.95% at 2024-12 — so the
+May-2025 FX loss cost the sector roughly 17pp of a ratio with a 200% statutory
+floor, which is the buffer question answered at sector level for the first
+time. And **assets/GDP breaks at the IFRS-17 boundary**: 131.22% at 2025-12
+against 111.19% at 2026-03. That is a measurement change, not a NT$6tn
+contraction, and the column comment says so, because a 20pp fall in an
+assets-to-GDP series is exactly the sort of artefact that gets quoted as a
+finding.
+
+**保險安定基金 holdings → `sector_holdings_monthly`.** 20 months from 2024-12,
+life and non-life as separate rows, stocks and bonds. Published in 億元 and
+stored in NT$ mn (×100, exact on integers). Its value is frequency: it carries
+the shock month at monthly resolution where every statutory table is
+quarterly. Life bond holdings fall from NT$21.41tn (2025-04) to NT$20.18tn
+(2025-05) and recover to NT$20.20tn (2025-06) — a NT$1.2tn drawdown inside one
+month. **It is domestic and foreign combined and must never be used as a
+foreign-asset series**; the table comment says so.
+
+**What it does open.** TII 表17-1 publishes the *domestic* equity line
+separately from 國外投資. Netting the two at 2026-05 — holdings 3,874,900 less
+表17-1 domestic equity 3,120,434 — implies roughly **NT$0.75tn of foreign
+equity**. That is not a curiosity: the FSC hedge-ratio denominator explicitly
+excludes unhedged non-FVTPL equities and funds (README §3, series 4), so this
+is a direct read on a term the project has so far only inferred. One month is
+not a series — 表17-1's export carries annual rows plus the latest month only —
+so this is recorded as an identity to exploit when Stage 5 needs the
+denominator decomposed, not as a loaded series.
+
+**Files.** `supabase/migrations/0011_sector_soundness_and_holdings.sql`,
+`scripts/stage2d_sector_series.py`, `scripts/fetch_sources.py` (CBC added to
+the weekly fetch), `data/raw/cbc/`, `out/stage2d_sector_20260905.sql`.
