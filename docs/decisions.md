@@ -2600,3 +2600,55 @@ decks.
 **Files.** `scripts/stage3_ib_firm_funds.py`,
 `supabase/migrations/0013_firm_fund_utilisation.sql`,
 `data/ib_firm_funds.csv`, `out/stage3_ib_funds_20260905.sql`.
+
+### 4.28 The reserve pages: one real series, one dead end, and a correction to 4.19
+
+`Info2-5` and `Info2-14` parsed and loaded (migration 0014, 15 rows, 15/15
+component-sum checks). The result is more mixed than 4.19 hoped, and one part
+of that entry was simply wrong.
+
+**The correction first.** 4.19 predicted these pages would split 特別盈餘公積
+into its FX-designated buckets and so close the question that entry could only
+bound. **They do not.** `Info2-14`'s 特別準備 is the **liability-side** special
+reserve, a different account from the equity-side 特別盈餘公積 carried on
+`firm_quarterly`. The scale settles it beyond argument: liability-side
+特別準備 is **zero** for five of six firms (Nan Shan alone shows NT$3.2bn),
+against an equity-side balance of NT$333.9bn at Fubon. Two accounts, similar
+names, three orders of magnitude apart. The column comment on
+`special_reserve_liability` now says so, because reading one for the other
+would wreck the buffer stack in either direction. **The equity-side split
+remains unavailable**, and no source found so far carries it.
+
+**Info2-5 has two layouts, and which one you get is not requestable.** A
+company whose latest filing predates IFRS 17 — only the absorbed Shin Kong
+(UID 03458902) — renders the old table: ten **labelled** rows across three
+completed years, 外匯價格變動準備 among them. Active firms render the 2026
+table: seven rows for one quarter whose 項目 cells are literally `&nbsp;` in
+the source. The page title states the FX reserve is included, but no row
+equals any firm's balance known from its own filings, so it is **bundled, not
+merely unnamed**. Testing five period-parameter shapes against a baseline
+(pass 6) returned byte-identical pages: the parameters are ignored and there
+is no history through this endpoint. Those rows load positionally into
+`unnamed_items`, on the 4.11 principle — publish what is published, name only
+what is pinned.
+
+**The one real gain.** Pre-merger Shin Kong's FX volatility reserve, NT$ mn:
+**13,219 (2023) → 45,146 (2024) → 99,587 (2025)**. A 7.5x build over two
+years, and a third independent firm telling the same story as Fubon's 6.6x
+(4.18) and Taiwan Life's. That the absorbed company was building this hard
+into its final year, while being merged, is itself informative about how
+binding the provisioning regime was.
+
+**A parser bug worth recording because of how it hid.** The pre-2026 layout
+prints **four** value columns: an empty current-year quarter column, then
+three completed years. My first version compacted blank cells away before
+aligning values to periods, which shifted every figure one year later. It
+produced 2024/2025/2026 for data that is 2023/2024/2025 — and it **passed
+every sum check**, because the columns still balanced among themselves. Only
+comparing against the printed header caught it. Alignment to a header must be
+positional; compaction before alignment is a silent date corruption that
+internal consistency checks cannot detect.
+
+**Files.** `scripts/stage3_ib_firm_reserves.py`,
+`supabase/migrations/0014_firm_reserves.sql`, `data/ib_firm_reserves.csv`,
+`config/ins_info_targets.tsv`, `out/stage3_ib_reserves_20260905.sql`.
