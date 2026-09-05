@@ -172,7 +172,13 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
 1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
    (`FRED_API_KEY` is). Writes go through the MCP for now.
-1a. **ins-info courier queue (for the user):** `data.gov.tw` is open (4.9);
+1a. **Ingestion is now a weekly workflow** (`fetch-sources`, decisions 4.13),
+   covering TIGF, TII and the data.gov.tw catalogue. Only `ins-info` still
+   needs a human, because it refuses every egress CI has; deploying
+   `ops/taiwan-relay/` to a Taiwan region and setting two repository secrets
+   removes that last manual step. Until then, the courier queue below stands.
+
+1b. **ins-info courier queue (for the user):** `data.gov.tw` is open (4.9);
    `ins-info.ib.gov.tw` is allowlisted but does not route to this egress, so
    its files arrive by courier (4.10). Next asks, in value order: the portal's
    column headers of 表06021011, which would name `amount4..8` (4.11); the

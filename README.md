@@ -95,15 +95,24 @@ platform for insurers: per-company pages (`customer/life.aspx?UID=…`,
 人身保險業辦理資訊公開管理辦法. The same indicators are also on `data.gov.tw`
 (dataset 7191, 壽險財務業務指標) as structured open data.
 
-**Reachability (2026-09-04).** `data.gov.tw` is allowlisted and open through its
-front-end API (decisions 4.9); it also led to `openapi.tii.org.tw`, which serves
-表17-1 as CSV. `ins-info` is allowlisted but does not route to this egress
-(TCP never connects; not a policy block). Its files arrive by **courier**: the
-user fetches them and commits them verbatim under `data/raw/ins-info/` with a
-`_YYYYMMDD` snapshot stamp that becomes the vintage (decisions 4.10). Dataset
-7191 landed that way into `tlfx.firm_statutory_indicators`. Re-probe ins-info
-at the start of any stage that needs firm disclosure; ask for the courier
-otherwise.
+**Reachability, measured (2026-09-05, decisions 4.13).** Ingestion is split by
+egress, not by source type, because three sources were "unreachable" for three
+different reasons and only one was real.
+
+| Source | Sandbox | GitHub runner | Cause |
+|---|---|---|---|
+| `ins-info.ib.gov.tw` | times out | times out | origin refuses non-Taiwan egress |
+| `www.tigf.org.tw` | 403 | 200 | our proxy's policy only |
+| `openapi.tii.org.tw` | 200 | 200 with the repo's TWCA cert | missing intermediate |
+| `data.gov.tw` | 200 | 200 | open |
+
+`scripts/fetch_sources.py` fetches all of them, writes each payload verbatim to
+`data/raw/<source>/<name>_YYYYMMDD.<ext>` and deduplicates on content hash;
+`.github/workflows/fetch-sources.yml` runs it weekly and commits what is new.
+ins-info needs Taiwan egress, so it goes through an optional relay
+(`ops/taiwan-relay/`); when the relay is unconfigured those sources are
+recorded unavailable and the run still succeeds. The manual courier route
+(decisions 4.10) produces byte-identical files and remains a valid fallback.
 
 **Briefing channel (fallback for series 4 and, from 2026, the reserve buckets).**
 The Insurance Bureau briefs reporters the day each month's figures are ready and

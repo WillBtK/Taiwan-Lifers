@@ -13,7 +13,9 @@
 name: fetch-sources
 on:
   schedule:
-    - cron: '17 2 2 * *'   # monthly, 02:17 UTC on the 2nd
+    - cron: '17 2 * * 1'   # weekly, Mondays 02:17 UTC. TIGF is monthly and
+                           # the statutory tables quarterly on irregular dates,
+                           # so weekly bounds the lag at seven days for pennies.
   workflow_dispatch:
   push:                    # editing the pipeline re-verifies it; the fetch
     branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]   # dedupes on content,
