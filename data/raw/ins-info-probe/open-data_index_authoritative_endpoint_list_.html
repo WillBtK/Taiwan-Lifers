@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head id="ctl00_Head1"><title>
+	保險業公開資訊觀測站 - 本局網站資料開放宣告
+</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link href="/assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="/assets/css/bootstrap-3.3.6.min.css" rel="stylesheet" /><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick.css" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick-theme.css" /><link href="/assets/css/main.css?v1.1" rel="stylesheet" />
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-27907866-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119881418-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119881418-1');
+</script>
+
+    
+</head>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
+<script language=javascript >
+
+
+    function prep() {
+        //alert('go back');
+        history.go(-1);
+        //window.location.href = "default.aspx"
+    }
+    //-------------------
+    //      有問題
+    //-------------------
+    function postData(url) {
+        document.forms[0].action = url;
+        document.forms[0].submit();
+    }
+
+    function sendURL(url) {
+        window.location = url;
+    }
+
+    function setInsuType(type) {
+        var idx = 0;
+        if (type == "A")
+            idx = 0;
+        else if (type == "產險")
+            idx = 1;
+        else if (type == "壽險")
+            idx = 2;
+
+        //document.getElementById("insurancetype").selectedIndex = idx;
+        document.getElementById('insurancetype').options(idx).selected = true;
+    }
+
+</script>
+
+<body>
+<noscript><div style="z-index: 99999;color: black;background: #fff;right: 0;top: 0;width:100%;padding: 10px;">您的瀏覽器不支援JavaScript語法，若網頁功能無法正常使用時，請開啟瀏覽器JavaScript功能</div></noscript>
+    <form name="aspnetForm" method="post" action="openData.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="pR3+ZwR9fGAf7ZwTjoSZKTVlRnuTFCZyzplkOfK78hUdAXEl7Y4HyYE++XhAd6jazRr66XCUeVCyQ97mzyNoa/wlBVQ=" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="1F6E70D7" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+    <a href="#C" id="gotocenter" title="跳到主要內容" tabindex="1" class="sr-only sr-only-focusable">跳到主要內容</a>
+
+    <div class="app">
+        <!--最外層包裝 開始 -->
+        <!-- HEADER -->
+        <header class="home">
+            <div class="container">
+                <div class="header-wrapper">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-8 logo">
+                            <a href="/index.aspx">
+                                <h1>
+                                    <img src="/assets/img/logo.gif" alt="保險業公開資訊網站" /></h1>
+                            </a>
+                        </div>
+
+                        <div class="col-md-9 col-xs-4">
+                            <div class="menu-mobile">
+                                <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" target="_blank">
+								搜尋
+                                    <img src="assets/img/search-icon.svg" alt="搜尋" /><span style="display:none">Search</span>
+                                </a>
+
+                                <a href="#" onclick="openMobileMenu()" title="選單">
+                                    選單
+                                </a>
+                            </div>
+
+                            <ul class="top-nav">
+                                <li>
+                                    <a href="#U" accesskey="U" name="U" title="上方區塊" class="accesskey">:::</a>
+                                    <a href="/index.aspx">
+                                        <img src="/assets/img/nav01.svg" width="20" alt="" />
+                                        回首頁
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/sitemap.html">
+                                        <img src="/assets/img/nav02.svg" width="20" alt="" />
+                                        網站導覽
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)">
+                                        <img src="/assets/img/nav03.svg" width="20" alt="" />
+                                        常見問題
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)">
+                                        <img src="/assets/img/nav04.svg" width="20" alt="" />
+                                        意見信箱
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/FSC/sales/login.aspx">
+                                        <img src="/assets/img/nav05.svg" width="20" alt="" />
+                                        業者登入
+                                    </a>
+                                </li>
+
+                                <li class="last">
+                                    <a href="javascript:;" class="font-sm">
+                                        <span>小</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-md">
+                                        <span>中</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-lg">
+                                        <span>大</span>
+                                    </a>
+                                    <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" title="搜尋(另開視窗)" target="_blank" class="search">
+                                        <i class="fa fa-search">
+                                        </i>搜尋
+                                    </a>
+                                    <!--
+                                    <form id="cse-search-box" target="_blank" action="https://www.google.com/cse"  rel="noopener noreferrer">
+                                    <span class="search">全文檢索
+                              
+                                            <input type="text" name="q" id="textfield" />
+                                            <input type="image" src="images/srch.gif" width="17" height="18" style="float:inherit" alt="搜尋" />
+                                            <input type="hidden" value="008155887231287897481:ghdoakum-vk" name="cx" />
+                                
+                                    </span>
+                                    </form>
+                                    -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- LEFT SIDEBAR -->
+        <div class="left-sidebar text-center">
+            <a href="/customer/accountquery.aspx">
+                <div class="wrap-option">
+                    <div class="img-01">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>統計查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="http://insprod.tii.org.tw/database/insurance/index.asp" target="_blank" title="財團法人保險事業發展中心保險商品查詢(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-02">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>財團法人保險事業發展中心 保險商品查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0" target="_blank" title="政策法規資訊(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-03">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>政策法規資訊</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://rm.ib.gov.tw/Pages/index.aspx" target="_blank" title="教育宣導(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-04">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>教育宣導</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+        </div>
+
+        <section class="slick-banner  page">
+            <div class="wrapper" style="background: url('/assets/img/banner.jpg') no-repeat center center"></div>
+        </section>
+
+        <!-- MOBILE MENU -->
+        <div class="overlay-menu hide">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeMobileMenu()">&times;
+            </a>
+
+            <div class="overlay-content">
+                <!-- <div class="icon text-left">
+                <a href="">網站導覽</a> | <a href="">EN</a> |
+                <a href=""><i class="fa fa-search"></i></a>
+              </div>
+
+              <div class="icon text-left">
+                <a href="">常見問答</a> | <a href="">雙語詞彙</a>
+              </div> -->
+
+                <div class="mobile-nav text-left">
+                    <ul>
+                        <li><a href="/index.aspx"" class="overlink">回首頁</a></li>
+                        <li><a href="/customer/sitemap.html" class="overlink">網站導覽</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)" class="overlink">常見問題</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)" class="overlink">意見信箱</a></li>
+                        <li><a href="/FSC/sales/login.aspx" class="overlink">業者登入</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END OF HEADER -->
+
+       <!-- <div id="MENU">
+            <ul>
+                <li class="c"><a href="announceinfo.aspx"> 
+                    保險業資訊公開</a>  </li>
+                <li><a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0">
+                    政策法規資訊</a></li>
+                <li><a href="https://rm.ib.gov.tw/Pages/index.aspx">
+                    教育宣導</a></li>
+                    <li><a href="accountquery.aspx">
+                    統計查詢</a></li>
+                <li><a href="http://insprod.tii.org.tw/database/insurance/index.asp">
+                    財團法人保險事業發展中心保險商品查詢</a></li>
+            </ul>
+        </div>-->
+
+        <section class="page">
+            <div class="bg-gradient">
+                <div class="container">
+                
+                <div class="row">
+                    <div class="col-md-2 bg-gradient-yellow"></div>
+
+                    <div class="col-md-10 detail">
+                        <a href="#C" accesskey="C" name="C" class="accesskey-content02" title="中央內容區塊">:::</a>
+                                    
+                            <!--內容 開始-->
+                            
+
+
+    <div class="row text-left breadcrumbs">
+        <div class="col-md-12">
+            <a id="ctl00_MainContent_HyperLink2" href="../index.aspx">首頁</a>
+            /
+            <span class="boldtxt">本局網站資料開放宣告</span>
+        </div>
+    </div>
+
+    <div class="row page-title">
+        <div class="col-md-12">
+            <h2>本局網站資料開放宣告</h2>
+        </div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">一、授權方式及範圍</div>
+    
+		<p>為利各界廣為利用網站資料，金融監督管理委員會保險局(以下簡稱本局)網站上刊載之所有資料與素材，其得受著作權保護之範圍，採<a href="https://data.gov.tw/license" target="_blank" title="政府資料開放授權條款(另開新視窗)">政府資料開放授權條款-第1版</a>發布，以無償、非專屬、得由使用者再授權之方式提供公眾使用，使用者得不限時間及地域，重製、改作、編輯、公開傳輸或為其他方式之利用，開發各種產品或服務（簡稱加值衍生物），此一授權行為不會嗣後撤回，使用者亦無須取得本機關之書面或其他方式授權；然使用時應註明出處。</p>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">二、相關事項說明：</div>
+        
+		<p>
+            (一)本宣告範圍僅及於著作權保護之範圍，不及於其他智慧財產權利(包括但不限於專利、商標、及機關標誌之提供)。<br/>
+(二)當事人自行公開或依法令公開之個人資料是否得被蒐集、處理，及利用，使用者須自行依照個人資料保護法之相關規定，規劃並執行法律要求之相應措施。<br/>
+(三)部分的影音、圖像、樂譜、專人專案撰文或其他著作，經機關特別聲明須經同意方可使用者，不在本宣告所及範圍，其後續使用應另經機關同意。<br/>
+        </p>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">三、應注意尊重第三人之著作人格權（包括姓名表示權及禁止不當變更權）。</div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">四、使用本宣告提供之資料與素材，不得惡意變更其相關資訊，若利用後所展示之資訊與原資料與素材不符，且得被依法歸責，使用者須自負民事、刑事上之法律責任。</div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">五、本網站之宣告，並不授與使用者代表本機關建議、認可或贊同其加值衍生物之地位。</div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">六、連結至本局網站</div>
+        <p>
+		任何網站連結至本局網站，毋須經過本局同意，然而連結須明白標示本會名稱，若是連結有誤導使用者之疑慮，本會將不允許此連結行為。
+		</p>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">七、本局網站之相關連結</div>
+        <p>為供網路使用者便利，本會網站僅提供相關網站之連結，對利用人涉及該網站內容之使用行為，本會不負責任。</p>
+    </div>
+    <div class="row content">
+        <div class="col-md-12">八、免責聲明</div>
+        <p>(一)本局網站已採取合理措施以確保所公布資訊刊登時之準確性及完整性，本會網站所公布之資料，均為該時點可獲知之內容，本會並有權逕行刪除、修改或更正所公布之資訊。使用者於引用資料時，宜載明資料發布時間，並請注意引用資料內容之正確性、即時性或完整性，對於因使用或引用本會網站內所載任何資訊而引起之直接、間接或衍生之損失或損害，本會不負任何相關責任。<br>
+        (二)本局網站所提供相關連結網站之網頁或資料，均為被連結網站所提供，相關權利為該等網站或合法權利人所有，本會不擔保其正確性、即時性或完整性。</p>
+    </div>
+
+
+                           
+                    </div>
+                </div>
+                </div>
+
+                <div class="row text-center">
+                <img src="/assets/img/bg-city.png" width="100%" class="bg-city" alt="" />
+                </div>
+            </div>
+        </section>
+
+
+        <section class="link">
+            <div class="row text-center">
+                <div class="col-md-4 col-xs-6">
+                    <a href="openData.aspx">資料開放宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="Information.aspx">資訊安全政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="privacy.aspx">隱私權政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="#" class="hide">無障礙聲明</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>
+                            金融監督管理委員會保險局 版權所有
+                            <br />
+                            220232 新北市板橋區縣民大道二段7號17樓
+                            <span>電話:(02)8968-0899</span> <span>傳真:(02)8969-1300</span><br />
+                            紐約辦事處：1 E.42 Street, 13F, New York, NY 10017, U.S.A. Tel:(1-212) 317-7326
+                            <br />
+                            倫敦辦事處：46-48 Grosvenor Gardens London SW1W 0EB,UK Tel:(44-20)7628-1501
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="border">
+                            歡迎連結使用金融監督管理委員會網站資料。引用時，請註明資料來源，請確保資料之完整性， 不得任意增刪，亦不得作為商業使用。
+                        </p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <a href="https://www.gov.tw/" target="_blank" title="我的e政府(另開視窗)"><img src="/assets/img/gov.png" alt="我的e政府" /></a>
+                        <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20230913102307" target="_blank" title="無障礙網站(另開視窗)"><img src="../assets/img/standard.jpg" alt="通過A檢測等級無障礙網頁檢測" /></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!--最外層包裝  END-->
+    </form>
+
+
+
+         
+
+                
+
+
+
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="Scripts/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/assets/js/slick/slick/slick.js"></script>
+
+    <script src="/assets/js/main.js?v1.1"></script>
+</body>
+</html>

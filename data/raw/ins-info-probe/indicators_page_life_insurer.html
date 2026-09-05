@@ -1,0 +1,916 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head id="ctl00_Head1"><title>
+	保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 各項財務業務指標
+</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link href="/assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="/assets/css/bootstrap-3.3.6.min.css" rel="stylesheet" /><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick.css" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick-theme.css" /><link href="/assets/css/main.css?v1.1" rel="stylesheet" />
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-27907866-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119881418-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119881418-1');
+</script>
+
+    
+</head>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
+<script language=javascript >
+
+
+    function prep() {
+        //alert('go back');
+        history.go(-1);
+        //window.location.href = "default.aspx"
+    }
+    //-------------------
+    //      有問題
+    //-------------------
+    function postData(url) {
+        document.forms[0].action = url;
+        document.forms[0].submit();
+    }
+
+    function sendURL(url) {
+        window.location = url;
+    }
+
+    function setInsuType(type) {
+        var idx = 0;
+        if (type == "A")
+            idx = 0;
+        else if (type == "產險")
+            idx = 1;
+        else if (type == "壽險")
+            idx = 2;
+
+        //document.getElementById("insurancetype").selectedIndex = idx;
+        document.getElementById('insurancetype').options(idx).selected = true;
+    }
+
+</script>
+
+<body>
+<noscript><div style="z-index: 99999;color: black;background: #fff;right: 0;top: 0;width:100%;padding: 10px;">您的瀏覽器不支援JavaScript語法，若網頁功能無法正常使用時，請開啟瀏覽器JavaScript功能</div></noscript>
+    <form name="aspnetForm" method="post" action="Info2-12.aspx?UID=03557017" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="BoPJ8Cg+nIDlKgnV2WCMN38WHkw2VZhMTjkmauDNiqQELWXTk+mXXKA9PL6te/0vVn+hmM4jsr60ymToChmhzFWBvDydYy4kJL7m/ZVNoo5Xaky9/xmxK/am8eCqasa7tbMeLnWqWcia2wMPJbUEaYE2119aw+VzcKorpxNrjPS7gP8goH0uHJvKxXCRkhrsUCC4xwHQq3H74I1PUIsm8o2ud2OgPj1/Sn8+QOxe680FoIwW8sgmOOsuKVrPXefsBvfqujNaQthCBJTYg2QzaF6pE9iJqjdBX7rwVS5+OdzPqaK63PYcQAZqSRas3li6F1TWxa9njen2v6nxbCcaYjA66uQwVOAh9riZLkmdSVn9osig0KdKQH53/hPzIctNizb6yPivznIDBCKPNIMOlPK4+C/w5l++EILnBYe1Yo4t55RZA51KGc4QRE8yB81rkC4YfiJzU03tCq3lM+WlutbCH4uL2pMjiC1m+lfASL9p9JwWekfZhcAVWvx9bDEs9ezQnFQsUXKbCQ5ZEC+at8LXXEtvyuoftxiX57cmsV1hjagVeaakbwePBOJ6hiiJFNpKKk0TKC1lOzLShyWST/kL1M7J5sDQwj6yVv/qjQakzTIgSj8RtwUMDW0pWQluNLFkHTyPMm0dwpI2dpQZbboT5F8sq2xqypHaK35ZCzP3v50y4L2GXFIY5QXuO2LzbYI3fIJr5W0cohLcYOxkJjsl5AWdgP7Ejzag2j4PVj4EpP1LiBiEM43cHRHJM0+QIl8DYQH7y3jfWH/lyawjJgb08Ndcz6XI78zrCNrYFV8aYWvbvH88qNUJhaSHaHz1jhum8ko7xy0OTmHm9mRiQDdLaRYYxK7iLF8aXF3+3IQDDM2oJY5kYLGXiQXD827Z2/UJXbGtTydPtAndedXWR7yV3kJCLvMM8z78XswSaNXVWboK+B9Ypd4mr+0Sz5JKLjLZ6Rp89iH6mQXwD15M41INu4o10xq95X7cqtvbCzqZSfGK/tyjnpU98a/pU4zO7R6JYlpQSIqWo9TnsvLMLbCtw+Nky05vYTLx8d/5IrRqEsG5nDPCxmUBp8SIJCzqHTjmTIXAPPJMXZdpFRRYChhPiTEM8KU+Cvs2vUg98sa7Nq5fIh5TU2sCJvHCqapdFMZKTX7Ck2JInpmY0b4GNW5MzIzmOr64I390y3+tIHH+66+0K0J1/+MP0mAPjmU4m32L4s2O8Pla5vQsT+mt66IROjBumeCyeCoFr/YR8Y/peB4jv8Pc5ymxnFAMA9oXim3LLpmk+Ix2EABd5KXhzotcvF27ExlTqJ70YcoORSC+d0OD6KI6DTewlqDTkB+yaUD+7k8NjVTI33/EZrMRiXNxyhEjX7nEXq3QMlAAoLlTlucZLxTzxdntpoEhAERiGjIqvV2prbWUxqTx/ABQT0sXN3M+pO5dn7ph7LNt/H+ryUGpMgbJN1ljN7DX9yPm50EiKcgb1TTEHOEdi+/hXgcCLkCDqSlvRR45ZphkkQnfU167nnWBAYIkvTeDjtzDCnpL5+i4ai502jLqnaG9Su6cjmZZlNQBxMCXs3RBWDRIu2oFYJKnU4ZkZx0TwoDFujLo6LioiEbHVFyoeABWBfHnLMtlezFme2pEMYhswva7t4waBdGW0jaVgWFyhz6qoQ8dZgKq2IeNbHN5vKj9Ym58rM8zr8JvzchMr1Olg5oRAxiJrEgl1sbPSMkRHOcvxFOn+VY3vl1dkEgTQxTci3Z1f/2SgcuWJyyliumm9rlGo/9YEdzDrA8ZoibG16c+1P8huoPb55kAK01ucTbvO2W5j2L/BOcsRKUIGdgk0oKv0RJpR422VmOzaaO5KEN9pLKOMj30wGA8gMdY5W4nhssD436WMIds1TJndnsL+q58xUVHp0E/rsOPguSy9eq9SVwgmRWbPBQgZZGdAkYYF1K/e5YC4YM2f8AFW9XANyvImdcsEnOQb7XV/B0e4md4lTRwoAoplhPVTFN5/XE0oebIjCzXlsufXkChkIdCbtY9GXmYdOiyUgsFWXrH4S2PGU0i1W9iyqO1nWwVs5HIkkj7d+Rciio51LotKjgezqINWsiBakfJZSgGBG+Gwf37pyizJ3V95KEmXjdFohSBaCS6LOlJQIi5EhYmErIyrkeOWXQxemn1rETkOvSZdqoF43xm7qWhlO2sCWiQwNogbOBqZrjKYqbFmdhYLypcV99+lo+sqaT0MVqJ8T0erXLnvPv/z9/AqMKcBky3ey70tglMdrZO6/UhxlEnovEBu2T4XvYYdReEFub4mrqnb4GA1Ny+AsDfRc7J6+XSROqX00R0Gvd/yfZIHqIsTMY9bLDHDUsx0q5WkA0NNoMbu+YrV82VW1OWm+5869sGTVJ3Viy+LaaJjtjinbq7CusahhE7AU0ChHHUDMqhSTe7GpCfbrPcyO2wWu6kVKCD4dlozp5nF5/HO4zXa5BOEJf9O6TgBk4hVugx32yj/n+fRxiPotZ7Bbuqnt5JN/w3oK+nyw9nVJbE71XCXhC+TfJ3WJ2Fo4zYjAgQ39SXqQX7fHOerotNEB/917z2yUPrLx0wkz/P6n5MQc/VsxAnvgvI86FpogOP+OtSukqAvopO1END5e9iL112IHXV6XdZ8z364l1v6kdl+Nbx4plkXang6xHzn5k1/JsEoJXz9A1fmk+1k27o/TC5rgQaFi3WwIx7CpGpsOu04NhEsfqMrZrH4pJb4pyvajIqTEIGGH/8wIzopfk3xTbrcZK6F3RKDBYgXCxqF3LBWPLrXEbIcNNXIXvxqubdjHFUsjhmvW9vP6Y6byCekIXxuZtmZmj64KcIVo/+j9uasuq3ymKvYRMPAbAcdqyDSF2vJcfFvAYheXb2fDmpJXIANF1VqQipf98P81J5jXXJr125cwbt+37fBMZEqZktVFrG1hdI8qEL0kYD60jLwllXveeiN35/IJ2y14EvCadXlHfugoQgXTSoO8EWtgxj1ub8hhUCg8mjDFZRK/eeAIObOljXcdf9FSJI2BXUCaPRuPYxcNssQ36k5UyN28WvRRL2bgmNwOk9iLG/tNFz+n7tY+2pIGY3r5/NhQDTRvBa9FfjdhcfPAvwPEJXBrebgITvTPQ/Z0T6EVmWAUDwGGbcMuxSjuX2la9RMKTqoEwTeUKGUS2FAEOlczKj9YZFPbba5lSqoAGJAe31XfVhD6uDsk3aye9nxED2HRIN9+cykBHh9Evy/gLmBhcXGTbxUShcBgj5MKOub7z48qZyVGLnrX1pHm5Pcy4vnAST1VkUaTgAc/hdTNZ8HK1s7SuPFzNeQAGtJfCD58QodezaHRA2T5ZADXWmSghX4IuHl562aDXKtka6j6LpbeWeQKuqCPV3QsZQmdlIJXcBPOc+ut383Y6o5xImcmTTN936OJ+wtqfqi+caj7aLrWaRDZeHdupJ09fD4gHZ5aF24TTBLLIQqA1N6oyRYHSbrbZk8r+fQU+akA4J+G/AuY8cWsaMYb8G1k9j6wpWB1ANHYuR14SQ7VxbGnY9Hplk8PfCiAHdCcaBlR0jtn/YZNMOAwrpkd7NmpJ1hVogfd++GK4RxCQQtewY4scuY9OwdYabmDxQGReMrd88vOKlsDSFd/qskM7JeuVxFt7lNEEgJ1j102vLDytlTuAhAtNTb54hH047EbDLVDsgLTFprGZK+NiZCNFTLXEN0JbJA22FBw14zfSCUl7Pcm3OWALSw82DtCN+8yoGQIo4GuEGfcA5t+r1n8ZAnYuB4WQLbMJfzrkQEkmMXloTbWuF7ZQVFMUpKtZTBHqdFrGOR0tx6jjIoavzhG77j1VxFVOG5mMkfDCOACXoHABtuMPT8E92FTkMadPiBaQhsUCasj05yfHl9SRpa3IURcnywMvw/6Fir+Mm7WnVY5tCX4psMgKienXatdAeQV0p/8hvFiX+IkQGX+IpOMEQdbSHA9V82951xxn3fb3hnDYHzB5e7aOyweQhWVotKMa7Z+fwIr++QBSra+WIVuH3ehqwU1lWaj7JJYgY57mHqQigxm0ohj9oW3gsK6ba7AtOBadN7LkO/TgDeUGYc6w4x8WGwBDSra0i0YEySYx5S/B/dEygPChxjszHr6j7xJF31iFw2ylpxB61G+W/yAAIE/EVIwdfSIEP0AiOG9ipJGqhy7xSW66Knu5S55+om99pLGed3QzpEqxFy5EIE3WXUbZnV0uO/1pjqa/9IrBsvwAGvFmt5MwLzHZ0tHk4OUjhfMJMZZWpWcWpMvb901ptazaqXFx93Obs6acaEdntWKHChk4/2XBoHIzyDmBhLArK+teL6Aux68tApwPAZuxR6LE+WuPEScRMVXWBaGFArLtSNmPuSAiuvpkn8s21uyq4qKyxdaYg7Av9NzhnOh69i60n9QlF9V6s4qPzecLT/VTeqNxLNNvyRgHmE2SoMT1At/gBqAgE3aV35HHcNIa7nZFA0ZVmwwwYJNJpCdv0CXim/y+V3OfJpIsPnfLlssWRA6CZKpk4k3PXDMkyIFou6qKXGFkY3jNl4Qj25bOTDC7C48nfF2ek9JRCpQXV6AO/xf1dtC7sIQs50/cOk3jXNa+NZI5zhIQ59nJF4vuUCELGa8zRvbO8jumXPT+BKenNPNaTbl5e7bresHUDxIGBTdgFM8yxOKDs/48twZjpMOfCmtQrZpcpaLXTjWgBDb0kiDLBsDYT6E7QXaThyRzimEtVx4o5Hi3uaWLkerscfCB1wRKGqVYdolmaGwWW2NUI07JKNVdeaISxG98AMU/LrSL7axj3X082VFfKzhNpjHqB2nItV3h5/3nPIYShs2Av08ToJw0RoFb++lA33C8rR/igM8TOliG5AMv5LgGKlnU2YR0hInorKc8CPlOv174yjNu9PZLRDE4M20sT6pqQ8pyWB/sOWqO2nk9HSzFFCqqPGP+evJEW1TBI4wYYadVknoJC9gpfNmTg728Z9bPVbVXndWSP/fJ8KxyMQH7pLu5ONXfl3h0oJxgf1XJOxL4F9qMZy4lGhmOoO0ACJw7kjJYA+oYQuVTUQbq5x9H1sE9HRWvTxlW2gcUEZZoZ79/R1PBpqkqPY1ur5PuR9f2K66u5T6YPbz5KVbTTfp7IIWVWsgpJmvaUVUiltJ8pWuQUtDRtYadv5I7ZHC57jICwl62Ra9jw3u1TabJQvnHolcH557bIfBT2UTtkb0l1+RgcHSmysM52hW+Jz4zok1uyWpbO/+1Ofl0+U0ryaAHUNuTx3/NMP1BfJQIbYVlGV/DFUdswrpY6vMkAmGrExVZ+p6N0ErYi1e5/IQvS4uGwRXfTthmd+TK1ziENVRHrdGYnRzmI9VxOuDzY7bt8fYCfFGwydiuGURrbkQ8rF3rvMW/pOuHG37KiRPOW2d0fVQRK7MjvHYSb5qdffHgWBY5Q/rnAdHmDr/yfWvuMFhmiVjyc4HBbGQnQ4999ouU/T5Ig9k1RWWyuFi9XeNwfV7+Z+1PwY2v+o9euWPQYawuvjgGVirfRZLJhCIZwKU//0odmQlNKs9WrCzlf1OySXKlPSaxhAoy45RPzvEYFB6aDru145xd8Khy9D+D3bzRK6TabCu9CZkKAkU/LGvC4r6wqg89mAdKkbIDfJ0GHQ+iBowqAFV2I96bd3jDJAFU6dcLvayyWvADegB4cCUVa3PFYC5UBPHRygg/G4FN16sPH6sDE3FEUlQD8G8mfTilMuuuP2+AuqH6rdi9xNn+h1K7AhMZVDKsUv0yMHBk1ORZr+Ci+HtPJjXcOCMEX95u67BcD6mMfgwgJ52t0wMA5WCBF0SKRygTGyOYkeS8NlUZBvMot3YmhlRXpq1nv1mNydBO8alY9FbsGkssQRt09UTp3fLxtdBcLT1PDSBPXmCrWsGR3jEpfX3o6hbB1VU3BSQ0Yx50nolTEb/Odvhjb5yimwEylbIpn5rUUvHk551MgvdKJwZxZBJTTyyq9yc/UToMSi4/zurnU+7gsjaS81XCRhLoha6p1foxcWj6z3jRUyNDac5uvpya9JzADPuncwIwEMktDsBzySP4NdJ5SNehYLi39ll/7SQ1FJTq2PBD0IYLg6dy2PW7Lf4o/NrUDCUm496OmrmiHKwOPgaIcC+MRdCl0DBkiLeeY6tktDKd3Sae5ZPq7IE30zIsuJhHogU67yHBocg2XNm9dW26JVcJkqYc8NrG9tGcjSytO61LEsfsQF+mHgxGKe1JK2Cr2piu1ERJSFJlXazkbo3w//pnvvBXaZXKSVOsi8RkFsYfl/wgB/4EMm3jcZMdyBYakVtrNCsivL3mnfmNjfYzyUUeaVXw7pd4Sxg/LXkijMr11Qqhxx2QUqX4KXp1/Dr/FC0qjfA3i0JgZGkmwbt/8CgpxUxUidUNeP+8zLGQdA9QdFWzdjvlETzO1iMJXe+5vfaTQ1iy3ZbDnYNB83pB3NkJEGItB2EkN24u9tp3Ng/9kShPf0zqpvUbOxsVX4u1kmEq7v8CnEhiTHezE2qZoryIf7FyF+zBt9vrehYxmU6+yacXoF5nRMUAhaFQtfl5t8SU9oEZHzHY/FPxtSSSWH0zZZPkVdieyrjRswQP/lMVmiWBaEc5p/UPFBFiMorpFtgku1EaJwaAQJnnt3J5X9IO1SdRid75ff0S+DIwSzHB1VFHefZYaxSaIxC1sLfi7hvUJ9zNl7BaBL784k0orBLN0me4DHtpqIef9U4tTSbioekTGOkgogVw795qvv63teJJrrnDz+vMFL42TVOr8MZzpzI6HA9N5ZgF4yeagK5bxIvvXrlvaTVG27WnLQ2JGGOLbIajuazQnp3LLWde8S6yBMcRGkUi1hfUASLZFfdkK5lMOIb3iAmTu3/ved5kjNqwnDL5i9+cTs34DGHZzq3hNT15rad1s/ypBP12FBiz6qsrZk7b6htoyhZLfeMNV6Tae9Y+nme8oKvDrdj4tC59DdKbzgCT+UcD5FE8qfVjpUIPeSUNVQcEcWNwMtsHfcVe6cFAdpCkvdQifm6xyQgbnZXV6L9vRpBkO3IVJdrIFjB9AnApbRCdbQId1D94Cs0TDbYMBe3v1NHQAod1+ocXG2+VCv6axxOhllWCmp/jPwkt744Rgrs0Qj5e6V4GI9UVj47OCT0RiMCfGghCJHOTvyJ6cazkPsdTMT7T1AczSUc6lFDbDRO8eY6S3GS3HKo+mMeiMXv+ToXIlASxQ8WmYsRYaVGfw07AFc5fUPywVfcQdiyvRLPB1CAF8S+VdxdriSjPf1+YRCRughDiovq4g+NY6sOS5slnVfZKdefyP63Cq9ptuwONw0kswynJeUp9uY5YkniqDQ4D9ZNFRCGuPLshkIDPCeP0y246Zvuilmg9+7eI8+7ROiuerH0ghCjqTDhRwEigAwZUDvOKPdDGMyyFuOtrOmtQuoSxOLjAMI0AYQpjBCLeTYdHtG5laWetmjch6O2i5v4N0xrtla9l0uOMfg8jeWdiwpavRtT5l7yJKA89e38qqwlajr8AnpfJimHzDrmVM5sR5kuk1+SiQGKTzV6vhk2IPwVA6i2RQWSYKpyroLzEP4qCGLm6JtmTFOD78BPPb2fqq1Zr+0Gdmkdmh3QAU9xqHl2mS5pL0ZIjnxtVflrzajw/JYo/tVZk3l8y/Z7nrqmr8uf/ijepsAsi6TLb4TokBU5Gp7tBmWkZZr1f2yiGZZwtM7RqgEGelBVquzk1ND6KTwl2TeEpbtVezmgK02KPFgzstXLVGpQf+WuDPMYP2iQKuugfQSAoYURPpnyEiIBcDQ9bDZ2gS7VH2qFg2pK5Fs3NmNj7sBIaVirmPgjHamF0E+PgdNqmIiu6FGiaVuuWIZ8gqIVxGOCuQ3DmRUSyU/v20+Z/i5dSJDHfvnreaWYHGQvPQ2Sj8eZtwW580O3NjZIen5RHTzXbSuqnr/f0Ad5ybaz0nCAqtazbzRsI/L6ju5MGg9cGLhqz8padowGv9uIUIQ9EwkFnoJ2ukdKJijPvtMW4Xew3bohpThvQ8umgNfKADCr/XZEnAKUy3rQsOxrlPqqvJ1x+PmQ9dtxZADV2YazH4HLyyx7G5iEd/T6OJQM0W1GA/HXg/zJXI0EdXQXRGMiwpY4jPKfdoidVwWZ+0Myx/CJeZzqDp8IYI90e6wuCdwxM/Xg/cYSaDEpmhMufB95Zu3lHV5uaFUAq2oxwa2Cuqk35e/m1w2aehyuPKah79KQ/DuD0sVQqc0vj7WBoZmbUJKveyn2ZMkCEG68GQSJu6pX6OtmwGSPzYd9jTZsWWzCT6Ymc8p/yri/uVUwBte3/yh4Ag/gOhEf+onFRzXoC2wglmysm/xjMYa+3Sru+D84MKXzB7lXp+0HiYx9DdQAO0czETIdAstROPCdlKXLCX+qIfmNBDeJ9SBV69VHZh7jEavLjxnubAb+JskKkjoxuBD4ql9d2vmwfp2UfsFWvT8xQwWH9cEB+5IQBPq5ZKX1Gt6a9eQa3bAqHcAhLFXF19HMrwdy8JDR5X5ptiDva6S2Hi3Pj5mo6/4Fa9UPQ+nMyfCUkmMKpBmBpndbeeOO1rdoNv3CsJyEmeMWWkZYA/+4wr247TD0L7Z5x9UZzILYFWxwHNj3MsH0zL4fLfV+wuJVrU34IsQuPjVgEVfwZ5DlmTslUMVH3KDacJA9TQb0OjTVuXYvhNv6cU6OxQvzUzSGpjLv+HfMa2Ke2OfuJE3fxLnoS/cGN3qQdO+xY5uRv1GTs+g4poxAdH1XW491VEZJPVX0xEN+1t2DNB6ERhf2ikoVq0YrLvWcV+yzGVIM+qmI6Msrk2vfhSqK45LJMqJJom7+PGbg241PqqlZX0Pk878Oqwgyl30e8VzYMD6mmhXFA9zHFSxOBsu+Jigym1ijPaiOxo6jZ4IHtDJwaXNGR3UcHvKxoFvBTBVZ2e3SqCCoatKDlSC31o2kX4kZgIMKTlOG/9sWhgvsUny2B0QWRvN+eAznhpSsuL2IT4gGcioxHveQ5wu+kFOdHzkN4RFOis9hH1m6zaRAD99RGL8WiVOVdzpBcvvJao4isfZpPlnsSlqGI3ZjLIw95cOhVP9aSmjczSDf9BvDbdlDmr4XhIOSfIoIx7Otxslng+P9W7SimTKg9UVYsrCTWdxT8vglckOGo9HdUB8Evv9S98N8pklDeJxzOlESk019jAWBQMqcAxaYnc91Pld8VrzlPSZIjLG5ycVDT6G6b7uiHi8woLfSYRlcbQbRTc8Iudg9JIKcm1L4OmsjRKxQbtRm6TjCyPkpsIMAFipjuhRI/doSANDaSb3MbcS8wTbn37e4GnlSw4ci+abUfy1JoQMYK2ZN2RLFmNOH4yhxuy1vLzWPxGDRYFDdanqc01yFDKXkI3edCmRS3VnhkDFNFF11cUt1TJa7jmmgmlevK6J2f6TIcDSIvUbz6j1Bu2+hRAxFrN9Elkoms0IUu3Cw4rJc1b9smcljf1JEtFgNnpJM3Wg9yXT3oIr3ra8TKYAWECidVYmSlOoZ6uLpdHUUMWmuk0BzTNCudN7D3yahqOH5OYMyEUncgczBPr40cTm1n07nmmsBz2OxWgfJsplzrPDgEyIH4iFkfR35PY7UJqatuRuBg6vu2NY46PwqTC31L+OqdE8EidQrEbSV9qjyNlafCIAOSPJbm9Rl5PMZ0hfyq+GKOLAp3IKU66+CNgitqgCRQNheKn65QLju/KzjhAexQeGgUpbxvOCWlctOggDvgmdQg6sLz1cGi9/3j9XukYNYFRHNax+uU8YpjVrQC1Yvv0XB9ALdfVVDZOg86a0uEebB6GxV4003caNW9iCGP33+nMrRLo03lkCxzegC6xg3NlrcI3BWCj41srdW5IiyraO0S7JMYtiUaQ6+GekvAxe3bQwK6eW7CDuk49fMXhQDVprnEPoUsdzHNCxAm4eWeapFQYs0uG/99jldjm1l3QqzgPs9Dmm4FMbc9MHFUi90+QjOXYM2NoFNlEFx8/16Pr1ge7kFDJtREOT3+sPEo4NGq/zbKabuT5yk8sCVqr9J67DOqUSfNOkIk/qcB7Ii4bXl6B8u0QM3RSbfGbbb0udlqOsCiw/HO1YL8niFkq2F5/txqYkErWoVYeETUVUDKHLC8G/ls0OfI8yn/6Mr+gmZ/iSTMOnSNwFXfg+OI5SRlJ5yZab0iUllhADjsTh/xgF8omH9SUDhB0EzVGMY5LPtG6TZ3UKrDvyd8pMXN0vU1ryso4mEG5KrkYlLy2nNA47xP0mUQOsMTPx20bWyeRXuXuIWuIPnlpi2TRUQYXx1rNo7izGAF7SaOZ9mDYX7wzTuRmP+eg4tfTdn8xBYQPfqKgizroeK4k9ssuIZSa59TqOMqscjkILfraCUrLIG6wGu0gtixA+36BwwGRrsBhgLVjf7XWuoN/+fxpReMEbRDhzTW/m8xNwjStHqKXQIXGFwFAEesThmACkclFeRg16dSWxMOTF1G5Ak1rGHeLU6C9MTZxuMGmW+1mHvLAPpYa1V4nRD4jn0T04/3lAqP+N4pSp79IUX7dPA3iHtwAkEGd/D0xoYhGTXlnfvI9ha+AKhtFDj1OSPG0fxjSwwSUCooHIM9ykG+gV4ECDF9yYihf+Owl/w8YK6zVPNbdcNN6lzfQWMb2acmXz5Yh9cdz9YKBZUFGFRJAR/DMWMDq2J9+wVz5EIOvbMK+IxUhLb8Ezwkka1/502IBR+fFbkFSR0f2lm25ngcMAwInsft+cE6jccPPMeh3dqWGMzybdg4wH8/rFNkpBWFEM55ppsMTzaZfSSoAfXORvBeLRdx7kelsMUNlm5I73AMF8i+/8NSx5YadQXYdv3UmvXTpiPyHzAyohH4vdhw+EMZh139IlUpR+YDKwmPGNhs6th2dVm5zF4SieucMArNQT3AsTERtLBTEjiBe/CtEcQYj2CKWLcXrSDxyd+AVjUdq7HcUCgOiyriJ35nqxXRuyDNxTq17AxUa11NYc3IyQxRxKTXHhCaTGa1AVcYgUqOsMAzXtF2SYQWhe5iSU/RAXttwfNf2/bshrmAGH3e4BZQ6aL6lnFXVsjMjZMjyYSIeHu6hinB3bFtDFn9DJl/PJABmLcaFaO4pm6ZnIG1AW8LWIOcxwvQ3KuH0jhHBCjI/n6Tit21WsQq1bVfaa7Bn42G4/0nMmZBrTURphwmdVyLBDeNwu922y1m0KpAlqmkyFEEB5D3VXWoNKJfr/yBoC6C1s4zQZKePQmajBH6YTYyjXAwAPPMXepE9RnUtffbdVw6D9ChSH8AXg5iGkjMAuwHJNouaIanr93u9/Hv50vQmXx1CcFzyeZrV2QDcBvVhtqsS5MbJFkI1puqBRy7mRrUpnLaecGB30JvdDcvXUT31M69LfBPtme+jFvpQA2EGbHuLudf19u53IHwehWilfQ2pf7EbkCn7uDWn/XXotBH69vU/oMLzdR3UuQTY9NTbgT3QD6PxtrgurFgLsKtex9mm4Rv9wG4KFnnvtQnPkbi1TN4lUH6k9tCLXHza3K/Sr6twO8Pg+mDvnvV4f2FXtK6PYMx7kMJeW49IgyzENSPEwkhtI5AQ3my/PBek3laKC8TXDSyYzaJy1R5ByL40OgfUKRPyhwqVdTX/anappFpztc9+B27bCfxHl9kUIerMM/be6c/L3/fP3B3qx0pYDjN0q+sJvc8F36KsFAdkeCXBVP12xMPyGB+uVHhshBWak5cRjh0beMtrcZvcsE9a1CVmIHEMg7bouJjibmTTYjGMjRQp2e4thblXMm5NfrNM1bgPefcIo9jG/fKShEEZgkfc/5QYocOIERRBHc0PRtJuJoTd8kMvhaDolLeNuvgM/2VnAc8McJ5vsZucpTExszQUbu9OV1nJ8fb/B0IFgUmsje4vCmBfdExRQ5zlKtsTeyXVqTcjDrPSHlCNlaVSwDf6iCqS/DAUlqhoh6ErODJQAEDfsgS6MYPguhq+WFUpSsO7CWbfBPFghaw5SQITNA8IGlWVNMTraSsomB2JFIVCk3FDs/HdOikvRu0a0ZVM9aW4CAlnHYoyEIa1/B06Gr9lhcBiqc1Rmt7Aaq4Le7KOWONPhSmxUXaXGyYAr7t2QfF31jhEQaJ0Nvdv7y/6wl3jgVFFL8VBNie80r4RQjKppukWflKdtsCcLqBTrfiPctLXPQi0LM9E/y3EMJlk2nfKUdxHkcPWPFz1SyW/qMbswm8t8TrfOC9zR7cKKu/rrcFqC6WlGgZoRyRb3NFE0wOFzanO4D2+EXCprDFt1Qc8SssbE2wudu6moQ+eqRGyrGNx0JO/PyzZZgBTFFq22uBCjv4bhbI4IhWU26pNSx6OSlmXaFisJkAbafGdgHaIfRfmWlxIjgzkJzNQZ8LEBYGVdl+NtT84LhR4Ydfnddw5PsLRJ8SKBybcPvKnuAvMByTyaKM/2GPfoXoAIPqWZBAiQNjSrlbrrGdUn8z2hChRhdPf3yyROtKhVXXx173fIhDrVSqmpa5m7z96fnnQs1C5jm31M+bFIhgLh2nAIfv97qInbuXUZda4pZLiG4C8iACjvSpdBECSslwlXeibRfBIVBQhSNkaZmkV+fnSDKPXcKCbWohZnMVFKzqNYECbk7iNVEgPJCt+dvhf+Y1Raj9BTpbraaovXEm1Owj326n61/Ttf3XjdudvacBHNtS70OGJOo4Wvvhtd/7AMSWBCMG+uoXKxgHdZqg6FMcT8CEyV1WsmSV4j5Tn1JnIt8OGYH/qfUCCImYUddN4UeNdikLu6K3sPhMjqrNwcZX+EC/N2qCdAXlFdUKP6ftJfnXoQ5OwMFlfXzKHAGCVJDAFRtzbEVbxlv07fEClPvrhWUVwgCPtnmbyvQsptd2jFbm8wbU7miPOAji0muGt3ynxmtwwddiBYL0WLidUlpisbq7gPtpcHGYjr5CznrHVmq6ZaCsziEKCt18OgntgsScu4gkRELAmW/lOZZIpdVkqfjCc3EDtw6O6zaPhbzXIHEnmnvPr9bf2IPfG53tsmT7VzkSkQGn7/c0cyo9Il2s4v2hrSvWgrBd5oLssJ1JCpwyFtFHdlYNgWabmj3MMpB+aLGLZIwudRWLcNpCEzAttAEDixT6qyy9MMskiPCtcCLCjRtyK0Di5CT3pWvONoF5FI9beIpXzXQiJ0BDJ6NZHco+bTZ86KUIMXcUPeszPFzv99/8Ab2XYb5jTKW1TDlRGy6OPxPHjJElYe8qKtrkXzMvxPc+KusKHjwsDod71lNLQlWMxnjNEsXydoG/XX5kQ8AzCkTov8LlRNdKUnX58w7y9Hr+b/erMsyl223EUSWDVN14sLIAN3RAtELdtz+fBNbSSJXviWDw3JFZ3vCqhdxWem86llRCZuXafZQwu7Mf/0gOepRMz93vRx6yKFfj0YJvQHu0HS43PfUunZgH20Kosr6DMtd1pp/jDzJcoOhBGvr0xvPu94hFkbQU5nfdutPrf8go=" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CEE05F68" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+    <a href="#C" id="gotocenter" title="跳到主要內容" tabindex="1" class="sr-only sr-only-focusable">跳到主要內容</a>
+
+    <div class="app">
+        <!--最外層包裝 開始 -->
+        <!-- HEADER -->
+        <header class="home">
+            <div class="container">
+                <div class="header-wrapper">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-8 logo">
+                            <a href="/index.aspx">
+                                <h1>
+                                    <img src="/assets/img/logo.gif" alt="保險業公開資訊網站" /></h1>
+                            </a>
+                        </div>
+
+                        <div class="col-md-9 col-xs-4">
+                            <div class="menu-mobile">
+                                <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" target="_blank">
+								搜尋
+                                    <img src="assets/img/search-icon.svg" alt="搜尋" /><span style="display:none">Search</span>
+                                </a>
+
+                                <a href="#" onclick="openMobileMenu()" title="選單">
+                                    選單
+                                </a>
+                            </div>
+
+                            <ul class="top-nav">
+                                <li>
+                                    <a href="#U" accesskey="U" name="U" title="上方區塊" class="accesskey">:::</a>
+                                    <a href="/index.aspx">
+                                        <img src="/assets/img/nav01.svg" width="20" alt="" />
+                                        回首頁
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/sitemap.html">
+                                        <img src="/assets/img/nav02.svg" width="20" alt="" />
+                                        網站導覽
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)">
+                                        <img src="/assets/img/nav03.svg" width="20" alt="" />
+                                        常見問題
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)">
+                                        <img src="/assets/img/nav04.svg" width="20" alt="" />
+                                        意見信箱
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/FSC/sales/login.aspx">
+                                        <img src="/assets/img/nav05.svg" width="20" alt="" />
+                                        業者登入
+                                    </a>
+                                </li>
+
+                                <li class="last">
+                                    <a href="javascript:;" class="font-sm">
+                                        <span>小</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-md">
+                                        <span>中</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-lg">
+                                        <span>大</span>
+                                    </a>
+                                    <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" title="搜尋(另開視窗)" target="_blank" class="search">
+                                        <i class="fa fa-search">
+                                        </i>搜尋
+                                    </a>
+                                    <!--
+                                    <form id="cse-search-box" target="_blank" action="https://www.google.com/cse"  rel="noopener noreferrer">
+                                    <span class="search">全文檢索
+                              
+                                            <input type="text" name="q" id="textfield" />
+                                            <input type="image" src="images/srch.gif" width="17" height="18" style="float:inherit" alt="搜尋" />
+                                            <input type="hidden" value="008155887231287897481:ghdoakum-vk" name="cx" />
+                                
+                                    </span>
+                                    </form>
+                                    -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- LEFT SIDEBAR -->
+        <div class="left-sidebar text-center">
+            <a href="/customer/accountquery.aspx">
+                <div class="wrap-option">
+                    <div class="img-01">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>統計查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="http://insprod.tii.org.tw/database/insurance/index.asp" target="_blank" title="財團法人保險事業發展中心保險商品查詢(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-02">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>財團法人保險事業發展中心 保險商品查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0" target="_blank" title="政策法規資訊(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-03">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>政策法規資訊</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://rm.ib.gov.tw/Pages/index.aspx" target="_blank" title="教育宣導(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-04">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>教育宣導</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+        </div>
+
+        <section class="slick-banner  page">
+            <div class="wrapper" style="background: url('/assets/img/banner.jpg') no-repeat center center"></div>
+        </section>
+
+        <!-- MOBILE MENU -->
+        <div class="overlay-menu hide">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeMobileMenu()">&times;
+            </a>
+
+            <div class="overlay-content">
+                <!-- <div class="icon text-left">
+                <a href="">網站導覽</a> | <a href="">EN</a> |
+                <a href=""><i class="fa fa-search"></i></a>
+              </div>
+
+              <div class="icon text-left">
+                <a href="">常見問答</a> | <a href="">雙語詞彙</a>
+              </div> -->
+
+                <div class="mobile-nav text-left">
+                    <ul>
+                        <li><a href="/index.aspx"" class="overlink">回首頁</a></li>
+                        <li><a href="/customer/sitemap.html" class="overlink">網站導覽</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)" class="overlink">常見問題</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)" class="overlink">意見信箱</a></li>
+                        <li><a href="/FSC/sales/login.aspx" class="overlink">業者登入</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END OF HEADER -->
+
+       <!-- <div id="MENU">
+            <ul>
+                <li class="c"><a href="announceinfo.aspx"> 
+                    保險業資訊公開</a>  </li>
+                <li><a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0">
+                    政策法規資訊</a></li>
+                <li><a href="https://rm.ib.gov.tw/Pages/index.aspx">
+                    教育宣導</a></li>
+                    <li><a href="accountquery.aspx">
+                    統計查詢</a></li>
+                <li><a href="http://insprod.tii.org.tw/database/insurance/index.asp">
+                    財團法人保險事業發展中心保險商品查詢</a></li>
+            </ul>
+        </div>-->
+
+        <section class="page">
+            <div class="bg-gradient">
+                <div class="container">
+                
+                <div class="row">
+                    <div class="col-md-2 bg-gradient-yellow"></div>
+
+                    <div class="col-md-10 detail">
+                        <a href="#C" accesskey="C" name="C" class="accesskey-content02" title="中央內容區塊">:::</a>
+                                    
+                            <!--內容 開始-->
+                            
+
+    <div class="row text-left breadcrumbs">
+        <div class="col-md-12">
+            <a id="ctl00_MainContent_HyperLink2" href="../index.aspx">首頁</a>
+            /
+            <a id="ctl00_MainContent_HyperLink3" href="announceinfo.aspx">保險資訊公開查詢</a>
+            /
+            <a id="ctl00_MainContent_HyperLink1" href="announceinfo.aspx">單一查詢</a>
+            / 
+            <a id="A1" href="life.aspx?UID=03557017">台灣人壽保險股份有限公司</a>
+            
+                        / 各項財務業務指標
+        </div>
+    </div>
+
+    <div class="row page-title">
+        <div class="col-md-12">
+            <h2><span id="ctl00_MainContent_lbCompanyName">台灣人壽保險股份有限公司</span>
+            - 資訊公開說明文件</h2>
+        </div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">財務概況 - 各項財務業務指標</div>
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+        <tr>
+            <td valign="top" class="contentbg">
+                <div id="contentbox">
+                    <div id="form_date">
+                        <span id="ctl00_MainContent_lblQyDate">資料日期：中華民國115年8月</span><br />
+                        單位：%
+                    </div>
+
+                     <div id="ctl00_MainContent_Panel1">
+	
+                     <div class="title">
+                            依國際會計準則(IFRSs)編製之各項財業務指標(自民國115 年第1 季起適用)    
+                        </div>
+                         <div>
+		<table class="table table-bordered" cellspacing="1" summary="資金運用表" border="0" id="ctl00_MainContent_GridView2" style="width:100%;">
+			<tr class="info">
+				<th scope="col" style="width:5%;">列號</th><th scope="col">&nbsp;</th><th scope="col">財務業務指標項目</th><th scope="col">申報頻率</th><th scope="col">115年度第2季金額</th>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    1
+                                </td><td rowspan="25">&nbsp;</td><td>負債占資產比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl02_Label1">86.13</span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    2
+                                </td><td>保險合約負債對資產比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl03_Label1">74.50</span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    3
+                                </td><td>保險合約負債變動率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl04_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    4
+                                </td><td>淨值比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl05_Label1">14.75</span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    5
+                                </td><td>保險收入變動率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl06_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    6
+                                </td><td>權益變動率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl07_Label1">99.25</span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    7
+                                </td><td>淨利變動率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl08_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    8
+                                </td><td>資金運用比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl09_Label1">101.39</span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    9
+                                </td><td>繼續率（十三個月）</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl10_Label1">96.40</span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    10
+                                </td><td>繼續率（二十五個月）</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl11_Label1">93.93</span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    11
+                                </td><td>資產報酬率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl12_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    12
+                                </td><td>權益報酬率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl13_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    13
+                                </td><td>保險服務結果對保險收入比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl14_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    14
+                                </td><td>保險服務結果對稅前純益比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl15_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    15
+                                </td><td>合約服務邊際釋放對保險服務結果比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl16_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    16
+                                </td><td>損失組成部分對剩餘保障負債比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl17_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    17
+                                </td><td>資金運用淨收益率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl18_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    18
+                                </td><td>投資報酬率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl19_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    19
+                                </td><td>淨投資報酬率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl20_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    20
+                                </td><td>營業利益對保險收入比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl21_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    21
+                                </td><td>稅前純益對保險收入比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl22_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    22
+                                </td><td>純益率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl23_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    23
+                                </td><td>每股盈餘</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl24_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    24
+                                </td><td>投資性不動產與不動產</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl25_Label1"></span>
+                                </td>
+			</tr><tr class="tb3" align="left">
+				<td style="width:5%;">
+                                    25
+                                </td><td>附註說明</td><td>&nbsp;</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView2_ctl26_Label1"></span>
+                                </td>
+			</tr>
+		</table>
+	</div>
+
+                    <div class="memo">
+                        <span id="ctl00_MainContent_Label5" class="info2"><span class='brown'>※115年度備註：</span><pre title='年度備註'>1、115年第二季本公司未適用人身保險業外匯價格變動準備金機制前之每股盈餘為2.35元。
+2、本表係以本公司個體財務資訊進行揭露。</pre></span>
+                        <span id="ctl00_MainContent_Label6" class="info2"></span>
+                        <span id="ctl00_MainContent_Label7" class="info2"></span>
+                        <span id="ctl00_MainContent_Label8" class="info2"></span>
+                        <br />
+                        <p>
+                            <span class="brown">※更新頻率</span><span class="brown">：</span><br />
+                            每季更新：屬第一季及第三季更新者，應於第一季及第三季終了後四十五天內更新; 屬第二季更新者，應於半年度終了後二個月內更新。 每年更新：年度終了後三個月內更新。&quot;
+                            <br />
+                        </p>
+                    </div>
+
+
+                    
+</div>
+
+                    <div class="title">
+                            依國際會計準則(IFRSs)編製之綜合損益表(自民國114年之前)      
+                        </div>
+                    <div>
+	<table class="table table-bordered" cellspacing="1" summary="資金運用表" border="0" id="ctl00_MainContent_GridView1" style="width:100%;">
+		<tr class="info">
+			<th scope="col" style="width:5%;">列號</th><th scope="col">&nbsp;</th><th scope="col">財務業務指標項目</th><th scope="col">申報頻率</th><th scope="col">114年度金額</th><th scope="col">113年度金額</th><th scope="col">112年度金額</th><th scope="col">111年度金額</th>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    1
+                                </td><td rowspan="5">財務結構指標</td><td>負債占資產比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl02_Label1">92.41</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl02_Label2">92.84</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl02_Label3">93.56</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl02_Label4">95.62</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    2
+                                </td><td>各種保險負債對資產比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl03_Label1">80.94</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl03_Label2">81.52</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl03_Label3">82.83</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl03_Label4">86.43</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    3
+                                </td><td>各種保險負債變動率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl04_Label1">1.70</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl04_Label2">2.06</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl04_Label3">-1.28</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl04_Label4">4.06</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    4
+                                </td><td>各種保險負債淨增額對保費收入比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl05_Label1">20.37</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl05_Label2">27.47</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl05_Label3">-18.27</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl05_Label4">56.43</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    5
+                                </td><td>淨值比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl06_Label1">8.07</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl06_Label2">7.62</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl06_Label3">6.93</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl06_Label4">4.72</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    6
+                                </td><td rowspan="3">償債能力指標</td><td>關係企業投資額對權益比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl07_Label1">13.86</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl07_Label2">13.00</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl07_Label3">13.22</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl07_Label4">10.05</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    7
+                                </td><td>初年度保費比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl08_Label1">138.48</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl08_Label2">92.39</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl08_Label3">90.31</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl08_Label4">110.00</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    8
+                                </td><td>續年度保費比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl09_Label1">103.50</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl09_Label2">112.64</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl09_Label3">107.60</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl09_Label4">80.52</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    9
+                                </td><td rowspan="7">經營能力指標</td><td>新契約費用率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl10_Label1">20.78</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl10_Label2">24.80</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl10_Label3">27.23</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl10_Label4">16.37</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    10
+                                </td><td>保費收入變動率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl11_Label1">13.88</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl11_Label2">5.76</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl11_Label3">1.03</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl11_Label4">-10.34</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    11
+                                </td><td>權益變動率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl12_Label1">8.63</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl12_Label2">15.18</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl12_Label3">51.57</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl12_Label4">-42.52</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    12
+                                </td><td>淨利變動率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl13_Label1">-2.91</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl13_Label2">73.42</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl13_Label3">463.46</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl13_Label4">-114.73</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    13
+                                </td><td>資金運用比率</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl14_Label1">100.00</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl14_Label2">100.66</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl14_Label3">99.57</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl14_Label4">99.32</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    14
+                                </td><td>繼續率（十三個月）</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl15_Label1">95.85</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl15_Label2">95.77</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl15_Label3">96.92</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl15_Label4">96.03</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    15
+                                </td><td>繼續率（二十五個月）</td><td>每季</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl16_Label1">94.33</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl16_Label2">94.41</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl16_Label3">94.35</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl16_Label4">96.02</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    16
+                                </td><td rowspan="9">獲利能力指標</td><td>資產報酬率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl17_Label1">0.97</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl17_Label2">1.00</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl17_Label3">0.60</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl17_Label4">-0.14</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    17
+                                </td><td>權益報酬率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl18_Label1">12.24</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl18_Label2">14.07</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl18_Label3">10.52</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl18_Label4">-2.66</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    18
+                                </td><td>資金運用淨收益率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl19_Label1">3.17</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl19_Label2">3.97</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl19_Label3">3.49</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl19_Label4">2.70</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    19
+                                </td><td>投資報酬率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl20_Label1">2.86</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl20_Label2">3.58</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl20_Label3">3.16</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl20_Label4">2.44</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    20
+                                </td><td>營業利益對營業收入比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl21_Label1">7.97</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl21_Label2">9.89</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl21_Label3">5.31</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl21_Label4">-0.80</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    21
+                                </td><td>稅前純益對總收入比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl22_Label1">7.88</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl22_Label2">9.90</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl22_Label3">5.36</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl22_Label4">-0.79</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    22
+                                </td><td>純益率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl23_Label1">8.26</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl23_Label2">9.01</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl23_Label3">5.87</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl23_Label4">-1.97</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    23
+                                </td><td>每股盈餘(元)</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl24_Label1">3.35</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl24_Label2">3.45</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl24_Label3">1.99</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl24_Label4">-0.55</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    24
+                                </td><td>投資性不動產與不動產抵押放款對資產比率</td><td>每年</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl25_Label1">6.18</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl25_Label2">5.72</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl25_Label3">5.82</span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl25_Label4">5.31</span>
+                                </td>
+		</tr><tr class="tb3" align="left">
+			<td style="width:5%;">
+                                    25
+                                </td><td>&nbsp;</td><td>附註說明</td><td>&nbsp;</td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl26_Label1"></span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl26_Label2"></span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl26_Label3"></span>
+                                </td><td align="right">
+                                    <span id="ctl00_MainContent_GridView1_ctl26_Label4"></span>
+                                </td>
+		</tr>
+	</table>
+</div>
+
+                    <div class="memo">
+                        <span id="ctl00_MainContent_lblMemo1" class="info2"><span class='brown'>※114年度備註：</span><pre title='年度備註'>1、114年本公司未適用人身保險業外匯價格變動準備金機制前之每股盈餘為5.56元。
+2、本表係以本公司個體財務資訊進行揭露。</pre></span>
+                        <span id="ctl00_MainContent_lblMemo2" class="info2"><span class='brown'>※113年度備註：</span><pre title='年度備註'>1、113年第四季本公司未適用人身保險業外匯價格變動準備金機制前之每股盈餘為4.04元。
+2、本表係以本公司個體財務資訊進行揭露。</pre></span>
+                        <span id="ctl00_MainContent_lblMemo3" class="info2"><span class='brown'>※112年度備註：</span><pre title='年度備註'>1、112年第四季本公司未適用人身保險業外匯價格變動準備金機制前之每股盈餘為1.19元。
+2、本表係以本公司個體財務資訊進行揭露。</pre></span>
+                        <span id="ctl00_MainContent_lblMemo4" class="info2"><span class='brown'>※111年度備註：</span><pre title='年度備註'>1、111年第四季本公司未適用人身保險業外匯價格變動準備金機制前之每股盈餘為0.64元。
+2、本表係以本公司個體財務資訊進行揭露。</pre></span>
+                        <br />
+                        <p>
+                            <span class="brown">※更新頻率</span><span class="brown">：</span><br />
+                            每季更新：屬第一季及第三季更新者，應於第一季及第三季終了後四十五天內更新; 屬第二季更新者，應於半年度終了後二個月內更新。 每年更新：年度終了後三個月內更新。&quot;
+                            <br />
+                        </p>
+                    </div>
+
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+                           
+                    </div>
+                </div>
+                </div>
+
+                <div class="row text-center">
+                <img src="/assets/img/bg-city.png" width="100%" class="bg-city" alt="" />
+                </div>
+            </div>
+        </section>
+
+
+        <section class="link">
+            <div class="row text-center">
+                <div class="col-md-4 col-xs-6">
+                    <a href="openData.aspx">資料開放宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="Information.aspx">資訊安全政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="privacy.aspx">隱私權政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="#" class="hide">無障礙聲明</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>
+                            金融監督管理委員會保險局 版權所有
+                            <br />
+                            220232 新北市板橋區縣民大道二段7號17樓
+                            <span>電話:(02)8968-0899</span> <span>傳真:(02)8969-1300</span><br />
+                            紐約辦事處：1 E.42 Street, 13F, New York, NY 10017, U.S.A. Tel:(1-212) 317-7326
+                            <br />
+                            倫敦辦事處：46-48 Grosvenor Gardens London SW1W 0EB,UK Tel:(44-20)7628-1501
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="border">
+                            歡迎連結使用金融監督管理委員會網站資料。引用時，請註明資料來源，請確保資料之完整性， 不得任意增刪，亦不得作為商業使用。
+                        </p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <a href="https://www.gov.tw/" target="_blank" title="我的e政府(另開視窗)"><img src="/assets/img/gov.png" alt="我的e政府" /></a>
+                        <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20230913102307" target="_blank" title="無障礙網站(另開視窗)"><img src="../assets/img/standard.jpg" alt="通過A檢測等級無障礙網頁檢測" /></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!--最外層包裝  END-->
+    </form>
+
+
+
+         
+
+                
+
+
+
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="Scripts/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/assets/js/slick/slick/slick.js"></script>
+
+    <script src="/assets/js/main.js?v1.1"></script>
+</body>
+</html>

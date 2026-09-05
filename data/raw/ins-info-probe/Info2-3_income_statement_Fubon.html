@@ -1,0 +1,719 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head id="ctl00_Head1"><title>
+	保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 綜合損益表
+</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link href="/assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="/assets/css/bootstrap-3.3.6.min.css" rel="stylesheet" /><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick.css" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick-theme.css" /><link href="/assets/css/main.css?v1.1" rel="stylesheet" />
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-27907866-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119881418-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119881418-1');
+</script>
+
+    
+</head>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
+<script language=javascript >
+
+
+    function prep() {
+        //alert('go back');
+        history.go(-1);
+        //window.location.href = "default.aspx"
+    }
+    //-------------------
+    //      有問題
+    //-------------------
+    function postData(url) {
+        document.forms[0].action = url;
+        document.forms[0].submit();
+    }
+
+    function sendURL(url) {
+        window.location = url;
+    }
+
+    function setInsuType(type) {
+        var idx = 0;
+        if (type == "A")
+            idx = 0;
+        else if (type == "產險")
+            idx = 1;
+        else if (type == "壽險")
+            idx = 2;
+
+        //document.getElementById("insurancetype").selectedIndex = idx;
+        document.getElementById('insurancetype').options(idx).selected = true;
+    }
+
+</script>
+
+<body>
+<noscript><div style="z-index: 99999;color: black;background: #fff;right: 0;top: 0;width:100%;padding: 10px;">您的瀏覽器不支援JavaScript語法，若網頁功能無法正常使用時，請開啟瀏覽器JavaScript功能</div></noscript>
+    <form name="aspnetForm" method="post" action="Info2-3.aspx?UID=27935073" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="83D8EC58" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+    <a href="#C" id="gotocenter" title="跳到主要內容" tabindex="1" class="sr-only sr-only-focusable">跳到主要內容</a>
+
+    <div class="app">
+        <!--最外層包裝 開始 -->
+        <!-- HEADER -->
+        <header class="home">
+            <div class="container">
+                <div class="header-wrapper">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-8 logo">
+                            <a href="/index.aspx">
+                                <h1>
+                                    <img src="/assets/img/logo.gif" alt="保險業公開資訊網站" /></h1>
+                            </a>
+                        </div>
+
+                        <div class="col-md-9 col-xs-4">
+                            <div class="menu-mobile">
+                                <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" target="_blank">
+								搜尋
+                                    <img src="assets/img/search-icon.svg" alt="搜尋" /><span style="display:none">Search</span>
+                                </a>
+
+                                <a href="#" onclick="openMobileMenu()" title="選單">
+                                    選單
+                                </a>
+                            </div>
+
+                            <ul class="top-nav">
+                                <li>
+                                    <a href="#U" accesskey="U" name="U" title="上方區塊" class="accesskey">:::</a>
+                                    <a href="/index.aspx">
+                                        <img src="/assets/img/nav01.svg" width="20" alt="" />
+                                        回首頁
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/sitemap.html">
+                                        <img src="/assets/img/nav02.svg" width="20" alt="" />
+                                        網站導覽
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)">
+                                        <img src="/assets/img/nav03.svg" width="20" alt="" />
+                                        常見問題
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)">
+                                        <img src="/assets/img/nav04.svg" width="20" alt="" />
+                                        意見信箱
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/FSC/sales/login.aspx">
+                                        <img src="/assets/img/nav05.svg" width="20" alt="" />
+                                        業者登入
+                                    </a>
+                                </li>
+
+                                <li class="last">
+                                    <a href="javascript:;" class="font-sm">
+                                        <span>小</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-md">
+                                        <span>中</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-lg">
+                                        <span>大</span>
+                                    </a>
+                                    <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" title="搜尋(另開視窗)" target="_blank" class="search">
+                                        <i class="fa fa-search">
+                                        </i>搜尋
+                                    </a>
+                                    <!--
+                                    <form id="cse-search-box" target="_blank" action="https://www.google.com/cse"  rel="noopener noreferrer">
+                                    <span class="search">全文檢索
+                              
+                                            <input type="text" name="q" id="textfield" />
+                                            <input type="image" src="images/srch.gif" width="17" height="18" style="float:inherit" alt="搜尋" />
+                                            <input type="hidden" value="008155887231287897481:ghdoakum-vk" name="cx" />
+                                
+                                    </span>
+                                    </form>
+                                    -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- LEFT SIDEBAR -->
+        <div class="left-sidebar text-center">
+            <a href="/customer/accountquery.aspx">
+                <div class="wrap-option">
+                    <div class="img-01">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>統計查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="http://insprod.tii.org.tw/database/insurance/index.asp" target="_blank" title="財團法人保險事業發展中心保險商品查詢(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-02">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>財團法人保險事業發展中心 保險商品查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0" target="_blank" title="政策法規資訊(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-03">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>政策法規資訊</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://rm.ib.gov.tw/Pages/index.aspx" target="_blank" title="教育宣導(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-04">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>教育宣導</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+        </div>
+
+        <section class="slick-banner  page">
+            <div class="wrapper" style="background: url('/assets/img/banner.jpg') no-repeat center center"></div>
+        </section>
+
+        <!-- MOBILE MENU -->
+        <div class="overlay-menu hide">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeMobileMenu()">&times;
+            </a>
+
+            <div class="overlay-content">
+                <!-- <div class="icon text-left">
+                <a href="">網站導覽</a> | <a href="">EN</a> |
+                <a href=""><i class="fa fa-search"></i></a>
+              </div>
+
+              <div class="icon text-left">
+                <a href="">常見問答</a> | <a href="">雙語詞彙</a>
+              </div> -->
+
+                <div class="mobile-nav text-left">
+                    <ul>
+                        <li><a href="/index.aspx"" class="overlink">回首頁</a></li>
+                        <li><a href="/customer/sitemap.html" class="overlink">網站導覽</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)" class="overlink">常見問題</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)" class="overlink">意見信箱</a></li>
+                        <li><a href="/FSC/sales/login.aspx" class="overlink">業者登入</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END OF HEADER -->
+
+       <!-- <div id="MENU">
+            <ul>
+                <li class="c"><a href="announceinfo.aspx"> 
+                    保險業資訊公開</a>  </li>
+                <li><a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0">
+                    政策法規資訊</a></li>
+                <li><a href="https://rm.ib.gov.tw/Pages/index.aspx">
+                    教育宣導</a></li>
+                    <li><a href="accountquery.aspx">
+                    統計查詢</a></li>
+                <li><a href="http://insprod.tii.org.tw/database/insurance/index.asp">
+                    財團法人保險事業發展中心保險商品查詢</a></li>
+            </ul>
+        </div>-->
+
+        <section class="page">
+            <div class="bg-gradient">
+                <div class="container">
+                
+                <div class="row">
+                    <div class="col-md-2 bg-gradient-yellow"></div>
+
+                    <div class="col-md-10 detail">
+                        <a href="#C" accesskey="C" name="C" class="accesskey-content02" title="中央內容區塊">:::</a>
+                                    
+                            <!--內容 開始-->
+                            
+
+
+    <div class="row text-left breadcrumbs">
+        <div class="col-md-12">
+            <a id="ctl00_MainContent_HyperLink2" href="../index.aspx">首頁</a>
+            /
+            <a id="ctl00_MainContent_HyperLink3" href="announceinfo.aspx">保險資訊公開查詢</a>
+            /
+           <a id="ctl00_MainContent_HyperLink1" href="announceinfo.aspx">單一查詢</a>
+            / 
+            <a id="A1" href="life.aspx?UID=27935073">富邦人壽保險股份有限公司</a>
+            
+                        / 綜合損益表
+        </div>
+    </div>
+
+    <div class="row page-title">
+        <div class="col-md-12">
+            <h2><span id="ctl00_MainContent_lbCompanyName">富邦人壽保險股份有限公司</span>
+            - 資訊公開說明文件</h2>
+        </div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">財務狀況 - 綜合損益表</div>
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+        <tr>
+            <td valign="top" class="contentbg">
+                <div id="contentbox">
+                    <div id="form_date">
+                        <span id="ctl00_MainContent_lblQyDate">資料日期：中華民國115年8月</span></br>單位：新臺幣仟元
+                    </div>
+
+                    <div id="ctl00_MainContent_Panel2">
+	
+
+                        <div class="title">
+                            依國際會計準則(IFRSs)編製之綜合損益表(自民國115年第1季起適用)      
+                        </div>
+
+                        <div>
+		<table class="table table-bordered" cellspacing="1" summary="綜合損益表" border="0" id="ctl00_MainContent_GridView3" style="width:100%;">
+			<tr class="info">
+				<th scope="col" style="width:5%;">列號</th><th scope="col" style="width:45%;">項目</th><th scope="col" style="width:10%;">115年度第2季金額</th>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        1
+                                    </td><td>保險收入</td><td align="right">
+                                        54,789,283
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        2
+                                    </td><td>保險服務費用</td><td align="right">
+                                        -34,745,285
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        3
+                                    </td><td>所持有之再保險合約收益或費損</td><td align="right">
+                                        -279,922
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        4
+                                    </td><td>保險服務結果合計</td><td align="right">
+                                        19,764,076
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        5
+                                    </td><td>財務結果</td><td align="right">
+                                        54,006,947
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        6
+                                    </td><td>其他營業結果</td><td align="right">
+                                        -13,614,925
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        7
+                                    </td><td>營業利益(損失)</td><td align="right">
+                                        60,156,098
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        8
+                                    </td><td>營業外收入及支出</td><td align="right">
+                                        581,727
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        9
+                                    </td><td>稅前純益(損)</td><td align="right">
+                                        60,737,825
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        10
+                                    </td><td>所得稅(費用)利益</td><td align="right">
+                                        -4,758,587
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        11
+                                    </td><td>本期淨利(損)</td><td align="right">
+                                        55,979,238
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        12
+                                    </td><td>本期其他綜合(損)益(稅後淨額)</td><td align="right">
+                                        308,933,341
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        13
+                                    </td><td>本期綜合(損)益總額</td><td align="right">
+                                        364,912,579
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        14
+                                    </td><td>每股盈餘(單位：元) (依本期淨利計算)</td><td align="right">
+                                        4.70
+                                    </td>
+			</tr>
+		</table>
+	</div>
+
+                        <div class="memo">
+                            <span id="ctl00_MainContent_lblMemo9" class="info2"><span class='brown'>※115年度備註：</span><pre title='年度備註'>1. 115年度第2季本公司未適用人身保險業外匯價格變動準備金機制之每股盈餘為5.48元。。
+2. 本表係合併財務資訊。
+</pre></span>
+                            <span id="ctl00_MainContent_lblMemo10" class="info2"></span>
+                            <span id="ctl00_MainContent_lblMemo11" class="info2"></span>
+                            <span id="ctl00_MainContent_lblMemo12" class="info2"></span>
+
+                            <p>
+                                <br></br>
+                                <span class="brown">※附註：</span><br />
+                                保險業財務報告編製係依據「保險業財務報告編製準則」第7條編製合併財務報告，若無子公司者則編製個別財務報告。
+                            </p>
+                        </div>
+
+                        <div class="title">
+                            民國114年前會計準則損益表
+                        </div>
+                    
+</div>
+
+
+                    <div id="ctl00_MainContent_Panel1">
+	
+
+                        <div class="title">
+                            依國際會計準則(IFRSs)編製之綜合損益表(自民國114年第1季起適用)      
+                        </div>
+
+                        <div>
+		<table class="table table-bordered" cellspacing="1" summary="綜合損益表" border="0" id="ctl00_MainContent_GridView2" style="width:100%;">
+			<tr class="info">
+				<th scope="col" style="width:5%;">列號</th><th scope="col" style="width:45%;">項目</th><th scope="col" style="width:10%;">114年度金額</th>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        1
+                                    </td><td>營業收入</td><td align="right">
+                                        569,542,095
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        2
+                                    </td><td>營業成本</td><td align="right">
+                                        -482,392,344
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        3
+                                    </td><td>營業費用</td><td align="right">
+                                        -24,440,384
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        4
+                                    </td><td>營業利益(損失)</td><td align="right">
+                                        62,709,367
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        5
+                                    </td><td>營業外收入及支出</td><td align="right">
+                                        1,139,751
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        6
+                                    </td><td>稅前純益(損)</td><td align="right">
+                                        63,849,118
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        7
+                                    </td><td>所得稅(費用)利益</td><td align="right">
+                                        -1,819,680
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        8
+                                    </td><td>停業單位(損失)利益</td><td align="right">
+                                        0
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        9
+                                    </td><td>本期淨利(損)</td><td align="right">
+                                        62,029,438
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        10
+                                    </td><td>本期其他綜合(損)益(稅後淨額)</td><td align="right">
+                                        -29,865,509
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        11
+                                    </td><td>本期綜合(損)益總額</td><td align="right">
+                                        32,163,929
+                                    </td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        12
+                                    </td><td>每股盈餘(單位：元) (依本期淨利計算)</td><td align="right">
+                                        5.29
+                                    </td>
+			</tr>
+		</table>
+	</div>
+
+                        <div class="memo">
+                            <span id="ctl00_MainContent_lblMemo1" class="info2"><span class='brown'>※114年度備註：</span><pre title='年度備註'>1. 114年本公司未適用人身保險業外匯價格變動準備金機制之每股盈餘為12.90元。
+2. 本表係合併財務資訊。</pre></span>
+                            <span id="ctl00_MainContent_lblMemo2" class="info2"></span>
+                            <span id="ctl00_MainContent_lblMemo3" class="info2"></span>
+                            <span id="ctl00_MainContent_lblMemo4" class="info2"></span>
+
+                            <p>
+                                <br></br>
+                                <span class="brown">※附註：</span><br />
+                                保險業財務報告編製係依據「保險業財務報告編製準則」第7條編製合併財務報告，若無子公司者則編製個別財務報告。
+                            </p>
+                        </div>
+
+                        <div class="title">
+                            民國114年前會計準則損益表
+                        </div>
+                    
+</div>
+
+                    <div>
+	<table class="table table-bordered" cellspacing="1" summary="綜合損益表" border="0" id="ctl00_MainContent_GridView1" style="width:100%;">
+		<tr class="info">
+			<th scope="col" style="width:5%;">列號</th><th scope="col" style="width:45%;">項目</th><th scope="col" style="width:10%;">113年度金額</th>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        1
+                                    </td><td>營業收入</td><td align="right">
+                                        664,359,801
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        2
+                                    </td><td>營業成本</td><td align="right">
+                                        -525,961,908
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        3
+                                    </td><td>營業費用</td><td align="right">
+                                        -24,329,630
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        4
+                                    </td><td>營業利益(損失)</td><td align="right">
+                                        114,068,263
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        5
+                                    </td><td>營業外收入及支出</td><td align="right">
+                                        1,500,163
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        6
+                                    </td><td>稅前純益(損)</td><td align="right">
+                                        115,568,426
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        7
+                                    </td><td>所得稅(費用)利益</td><td align="right">
+                                        -13,329,364
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        8
+                                    </td><td>本期淨利(損)</td><td align="right">
+                                        102,239,062
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        9
+                                    </td><td>本期其他綜合(損)益(稅後淨額)</td><td align="right">
+                                        18,768,396
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        10
+                                    </td><td>本期綜合(損)益總額</td><td align="right">
+                                        121,007,458
+                                    </td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                        11
+                                    </td><td>每股盈餘(單位：元) (依本期淨利計算)</td><td align="right">
+                                        8.67
+                                    </td>
+		</tr>
+	</table>
+</div>
+
+                    <div class="memo">
+                        <span id="ctl00_MainContent_lblMemo5" class="info2"><span class='brown'>※113年度備註：</span><pre title='年度備註'>1. 113年本公司未適用人身保險業外匯價格變動準備金機制之每股盈餘為9.50元。
+2. 本表係合併財務資訊。</pre></span>
+                        <span id="ctl00_MainContent_lblMemo6" class="info2"></span>
+                        <span id="ctl00_MainContent_lblMemo7" class="info2"></span>
+                        <br />
+                        <p>
+                            <span class="brown">※申報頻率</span><span class="brown">：</span><br />
+                            每季更新<br />
+                        </p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+                           
+                    </div>
+                </div>
+                </div>
+
+                <div class="row text-center">
+                <img src="/assets/img/bg-city.png" width="100%" class="bg-city" alt="" />
+                </div>
+            </div>
+        </section>
+
+
+        <section class="link">
+            <div class="row text-center">
+                <div class="col-md-4 col-xs-6">
+                    <a href="openData.aspx">資料開放宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="Information.aspx">資訊安全政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="privacy.aspx">隱私權政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="#" class="hide">無障礙聲明</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>
+                            金融監督管理委員會保險局 版權所有
+                            <br />
+                            220232 新北市板橋區縣民大道二段7號17樓
+                            <span>電話:(02)8968-0899</span> <span>傳真:(02)8969-1300</span><br />
+                            紐約辦事處：1 E.42 Street, 13F, New York, NY 10017, U.S.A. Tel:(1-212) 317-7326
+                            <br />
+                            倫敦辦事處：46-48 Grosvenor Gardens London SW1W 0EB,UK Tel:(44-20)7628-1501
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="border">
+                            歡迎連結使用金融監督管理委員會網站資料。引用時，請註明資料來源，請確保資料之完整性， 不得任意增刪，亦不得作為商業使用。
+                        </p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <a href="https://www.gov.tw/" target="_blank" title="我的e政府(另開視窗)"><img src="/assets/img/gov.png" alt="我的e政府" /></a>
+                        <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20230913102307" target="_blank" title="無障礙網站(另開視窗)"><img src="../assets/img/standard.jpg" alt="通過A檢測等級無障礙網頁檢測" /></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!--最外層包裝  END-->
+    </form>
+
+
+
+         
+
+                
+
+
+
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="Scripts/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/assets/js/slick/slick/slick.js"></script>
+
+    <script src="/assets/js/main.js?v1.1"></script>
+</body>
+</html>
