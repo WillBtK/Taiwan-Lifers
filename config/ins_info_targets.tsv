@@ -59,3 +59,34 @@ life.aspx lowercase param	https://ins-info.ib.gov.tw/customer/life.aspx?uid=0355
 company page by UID	https://ins-info.ib.gov.tw/customer/company.aspx?UID=03557115
 Info2-2 with UID	https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557115
 announceinfo with UID	https://ins-info.ib.gov.tw/customer/announceinfo.aspx?UID=03557115
+#
+# Pass 4 (2026-09-05). Pass 3 found the opening: Info2-2.aspx?UID=<8-digit id>
+# returns a PER-COMPANY BALANCE SHEET by plain GET, 122KB, no postback needed.
+# So the firm-level disclosures are URL-addressable and the whole per-company
+# menu should be Info2-N for some range of N. This pass walks that range to
+# learn which N is which report -- the titles say so -- looking above all for
+# 資金運用表 (fund utilisation: the hedge-ratio denominator per firm) and
+# 資本適足性 (capital adequacy per firm).
+#
+# 03557115 is 臺灣產物 (non-life), the one UID confirmed to work. 03557017 is
+# 台灣人壽's business-registration number from the TWSE registry: if it answers,
+# UID is simply the 統一編號 and every firm in the panel is addressable.
+
+Info2-1 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557115
+Info2-2 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557115
+Info2-3 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-3.aspx?UID=03557115
+Info2-4 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-4.aspx?UID=03557115
+Info2-5 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557115
+Info2-6 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-6.aspx?UID=03557115
+Info2-7 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-7.aspx?UID=03557115
+Info2-8 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-8.aspx?UID=03557115
+Info2-9 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-9.aspx?UID=03557115
+Info2-10 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-10.aspx?UID=03557115
+Info2-11 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-11.aspx?UID=03557115
+Info2-12 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID=03557115
+Info2-13 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-13.aspx?UID=03557115
+Info2-14 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557115
+Info2-15 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-15.aspx?UID=03557115
+Info2-16 (non-life UID)	https://ins-info.ib.gov.tw/customer/Info2-16.aspx?UID=03557115
+Info2-2 with a LIFE insurer's 統編	https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557017
+Info2-1 with a LIFE insurer's 統編	https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017
