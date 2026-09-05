@@ -2180,3 +2180,49 @@ blocking anything.
 
 **Files.** `scripts/stage3_load_mops.py`, `data/mops_statements.csv`,
 `out/stage3_mops_load_20260905.sql`, `cache/mops/`.
+
+### 4.18 The 2024Q4 anchor pays for itself: Fubon's reserve build, decomposed, with a residual worth chasing
+
+Fubon's 2024 year-end filing arrived on 2026-09-05, giving the project its
+first **pre-shock** firm-level FX-reserve balance. It is the single most
+informative row the MOPS queue has returned.
+
+| Fubon Life | FX volatility reserve | Total assets | Reserve / assets |
+|---|---|---|---|
+| 2024Q4 | 21,480.601 | 6,203,993.341 | 0.35% |
+| 2025Q4 | 142,124.635 | 6,388,704.628 | 2.22% |
+
+**A 6.6x build, +NT$120.6bn, in the year the sector took record FX losses.**
+That is the opposite of the naive expectation — a shock draws a buffer down —
+and it is the central fact about the 2025 buffer regime: the reserve is not
+a passive cushion that erodes, it is a provisioning account the FSC allowed
+and required to be filled aggressively while losses were being taken.
+
+**The decomposition, using the cash-flow line already parsed.** The statement
+of cash flows carries the year-to-date net change in the reserve, and the sign
+convention is pinned (a negative figure is an addition, 4.5). For 2025 it
+reads −112,638.262, so **112.6bn of the 120.6bn build came through that
+line**, leaving a **residual of +8,005.772** — 6.6% of the change — that the
+cash-flow line does not explain.
+
+**The residual is not noise and should not be rounded away.** Two candidate
+explanations, neither yet tested: transfers into the reserve from special
+surplus reserve sit in the equity statement rather than in the operating
+cash-flow line, or the FSC's 2025 reforms created reserve sub-buckets carried
+under XBRL concepts the parser does not match, in which case the *headline
+balance itself* understates FX loss-absorbing capacity. The second would
+matter directly for series 3, whose v2 definition is explicitly four named
+buckets (README §3). The parser currently matches one concept family
+(`*ReserveForForeignExchangeValuation`); enumerating every reserve-like
+concept in a 2025 filing would settle it, and that is the next thing to do on
+this channel.
+
+**Why this row and not another.** Fubon is the only firm holding both anchors,
+which is precisely what the remaining 2024Q4 queue is for: without a
+pre-shock balance the build is invisible and only the post-shock level shows.
+Taiwan Life's 2025Q4 also landed, promoting its 2026 balances to a statement
+base (29,977.868 and 33,343.941), so five of six firms now derive their 2026
+reserve from their own filing rather than a deck.
+
+**Files.** `data/mops_statements.csv`, `out/stage3_mops_load_20260905.sql`,
+`cache/mops/`.
