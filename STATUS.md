@@ -172,6 +172,11 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
 1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
    (`FRED_API_KEY` is). Writes go through the MCP for now.
+1a0. **No reachable open-data host replaces ins-info** (4.14): TII's 139 tables
+   are catalogued in `config/tii_tables.tsv`, and its 38 firm-level tables are
+   business volume only. Firm financials come from MOPS XBRL or ins-info,
+   nowhere else.
+
 1a. **Ingestion is now a weekly workflow** (`fetch-sources`, decisions 4.13),
    covering TIGF, TII and the data.gov.tw catalogue. Only `ins-info` still
    needs a human, because it refuses every egress CI has; deploying

@@ -2007,3 +2007,43 @@ the relay ships as code and documentation with nothing deployed.
 `.github/workflows/fetch-sources.yml`, `.github/workflows/probe-sources.yml`,
 `ops/taiwan-relay/` (`main.py`, `requirements.txt`, `Procfile`, `README.md`),
 `data/raw/tii/`, `.gitignore`.
+
+### 4.14 The catalogue sweep: TII does not replace ins-info, and the relay decision stands
+
+Before recommending that the user spend money on Taiwan egress (4.13), the
+obvious alternative was tested: is there a *reachable* host publishing what
+ins-info publishes? The answer is no, and it is now settled rather than
+assumed.
+
+**Method.** data.gov.tw's `list` endpoint ignores every filter parameter
+tried, so agency enumeration is impossible directly. Twelve insurance keyword
+searches through `dropdown` yielded 1,151 candidate datasets; `detail` on each
+gave the resource url, and the urls were grouped by host
+(`scripts/discover_opendata_catalogue.py`).
+
+**Result.** `openapi.tii.org.tw` — reachable, no key, the host that already
+serves 表17-1 — carries **139 tables**, now catalogued in
+`config/tii_tables.tsv` because TableIDs cannot be guessed (I17 and I172 both
+answer "table not find!"; they exist only inside a dataset's resource url).
+Thirty-eight of those 139 are firm-level, which sounds promising and is not:
+every one is **business volume by company** — new and in-force contracts,
+sums assured, premium income by line (K64–K73, K94–K100). The financial
+tables on the host are all **sector** aggregates: I14 balance sheet, I15
+income statement, I171 life fund utilisation, I161 non-life fund utilisation,
+K46/K47 the two-year sector statements.
+
+**So the gap is precisely characterised.** No reachable open-data host carries
+firm balance sheets, firm fund utilisation, or firm foreign investment. For
+the six-firm panel those come from exactly two places: MOPS XBRL (reachable,
+already used, but slow against the WAF — 4.3) and ins-info (not reachable
+without Taiwan egress). Nothing in the catalogue changes the relay decision;
+it removes the hope that something might.
+
+**What the sweep did add.** Firm-level premium and contract volumes on a
+reachable host, which the project did not have. Those are not FX quantities,
+but they give an independent asset-weighting for aggregating the six-firm
+panel to sector, and a direct read on the premium-growth question that
+AMOUNT9 in the statutory indicators answers ambiguously (4.10). Queued
+rather than loaded: it is Stage 5 material, not Stage 3.
+
+**Files.** `scripts/discover_opendata_catalogue.py`, `config/tii_tables.tsv`.
