@@ -4253,3 +4253,69 @@ end-to-end verified. Repeated attempts appear to renew the block rather than
 outlast it, so the endpoint is left alone. The firm-statement route to hedge
 ratios back to 2013 remains the open path, and its next step is a single patient
 attempt after a long idle period, not another crawl.
+
+---
+
+### 4.48 The P&L reconstruction is not a level series before 2024, and the bias is not constant
+
+The user looked at the focused hedge-ratio chart and asked why the numbers were
+so wildly different. They are, and measuring it rather than explaining it away
+gives a result that changes how the reconstruction may be used.
+
+**Three measurements.**
+
+1. **The validation is four months.** `reg_hedge_ratio` (published) starts
+   2024-04; `reg_hedge_ratio_pl_rolling` ends 2025-05. They coincide on exactly
+   four dates. The gaps, reconstruction less published:
+
+   | | 2024-04 | 2024-12 | 2025-04 | 2025-08 |
+   |---|---|---|---|---|
+   | gap, pp | +2.9 | +5.9 | +4.9 | −5.4 |
+
+   Mean +2.1pp, MAE 4.8pp — consistent with the 4.4/5.6pp figures 4.29 reported,
+   but on a sample of four.
+
+2. **At the long end the gap is roughly +15pp.** Over 2020-07 → 2022-11, taking
+   only the months where the swap carry was NOT imputed, the reconstruction runs
+   **76.1% to 85.3%, mean 79.9%**. For that same period 1.11 records the
+   壽險公會's own characterisation: 「一般都在 60%～70% 以上」, and commissioned
+   research 「約六至七成」. Against the midpoint of the association's range the
+   reconstruction is **+14.9pp**.
+
+3. **So the bias drifts.** About +2pp where it can be checked, about +15pp three
+   years earlier. A bias that grows with distance from the validation window
+   means the reconstruction's SHAPE is unreliable at the long end, not merely
+   its level — the 85% → 66% decline it draws may be substantially an artefact
+   of the bias unwinding rather than the ratio falling.
+
+**Why it runs high, mechanically.** The identity measures H/A: derivatives
+marked through P&L over the FX book whose translation reaches P&L. The FSC
+publishes H_trad/D. The numerator is wider — the identity cannot distinguish the
+hedges the FSC counts as 傳統避險 from proxy and cross-currency positions whose
+marks also reach P&L. The denominator is not the regulatory one. 4.29 said a
+residual scope gap was expected and refused to calibrate it out, which was right;
+what it did not establish is that the gap is stable, and it is not.
+
+**What this changes.**
+
+* The reconstruction stays loaded and stays `basis = estimated`. It is a
+  DIRECTION indicator over the window it was checked on.
+* It must not be used to state a LEVEL before 2024-04, and the 85.2% figure for
+  2019-01 must not be quoted at all — it sits outside the validation window and
+  carries an imputed carry on top (±5pp per NT$10bn/month assumed).
+* The "−42pp fall since 2019" framing, which the first version of the focused
+  artifact used as a headline tile, is withdrawn. The defensible statement is the
+  published one: **66.0% (2024-04) → 42.94% (2026-07), −23.1pp in 27 months,
+  about −10.2pp a year.**
+* The association's 60–70% range is now drawn on the chart as a band, and the
+  reconstruction is faded outside 2024-04 → 2025-05 with the validation bracket
+  marked. The reader sees the disagreement rather than being told a level.
+
+**The open question this leaves.** If the association was right that the ratio
+was 60–70% in 2021-22, then the ratio has fallen far less than the reconstruction
+implies — perhaps 65% → 43%, not 85% → 43%. Distinguishing the two needs a
+pre-2024 level anchor that is neither the reconstruction nor a spoken range.
+The firm-statement route of 4.46 is the candidate: firm-level 兌換損益 and
+避險工具損益 give the same identity per company, where the deck-disclosed hedge
+composition provides an independent level check for the same quarter. That is
+now the highest-value open item in the hedge-ratio workstream.
