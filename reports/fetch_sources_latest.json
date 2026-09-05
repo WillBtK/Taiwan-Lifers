@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T00:41:54.332345+00:00",
+ "run_at": "2026-09-05T00:45:09.903135+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
@@ -14,19 +14,17 @@
    "name": "tii_I171",
    "url": "https://openapi.tii.org.tw/TIIOPENDATA/API/CSV_EXPORT?TableID=I171",
    "needs_relay": false,
-   "status": "written",
+   "status": "unchanged",
    "sha256": "dd09b3f4a4b74341c1d7dc5914835d3689227627b75a544a41e8a2c413d6f623",
-   "bytes": 5978,
-   "path": "data/raw/tii/tii_I171_20260905.csv"
+   "matches": "tii_I171_20260905.csv"
   },
   {
    "name": "tii_K47",
    "url": "https://openapi.tii.org.tw/TIIOpenData/API/CSV_EXPORT?TableID=K47",
    "needs_relay": false,
-   "status": "written",
+   "status": "unchanged",
    "sha256": "093824f00fc93062956a6a047ca77614aea94800ea4b2f43a5b20441e5eaa097",
-   "bytes": 669,
-   "path": "data/raw/tii/tii_K47_20260905.csv"
+   "matches": "tii_K47_20260905.csv"
   },
   {
    "name": "json-06161610",
@@ -44,8 +42,8 @@
   }
  ],
  "summary": {
-  "written": 3,
-  "unchanged": 0,
+  "written": 1,
+  "unchanged": 2,
   "unavailable": 2
  }
 }
