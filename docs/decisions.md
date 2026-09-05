@@ -4245,7 +4245,11 @@ its evidence.
 **MOPS download, status.** The mechanism from 4.46's next step is now understood
 and fixed in code: `step=9` does not stream the filing, it returns an HTML page
 linking to `/pdf/<name>_<timestamp>.pdf` with a per-request timestamp, so the URL
-cannot be constructed. One filing's link page was retrieved successfully, proving
-the route. The WAF has since re-blocked the endpoint, so no PDF has yet landed —
-a rate limit, not a defect. The firm-statement route to hedge ratios back to 2013
-remains the open path.
+cannot be constructed. The FIRST leg is proven — one filing's link page was
+retrieved and carried a well-formed href. The SECOND leg, fetching that link, is
+still untested: every attempt since has drawn the WAF's block page, four in a row
+on the one filing tried, so no PDF has landed and the chain is not yet
+end-to-end verified. Repeated attempts appear to renew the block rather than
+outlast it, so the endpoint is left alone. The firm-statement route to hedge
+ratios back to 2013 remains the open path, and its next step is a single patient
+attempt after a long idle period, not another crawl.
