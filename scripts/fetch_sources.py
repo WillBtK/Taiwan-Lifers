@@ -50,7 +50,54 @@ SOURCES = [
      "ins-info", "json", True, False),
     ("json-06021011", "https://ins-info.ib.gov.tw/opendata/json-06021011.aspx",
      "ins-info", "json", True, False),
+    # The other seven aggregate tables, found by walking the portal's report
+    # menu (decisions 4.26). json-<code>.aspx holds for every 彙計表 code.
+    ("json-05010111", "https://ins-info.ib.gov.tw/opendata/json-05010111.aspx",
+     "ins-info", "json", True, False),      # 公司基本資料
+    ("json-05020511", "https://ins-info.ib.gov.tw/opendata/json-05020511.aspx",
+     "ins-info", "json", True, False),      # 內部人員數
+    ("json-05030310", "https://ins-info.ib.gov.tw/opendata/json-05030310.aspx",
+     "ins-info", "json", True, False),      # 股東持股
+    ("json-05030311", "https://ins-info.ib.gov.tw/opendata/json-05030311.aspx",
+     "ins-info", "json", True, False),      # 股權異動
+    ("json-06161601", "https://ins-info.ib.gov.tw/opendata/json-06161601.aspx",
+     "ins-info", "json", True, False),      # 產險財務業務指標
+    ("json-07010801", "https://ins-info.ib.gov.tw/opendata/json-07010801.aspx",
+     "ins-info", "json", True, False),      # 產險業務概況
+    ("json-07011010", "https://ins-info.ib.gov.tw/opendata/json-07011010.aspx",
+     "ins-info", "json", True, False),      # 壽險業務概況
+    ("json-07090901", "https://ins-info.ib.gov.tw/opendata/json-07090901.aspx",
+     "ins-info", "json", True, False),      # 申訴率統計
 ]
+
+# Per-company disclosures. These are the reason the relay was built: the
+# aggregate tables above are sector-wide, but Info2-1 is FUND UTILISATION PER
+# FIRM -- 國外投資 by insurer, the hedge-ratio denominator the project has only
+# ever had at sector level or from investor decks. Info2-5 and Info2-14 are the
+# reserve pages, which may split 特別盈餘公積 into its FX-designated buckets and
+# so close the question decisions 4.19 could only bound.
+#
+# Pages are Big5 HTML, ~20-130KB each, addressed by 統一編號 (config/firm_uids.tsv).
+FIRM_PAGES = [("Info2-1", "資金運用表"), ("Info2-5", "準備金"),
+              ("Info2-14", "其他負債項下之特別準備及其他準備")]
+
+
+def firm_sources():
+    path = ROOT / "config" / "firm_uids.tsv"
+    out = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#") or line.startswith("entity_id\t"):
+            continue
+        parts = line.split("\t")
+        entity, uid = parts[0].strip(), parts[1].strip()
+        for page, _label in FIRM_PAGES:
+            out.append((f"{page}_{entity}",
+                        f"https://ins-info.ib.gov.tw/customer/{page}.aspx?UID={uid}",
+                        "ins-info-firm", "html", True, False))
+    return out
+
+
+SOURCES += firm_sources()
 
 
 def ssl_context(needs_cert):

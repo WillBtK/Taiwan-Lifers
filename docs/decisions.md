@@ -2474,3 +2474,64 @@ on, and only rewrites a path whose content already matches. Dedupe still works
 because the suffixed name sorts after the plain one.
 
 **Files.** `scripts/fetch_sources.py`.
+
+### 4.26 Mapping the portal: the firm-level disclosures are URL-addressable
+
+With the relay live, five discovery passes mapped the Insurance Bureau's
+portal. The passes ran on the GitHub runner and reported back through a
+committed file, because no single place can reach both ends — the portal
+answers only the relay, and this sandbox's proxy refuses `*.run.app`. Each
+turn of "read a page, decide what to follow" therefore costs a workflow run,
+which is why each pass fetches everything at once and extracts links, query
+shapes, form controls, option lists and viewstate presence together.
+
+**Pass 2 — the aggregate side, settled.** The report menu lists ten 彙計表
+codes, and `opendata/json-<code>.aspx` exists for **all ten**, not just the
+three already known. Seven new machine-readable tables: company master data,
+staffing, shareholdings, share transfers, non-life indicators, and the two
+business-overview tables. All are now in `SOURCES`. **None of them is fund
+utilisation or capital adequacy** — the aggregate tables simply do not carry
+those, which is the negative result that made the next pass necessary.
+
+**Pass 3 — the opening.** `customer/life.aspx` had returned a *null-reference*
+error rather than a 404, meaning it existed and wanted a parameter. Testing
+parameter shapes found that **`customer/Info2-2.aspx?UID=<8-digit id>` returns
+a per-company balance sheet by plain GET** — 122KB, no postback. The
+per-company disclosures are URL-addressable, so the relay needs no POST
+support and none of the ASP.NET viewstate machinery has to be reproduced.
+
+**Pass 4 — the menu.** Walking `Info2-1` … `Info2-16` reads back the whole
+per-company menu from the page titles:
+
+| | | | |
+|---|---|---|---|
+| Info2-1 **資金運用表** | Info2-2 資產負債表 | Info2-3 綜合損益表 | Info2-4 權益變動表 |
+| Info2-5 **準備金** | Info2-6 放款/逾放 | Info2-7 關係人交易 | Info2-8 會計師意見 |
+| Info2-9 現金流量表 | Info2-10 盈餘分配 | Info2-11 資產評估 | Info2-12 各項財務業務指標 |
+| Info2-14 **其他負債項下之特別準備及其他準備** | | | |
+
+**Info2-1 is the prize.** Fund utilisation *per firm* carries 國外投資 by
+insurer — the hedge-ratio denominator the project has only ever had at sector
+level (表17-1) or inferred from investor decks for three firms. Info2-5 and
+Info2-14 are the reserve pages, and are the direct route to splitting
+特別盈餘公積 into its FX-designated buckets, which 4.19 could only bound.
+
+**Pass 5 and the identifiers.** The portal root's dropdown lists only the 22
+non-life insurers, so the life ids came from elsewhere: TII **K106
+保險公司基本資料**, reachable, whose head-office rows carry 統一編號. All six panel
+firms resolved (`config/firm_uids.tsv`), and one reconciliation fell out of
+it. Two Shin Kong ids exist and both are right — 03458902 is the pre-2026
+company that was absorbed, 70789634 the surviving entity. K106 predates the
+rename and still prints 保德信國際人壽 against 70789634, which traces the chain
+Prudential of Taiwan → Taishin Life → Shin Kong Life and *confirms* the
+merger convention in README §4.5 rather than contradicting it. KGI appears as
+中國人壽, its pre-2023 name, same legal entity.
+
+**Where this leaves the panel.** 21 per-company pages are now in the weekly
+fetch (three reports × seven ids). They are Big5 HTML rather than JSON, so
+each needs a parser — that is the next build, and it is Stage 3 work rather
+than plumbing.
+
+**Files.** `scripts/discover_ins_info.py`,
+`.github/workflows/discover-ins-info.yml`, `config/ins_info_targets.tsv`,
+`config/firm_uids.tsv`, `scripts/fetch_sources.py`, `reports/ins_info_map.json`.

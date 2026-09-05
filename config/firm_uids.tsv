@@ -1,0 +1,22 @@
+# 統一編號 for the six-firm panel, which is the key the Insurance Bureau's
+# portal addresses per-company disclosures by: customer/Info2-N.aspx?UID=<id>
+# (decisions 4.26). Source: TII K106 保險公司基本資料 (data.gov.tw 122361,
+# openapi.tii.org.tw TableID=K106), head-office rows, retrieved 2026-09-05.
+#
+# Two Shin Kong ids exist and both are correct, which is the merger recorded
+# in README section 4.5: 03458902 is the pre-2026 Shin Kong Life that was
+# absorbed, 70789634 is the surviving entity (Prudential of Taiwan -> Taishin
+# Life -> renamed Shin Kong Life on 2026-01-01). K106 predates the rename and
+# still prints the old name against the surviving id, which is what confirms
+# the chain rather than contradicting it.
+#
+# KGI is listed under 中國人壽, its name before the 2023 rebrand; same legal
+# entity and same filing code 2823 (entities seed).
+entity_id	uid	name_zh	note
+cathay_life	03374707	國泰人壽保險股份有限公司
+fubon_life	27935073	富邦人壽保險股份有限公司
+nanshan_life	11456006	南山人壽股份有限公司	registered without 保險 in the name
+kgi_life	03434016	中國人壽保險股份有限公司	renamed 凱基人壽 in 2023
+taiwan_life	03557017	台灣人壽保險股份有限公司
+shinkong_life	70789634	新光人壽保險股份有限公司	surviving entity; K106 still shows 保德信國際人壽
+shinkong_life_pre2026	03458902	新光人壽保險股份有限公司	absorbed 2026-01-01
