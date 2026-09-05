@@ -33,6 +33,25 @@ OUT = ROOT / "reports" / "ins_info_map.json"
 UA = "Mozilla/5.0 (compatible; TLFX/1.0)"
 
 
+RELAY_HOSTS = {"ins-info.ib.gov.tw"}
+
+
+def fetch(url, timeout=120):
+    """Relay only what needs it; everything else goes direct.
+
+    The relay allows one host, so sending a foreign host through it returns
+    400 "host not allowed" -- which reads like the target refused us when in
+    fact it was never contacted. That is the failure this function exists to
+    prevent: a probe that cannot reach its target must say so, not borrow
+    another component's rejection.
+    """
+    if urllib.parse.urlparse(url).hostname in RELAY_HOSTS:
+        return via_relay(url, timeout)
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.status, r.headers.get("Content-Type", ""), r.read()
+
+
 def via_relay(url, timeout=120):
     base = os.environ.get("TAIWAN_RELAY_URL", "").strip()
     token = os.environ.get("TAIWAN_RELAY_TOKEN", "").strip()
@@ -123,7 +142,7 @@ def main():
     for note, url in rows:
         entry = {"note": note, "url": url}
         try:
-            status, ctype, body = via_relay(url)
+            status, ctype, body = fetch(url)
             text = decode(body)
             # keep the body: a summary answers "does this page exist", but the
             # question is usually "what is on it", and a second workflow run to
