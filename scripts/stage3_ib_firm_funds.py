@@ -199,8 +199,14 @@ commit;
     for r in rows:
         by.setdefault(r["obs_date"], []).append((r["entity_id"], r["foreign_investment"]))
     for obs in sorted(by, reverse=True):
+        ents = [e for e, _ in by[obs]]
         tot = sum(v for _, v in by[obs] if v)
-        print(f"  {obs}  n={len(by[obs])}  sum {tot:>14,.0f}")
+        # Shin Kong reports under two registration numbers, so a plain sum at a
+        # shared year-end double-counts it; say so rather than printing a
+        # number that looks like a panel total and is not one
+        dup = len(ents) != len(set(ents))
+        flag = "  <- DOUBLE-COUNTS shinkong (two uids); not a panel total" if dup else ""
+        print(f"  {obs}  n={len(by[obs])}  sum {tot:>14,.0f}{flag}")
     print(f"\nchecksums: sum foreign_investment {round(sum(r['foreign_investment'] or 0 for r in rows), 3)}; "
           f"sum total {round(sum(r['total'] or 0 for r in rows), 3)}")
     print(f"csv: {OUT_CSV.relative_to(ROOT)}; sql: {out.relative_to(ROOT)}")

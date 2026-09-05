@@ -2571,6 +2571,32 @@ all six from published data, wherever a hedge principal exists. That is the
 next derivation, and it is the first time the six-firm panel has had a common
 published denominator rather than three deck-derived ones and three gaps.
 
+**A trap in my own output, corrected before it spread.** The loader prints a
+sum of `foreign_investment` per period, and at the three shared year-ends that
+sum runs over **seven** rows, not six: Shin Kong reports under both
+registration numbers, so those totals **double-count** it. Only the
+2026-08-31 figure (n=6) is a clean six-firm total, which is the one the 82%
+coverage check used, so that check stands — but the year-end sums beside it in
+the same output do not mean what their neighbour means, and printing them
+adjacently invited exactly that reading.
+
+Worse, the two Shin Kong series are not splices of one company. 70789634 is
+the surviving entity, which before 2026 was Prudential of Taiwan and then
+Taishin Life — an order of magnitude smaller than the company that absorbed
+it. So its 2023-2025 year-ends are the *small* predecessor, while 03458902
+carries the large pre-merger Shin Kong through 2025 and supplies the lone
+2022 row. Concatenating them into one `shinkong_life` line would manufacture
+a step change that is a merger, not a flow. The `uid` column is in the primary
+key precisely so both survive, and any firm-level series must choose one
+registration number per era deliberately rather than grouping on `entity_id`.
+
+**What the latest month shows.** Foreign investment as a share of each firm's
+own invested funds, 2026-08: Nan Shan 72.4%, KGI 70.2%, Cathay 68.7%, Taiwan
+Life 65.4%, Shin Kong 61.4%, Fubon 60.2%. A twelve-point spread across the
+panel, which is the first time this project could see dispersion in foreign
+allocation on a common published basis rather than inferring it from three
+decks.
+
 **Files.** `scripts/stage3_ib_firm_funds.py`,
 `supabase/migrations/0013_firm_fund_utilisation.sql`,
 `data/ib_firm_funds.csv`, `out/stage3_ib_funds_20260905.sql`.
