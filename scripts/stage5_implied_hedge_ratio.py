@@ -137,6 +137,13 @@ def prev_month(k):
     return (y - 1, 12) if m == 1 else (y, m - 1)
 
 
+def months_between(a, b):
+    """Signed month distance between two 'YYYY-MM-01' labels."""
+    ya, ma = int(a[:4]), int(a[5:7])
+    yb, mb = int(b[:4]), int(b[5:7])
+    return (yb - ya) * 12 + (mb - ma)
+
+
 def ytd_to_monthly(series):
     """The release is YEAR-TO-DATE and resets each January.
 
@@ -441,6 +448,23 @@ NOTE_OFFSET = (
     "happens when TWD weakens and firms provision into the reserve out of the "
     "gain. Not a regulatory measure; it has no published counterpart."
 )
+NOTE_ROLL = (
+    " ROLLING VARIANT: this row is a 12-month through-origin fit, not a single "
+    "month's reading, and it is DATED TO THE FIT'S fx-SQUARED-WEIGHTED CENTRE "
+    "rather than to the window's last month — a window containing one violent "
+    "month is an estimate of THAT month wearing a window's clothes, and dating "
+    "it to the end was the error corrected in decisions 4.29. It exists because "
+    "the single-month series is identified only when the currency moves enough "
+    "(nineteen months since 2019); the rolling fit borrows its window's "
+    "variance and so is defined in quiet months too. Validated against the "
+    "published ratio at the centre: 5.6pp mean absolute error, against 8.4pp "
+    "if dated to the window end. Use the single-month series where it exists; "
+    "use this for shape and for the months the single-month series cannot "
+    "reach. The two are not independent — they are the same identity read over "
+    "different spans — so never average them."
+)
+
+
 NOTE_CARRY = (
     " Months to 2019-10 additionally assume a swap carry of NT$16.54bn/month "
     "(the 2019 full-year cost / 12) because the release did not split the "
@@ -461,6 +485,33 @@ def emit_sql(rows):
             out.append(("fx_offset_total_pl_implied", r["obs_month"],
                         r["h_month_with_reserve"], r["vintage"],
                         r["carry_imputed"]))
+
+    # The rolling fits were computed, validated (VALIDATION 2) and then thrown
+    # away, which left the loaded history as nineteen scattered months — the
+    # only months the currency moved enough for a single reading to identify
+    # the ratio. The rolling estimate is identified in quiet months too, because
+    # it borrows the variance of its window, and validates at 5.6pp once dated
+    # to its weighted centre. Loading it is what turns a scatter into a series.
+    #
+    # DATED TO THE WEIGHTED CENTRE, NOT THE WINDOW END. That is the whole point
+    # of 4.29's second correction and it is why the natural key can collide:
+    # two adjacent windows dominated by the same violent month share a centre.
+    # Where that happens the window whose centre is nearest its own end is kept,
+    # since it is the one least extrapolated.
+    seen = {}
+    for r in rows:
+        if r.get("h_roll") is None or not r.get("h_roll_centre"):
+            continue
+        c = r["h_roll_centre"]
+        far = abs(months_between(c, r["obs_month"]))
+        if c not in seen or far < seen[c][0]:
+            seen[c] = (far, r)
+    for c, (_, r) in sorted(seen.items()):
+        out.append(("reg_hedge_ratio_pl_rolling", c, r["h_roll"],
+                    r["vintage"], r["h_roll_carry_imputed"]))
+        if r.get("h_roll_with_reserve") is not None:
+            out.append(("fx_offset_total_pl_rolling", c, r["h_roll_with_reserve"],
+                        r["vintage"], r["h_roll_carry_imputed"]))
     keys = [(key, month) for key, month, *_ in out]
     if len(keys) != len(set(keys)):
         raise SystemExit("natural-key collision")
@@ -473,7 +524,9 @@ def emit_sql(rows):
 begin;
 with notes(series_key, note) as (values
   ('reg_hedge_ratio_pl_implied', {sqlv(NOTE_HEDGE)}),
-  ('fx_offset_total_pl_implied', {sqlv(NOTE_OFFSET)})
+  ('fx_offset_total_pl_implied', {sqlv(NOTE_OFFSET)}),
+  ('reg_hedge_ratio_pl_rolling', {sqlv(NOTE_HEDGE + NOTE_ROLL)}),
+  ('fx_offset_total_pl_rolling', {sqlv(NOTE_OFFSET + NOTE_ROLL)})
 ), vals(series_key, obs_date, value, vintage, carry_imputed) as (values
   {vals})
 insert into tlfx.derived_series
@@ -502,5 +555,34 @@ commit;
     return p
 
 
+def reemit():
+    """Regenerate the load SQL from this script's own CSV output.
+
+    The estimation is unchanged — the CSV is what a previous run computed and
+    validated, column for column — so this is a re-emit, not a second
+    estimator. It exists because the rolling fits were computed and printed
+    from the beginning but never loaded, and re-running the estimator needs the
+    year-to-date input piped from the database, which is not always to hand.
+    """
+    def f(v):
+        return None if v in ("", None) else float(v)
+
+    rows = []
+    for r in csv.DictReader(open(OUT_CSV, encoding="utf-8")):
+        rows.append({
+            "obs_month": r["obs_month"], "vintage": r["vintage"],
+            "carry_imputed": r["carry_imputed"] == "True",
+            "h_month": f(r["h_month"]),
+            "h_month_with_reserve": f(r["h_month_with_reserve"]),
+            "h_roll": f(r["h_roll"]), "h_roll_centre": r["h_roll_centre"] or None,
+            "h_roll_with_reserve": f(r["h_roll_with_reserve"]),
+            "h_roll_carry_imputed": r["h_roll_carry_imputed"] == "True"})
+    p = emit_sql(rows)
+    print(f"sql: {p.relative_to(ROOT)}")
+    return 0
+
+
 if __name__ == "__main__":
+    if "--reemit" in sys.argv:
+        sys.exit(reemit())
     sys.exit(main(json.load(sys.stdin)))

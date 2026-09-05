@@ -4108,3 +4108,104 @@ tracked quarterly now that it is published.
 **No new rows.** This is a derivation from series 5 and series 12, both already
 loaded; it is recorded here rather than stored, because the pairing depends on a
 date-matching choice that a stored series would freeze.
+
+---
+
+### 4.46 How far back the hedge ratio actually goes, why, and the 42 observations that were computed and thrown away
+
+The user asked, repeatedly, how far back an FX hedge ratio can be taken, and why
+others appear to reach further. The answer had never been written down in one
+place, and two of the numbers this log and the README carried were wrong in a
+way that flattered the project. Both are corrected here.
+
+**Every hedge-ratio observation in the database, before this entry:**
+
+| construction | what it is | span | count |
+|---|---|---|---|
+| `hedge_ratio_regulatory` | the FSC's own published figure | 2024-04 → 2026-07 | monthly |
+| `reg_hedge_ratio_pl_implied` | single-month P&L identity | 2019-05 → 2025-11 | **19** |
+| deck composite | Cathay + KGI bottom-up | 2014-12 → 2026-06 | 31 quarters |
+| `economic_hedge_ratio` (Fubon) | firm disclosure | 2014-04 → 2025-10 | 36 quarters |
+| CBC footnote ÷ 國外資產 | sector gross, swap-type only | 2012-03 → 2026-07 | **11** |
+
+**Correction 1: the README's "firm 2011" was false.** Nothing before **2013-10**
+is loaded for any firm, and no hedge RATIO before **2014-04**. The deck archives
+are the reason and the limit: the earliest Cathay deck carrying the FX
+composition panel is March 2014, Fubon's is 1H14. Fubon's decks do reach 1Q06,
+but those early ones disclose the hedging COST only — seven observations in
+`data/fubon_eraA_cost.csv`, no composition, no ratio. The README table now says
+2013-10/2014-03/2014-04 in the five places it said 2011.
+
+**Correction 2: "reconstructed monthly back to 2019-05" was overstated.** It is
+nineteen scattered months, not a monthly series: the estimator publishes a
+single-month reading only where the FX result clears the NT$200bn signal-to-noise
+floor, and most months do not. STATUS said so; the README did not.
+
+**WHY THE FRONTIER IS WHERE IT IS.** Each construction has a hard floor set by
+when a disclosure began, not by how hard anyone looks:
+
+* The FSC did not publish the regulatory ratio before **2024-04**.
+* The FSC monthly release did not carry 兌換損益 or 避險損益 before **2018-05**.
+  Checked directly: the first row with either line is 2018-05. No P&L
+  reconstruction of any kind can reach earlier, because the inputs do not exist.
+* The insurers did not disclose hedge composition in their IR decks before
+  **2014**.
+* The CBC footnote begins around 2012 — but each monthly edition OVERWRITES the
+  same file, so the only history is what a web archive happened to capture. The
+  Wayback Machine holds **nine** captures of the PDF and **two** of the CSV,
+  eleven in total, and that is the whole population: checked without the digest
+  collapse that the recovery script uses, so it is not a deduplication artefact.
+  The CBC's own site lists one edition (115年7月版). archive.today refuses the
+  URL and the NCL Taiwan web archive did not respond.
+
+So the frontier is **2012 for a sparse sector anchor and 2014 for anything
+continuous**, and it is a disclosure frontier. Anyone showing a Taiwanese lifer
+hedge ratio before about 2012 is either reading those same eleven CBC points,
+aggregating the same two or three firms' decks, or inferring from
+balance-of-payments and BIS residuals — which is an estimate of a different
+thing.
+
+**WHAT WAS ACTUALLY RECOVERABLE, AND HAS NOW BEEN RECOVERED.** The estimator
+has always computed a second series and never stored it. Alongside each month's
+own reading it fits a twelve-month through-origin regression and dates it to the
+fit's fx²-weighted centre — the correction of 4.29 — and validates it at **5.6pp
+MAE** against the published ratio at that centre (8.4pp if wrongly dated to the
+window end). Those fits are identified in quiet months, because the window
+borrows the variance of the loud ones. They were printed every third month and
+discarded at the load step: `emit_sql` only ever wrote `h_month`.
+
+Loading them adds **42 observations, 2019-01 → 2025-05** — more than double the
+single-month series, and starting four months earlier:
+
+    2019-01  85.2%    2021-04  84.0%    2023-08  73.4%
+    2019-06  79.8%    2022-03  77.5%    2024-03  73.1%
+    2020-05  84.2%    2022-09  76.6%    2024-12  72.3%
+    2020-12  84.7%    2023-01  75.8%    2025-05  66.4%
+
+and the buffer-inclusive twin (`fx_offset_total_pl_rolling`) sits at 88-94%
+across the whole span, which is the substitution result stated as a continuous
+line rather than as nineteen dots.
+
+Two windows can share a centre when the same violent month dominates both; the
+window whose centre lies nearest its own end is kept, being the least
+extrapolated. The rolling and single-month series are **not independent** — the
+same identity read over different spans — so they must never be averaged, and
+that instruction is in the `basis_note` of every row.
+
+**What would extend the history further, in order of expected value.**
+
+1. **Firm income statements through the same identity.** 兌換損益 and 避險工具損益
+   appear in the insurers' own quarterly statements. Applying h = −H/A firm by
+   firm would give an independent construction from IFRS adoption (2013), fill
+   2013-2018 where nothing sector-level exists, and cross-check the deck
+   composite over 2014-2018. This needs the MOPS filings for ROC 102-111, which
+   the current index does not cover.
+2. **More CBC footnote editions**, if any archive outside Wayback holds the
+   monthly bulletin. Nothing found so far.
+3. **Nothing else.** Pre-2012 is not a data-collection problem.
+
+**Files.** `scripts/stage5_implied_hedge_ratio.py` — `emit_sql` now also writes
+`reg_hedge_ratio_pl_rolling` and `fx_offset_total_pl_rolling`, and a `--reemit`
+mode regenerates the load SQL from the script's own CSV so the rolling fits can
+be loaded without re-piping the year-to-date input. 42 rows per key, sums
+32.7237 and 37.3899, verified server-side against the generator.
