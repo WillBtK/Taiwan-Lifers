@@ -139,3 +139,17 @@ Info2-12 indicators, Fubon	https://ins-info.ib.gov.tw/customer/Info2-12.aspx?UID
 Info2-4 equity changes, Fubon	https://ins-info.ib.gov.tw/customer/Info2-4.aspx?UID=27935073
 Info2-9 cash flow, Fubon	https://ins-info.ib.gov.tw/customer/Info2-9.aspx?UID=27935073
 Info2-2 balance sheet, Fubon (derivative lines?)	https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=27935073
+#
+# Pass 8 (2026-09-05). NOT ins-info: the three panel firms with no deck data
+# because their IR hosts are refused by THIS sandbox's proxy. A GitHub runner
+# reaches hosts the sandbox cannot (that is how the guaranty-fund series came
+# in), and this has never been tested for them. If they answer, the
+# deck-derived hedge numerator roughly doubles its sector coverage.
+# These go direct, not through the relay -- the relay allows one host only, so
+# a relay error here means "not tested", not "blocked".
+Nan Shan IR	https://www.nanshanlife.com.tw/
+Nan Shan investor page	https://www.nanshanlife.com.tw/NSWeb/about/investor
+Taiwan Life IR	https://www.taiwanlife.com/
+CTBC holdings IR (Taiwan Life parent)	https://www.ctbcholding.com/
+Shin Kong Life	https://www.skl.com.tw/
+TS Financial holdings IR (Shin Kong parent)	https://www.tsfhc.com.tw/
