@@ -15,6 +15,15 @@
 # attempt (4.47).
 name: pull-firm-statements
 on:
+  # workflow_dispatch alone is not enough: GitHub only accepts a dispatch for a
+  # workflow present on the DEFAULT branch, and this one lives on the feature
+  # branch. probe-rpt-panel solves it the same way — a push trigger on the
+  # script's own path, so editing the puller runs it.
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - 'scripts/stage6_firm_sensitivity.py'
+      - '.github/workflows/pull-firm-statements.yml'
   workflow_dispatch:
     inputs:
       years:
