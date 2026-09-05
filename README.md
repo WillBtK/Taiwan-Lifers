@@ -95,11 +95,15 @@ platform for insurers: per-company pages (`customer/life.aspx?UID=…`,
 人身保險業辦理資訊公開管理辦法. The same indicators are also on `data.gov.tw`
 (dataset 7191, 壽險財務業務指標) as structured open data.
 
-**Both are currently unreachable from the sandbox** — `ins-info` drops the https
-tunnel at ~12 s and answers 503 over http; `data.gov.tw` is a 403 CONNECT policy
-denial (decisions 3.4). That is an egress problem to escalate, not a reason to
-drop to the press tier permanently. Re-probe both at the start of any stage that
-needs firm or sector disclosure.
+**Reachability (2026-09-04).** `data.gov.tw` is allowlisted and open through its
+front-end API (decisions 4.9); it also led to `openapi.tii.org.tw`, which serves
+表17-1 as CSV. `ins-info` is allowlisted but does not route to this egress
+(TCP never connects; not a policy block). Its files arrive by **courier**: the
+user fetches them and commits them verbatim under `data/raw/ins-info/` with a
+`_YYYYMMDD` snapshot stamp that becomes the vintage (decisions 4.10). Dataset
+7191 landed that way into `tlfx.firm_statutory_indicators`. Re-probe ins-info
+at the start of any stage that needs firm disclosure; ask for the courier
+otherwise.
 
 **Briefing channel (fallback for series 4 and, from 2026, the reserve buckets).**
 The Insurance Bureau briefs reporters the day each month's figures are ready and
@@ -240,10 +244,10 @@ Wildcards are needed where an organisation serves data from several hosts. † =
 # Regulators and official statistics (Taiwan)
 *.fsc.gov.tw          # www (en/ch press releases) †
 *.ib.gov.tw           # Insurance Bureau † — BUT ins-info.ib.gov.tw (the statutory
-                      #   disclosure portal, tier 2 of the §4 hierarchy) is UNREACHABLE:
-                      #   https tunnel drops ~12s, http 503. Escalate, re-probe each stage
-data.gov.tw           # open data; dataset 7191 = 壽險財務業務指標 — 403 CONNECT policy denial.
-                      #   Highest tier of the §4 hierarchy; unblocking it removes scraping
+                      #   disclosure portal, tier 2 of the §4 hierarchy) does not route to
+                      #   this egress even when allowlisted (4.9); files come by courier (4.10)
+data.gov.tw           # open data, reachable since 2026-09-04 (front-end API, no key; 4.9).
+                      #   Highest tier of the §4 hierarchy; dataset 7191 = 壽險財務業務指標
 *.cbc.gov.tw          # www (stats, FX ops), cpx (database), law †
 *.tii.org.tw          # www, sv, insdb, law † (insdb needs a member login)
 *.stat.gov.tw         # DGBAS ‡

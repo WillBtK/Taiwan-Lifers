@@ -1749,3 +1749,78 @@ further allowlist entry.
 
 **Files.** `config/allowlist.tsv` (three rows rewritten),
 `cache/tii/I171_20260904.csv`.
+
+### 4.10 The couriered firm-level indicators: dataset 7191 lands, mapped positionally, as a snapshot table
+
+**Route.** ins-info remains unroutable from this egress (4.9), but the user
+can reach it, so the payload behind data.gov.tw dataset 7191
+(`ins-info.ib.gov.tw/opendata/json-06161610.aspx`, 表06161610 壽險財務業務指標)
+was fetched by them on 2026-09-04 and committed verbatim as
+`data/raw/ins-info/json-06161610_20260904.json`. The courier route is a
+standing convention: any further ins-info file is committed under
+`data/raw/ins-info/` with a `_YYYYMMDD` snapshot stamp, and the stamp is the
+vintage — the payload itself carries no publication date and the catalogue's
+`last_update_time` (2026-06-26) predates the quarter the data contains
+(115Q2, ending 2026-06-30), so it is catalogue metadata, not a data vintage.
+
+**What the file is.** 30 records, one per insurer at its *latest* reported
+quarter: 22 active names at 115Q2, the pre-merger Shin Kong Life
+(「115.1.1合併前」) at 114Q4, and defunct firms frozen at their last filing
+(國華 102Q1, 國寶/幸福 104Q2, 中國信託人壽 104Q4, 朝陽 106Q1, 蘇黎世 106Q4, …).
+It is a snapshot, not a panel: the history behind it sits in the portal's
+query pages, which is the next courier ask. Each record carries
+`ClaimYear` (ROC), `ClaimQuarter`, `INSURER_Name` and 23 positional
+`AMOUNT` fields.
+
+**Mapping AMOUNT1..23.** The catalogue's `data_fields` describe only the three
+key fields; the AMOUNTs have no per-field description. The dataset `content`
+string, however, lists exactly 23 indicators in order (負債占資產比率 …
+不動產投資與不動產抵押放款對資產比率), and the positional reading is corroborated
+on every indicator whose range is unambiguous: AMOUNT1 liabilities/assets
+86–95% across the six panel firms; AMOUNT2 reserves/assets 72–91%; AMOUNT12
+資金運用比率 96–99%; AMOUNT13 13-month persistency 93–97%; AMOUNT22 EPS −3.13
+for Shin Kong Life's loss-making 2025; AMOUNT23 real-estate share ~7%. The
+mapping is therefore an inference, recorded as such in the migration and
+loader, and the verbatim record is stored alongside (`raw_record`) so a
+re-mapping never needs the source again.
+
+**Two features to respect when reading it.** (i) The 2026 (IFRS 17) rows
+publish only the balance-sheet and business ratios; ROA, ROE, yields,
+margins, EPS and the real-estate share are `N/A` for every active insurer,
+while the 2025 Shin Kong row carries the full set. Whether that is a
+half-year convention or an IFRS-17 transition gap is not knowable from the
+file. (ii) The growth fields behave differently across the two eras:
+保費收入變動率 and 淨利變動率 on the 2026 rows cluster around 100 (Taiwan Life
+99.25 / 101.39, Cathay 90.02 / 98.13, KGI 62.69 / 101.13), while the 2025
+Shin Kong row prints signed changes (−0.35, 360.18). The 2026 values read as
+an index (this period ÷ prior period × 100) rather than a percentage change,
+but that is a reading, not a definition; the columns are loaded as published
+and the two column comments say so. The portal's 指標說明 page settles it and
+is on the courier list. `N/A` and blank are distinct in the source (blank
+marks indicators the 2026 rows do not carry at all: 5, 6, 7, 14); both load
+as NULL and both survive in `raw_record`.
+
+**Storage.** New additive table `tlfx.firm_statutory_indicators`
+(migration 0008), wide, keyed on (`insurer_name`, `obs_quarter`, `vintage`):
+these are the Bureau's ratios for every insurer, so the published name is
+the key and `entity_id` is a nullable link into the six-firm panel (7 of 30
+rows link; both Shin Kong names map to `shinkong_life` under the README §4.5
+continuity convention, on different quarters so no collision). Not folded
+into `firm_quarterly`: none of the 23 indicators is an FX quantity, and the
+table's population (30 insurers) is a different universe from the panel.
+Loader `scripts/stage3_ib_firm_indicators.py` runs the natural-key
+collision guard (4.4) and prints per-column sums and non-null counts;
+the load is verified against them server-side.
+
+**What it buys the FX monitor.** Directly, little: no hedge ratio, no FX
+reserve, no foreign-investment share. Indirectly, it is the first
+regulator-published firm-level cross-section in the project (tier 2 of the
+README §4 hierarchy), it gives the six firms' leverage and reserve ratios on
+the Bureau's own definitions for the Stage 5 counterparty framing, and it
+proves the courier route, which is what makes 表06021011 財務報告彙總 and the
+per-company pages reachable.
+
+**Files.** `data/raw/ins-info/json-06161610_20260904.json`,
+`data/ib_firm_indicators.csv`, `scripts/stage3_ib_firm_indicators.py`,
+`supabase/migrations/0008_firm_statutory_indicators.sql`,
+`out/stage3_ib_firm_20260904.sql`.

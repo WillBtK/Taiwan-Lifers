@@ -24,7 +24,9 @@ rows — Fubon's disclosed economic hedge ratio over 36 quarters plus both
 firms' hedge-cost series, split discrete/cumulative after 4.4). The 41億
 reserve gap is closed as immaterial (4.8) and the KGI cost definition is
 pinned as all-in (4.6). One judgement is open and flagged for the user: the
-Cathay composition-pie base (4.2/4.7). Stages 5–7 not started.
+Cathay composition-pie base (4.2/4.7). **Firm-level statutory ratios
+landed by courier** (dataset 7191 → `firm_statutory_indicators`, 4.10).
+Stages 5–7 not started.
 
 ## What runs
 
@@ -38,6 +40,7 @@ Cathay composition-pie base (4.2/4.7). Stages 5–7 not started.
 | `python3 scripts/stage2c_ib_indicators.py [--refresh] [--limit N]` | Walks the Insurance Bureau's monthly 保險市場重要指標 archive (id=48), parses 表17-1 人身保險業資金運用表 (page selected by value scale — titles print on the preceding page), ties each edition's 資產總額 to CBC table 8, writes `data/ib_indicators_monthly.csv`, `out/stage2c_ib_*.sql`, report | Working: 112 months, 112/112 ties (two named tolerance exceptions: IFRS-17-era 2026, disrupted 2020-03) |
 | `python3 scripts/stage3_load_cathay.py` | Maps `data/cathay_fx_quarterly.csv` (merged deck series) into `firm_quarterly` SQL — period → quarter, tn/bn → mn, % → bp, IFRS17 from 2026 | Working: 47 rows |
 | `python3 scripts/stage3_cathay_statements.py` | Parses the cached Cathay Life statement Excels (2020→), extracts FX volatility reserve / total assets / equity, derives 2026 reserve via cash-flow net change, joins the deck series, emits CSV + `firm_quarterly` SQL | Working: 26 quarters, 28/28 checks |
+| `python3 scripts/stage3_ib_firm_indicators.py` | Maps every couriered `data/raw/ins-info/json-06161610_YYYYMMDD.json` (dataset 7191 payload) into `firm_statutory_indicators` SQL, positional AMOUNT mapping, collision guard, per-column checksums | Working: 30 rows, 1 snapshot |
 | `python3 scripts/stage1_briefing_press.py [--refresh]` | Fetches the press articles cited in `config/briefing_press.json`, verifies every figure against its article, converts units, runs the v2 identity checks, writes `data/sector_monthly_briefing.csv`, `out/stage1_briefing_YYYYMMDD.sql`, `reports/…json`, `docs/sources/press/briefing_excerpts.md` | Working: 14 months, 16/16 checks |
 
 Write path: the scripts emit idempotent SQL (`insert … on conflict do
@@ -66,11 +69,11 @@ the shared key). Loads are checksum-verified server-side against the local CSVs
 | `ib_indicators` | 112 | 2017-01 → 2026-04, complete | `disclosed` | FSC-basis 國外投資 (the regulatory hedge-ratio denominator) and 資產總額, monthly, from 表17-1 of the Bureau's key-indicators PDFs; each month's column label proven by a CBC total-assets tie; vintage = PDF upload date; 2026 figures are IFRS 17 and current-year figures unaudited per the table's own note |
 | `briefing_press` | 14 | 2024-04, 2024-12, 2025-04, 2025-08, 2025-09, 2025-10, 2025-12, 2026-01 → 2026-07 | `press_reported` | regulatory hedge ratio; from 2026-02 the P/Q/X/Y buckets, buffer total, net FX exposure, absorbable appreciation, effective-ratio memo; denominators at 2024-12, 2025-09, 2025-10, 2025-12 — hedge principal derivable at the ratio-bearing three: 10.36tn → 8.90tn → 7.74tn NT$ |
 
-Migrations applied: `0001`–`0007`. `0003` adds the release fields, `0004`
+Migrations applied: `0001`–`0008`. `0003` adds the release fields, `0004`
 puts `reporting_channel` in the primary key, `0005` admits the
 `ib_indicators` channel, `0006` adds deck share columns and the
 `source_channel` key to `firm_quarterly`, `0007` adds `deck_composition`
-and `total_fx_cost_bp`.
+and `total_fx_cost_bp`, `0008` adds `firm_statutory_indicators`.
 `tlfx.entities` holds the six firms (decisions 3.10). `tlfx.firm_quarterly`
 holds three firms' deck series — Cathay 47 quarters, **Fubon 49 (2013-Q4 →
 2026-Q2, all-in FX cost + colour-bound recurring cost + composition —
@@ -86,7 +89,11 @@ change and tied to the deck — decisions 3.12). Both loads checksum-verified.
 carries the five non-Cathay firms** — 11 rows from MOPS XBRL (Fubon and Nan
 Shan 2025Q4 plus 2026 quarters for all five), whose derived 2026 reserve
 balances tie the Fubon and KGI decks exactly (decisions 4.5), so all six
-entities are now populated. Other tables remain empty.
+entities are now populated. **`tlfx.firm_statutory_indicators` — 30 rows**, the
+Insurance Bureau's 23 statutory ratios per life insurer (ins-info 表06161610 /
+data.gov.tw 7191), one snapshot vintage 2026-09-04 couriered by the user,
+latest quarter per insurer (active firms 2026-Q2); 7 rows link to the panel
+(decisions 4.10). Other tables remain empty.
 `tlfx.derived_series` — **sector 55 rows / 8 keys, 2024-04 → 2026-07**
 (reg hedge ratio and the Bureau's effective memo, denominator, net open,
 hedge principal, gross hedge ratio, buffer total, absorbable appreciation —
@@ -155,13 +162,16 @@ tunnel; `fsc.search` and `fetch` retry transport errors with backoff.
 
 1. `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` not set in the environment
    (`FRED_API_KEY` is). Writes go through the MCP for now.
-1a. **Proxy unblock request (for the user):** the cleanest firm and sector
-   sources are blocked at the egress proxy — `ins-info.ib.gov.tw` (the
-   Bureau's insurer-disclosure portal), `data.gov.tw`, and every insurer's
-   own site tried so far (`www.cathaylife.com.tw`, `www.taiwanlife.com`,
-   `www.skl.com.tw`, `www.taishinlife.com.tw`, `www.tsfl.com.tw`).
-   Unblocking ins-info alone would replace the MOPS WAF crawl with direct
-   statutory disclosures for all six firms.
+1a. **ins-info courier queue (for the user):** `data.gov.tw` is open (4.9);
+   `ins-info.ib.gov.tw` is allowlisted but does not route to this egress, so
+   its files arrive by courier (4.10). Next asks, in value order: the portal's
+   指標說明 page for 表06161610 (settles the 2026 growth-field definition), the
+   historical query for 表06161610 per firm (turns the snapshot into a panel),
+   表06021011 財務報告彙總 (`json-06021011.aspx` if the pattern holds), and one
+   per-company page (`customer/life.aspx?UID=…`) to see what else the portal
+   carries. Insurer sites (`www.cathaylife.com.tw`, `www.taiwanlife.com`,
+   `www.skl.com.tw`, `www.taishinlife.com.tw`, `www.tsfl.com.tw`) remain
+   proxy-blocked.
 2. Hedge-ratio backfill: the start of the series is now pinned — **2024-04**
    in practice (`docs/decisions.md` 1.11). Before that the press gives spoken
    ranges ("6~7成"), not the regulatory figure, so pre-2024 sector series 1/2/5
