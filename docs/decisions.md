@@ -3557,3 +3557,171 @@ points.
 with `/post`. That is a single paste of `ops/taiwan-relay/oneliner.sh` into
 Google Cloud Shell; it reuses the existing token, so no secret changes. Until
 then the panel probe reports the 404 rather than failing silently.
+
+### 4.39 Scope corrected: the duration-demand channel, and the flow has already turned
+
+**The correction.** The user's framing: the project has been treating FX
+hedging as the object when it is a gate. What matters to a bond market is that
+one domestic sector recycles a current-account surplus above 10% of GDP into
+long-dated USD credit. The hedge ratio, the buffer stack and the 2026
+accounting changes are inputs to that, not ends. README §1 now leads with it.
+
+**The series was already cached and unparsed.** Taiwan's balance of payments
+splits portfolio-investment debt-security acquisition by sector AND by tenor,
+so the cut that matters is directly published:
+
+    債務證券 - 其他部門 - 其他金融機構 - 長期 - 資產
+
+quarterly. Items are resolved by LABEL, not index: the BoP carries 402 of them
+and an index would silently return a different series if the CBC reordered,
+which is the failure class of 4.28 all over again.
+
+**The sector identification, measured rather than asserted.** Setser & S.T.W.
+take "other financial institutions" to be the lifers. Against the lifers' own
+國外資產 from the CBC balance sheet, converted at year-end:
+
+| | 2012 | 2015 | 2018 | 2021 | 2023 | 2025 |
+|---|---|---|---|---|---|---|
+| lifer FX assets, USD bn | 176 | 303 | 508 | 688 | 685 | 700 |
+| OFI IIP debt stock, USD bn | 170 | 271 | 484 | 695 | 718 | 778 |
+| ratio | 104% | 112% | 105% | 99% | 95% | **90%** |
+
+Above 100% in the early years because lifer 國外資產 includes equity and funds
+that a debt-only stock excludes — so the true lifer share of OFI *debt* is
+somewhat below these figures throughout. Either way the sector is the lifers,
+and the drift from 104% to 90% says non-bank others have grown slightly faster
+lately, which is worth watching but does not change the reading.
+
+**The stock.** OFI holdings of foreign debt securities: USD 170bn (2012) →
+484bn (2018) → **778bn (2025)**, and **71–79% of ALL Taiwanese foreign
+debt-security holdings** throughout. This is not a participant in the US credit
+market, it is a top-tier one.
+
+**The flow, and it has already turned.** Net acquisition of LONG-TERM foreign
+debt by this sector, USD bn a year:
+
+    2012  22.8   2015  37.3   2018  57.0   2021  41.0   2024  19.3
+    2013  22.1   2016  58.2   2019  41.6   2022  16.4   2025  −7.7
+    2014  28.6   2017  52.2   2020  13.4   2023  15.1
+
+**2025 is the first net-selling year in the series**, and the quarterly detail
+puts it precisely: 2025Q2 = **−USD 12.4bn**, the largest single-quarter
+liquidation on record, in the TWD-shock quarter. 2026Q1 is −2.9bn. Meanwhile
+the current-account surplus set records — USD 184bn in 2025, and 2025Q4 alone
+was 69.9bn.
+
+**That conjunction is the finding.** Taiwan is running its largest ever external
+surplus while its principal private recycler is a net seller of the assets that
+surplus used to buy. The vulnerability question the user posed is therefore not
+hypothetical: the stock was sold, hard, in the one stress episode the sample
+contains, and the flow has not recovered four quarters later. Everything the
+project has built about hedge ratios, buffers and accounting is now
+interpretable as the mechanism — the hedge ratio fell 20pp, the reserve
+absorbed what the hedges no longer did, and when TWD moved 6% in a month the
+response was to sell the asset rather than re-hedge it.
+
+**Limits of what this series can say, stated so the next pass does not
+overclaim.** The tenor split starts 2012Q1, not 1984 — the sector detail does
+not exist earlier, so the four-decade history is of the aggregate only. And the
+BoP has **no currency and no issuer-type dimension**: it cannot by itself say
+"USD corporate". For that the next sources are the US TIC survey (holdings of
+US securities by country and security type, which does separate corporate debt)
+and the firms' own disclosures on asset type and duration. That is the next
+step and it is what turns "long-dated foreign debt" into the specific claim the
+question asks about.
+
+**Files.** `scripts/stage6_duration_demand.py`, `data/duration_demand.csv`,
+`out/stage6_duration_20260905.sql`. Loaded to `derived_series` series 9 as
+`ofi_lt_foreign_debt_purchases`, `ofi_foreign_debt_purchases` and
+`ofi_foreign_debt_stock`, `definition_version = bpm6`.
+
+---
+
+### 4.40 The composition of the duration bid: TIC says agency MBS first, corporate credit second and rising
+
+4.39 established the flow and the stock but ended on an explicit limit: the
+balance of payments has no currency and no issuer-type dimension, so it cannot
+say "USD corporate". The US Treasury's annual TIC benchmark survey of foreign
+portfolio holdings of US securities can. It reports, by country, the split into
+equities, Treasuries, agency non-ABS, agency ABS, corporate bonds and corporate
+ABS. `scripts/stage6_tic_holdings.py` parses Taiwan's row from eleven vintages,
+2013 to 2024.
+
+**What Taiwan holds in the US market, USD bn, end-June:**
+
+| | 2013 | 2016 | 2018 | 2019 | 2021 | 2022 | 2023 | 2024 |
+|---|---|---|---|---|---|---|---|---|
+| Treasuries | 183 | 185 | 161 | 172 | 234 | 227 | 236 | 265 |
+| agency ABS | 126 | 207 | **250** | **265** | 243 | 222 | 208 | 192 |
+| corporate bonds | 35 | 80 | 97 | 115 | 162 | 139 | 152 | **173** |
+| corporate ABS | 1 | 1 | 2 | 2 | 2 | 3 | 3 | 2 |
+| equities | 23 | 43 | 65 | 68 | 110 | 100 | 112 | 146 |
+| **all LT debt** | **346** | **473** | **510** | **554** | **642** | **590** | **599** | **632** |
+
+**The market-share reading, which is the one that answers the question.** Taiwan
+as a percentage of ALL foreign holdings of US securities:
+
+| | 2013 | 2015 | 2018 | 2019 | 2021 | 2022 | 2023 | 2024 |
+|---|---|---|---|---|---|---|---|---|
+| agency ABS | 19.2 | 25.4 | **26.2** | 24.6 | 20.5 | 19.4 | 17.1 | **14.9** |
+| corporate bonds | 1.5 | 1.8 | 2.8 | 3.2 | 3.9 | 3.9 | 4.1 | **4.4** |
+| all LT debt | 4.1 | 4.4 | 5.0 | 5.0 | 5.2 | 5.1 | 5.0 | 5.0 |
+
+An economy of USD 800bn held **a quarter of the entire foreign-held stock of US
+agency MBS** at the 2018 peak. That is the duration bid in one number, and it is
+agency MBS first — the longest-duration, most negatively-convex instrument in
+the US market — not Treasuries. The corporate share has nearly tripled, 1.5% to
+4.4%, and is the only line still rising.
+
+**And the agency-MBS position has already been cut.** 265bn (2019) to 192bn
+(2024), −73bn, while the foreign-held total rose from 1,077 to 1,291bn. Taiwan
+did not merely stop adding; it shrank the book in absolute terms through the
+period when everyone else grew theirs. The share fell from 26.2% to 14.9%. This
+is the same retreat 4.39 found in the BoP flow, seen from the US side and dated
+a year or two earlier, and it lands in the instrument where a forced seller is
+worst placed — extension risk means the position lengthens exactly when the
+seller most wants out.
+
+**Attribution to the lifers, and the asymmetry that makes it defensible.** TIC
+measures a country, not a sector: Treasuries and agency non-ABS mix the CBC's
+reserves with private portfolios and are NOT attributed here. Agency ABS and
+corporate debt are, on the grounds that a reserve manager does not run a USD
+175bn corporate-credit book and the CBC's own reserve guidance describes
+deposits and sovereign paper. The asymmetry is deliberate; it is why the table
+is worth parsing rather than the headline total, and it is stated in the
+`basis_note` on every loaded row.
+
+**Validation.** The seven cells of each row must sum to the printed total; a
+country label landing mid-column is the failure mode this catches, and every
+accepted row passes. Independently, Table A3/A9 prints LT debt by country across
+eight survey dates, compiled from the same returns but printed in different
+units — it agrees with the composition table on **11 of 11** overlapping years,
+to the billion. The same table extends the total-debt series to 2007 and
+supplies 2020, whose survey report is not retrievable from the Treasury document
+server (four filename patterns tried, all 404). No vintage revises another: six
+overlapping reports print identical history for every year.
+
+**One anomaly, flagged not explained.** The by-year table gives 2010 and 2011 as
+213bn each and then 349bn for 2012 — a +136bn jump that neither lifer foreign
+assets (+~36bn) nor FX reserves (+~10bn) can account for. All six vintages that
+cover those years print the same figures, so it is not a parsing artefact. Until
+it is understood, the composition series is read from 2013 and the pre-2012
+points are not used for anything load-bearing.
+
+**The gap this opens, which is the next piece of work.** From 2019 the lifers'
+own foreign debt stock (OFI IIP, 749bn at end-2024) EXCEEDS Taiwan's entire
+country-wide holding of US long-term debt (632bn in June 2024) — before setting
+aside whatever share of that 632bn is the CBC's reserves. The lifers' USD
+duration book is therefore substantially larger than their holdings of
+US-ISSUED securities, and the residual has an obvious candidate: 國際板 (Formosa)
+bonds are USD-denominated paper from foreign issuers listed in Taipei, so they
+are USD credit exposure that TIC does not see at all. TIC 173bn is thus a FLOOR
+on the lifers' USD corporate credit, not a measure of it. Sizing the Formosa
+book is the next step.
+
+**Files.** `scripts/stage6_tic_holdings.py`, `data/tic_taiwan_holdings.csv`,
+`out/stage6_tic_20260905.sql`. Loaded to `derived_series` series 10,
+`definition_version = tic_shl`: seven Taiwan series, seven `world_`-prefixed
+all-foreign-holder denominators (stored as primitives so a share is computed in
+SQL, never frozen at parse time), and `us_lt_debt_holdings` 2007-2024. 172 rows,
+sum 464,613,186 USD mn, verified server-side against the generator.
