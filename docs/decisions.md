@@ -3452,3 +3452,99 @@ currently forwards GET only.
 
 **Files.** `docs/sources/supplied/DATA_SOURCES.md` (verbatim, with the
 verification result recorded against each disputed claim).
+
+### 4.38 The company panel is 2009-deep, and the first per-firm hedge notionals load
+
+Four results, in descending order of how much they change the project.
+
+**1. The Observation Station holds a company × quarter panel back to 2009 —
+and the answer was already on disk.** `RPT-06021011.aspx` (表06021011
+財務報表摘要) is an ASP.NET form whose period selectors offer **ROC 98 to 115,
+2009 Q1 to 2026 Q4**, over 55 insurers with a 壽險/產險 filter. That is read
+directly from the `<option>` lists in a page the discovery pass fetched days
+ago. No query was needed, and the supplied source map's first and most
+important open question (4.37) is answered: the pre-2020 company panel exists.
+The same form shape appears on the other nine RPT pages, so 表06161610 and
+表07011010 follow the same route.
+
+Two corrections to how it is reached. `checkrpt.aspx` is a **menu**, not the
+query — its whole body is ten links to the RPT pages. And **GET does not
+work**: sending the form fields as a query string returns a 3.5KB error page
+against the 21.6KB real form, so the page reads `Request.Form` and a POST is
+required. That was worth testing rather than assuming, because many WebForms
+pages do accept either and it would have saved the relay change.
+
+**2. The relay gains POST, and the reason it also needed cookies.** The portal
+answers only from Taiwan, so the POST must go through the relay. `/post` sits
+behind the same two guards as `/fetch` — allowlisted host, shared token — so
+what widens is what may be *asked of* the one permitted host, not which hosts
+are reachable; it is still not an open proxy. The forwarder now also passes
+`Set-Cookie` back and `Cookie` forward, because the server ties `__VIEWSTATE`
+to the session that issued it and a relayed POST without the cookie fails
+viewstate validation in a way that reads exactly like a malformed request. The
+redeploy script was regenerated, and one real bug fixed in it: it minted a
+**new** token on every run, which on a redeploy would have silently invalidated
+the GitHub secrets and broken every workflow. It now reuses the token the
+service already runs with.
+
+**3. The first per-firm hedge notionals are loaded, and they self-verify.**
+Shin Kong Life, six quarters — 2020-03, 2020-12, 2021-03, 2023-06, 2023-12,
+2024-06 — from two filings, each carrying three period columns. NT$1,047bn →
+NT$999bn → NT$1,030bn → NT$1,208bn → NT$1,369bn → NT$1,399bn, with the
+currency-swap and deliverable-forward legs in USD alongside.
+
+The check that makes them trustworthy: the currency-risk note's NT$ total and
+the derivatives note's USD split are typeset independently and **tie at the
+period-end rate on all six quarters to four decimals** — 30.2540, 28.5080,
+28.5310, 31.1350, 30.7350, 32.4500. The loader asserts this and prints the
+implied rate, because a tie at an implausible rate is two errors agreeing
+rather than a confirmation. Forwards get their own column: 遠期外匯合約 is
+deliverable and an NDF is not, the FSC's traditional-hedge definition
+enumerates instruments, and the whole CBC-versus-FSC gap (4.34) turns on that
+split.
+
+A unit slip was caught by the tie itself — the first version multiplied a
+NT$-million total by 1,000 against a USD-million split and produced implied
+rates of 30,254. Six identical failures at exactly 1000× is a units bug
+announcing itself; had the check been a tolerance on a single number it would
+have been tuned instead of fixed.
+
+**Coverage is one firm and that is recorded, not smoothed.** Cathay applies
+hedge accounting to a small designated book, so its 名目本金 table reads
+NT$49bn against NT$5.5tn of foreign assets and measures something else
+entirely. The other four are untested. MOPS turned out to be a dead end for
+them: it does list the life subsidiaries under their own codes — 新光人壽
+28880001, 富邦人壽 28810012, 台壽保 28910031, which is itself worth knowing —
+but its document server answers 查無所需資料 for those codes on every document
+type tried. Nan Shan's site is reachable but its report API refuses an
+unauthenticated POST. A firm absent from this table is **unknown, never zero**.
+
+**4. Two verified extraction gaps patched, as an overlay rather than an edit.**
+Cathay's FY2022 bar (外幣保單負債 32% / 具外匯風險資產 68%) and Fubon's 1Q2026
+bar (22.4% / 77.6%) plus its CS+NDF wedge (23.9%) go into
+`config/deck_corrections.tsv`, cited to the deck page each came from. The
+extracted CSVs stay exactly as the parser produced them: editing them in place
+would make a parser bug and a source change indistinguishable next time.
+
+That patch has a consequence for 4.35. **Fubon's 2026 pie drops 外幣保單 from
+its big wedge** and prints the bar separately, which makes it the same shape as
+Cathay's and KGI's — so from 2026 Fubon joins the gross composite it was
+rightly excluded from before. It is also the least hedged of the three: 23.9%
+of a 77.6% risk subset is **18.5%** of total FX assets, against Cathay's 26.6%
+and KGI's 28.5%, with 63.7% of its risk-bearing book naked. Adding it moves the
+2026-03 composite from 28.5% to 21.9% and widens the gap to the FSC-basis
+sector ratio to −10.3pp, which is the panel-coverage caveat of 4.35 doing
+exactly what it was written to warn about: two firms are not twenty-three. The
+strong validation is unmoved — CBC ÷ composite stays at 0.79 across eight
+points.
+
+**Files.** `scripts/probe_rpt_panel.py`, `.github/workflows/probe-rpt-panel.yml`,
+`ops/taiwan-relay/{main.py,oneliner.sh}`, `scripts/stage3_mops_statements.py`,
+`scripts/stage3_stmt_hedge_notional.py`,
+`supabase/migrations/0016_firm_hedge_notional.sql`,
+`config/deck_corrections.tsv`.
+
+**Blocked on one action.** Pulling the 2009→ panel needs the relay redeployed
+with `/post`. That is a single paste of `ops/taiwan-relay/oneliner.sh` into
+Google Cloud Shell; it reuses the existing token, so no secret changes. Until
+then the panel probe reports the 404 rather than failing silently.

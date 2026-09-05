@@ -1,0 +1,15 @@
+# Verified corrections to deck extraction, applied as an overlay.
+#
+# The extracted CSVs stay exactly as the extractor produced them: they are the
+# record of what the parser saw, and editing them in place would destroy the
+# ability to tell a parser bug from a source change. Values here were read off
+# the deck by hand, are cited to the page that carries them, and are applied on
+# top at composite time. Anything in this file is a claim about a specific PDF
+# and can be re-checked against it.
+#
+# entity	quarter	field	value	source
+cathay_life	2022-12-01	fx_policy_pct	32	FY2022 deck p29 外幣資產避險結構: 外幣資產 NT$5.11兆元, 具外匯風險資產 68%, 外幣保單負債 32%
+cathay_life	2022-12-01	fx_risk_pct	68	FY2022 deck p29, same panel
+fubon_life	2026-03-01	cs_ndf_pct	23.9	1Q2026 deck: 外匯交換、無本金遠期外匯 23.9% (wedge no longer includes 外幣保單, unlike pre-2026)
+fubon_life	2026-03-01	fx_risk_pct	77.6	1Q2026 deck: 具外匯風險資產 77.6%
+fubon_life	2026-03-01	fx_policy_pct	22.4	1Q2026 deck: 外幣保單負債 22.4%

@@ -103,6 +103,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CATHAY = ROOT / "data" / "cathay_fx_quarterly.csv"
 FUBON = ROOT / "data" / "fubon_deck_fx.csv"
 KGI = ROOT / "data" / "kgi_deck_fx.csv"
+CORR = ROOT / "config" / "deck_corrections.tsv"
 OUT_CSV = ROOT / "data" / "deck_composite.csv"
 
 # How far a bar reading may be carried to a quarter that lacks one. Four
@@ -179,6 +180,25 @@ def carry(series, quarters):
     return out
 
 
+def corrections():
+    """Hand-verified values the extractor missed, as an overlay.
+
+    Kept out of the extracted CSVs deliberately. Those files are the record of
+    what the parser saw; editing them in place would make a parser bug and a
+    source change indistinguishable next time. Each row here cites the deck page
+    it came from and can be re-checked against the PDF.
+    """
+    out = {}
+    if not CORR.exists():
+        return out
+    for line in CORR.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        ent, q, field, val, *_ = line.split("\t")
+        out.setdefault((ent.strip(), q.strip()), {})[field.strip()] = float(val)
+    return out
+
+
 def read_cathay():
     rows = {}
     for r in csv.DictReader(open(CATHAY, encoding="utf-8")):
@@ -251,6 +271,24 @@ def main():
     reg = {str(x["m"])[:10]: float(x["v"]) for x in (payload.get("reg_ratio") or [])}
 
     cat, kgi, fub = read_cathay(), read_kgi(), read_fubon()
+    corr = corrections()
+    # Fubon's 2026 pie drops 外幣保單 from its big wedge and prints the bar
+    # separately, which makes it the same shape as Cathay's and KGI's -- so from
+    # 2026 Fubon can join the GROSS composite it was excluded from before.
+    FUB_FIELDS = {"cs_ndf_pct": "csndf", "fx_risk_pct": "fxrisk", "fx_policy_pct": "fxpol"}
+    for (ent, q), fields in corr.items():
+        tgt = {"cathay_life": cat, "kgi_life": kgi, "fubon_life": fub}.get(ent)
+        if tgt is None:
+            continue
+        row = tgt.setdefault(q, {})
+        for f, v in fields.items():
+            key = {"fx_policy_pct": "fxpol", "fx_risk_pct": "fxrisk",
+                   "cs_ndf_pct": "csndf"}.get(f, f)
+            if row.get(key) is None:
+                row[key] = v
+    n_corr = sum(len(v) for v in corr.values())
+    print(f"corrections applied from {CORR.name}: {n_corr} values across "
+          f"{len(corr)} firm-quarters")
     quarters = sorted(set(cat) | set(kgi) | set(fub))
 
     # carry the slow bar for the two firms whose pie is over the risk subset
@@ -282,7 +320,15 @@ def main():
             firms["kgi_life"] = {"gross": g, "carried": kgi_risk[q][1],
                                  "econ": (g + kgi_pol[q][0]) if q in kgi_pol else None,
                                  "w": weight("kgi_life", q)}
-        f = fub.get(q, {})                        # reported beside, never blended
+        f = fub.get(q, {})
+        # From 2026 Fubon's pie is over the risk subset like the others, so it
+        # joins the composite on the same construction. Before 2026 its wedge
+        # includes 外幣保單 and it stays outside (see the docstring).
+        if f.get("csndf") is not None and f.get("fxrisk") is not None:
+            g = f["csndf"] * f["fxrisk"] / 100
+            firms["fubon_life"] = {"gross": g, "carried": 0,
+                                   "econ": (g + f["fxpol"]) if f.get("fxpol") else None,
+                                   "w": weight("fubon_life", q)}
         if not firms and not f.get("econ"):
             continue
 
