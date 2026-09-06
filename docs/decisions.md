@@ -4597,3 +4597,68 @@ should not be done. Take (a), and use (b) only as a cross-check on it.
 **Three observations is thin.** The band is narrow but the sample is small and
 entirely post-2024. The statements will make it testable per firm rather than
 assumed at sector level.
+
+### 4.54 Both extractors were wrong, and one filing's text settled what two runs of guessing could not
+
+The statement puller was about to spend two hours producing numbers that
+would have looked entirely plausible and been entirely wrong. The tell was
+small: every filing reported exactly one notional row and zero sensitivity
+rows. One row per filing cannot be right for a life insurer disclosing
+forwards, FX swaps, CCS and NDFs separately across two periods.
+
+The artifact host carrying the already-downloaded PDFs is blocked from this
+sandbox, so the filings could not be inspected where the parser runs. A
+throwaway workflow that fetches ONE filing and prints the flattened text of
+the relevant pages resolved both defects in two runs of about twenty seconds
+each — against roughly three hours per wrong guess the other way.
+
+**The derivatives note.** Laid out period-major:
+
+    113.12.31              112.12.31
+    帳面價值    名目本金     帳面價值    名目本金
+    遠期外匯合約 $ (1,309,890) 198,008,832 2,769,845 634,021,774
+
+The notional is the SECOND number after the instrument name. The parser took
+the first, which is 帳面價值 — the carrying value. Every notional extracted so
+far was a fair value, in the right shape and the right order of magnitude, and
+wrong. Worse, `INSTR` did not match 匯率交換合約 at all: NT$1,213.8bn against
+NT$198.0bn of forwards, 84% of the total notional, invisible.
+
+The header is now parsed rather than assumed, and the printed 合計 is checked
+against the sum of instrument rows per period — the only test that catches a
+column read at the wrong offset.
+
+**The sensitivity table.** Not two tables but one, 敏感度分析表(本公司),
+covering equity, rate and FX together. The rate rows read
+殖利率曲線(美元)平行上移50BPS — not 平移上升 … bp — and the FX row is
+新台幣兌所有外幣升值3%, with 所有外幣 where a named currency was expected.
+Periods are dot dates.
+
+**The shocks are not unit shocks**, and this changes the meaning of the
+series. 50BPS and 3%, so these are NOT DV01s; the module docstring asserted a
+1bp reading and has been corrected. The shock size now travels with every row.
+
+**First real numbers, Fubon Life:**
+
+| | 2023-12-31 | 2024-12-31 |
+|---|---|---|
+| 傳統避險本金 | — | NT$1,434.2bn |
+| USD curve +50bp on equity | −NT$30.0bn | −NT$33.2bn |
+| TWD curve +50bp on equity | −NT$7.8bn | −NT$6.7bn |
+| TWD +3% vs all FX, on P&L | −NT$8.4bn | −NT$19.6bn |
+
+Against Fubon's NT$3,472bn 國外投資 and the ~32% wedge of 4.53, the implied
+firm hedge ratio at 2024-12 is about 61%, against the sector's published 66.4%
+— consistent with Fubon being known to hedge lighter and lean on the reserve.
+
+**A resume feature that would have hidden the fix.** The puller skips filings
+already attempted, which is right for re-running the same parser and exactly
+wrong after fixing one: the cancelled run's filings would have caused the fixed
+parser to skip every one of them and keep the bad numbers. PARSER_VERSION now
+discards the record, the rows and the output files when the extraction changes
+meaning.
+
+**The lesson worth keeping.** Both defects produced output that passed every
+smell test available without the source document — plausible magnitudes, right
+units, right shape. Neither would have been caught by staring at the CSV. The
+cheap probe should have come before the long run, not after two of them.
