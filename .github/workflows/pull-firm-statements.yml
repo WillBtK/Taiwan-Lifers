@@ -19,10 +19,13 @@ on:
   # workflow present on the DEFAULT branch, and this one lives on the feature
   # branch. probe-rpt-panel solves it the same way — a push trigger on the
   # script's own path, so editing the puller runs it.
+  # Deliberately NOT triggered by the parser script. Editing the parser used
+  # to re-run a 60-minute index and two hours of rate-limited downloads to
+  # re-read text the repository already holds; reparse-notes.yml does that
+  # part in seconds. Start a real pull by editing THIS file, or by dispatch.
   push:
     branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
     paths:
-      - 'scripts/stage6_firm_sensitivity.py'
       - '.github/workflows/pull-firm-statements.yml'
   workflow_dispatch:
     inputs:

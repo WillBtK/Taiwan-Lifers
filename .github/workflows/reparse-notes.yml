@@ -1,0 +1,55 @@
+# Re-run the note parsers over the text captured by pull-firm-statements. No
+# network, seconds not hours.
+#
+# This exists because editing the parser used to re-trigger the whole pull: a
+# 60-minute index plus two hours of rate-limited downloads, to re-read text the
+# repository already held. Every firm lays these notes out differently, so
+# parser passes are frequent and that cost dominated everything.
+#
+# pull-firm-statements no longer triggers on the script path for the same
+# reason; it is started by editing its own workflow file or by dispatch.
+name: reparse-notes
+on:
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - 'scripts/stage6_firm_sensitivity.py'
+      - 'tests/test_note_parsers.py'
+      - 'tests/fixtures/**'
+      - '.github/workflows/reparse-notes.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: reparse-notes
+  cancel-in-progress: true
+jobs:
+  reparse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # The fixtures are real filing text and each one exists because a parser
+      # got it wrong first. A parser change that breaks one must fail here
+      # rather than quietly rewrite the extracted numbers.
+      - name: Parser regression tests
+        run: python3 tests/test_note_parsers.py
+      - name: Re-parse the captured note text
+        run: python3 scripts/stage6_firm_sensitivity.py reparse
+      - name: Commit the re-extracted numbers
+        if: always()
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/firm_sensitivity.csv data/firm_hedge_notional.csv \
+                  2>/dev/null || true
+          if git diff --cached --quiet; then echo 'unchanged'; else
+            git commit -m 'Reparse: firm hedge notionals and sensitivities'
+            git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true
+            git push
+          fi
