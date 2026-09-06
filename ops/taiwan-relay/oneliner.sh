@@ -126,68 +126,6 @@ def post():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
-PYEOF'
-"""Minimal fetch relay with Taiwan egress.
-
-ins-info.ib.gov.tw (the Insurance Bureau's statutory disclosure portal) accepts
-connections only from inside Taiwan: it refuses the agent sandbox and GitHub's
-runners identically, with the TCP connect never completing (decisions 4.13).
-Deployed to a Taiwan region, this service fetches those URLs and returns the
-bytes unchanged, so scripts/fetch_sources.py can run anywhere.
-
-It is deliberately not a general proxy. Two constraints keep it from becoming
-an open relay someone else can point at arbitrary hosts:
-  * the target host must be in ALLOWED_HOSTS (exact match, https only);
-  * every request must carry X-Relay-Token matching the RELAY_TOKEN env var.
-Requests failing either check are refused without being forwarded.
-"""
-import os
-import urllib.parse
-import urllib.request
-
-from flask import Flask, Response, request
-
-app = Flask(__name__)
-
-ALLOWED_HOSTS = {"ins-info.ib.gov.tw"}
-MAX_BYTES = 32 * 1024 * 1024
-UA = "Mozilla/5.0 (compatible; TLFX/1.0)"
-
-
-@app.get("/health")
-def health():
-    return {"ok": True, "allowed_hosts": sorted(ALLOWED_HOSTS)}
-
-
-@app.get("/fetch")
-def fetch():
-    expected = os.environ.get("RELAY_TOKEN", "")
-    if not expected:
-        return {"error": "relay misconfigured: RELAY_TOKEN unset"}, 500
-    if request.headers.get("X-Relay-Token", "") != expected:
-        return {"error": "forbidden"}, 403
-
-    target = request.args.get("url", "")
-    parts = urllib.parse.urlparse(target)
-    if parts.scheme != "https":
-        return {"error": f"scheme not allowed: {parts.scheme or '(none)'}"}, 400
-    if parts.hostname not in ALLOWED_HOSTS:
-        return {"error": f"host not allowed: {parts.hostname}"}, 400
-
-    req = urllib.request.Request(target, headers={"User-Agent": UA})
-    try:
-        with urllib.request.urlopen(req, timeout=90) as r:
-            body = r.read(MAX_BYTES + 1)
-            ctype = r.headers.get("Content-Type", "application/octet-stream")
-    except Exception as e:
-        return {"error": f"{type(e).__name__}: {e}"}, 502
-    if len(body) > MAX_BYTES:
-        return {"error": "response too large"}, 502
-    return Response(body, content_type=ctype)
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
 PYEOF
 printf 'flask==3.0.3\ngunicorn==22.0.0\n' > requirements.txt
 printf 'web: gunicorn --bind :$PORT --workers 1 --threads 4 --timeout 120 main:app\n' > Procfile
@@ -225,6 +163,18 @@ if [ -n "${NEWTOKEN:-}" ]; then
 else
   echo "TAIWAN_RELAY_TOKEN  (unchanged - existing GitHub secret still valid)"
 fi; echo
+# /fetch exists in every build the service has ever run, so a passing fetch
+# does NOT prove this redeploy took. /health reports "post" only in the build
+# that carries the POST endpoint, which is the whole reason for redeploying.
+echo "--- verifying the new build is live ---"
+if curl -sS --max-time 30 "$URL/health" | grep -q '"post"'; then
+  echo "POST endpoint  present"
+else
+  echo "POST endpoint  MISSING - an older build is still serving. Re-run this"
+  echo "               script; if it persists the deploy did not replace the"
+  echo "               revision and the panel pull will keep failing."
+fi
+echo
 echo "--- verifying the origin accepts this egress ---"
 code=$(curl -sS --max-time 120 -o /tmp/relay_body -w '%{http_code}' -H "X-Relay-Token: $TOKEN" "$URL/fetch?url=https%3A%2F%2Fins-info.ib.gov.tw%2Fopendata%2Fjson-06021011.aspx" || echo 000)
 echo "http=$code"; head -c 200 /tmp/relay_body; echo
