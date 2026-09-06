@@ -100,9 +100,12 @@ def main():
 
     out = []
     for (ent, as_of), v in sorted(agg.items()):
-        # A period whose instruments all parsed to zero is a failed read, not
-        # a firm that closed its whole hedge book overnight.
-        if v <= 0:
+        # A materiality floor, not a positivity test. Fubon's 2025-06-30
+        # summed to NT$12 THOUSAND - three instruments that each parsed to 4 -
+        # which is positive, reconciled against a total that parsed the same
+        # way, and plotted as a plunge to zero. No insurer with a foreign book
+        # runs a hedge programme under a billion.
+        if v < 1e6:          # NT$1bn, expressed in thousands
             continue
         out.append({"entity_id": ent, "as_of": as_of,
                     "traditional_notional_ntd_k": round(v, 3),
