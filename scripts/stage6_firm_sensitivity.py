@@ -921,8 +921,15 @@ def reparse():
     """
     notes = load_note_text()
     if not notes:
-        print(f"no captured text at {NOTE_TEXT.relative_to(ROOT)}; run `pull` first")
-        return 1
+        # Nothing captured yet is a legitimate state, not a failure: the pull
+        # that produces the text runs for hours and this workflow fires on
+        # every parser edit. Exiting non-zero here reported a broken build to
+        # the user when nothing was broken, which is worse than useless — it
+        # spends the credibility a real failure needs.
+        print(f"no captured text at {NOTE_TEXT.relative_to(ROOT)} yet; "
+              f"nothing to re-parse. The pull that produces it is the source, "
+              f"and it takes hours — this is not an error.")
+        return 0
     rows, notional_rows = [], []
     per_firm = {}
     for filing, rec in sorted(notes.items()):
