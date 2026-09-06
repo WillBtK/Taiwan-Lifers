@@ -369,11 +369,21 @@ TRADITIONAL = {"遠期外匯合約", "匯率交換合約", "換匯換利合約",
 COLHEAD = re.compile(r"(帳面價值|名目本金|合約金額|契約金額|公允價值)")
 # 113.12.31 style period headers used by the derivatives note
 DOTDATE = re.compile(r"(\d{2,3})\.(\d{1,2})\.(\d{1,2})")
-# Which note a page belongs to. 避險活動 lists only instruments formally
-# DESIGNATED as hedges (Fubon: NT$67bn) -- a small subset of the economic book
-# (NT$1,437bn), so the two must never be summed together.
-DESIG = re.compile(r"避險活動|避險會計|避險工具之明細|現金流量避險|公允價值避險")
+# Which TABLE a page carries, not which section it sits in. The old pattern
+# matched the section heading -- Fubon's is "(三)衍生性金融工具及避險會計",
+# naming both topics -- so the MAIN derivatives table was filed as "designated"
+# and dropped from the numerator. 173 of 189 rows landed in the wrong bucket
+# and the 傳統避險本金 series was empty as a result.
+#
+# The designated-hedge table has markers of its own: it reports the carrying
+# amount of the hedging instrument and the value change used to compute hedge
+# ineffectiveness. Those appear in that table and nowhere else.
+DESIG = re.compile(r"避險工具之帳面金額|避險無效性|避險工具之明細|"
+                   r"指定為避險工具|被避險項目")
 CCYRISK = re.compile(r"匯率風險|外幣.{0,6}風險|未避險|並未採用避險會計")
+# The main derivatives table, identified structurally: notional beside carrying
+# value. This IS the economic book and is what §三(九)'s numerator draws on.
+ECONOMIC = re.compile(r"名目本金|合約金額|契約金額")
 
 
 # Cathay presents the same disclosure under IFRS 17, split across eight
@@ -1002,7 +1012,13 @@ def reparse():
         flat_all = " ".join(rec["pages"].values())
         n = s = 0
         for page, flat in rec["pages"].items():
-            kind = ("designated" if DESIG.search(flat)
+            # Order matters: a page carrying the notional table is the
+            # economic book even when the surrounding section also discusses
+            # hedge accounting. Only the designated table's own markers, in
+            # the ABSENCE of a notional table, mean designated.
+            kind = ("currency_risk" if ECONOMIC.search(flat)
+                    and not DESIG.search(flat)
+                    else "designated" if DESIG.search(flat)
                     else "currency_risk" if CCYRISK.search(flat)
                     else "unclassified")
             meta = dict(entity_id=rec["entity_id"], co_id=rec["co_id"],
@@ -1031,9 +1047,14 @@ def reparse():
     print(f"  {'firm':<18}{'filings':>8}{'notional rows':>15}")
     for ent, (f, n, s) in sorted(per_firm.items()):
         print(f"  {ent:<18}{f:>8}{n:>15}" + ("   <- NO ROWS" if not n else ""))
+    # Two row shapes share this file: NT$ rows carry notional_ntd_k, by-currency
+    # rows carry notional_ccy_k plus a currency. Keying on the NT$ field alone
+    # raises on the currency rows, and dropping the currency from the key would
+    # collapse a firm's USD and JPY legs into one.
     _write(NOTIONAL_OUT, notional_rows,
            lambda r: (r["entity_id"], r["as_of"], r["note_kind"],
-                      r["instrument"], r["notional_ntd_k"]))
+                      r["instrument"], r.get("currency") or "NTD",
+                      r.get("notional_ntd_k"), r.get("notional_ccy_k")))
     print(f"\n{len(notional_rows)} notional rows -> "
           f"{NOTIONAL_OUT.relative_to(ROOT)}")
     return 0
