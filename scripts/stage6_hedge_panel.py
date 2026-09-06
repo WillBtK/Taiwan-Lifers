@@ -100,6 +100,10 @@ def main():
 
     out = []
     for (ent, as_of), v in sorted(agg.items()):
+        # A period whose instruments all parsed to zero is a failed read, not
+        # a firm that closed its whole hedge book overnight.
+        if v <= 0:
+            continue
         out.append({"entity_id": ent, "as_of": as_of,
                     "traditional_notional_ntd_k": round(v, 3),
                     "source_filing": chosen[(ent, as_of)],
