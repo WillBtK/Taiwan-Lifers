@@ -1,0 +1,42 @@
+entity_id,as_of,traditional_notional_ntd_k,source_filing,primary,quality,instruments
+banktaiwan_life,2020-06-30,176938885.0,202102_6025_AI2.pdf,False,reconciled,匯率交換合約=108.3bn; 遠期外匯合約=68.6bn
+banktaiwan_life,2020-12-31,150700547.0,202004_6025_AI2.pdf,True,reconciled,匯率交換合約=100.6bn; 遠期外匯合約=40.6bn; 換匯換利合約=9.5bn
+banktaiwan_life,2021-06-30,163827369.0,202102_6025_AI2.pdf,True,reconciled,匯率交換合約=108.8bn; 遠期外匯合約=33.8bn; 換匯換利合約=21.3bn
+banktaiwan_life,2021-12-31,165568068.0,202104_6025_AI2.pdf,True,reconciled,匯率交換合約=87.1bn; 遠期外匯合約=41.8bn; 換匯換利合約=36.7bn
+banktaiwan_life,2022-06-30,172269575.0,202202_6025_AI2.pdf,True,reconciled,匯率交換合約=99.8bn; 換匯換利合約=36.7bn; 遠期外匯合約=35.8bn
+banktaiwan_life,2022-12-31,181149573.0,202204_6025_AI2.pdf,True,reconciled,匯率交換合約=112.2bn; 遠期外匯合約=41.8bn; 換匯換利合約=27.1bn
+banktaiwan_life,2023-06-30,149117122.0,202302_6025_AI2.pdf,True,reconciled,匯率交換合約=121.5bn; 換匯換利合約=15.4bn; 遠期外匯合約=12.3bn
+banktaiwan_life,2023-12-31,143409551.0,202304_6025_AI2.pdf,True,reconciled,匯率交換合約=138.5bn; 遠期外匯合約=5.0bn
+banktaiwan_life,2024-06-30,163377005.0,202402_6025_AI2.pdf,True,reconciled,匯率交換合約=137.4bn; 遠期外匯合約=25.9bn
+banktaiwan_life,2024-12-31,225618421.0,202404_6025_AI2.pdf,True,reconciled,匯率交換合約=130.4bn; 遠期外匯合約=95.2bn
+banktaiwan_life,2025-06-30,140196949.0,202602_6025_AI2.pdf,False,reconciled,匯率交換合約=124.3bn; 遠期外匯合約=15.9bn
+banktaiwan_life,2025-12-31,155500085.0,202504_6025_AI2.pdf,True,reconciled,匯率交換合約=120.2bn; 遠期外匯合約=35.3bn
+banktaiwan_life,2026-06-30,117737092.0,202602_6025_AI2.pdf,True,reconciled,匯率交換合約=113.2bn; 遠期外匯合約=4.5bn
+fubon_life,2019-09-30,1371693293.0,202003_5865_AI1.pdf,False,reconciled,"匯率交換合約=1,025.0bn; 遠期外匯合約=346.7bn"
+fubon_life,2019-12-31,1259641005.0,202003_5865_AI1.pdf,False,reconciled,匯率交換合約=989.3bn; 遠期外匯合約=270.4bn
+fubon_life,2020-09-30,1333624661.0,202003_5865_AI1.pdf,True,reconciled,"匯率交換合約=1,019.9bn; 遠期外匯合約=313.7bn"
+fubon_life,2021-06-30,1330854651.0,202202_5865_AI1.pdf,False,reconciled,"匯率交換合約=1,078.0bn; 遠期外匯合約=242.0bn; 換匯換利合約=10.8bn"
+fubon_life,2021-12-31,1531659492.0,202202_5865_AI1.pdf,False,reconciled,"匯率交換合約=1,217.8bn; 遠期外匯合約=291.6bn; 換匯換利合約=22.2bn"
+fubon_life,2022-06-30,1565876376.0,202202_5865_AI1.pdf,True,reconciled,"匯率交換合約=1,260.2bn; 遠期外匯合約=282.6bn; 換匯換利合約=23.0bn"
+fubon_life,2024-12-31,1434210049.0,202404_5865_AI1.pdf,True,reconciled,"匯率交換合約=1,213.8bn; 遠期外匯合約=198.0bn; 換匯換利合約=22.4bn"
+fubon_life,2025-03-31,1559756200.0,202601_5865_AI1.pdf,False,reconciled,"匯率交換合約=1,123.5bn; 遠期外匯合約=413.3bn; 換匯換利合約=23.0bn"
+fubon_life,2025-06-30,12.0,202602_5865_AI1.pdf,False,reconciled,匯率交換合約=0.0bn; 換匯換利合約=0.0bn; 遠期外匯合約=0.0bn
+fubon_life,2025-12-31,825623053.0,202601_5865_AI1.pdf,False,reconciled,匯率交換合約=779.2bn; 遠期外匯合約=26.8bn; 換匯換利合約=19.6bn
+fubon_life,2026-03-31,697089522.0,202601_5865_AI1.pdf,True,reconciled,匯率交換合約=666.5bn; 換匯換利合約=19.2bn; 遠期外匯合約=11.4bn
+fubon_life,2026-06-30,785412861.0,202602_5865_AI1.pdf,True,reconciled,匯率交換合約=708.0bn; 遠期外匯合約=52.8bn; 換匯換利合約=24.7bn
+hontai_life,2017-12-31,105927208.0,201804_2876_AI2.pdf,False,reconciled,匯率交換合約=85.8bn; 無本金交割遠期外匯合約=17.3bn; 換匯換利合約=2.5bn; 遠期外匯合約=0.3bn
+hontai_life,2018-12-31,104932929.0,201804_2876_AI2.pdf,True,reconciled,匯率交換合約=93.6bn; 無本金交割遠期外匯合約=9.2bn; 換匯換利合約=1.9bn; 遠期外匯合約=0.2bn
+hontai_life,2021-12-31,70446071.0,202204_2876_AI2.pdf,False,reconciled,匯率交換合約=45.1bn; 無本金交割遠期外匯合約=12.7bn; 遠期外匯合約=7.5bn; 換匯換利合約=5.1bn
+hontai_life,2022-12-31,102985147.0,202204_2876_AI2.pdf,True,reconciled,匯率交換合約=70.2bn; 無本金交割遠期外匯合約=26.3bn; 換匯換利合約=5.1bn; 遠期外匯合約=1.4bn
+hontai_life,2023-12-31,85780047.0,202304_2876_AI2.pdf,True,reconciled,匯率交換合約=74.5bn; 無本金交割遠期外匯合約=7.1bn; 遠期外匯合約=4.2bn
+nanshan_life,2018-06-30,2088712237.0,201802_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,408.2bn; 遠期外匯=680.5bn"
+nanshan_life,2018-12-31,2103314148.0,201804_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,414.6bn; 遠期外匯=688.7bn"
+nanshan_life,2019-06-30,1961998986.0,201902_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,405.2bn; 遠期外匯=556.8bn"
+nanshan_life,2020-06-30,1821858656.0,202002_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,107.4bn; 遠期外匯=714.4bn"
+nanshan_life,2020-12-31,1821858656.0,202102_5874_AI1.pdf,False,subtotal_validated,"匯率交換=1,107.4bn; 遠期外匯=714.4bn"
+nanshan_life,2021-06-30,1782979506.0,202102_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,081.0bn; 遠期外匯=702.0bn"
+nanshan_life,2022-06-30,1781570176.0,202302_5874_AI1.pdf,False,subtotal_validated,"匯率交換=1,160.3bn; 遠期外匯=621.3bn"
+nanshan_life,2022-12-31,1795291642.0,202302_5874_AI1.pdf,False,subtotal_validated,"匯率交換=1,094.3bn; 遠期外匯=701.0bn"
+nanshan_life,2023-06-30,1809854914.0,202302_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,081.3bn; 遠期外匯=728.6bn"
+nanshan_life,2023-12-31,1887053359.0,202304_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,052.3bn; 遠期外匯=834.8bn"
+nanshan_life,2024-06-30,1923837482.0,202402_5874_AI1.pdf,True,subtotal_validated,"匯率交換=1,074.0bn; 遠期外匯=849.9bn"

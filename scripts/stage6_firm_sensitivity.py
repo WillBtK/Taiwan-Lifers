@@ -607,8 +607,24 @@ def parse_note_nanshan(flat):
     """Gross derivative notionals from the asset/liability block layout."""
     if "名目本金" not in flat or not NS_BLOCK.search(flat):
         return []
-    dates = find_dates(flat, len(flat))       # headers trail the table here
-    blocks = list(NS_BLOCK.finditer(flat))
+    # The period headers trail the table, so they must be read from the TAIL,
+    # after the last block - not from the whole page. Note 2 of this same note
+    # recites the same three dates in prose ("...於民國115年6月30日、114年12月
+    # 31日及114年6月30日分別為..."), and scanning the whole page picked those
+    # up instead, attaching block values to the wrong periods. The same four
+    # figures then appeared under 2018-12-31 in one filing and 2020-12-31 in
+    # another, which is what the doubling was.
+    _blocks = [b for b in NS_BLOCK.finditer(flat)
+               if NS_INSTR.search(flat[b.end(): b.end() + 130])]
+    if not _blocks:
+        return []
+    dates = find_dates(flat[_blocks[-1].start():], len(flat))
+    # Only blocks that actually HEAD a table. The words 金融資產 and 金融負債
+    # also appear in surrounding prose ("金融資產及金融負債互抵資訊請詳..."),
+    # which on the real page gave 8 blocks against 6 real ones and failed the
+    # pairing check - the fixture, being trimmed, had exactly 6 and hid it.
+    blocks = [b for b in NS_BLOCK.finditer(flat)
+              if NS_INSTR.search(flat[b.end(): b.end() + 130])]
     if not dates or len(blocks) < 2:
         return []
     # blocks run asset, liability, asset, liability ... one PAIR per period,
