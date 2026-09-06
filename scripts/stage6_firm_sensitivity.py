@@ -367,8 +367,12 @@ TRADITIONAL = {"遠期外匯合約", "匯率交換合約", "換匯換利合約",
                "貨幣交換合約", "無本金交割遠期外匯", "無本金交割遠期外匯合約"}
 # The columns of the derivatives note, in the order they are headed.
 COLHEAD = re.compile(r"(帳面價值|名目本金|合約金額|契約金額|公允價值)")
-# 113.12.31 style period headers used by the derivatives note
-DOTDATE = re.compile(r"(\d{2,3})\.(\d{1,2})\.(\d{1,2})")
+# 113.12.31 style period headers. The bounds are not decoration: an unbounded
+# (\d{2,3})\.(\d{1,2})\.(\d{1,2}) matches any dotted numeral in the text and
+# produced dates like 2023-12-00 and 2021-12-16 from things that were never
+# dates, which then became the period key for real notionals. ROC years for
+# these filings run 90-130; months 1-12; days 1-31.
+DOTDATE = re.compile(r"\b(9\d|1[0-2]\d)\.(0?[1-9]|1[0-2])\.(0?[1-9]|[12]\d|3[01])\b")
 # Which TABLE a page carries, not which section it sits in. The old pattern
 # matched the section heading -- Fubon's is "(三)衍生性金融工具及避險會計",
 # naming both topics -- so the MAIN derivatives table was filed as "designated"
@@ -652,6 +656,31 @@ def parse_note_by_currency(flat):
                                 "notional_ccy_k": vals[di],
                                 "traditional": h.group(1) in TRADITIONAL})
     return out
+
+
+def note_total(flat):
+    """The 合計 notional printed on the page, per period.
+
+    This is the filing's own arithmetic and the only independent check on the
+    extraction: instrument rows that do not sum to it have been read at the
+    wrong offset, matched in prose, or double-counted. Without it, 910 rows of
+    unknown quality is all there is.
+    """
+    m = re.search(r"合\s*計\s*(.{0,220})", flat)
+    if not m:
+        return {}
+    dates = [f"{1911 + int(y)}-{int(mm):02d}-{int(d):02d}"
+             for y, mm, d in DOTDATE.findall(flat[:400])]
+    heads = COLHEAD.findall(flat[:400])
+    if not dates or not heads or len(heads) % len(dates):
+        return {}
+    per = len(heads) // len(dates)
+    want = [i for i, h in enumerate(heads[:per])
+            if h in ("名目本金", "合約金額", "契約金額")]
+    v = numbers(m.group(1), per * len(dates))
+    if not want or len(v) < per * len(dates):
+        return {}
+    return {d: v[i * per + want[0]] for i, d in enumerate(dates)}
 
 
 def notionals(path):
@@ -1030,8 +1059,24 @@ def reparse():
             # than none, which is the harder error to notice.
             byccy = parse_note_by_currency(flat)
             rows_here = byccy or parse_note(flat)
+            tot = {} if byccy else note_total(flat)
+            # Mark each row with whether ITS table reconciles to the filing's
+            # own 合計. Shipping 900 rows of mixed provenance and letting the
+            # reader guess which are sound is worse than shipping fewer: the
+            # flag is what makes a subset defensible.
+            page_sum = {}
             for r in rows_here:
-                r.update(meta, total_ntd_k=None)
+                if r.get("notional_ntd_k"):
+                    page_sum[r["as_of"]] = (page_sum.get(r["as_of"], 0.0)
+                                            + r["notional_ntd_k"])
+            for r in rows_here:
+                tv = tot.get(r["as_of"])
+                if tv:
+                    s = page_sum.get(r["as_of"], 0.0)
+                    flag = "yes" if abs(s - tv) <= max(1.0, 5e-4 * abs(tv)) else "no"
+                else:
+                    flag = "no_total"
+                r.update(meta, total_ntd_k=tv, reconciles=flag)
                 notional_rows.append(r)
                 n += 1
             for r in (parse_sensitivity_ifrs17(flat) or []):
