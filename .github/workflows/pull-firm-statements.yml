@@ -27,9 +27,9 @@ on:
   workflow_dispatch:
     inputs:
       years:
-        description: 'ROC years to index, space separated (default 115 114 113 112)'
+        description: 'ROC years to index, space separated (blank = 115 down to 102)'
         required: false
-        default: '115 114 113 112'
+        default: ''
       gap:
         description: 'seconds between requests'
         required: false
@@ -58,7 +58,7 @@ jobs:
         env:
           TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
           TLFX_MOPS_BLOCK_WAIT: '120'
-        run: python3 scripts/stage6_firm_sensitivity.py ${{ github.event.inputs.years || '115 114 113 112' }}
+        run: python3 scripts/stage6_firm_sensitivity.py ${{ github.event.inputs.years }}
       - name: Download and parse
         env:
           TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
@@ -66,12 +66,17 @@ jobs:
         run: python3 scripts/stage6_firm_sensitivity.py pull
       # The PDFs are large and disposable; only the extracted numbers and the
       # filing index are committed.
+      # always(): the filings cost minutes each to fetch, and the index is the
+      # expensive half. A failure in the parse step must not throw away the
+      # index and the rows that did parse, which is what a skipped commit did.
       - name: Commit the extracted numbers
+        if: always()
         run: |
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add reports/mops_filing_index.json data/firm_sensitivity.csv \
-                  data/firm_hedge_notional.csv 2>/dev/null || true
+          git add reports/mops_filing_index.json reports/mops_parsed_filings.json \
+                  data/firm_sensitivity.csv data/firm_hedge_notional.csv \
+                  2>/dev/null || true
           if git diff --cached --quiet; then echo 'unchanged'; else
             git commit -m 'Pull: firm statutory statements (rate/FX sensitivity, hedge notionals)'
             git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true

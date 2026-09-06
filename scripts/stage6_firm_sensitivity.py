@@ -255,7 +255,12 @@ def pdf(co_id, filename):
             return p
         except Exception as e:
             _last[0] = time.time()
-            print(f"    ! {filename}: {type(e).__name__}")
+            # The reason, not just the class. "URLError" alone cannot
+            # distinguish a timeout from a reset from a refused connection,
+            # and those call for opposite responses (wait longer vs back off
+            # entirely). A whole run's worth of these said nothing diagnosable.
+            print(f"    ! {filename}: {type(e).__name__}: "
+                  f"{getattr(e, 'reason', None) or e}")
             time.sleep(5 * (attempt + 1))
     print(f"    ! {filename}: gave up after 4 attempts")
     return None
@@ -270,7 +275,11 @@ PERIOD = re.compile(r"(\d{2,3})\s*年\s*(\d{1,2})\s*月\s*\d{1,2}\s*日\s*至\s*
                     r"(\d{1,2})\s*月\s*(\d{1,2})\s*日")
 RATE_ROW = re.compile(r"殖利率曲線\s*\(\s*([^)]+?)\s*\)\s*平移上升\s*(\d+)\s*bp")
 FX_ROW = re.compile(r"([一-鿿]{2,4})兌([一-鿿]{2,4})升值\s*(\d+)\s*%")
-NUM = re.compile(r"\(\s*\$?\s*([\d,]+)\s*\)|\$?\s*(-)(?![\d,])|\$?\s*([\d,]+)")
+# Each numeric alternative must START with a digit. Written as [\d,]+ it also
+# matches a bare "," — and flattening the PDF's one-glyph-per-line CJK leaves
+# plenty of stray separators — whereupon "".replace(",","") is the empty string
+# and float() raises. That killed a whole CI run over one comma.
+NUM = re.compile(r"\(\s*\$?\s*(\d[\d,]*)\s*\)|\$?\s*(-)(?![\d,])|\$?\s*(\d[\d,]*)")
 
 
 def numbers(seg, n):
@@ -402,6 +411,10 @@ def notionals(path):
 
 
 IDX = ROOT / "reports" / "mops_filing_index.json"
+# Filings downloaded and parsed, whatever they yielded. A filing that parses to
+# no rows leaves no trace in either CSV, so without this list it would be
+# re-downloaded on every future run for ever.
+ATTEMPTED = ROOT / "reports" / "mops_parsed_filings.json"
 
 
 def build_index(years):
@@ -427,17 +440,93 @@ def build_index(years):
     return idx
 
 
+def _write(path, rows, keyf):
+    """Dedupe on keyf and write; returns the rows written.
+
+    Rows carried in from an earlier run are dicts read back from CSV, so every
+    value is a string, while freshly parsed rows hold floats and None. Keying
+    on str() puts both in the same space — otherwise the same observation
+    reappears each run under a key that never matches its predecessor and the
+    file grows without bound.
+    """
+    import csv
+    seen, uniq = set(), []
+    for r in sorted(rows, key=lambda r: tuple(str(x) for x in keyf(r))):
+        k = tuple(str(x) for x in keyf(r))
+        if k in seen:
+            continue
+        seen.add(k)
+        uniq.append(r)
+    if not uniq:
+        return []
+    # a run resumed from CSV has string cells; a fresh row may carry a key the
+    # older file lacked, so the header is the union rather than the first row's
+    cols = list(dict.fromkeys(c for r in uniq for c in r))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=cols)
+        w.writeheader()
+        for r in uniq:
+            w.writerow({c: r.get(c) for c in cols})
+    return uniq
+
+
+def _prior(path, key="filing"):
+    """Rows already extracted by an earlier run, and the filings they came from.
+
+    The PDFs are not committed (they are large and disposable), so every run
+    starts with an empty cache and re-fetches from scratch. At eight seconds a
+    request and two requests a filing, a decade of filings does not fit in one
+    run's time budget — and a run that times out three-quarters of the way
+    through used to leave nothing behind.
+
+    Carrying the output forward makes runs additive instead: each one skips
+    what is already extracted and spends its budget on filings never seen. The
+    history therefore deepens one run at a time rather than needing a single
+    run long enough for all of it.
+    """
+    import csv
+    if not path.exists():
+        return [], set()
+    with open(path, newline="", encoding="utf-8") as fh:
+        rows = list(csv.DictReader(fh))
+    return rows, {r[key] for r in rows if r.get(key)}
+
+
 def pull():
     """Download the consolidated filings named in the index and parse them."""
     import csv
     idx = json.loads(IDX.read_text(encoding="utf-8"))
-    rows, notional_rows = [], []
+    rows, done_sens = _prior(OUT)
+    notional_rows, done_not = _prior(NOTIONAL_OUT)
+    # A filing that parsed to nothing is still done: without recording it, an
+    # empty result would be retried on every future run, for ever.
+    attempted = set(json.loads(ATTEMPTED.read_text(encoding="utf-8"))
+                    ) if ATTEMPTED.exists() else set()
+    done = (done_sens | done_not | attempted)
+    if done:
+        print(f"  {len(done)} filings already extracted; skipping those\n")
     # One filing per firm-quarter. Insurers with subsidiaries file 合併財報 and
     # that is the one to take; several file only 個別/個體財報, which carries the
     # same risk note for an entity with nothing to consolidate. The 英文版 is a
     # translation of a filing already in the list and is never fetched.
     def rank(kind):
         return 0 if "合併" in kind else 1 if "個別" in kind else 2 if "個體" in kind else 9
+
+    def checkpoint():
+        """Persist after every firm.
+
+        The job's wall-clock ceiling is a real constraint, and a cancelled run
+        writes nothing from inside the loop. Saving per firm means the worst a
+        timeout costs is the firm in progress, not the whole run.
+        """
+        ATTEMPTED.parent.mkdir(parents=True, exist_ok=True)
+        ATTEMPTED.write_text(json.dumps(sorted(attempted), indent=0), encoding="utf-8")
+        _write(NOTIONAL_OUT, notional_rows,
+               lambda r: (r["entity_id"], r["as_of"], r["note_kind"],
+                          r["instrument"], r["notional_ntd_k"]))
+        _write(OUT, rows,
+               lambda r: (r["entity_id"], r["period_end"], r["table"], r["label"]))
 
     for co, name in FIRMS.items():
         best = {}
@@ -451,11 +540,23 @@ def pull():
         # recent periods should be the ones already on disk when it does
         for f in sorted(best.values(),
                         key=lambda r: (r["roc_year"], r["quarter"]), reverse=True):
+            if f["filename"] in done:
+                continue
             p = pdf(co, f["filename"])
             if not p:
                 continue
-            got = sensitivities(p)
-            nots = notionals(p)
+            attempted.add(f["filename"])
+            # One malformed filing must cost that filing, not the run. Each
+            # download is minutes of rate-limited fetching, so an exception
+            # raised here discards every earlier firm's work as well — which
+            # is exactly what happened, over a single unparseable cell.
+            try:
+                got = sensitivities(p)
+                nots = notionals(p)
+            except Exception as e:
+                print(f"  {name:<16} {f['roc_year']}Q{f['quarter']} "
+                      f"{f['filename']:<24} PARSE FAILED: {type(e).__name__}: {e}")
+                continue
             print(f"  {name:<16} {f['roc_year']}Q{f['quarter']} "
                   f"{f['filename']:<24} {len(got):>3} sens  {len(nots):>3} notional")
             for r in got:
@@ -464,23 +565,12 @@ def pull():
             for r in nots:
                 notional_rows.append({"entity_id": name, "co_id": co,
                                       "filing": f["filename"], **r})
-    # Written before the sensitivity guard: a run that finds notionals but no
-    # sensitivity tables must still keep the notionals.
-    if notional_rows:
-        seen, uniq = set(), []
-        for r in sorted(notional_rows, key=lambda r: (r["entity_id"], r["as_of"] or "",
-                                                      r["note_kind"], r["instrument"])):
-            k = (r["entity_id"], r["as_of"], r["note_kind"], r["instrument"],
-                 r["notional_ntd_k"])
-            if k in seen:
-                continue
-            seen.add(k)
-            uniq.append(r)
-        NOTIONAL_OUT.parent.mkdir(exist_ok=True)
-        with open(NOTIONAL_OUT, "w", newline="", encoding="utf-8") as fh:
-            w = csv.DictWriter(fh, fieldnames=list(uniq[0].keys()))
-            w.writeheader()
-            w.writerows(uniq)
+        checkpoint()
+
+    uniq = _write(NOTIONAL_OUT, notional_rows,
+                  lambda r: (r["entity_id"], r["as_of"], r["note_kind"],
+                             r["instrument"], r["notional_ntd_k"]))
+    if uniq:
         print(f"\n{len(uniq)} notional rows -> {NOTIONAL_OUT.relative_to(ROOT)}")
         by_kind = {}
         for r in uniq:
@@ -488,22 +578,12 @@ def pull():
         print("  by note: " + ", ".join(f"{k} {v}" for k, v in sorted(by_kind.items()))
               + "   (only currency_risk corresponds to 傳統避險本金)")
 
-    if not rows:
+    # a later filing restates the same comparative period; keep one
+    uniq = _write(OUT, rows,
+                  lambda r: (r["entity_id"], r["period_end"], r["table"], r["label"]))
+    if not uniq:
         print("  no sensitivity rows parsed")
-        return rows
-    seen, uniq = set(), []
-    for r in sorted(rows, key=lambda r: (r["entity_id"], r["period_end"],
-                                         r["table"], r["label"], r["filing"])):
-        k = (r["entity_id"], r["period_end"], r["table"], r["label"])
-        if k in seen:      # a later filing restates the same comparative period
-            continue
-        seen.add(k)
-        uniq.append(r)
-    OUT.parent.mkdir(exist_ok=True)
-    with open(OUT, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(uniq[0].keys()))
-        w.writeheader()
-        w.writerows(uniq)
+        return []
     print(f"\n{len(uniq)} unique observations -> {OUT.relative_to(ROOT)}")
     usd = [r for r in uniq if r["table"] == "rate" and r["label"] == "美金"]
     if usd:
@@ -520,7 +600,11 @@ def main():
     if args and args[0] == "pull":
         pull()
         return 0
-    build_index([int(y) for y in (args or ["115", "114", "113", "112"])])
+    # Down to ROC 102 (2013). The point of this puller is a hedge-ratio history
+    # built the regulation's way, so the index has to span the history that
+    # exists rather than the recent window the sector already publishes.
+    default = [str(y) for y in range(115, 101, -1)]
+    build_index([int(y) for y in (args or default)])
     return 0
 
 
