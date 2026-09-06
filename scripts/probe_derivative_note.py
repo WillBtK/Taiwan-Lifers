@@ -31,7 +31,7 @@ from stage6_firm_sensitivity import (INSTR, pdf, FIRMS)  # noqa: E402
 
 def main():
     co = sys.argv[1] if len(sys.argv) > 1 else "5865"      # Fubon Life
-    name = sys.argv[2] if len(sys.argv) > 2 else "202404_5865_AI2.pdf"
+    name = sys.argv[2] if len(sys.argv) > 2 else "202404_5865_AI1.pdf"
     print(f"# {FIRMS.get(co, co)}  {name}\n")
     p = pdf(co, name)
     if not p:
