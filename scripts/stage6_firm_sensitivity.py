@@ -84,6 +84,17 @@ def _envf(name, default):
 
 
 REQUEST_GAP = _envf("TLFX_MOPS_GAP", 8)
+# Earliest ROC year to DOWNLOAD, applied independently of what the index
+# happens to hold. The index is cumulative and an earlier run may have written
+# years beyond this range; without a floor here those would be pulled anyway
+# and the run would not finish in one pass, which is the point of the range.
+MIN_YEAR = int(_envf("TLFX_MOPS_MIN_YEAR", 105))
+# Stop downloading with time to spare and exit cleanly. Being killed at the
+# job's ceiling ends the process mid-filing; stopping first means the last
+# checkpoint is written and the run reports how far it actually got, which is
+# the difference between "resume from here" and "work out where it died".
+DEADLINE = _envf("TLFX_MOPS_DEADLINE_MIN", 280) * 60
+_started = time.time()
 # The WAF answers 200 with a "FOR SECURITY REASONS" page rather than a 4xx. A
 # first pass at 3s between requests hit it, and — worse — cached the block page,
 # so a rate-limited company-year became a permanent "0 filings". Blocked
@@ -528,10 +539,13 @@ def pull():
         _write(OUT, rows,
                lambda r: (r["entity_id"], r["period_end"], r["table"], r["label"]))
 
+    stopped = [False]
     for co, name in FIRMS.items():
+        if stopped[0]:
+            break
         best = {}
         for f in idx.get(co, []):
-            if "英文版" in f["kind"]:
+            if "英文版" in f["kind"] or int(f["roc_year"]) < MIN_YEAR:
                 continue
             k = (f["roc_year"], f["quarter"])
             if k not in best or rank(f["kind"]) < rank(best[k]["kind"]):
@@ -542,6 +556,12 @@ def pull():
                         key=lambda r: (r["roc_year"], r["quarter"]), reverse=True):
             if f["filename"] in done:
                 continue
+            if time.time() - _started > DEADLINE:
+                print(f"\n  deadline reached ({DEADLINE / 60:.0f} min); stopping "
+                      f"with {len(attempted)} filings extracted. Re-run to "
+                      f"continue from here.")
+                stopped[0] = True
+                break
             p = pdf(co, f["filename"])
             if not p:
                 continue
@@ -600,10 +620,11 @@ def main():
     if args and args[0] == "pull":
         pull()
         return 0
-    # Down to ROC 102 (2013). The point of this puller is a hedge-ratio history
-    # built the regulation's way, so the index has to span the history that
-    # exists rather than the recent window the sector already publishes.
-    default = [str(y) for y in range(115, 101, -1)]
+    # ROC 105-115 = calendar 2016-2026. Chosen so the whole span completes in
+    # ONE run rather than accumulating over several: at two requests a filing
+    # and eight seconds a request, eleven years fits inside the job's ceiling
+    # and fourteen does not. A dense decade now beats a fuller history later.
+    default = [str(y) for y in range(115, MIN_YEAR - 1, -1)]
     build_index([int(y) for y in (args or default)])
     return 0
 

@@ -27,7 +27,7 @@ on:
   workflow_dispatch:
     inputs:
       years:
-        description: 'ROC years to index, space separated (blank = 115 down to 102)'
+        description: 'ROC years to index, space separated (blank = 115 down to 105, i.e. 2016-2026)'
         required: false
         default: ''
       gap:
@@ -58,11 +58,15 @@ jobs:
         env:
           TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
           TLFX_MOPS_BLOCK_WAIT: '120'
+          TLFX_MOPS_MIN_YEAR: '105'
         run: python3 scripts/stage6_firm_sensitivity.py ${{ github.event.inputs.years }}
+      # The floor is set on BOTH steps so the download cannot wander outside
+      # the range the index was built for, whatever an earlier run left behind.
       - name: Download and parse
         env:
           TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
           TLFX_MOPS_BLOCK_WAIT: '120'
+          TLFX_MOPS_MIN_YEAR: '105'
         run: python3 scripts/stage6_firm_sensitivity.py pull
       # The PDFs are large and disposable; only the extracted numbers and the
       # filing index are committed.
