@@ -56,12 +56,12 @@ jobs:
       # has not already fetched.
       - name: Index the filings
         env:
-          TLFX_MOPS_GAP: ${{ github.event.inputs.gap }}
+          TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
           TLFX_MOPS_BLOCK_WAIT: '120'
-        run: python3 scripts/stage6_firm_sensitivity.py ${{ github.event.inputs.years }}
+        run: python3 scripts/stage6_firm_sensitivity.py ${{ github.event.inputs.years || '115 114 113 112' }}
       - name: Download and parse
         env:
-          TLFX_MOPS_GAP: ${{ github.event.inputs.gap }}
+          TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
           TLFX_MOPS_BLOCK_WAIT: '120'
         run: python3 scripts/stage6_firm_sensitivity.py pull
       # The PDFs are large and disposable; only the extracted numbers and the
