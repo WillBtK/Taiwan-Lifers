@@ -4662,3 +4662,59 @@ meaning.
 smell test available without the source document — plausible magnitudes, right
 units, right shape. Neither would have been caught by staring at the CSV. The
 cheap probe should have come before the long run, not after two of them.
+
+### 4.55 The competing hedge ratios share a numerator and differ by denominator, and the arithmetic closes
+
+Framed correctly (by the user), the dispersion is not four measurements of one
+thing. It is one measurement — 傳統避險本金 — divided by three different bases.
+
+| month | 傳統避險本金 | ÷ net FX base | ÷ 國外投資 | ÷ total assets |
+|---|---|---|---|---|
+| 2024-12 | 10.36兆 | **66.4%** | 45.0% | 28.1% |
+| 2025-10 | 8.90兆 | 58.6% | 39.9% | 24.0% |
+| 2025-12 | 7.74兆 | 50.2% | 33.9% | 20.5% |
+
+At 2024-12 that is a **38pp spread with no economic content whatever**.
+
+**The identity closes, which is what makes this more than a story.** Where both
+`reg_hedge_ratio` and `gross_hedge_ratio` exist, their ratio should equal the
+published exposure ÷ 國外投資 if and only if they share a numerator:
+
+| month | gross ÷ reg | exposure ÷ 國外投資 | implied numerators |
+|---|---|---|---|
+| 2024-12 | 0.6775 | 0.6783 | 10.357 vs 10.345兆 (−0.11%) |
+| 2025-10 | 0.6814 | 0.6816 | 8.900 vs 8.897兆 (−0.03%) |
+| 2025-12 | 0.6764 | 0.6754 | 7.735 vs 7.747兆 (+0.14%) |
+
+Two independently sourced series, agreeing to within 0.2pp on the ratio and
+0.15% on the implied numerator. Not circular: `reg_hedge_ratio` is press-reported
+from FSC briefings, `gross_hedge_ratio` is built from 國外投資 in the Bureau's
+indicators.
+
+**The FX-liability adjustment appears on EITHER side of the fraction**, which is
+the part the denominator framing alone misses:
+- §三(九) **removes** 外幣收付之非投資型保單負債 from the denominator → 66.4%.
+- The "economic" ratio **adds** the same FX-policy backing to the numerator as a
+  natural hedge → gross + 30pp (24–34pp across 23 observations, mean 30.2).
+
+Same balance-sheet object, two treatments, and they are not interchangeable:
+N/(F−L) and (N+L)/F differ except by coincidence.
+
+**Which one a broker is quoting.** This project's own note on
+`gross_hedge_ratio` already called it "the cross-scope construct sell-side
+quotes" — numerator on the regulatory scope, denominator gross. That is the
+45%-at-2024-12 line, and it is the most likely thing to arrive in a broker note
+labelled simply "hedge ratio".
+
+**A live trend worth watching.** The net base was 67.6–68.1% of 國外投資 through
+2024–25 but 71.2% at 2026-03 and 70.4% at 2026-04. The deduction is shrinking
+relative to foreign investment, so the gap between the regulatory and gross
+ratios is narrowing — the regulatory ratio is falling for a denominator reason
+as well as a hedging one, and the two should be separated before reading the
+44% as a pure retreat from hedging.
+
+**Consequence for 4.53.** The "32% wedge" is not an empirical oddity needing a
+stopgap; it is the definitional difference between two published bases, and it
+converts between them exactly. That is a stronger footing than the entry
+implied, though the caution about extrapolating it before 2024 stands — it is
+the FX-policy liability book relative to foreign investment, and both have moved.
