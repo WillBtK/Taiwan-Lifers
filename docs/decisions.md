@@ -4549,3 +4549,51 @@ predecessor and the file would grow without bound each run.
 the 敏感度分析表 matcher does not fire on these filings and has not yet been
 diagnosed — the artifact host is blocked from this sandbox, so it needs either
 a filing fetched another way or diagnostics added to the CI run.
+
+### 4.53 The §三(九) denominator is about 32% smaller than 國外投資, and that wedge is stable
+
+A bottom-up hedge ratio built as Σnotional ÷ Σ國外投資 would not be comparable
+with the official ratio, and the size of the error is now measurable.
+
+Two independently published series overlap at three month-ends: 國外投資總額 and
+the regulatory exposure the FSC quotes as the ratio's denominator.
+
+| month | 國外投資 | reg. exposure | wedge |
+|---|---|---|---|
+| 2024-12 | 23.0兆 | 15.6兆 | 32.2% |
+| 2025-10 | 22.3兆 | 15.2兆 | 31.8% |
+| 2025-12 | 22.8兆 | 15.4兆 | 32.5% |
+
+The denominator is roughly **two-thirds** of foreign investment, and the wedge
+sits in a 0.7pp band across two years that span a 24pp fall in the ratio itself
+(66.4% → 42.9%). A ratio computed on the raw 國外投資 base would read about 0.68
+times the official one: at 2024-12, 45.0% against the published 66.4%. That is
+precisely the magnitude of level error that made the P&L reconstruction
+unusable (4.48), so it has to be handled rather than noted.
+
+**A circularity check that failed, and what survives it.** The obvious
+validation — that 傳統避險本金 ÷ 避險比率 reproduces the published denominator —
+is worthless here: `hedge_principal` carries `basis='estimated'` and was itself
+computed as denominator × ratio, so the identity holds by construction at every
+date. It confirms nothing. The wedge above does not depend on it: both columns
+are separately sourced from FSC briefings and the Bureau's written report to
+the Legislative Yuan.
+
+**What the wedge is made of.** Per the 2024-12 source note, the exposure as
+described deducts 外幣收付之非投資型保單負債 only; §三(九)'s third term (unhedged
+non-FVTPL equities and funds) is not mentioned in the reporting. So the 32% is
+mostly the FX-policy liability book, and the equity/fund deduction is either
+small or excluded from the quoted figure.
+
+**Consequence for the bottom-up construction.** Three options, in descending
+order of defensibility: (a) extract the denominator components from the same
+statements as the numerator, which is what §三(九) actually requires and what
+the filings disclose; (b) apply the measured wedge as a scaling factor, whose
+uncertainty over 2024-2026 is ±0.4pp but whose stability before 2024 is an
+assumption, not a measurement — the FX-policy liability book has grown over
+time; (c) publish the raw-base ratio, which is not comparable to anything and
+should not be done. Take (a), and use (b) only as a cross-check on it.
+
+**Three observations is thin.** The band is narrow but the sample is small and
+entirely post-2024. The statements will make it testable per firm rather than
+assumed at sector level.
