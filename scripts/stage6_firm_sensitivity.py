@@ -22,18 +22,26 @@ gated; it is attempted here and the result is reported rather than assumed.
 
 WHAT IS EXTRACTED AND WHY IT IS THE RIGHT NUMBER
 ------------------------------------------------
-Two tables in the financial-risk note:
+Two disclosures, both read from the real filings rather than assumed:
 
-  利率風險敏感度分析表 — the change in P&L and in EQUITY for a 1bp parallel
-  shift in each currency's yield curve. This is a DV01, disclosed by the firm,
-  by currency. It is the direct measure of how much duration risk is actually
-  carried on the balance sheet, and it is far better than any inference from
-  asset mix, because it is net of hedges and reflects the firm's own accounting
-  classification.
+  敏感度分析表 — ONE table covering equity, rate and FX risk together, not the
+  two separate 利率風險/匯率風險 tables this script originally looked for. Rows
+  give the change in P&L and in EQUITY for a stated shock, and the shocks are
+  NOT unit shocks: Fubon discloses a 50BPS parallel curve move by currency and
+  a 3% move in TWD against all foreign currencies. Calling these DV01s would
+  overstate per-basis-point sensitivity fiftyfold, so the shock size travels
+  with every row and any per-bp figure is derived downstream.
 
-  匯率風險敏感度分析表 — the change in P&L, in EQUITY and in the FX volatility
-  reserve for a 1% move in each currency. The reserve column is the one this
-  project has spent most effort on from the sector side; here it is per firm.
+  衍生性金融商品 — the derivatives note, laid out period-major as
+  帳面價值 | 名目本金 for each period side by side. The notional is therefore
+  the SECOND number after an instrument name; reading the first silently
+  recorded the carrying value instead. §三(五)'s 傳統避險 set (forwards, FX
+  swaps, CCS, NDFs) is selected by instrument label, so the interest-rate swaps
+  and options in the same table are excluded from the hedge numerator.
+
+  Not to be confused with the 避險活動 note, which lists only instruments
+  formally DESIGNATED as hedges — NT$67bn for Fubon against a NT$1,437bn
+  economic book. The two are labelled separately and never summed.
 
 THE CLASSIFICATION TRAP, WHICH IS THE POINT
 -------------------------------------------
@@ -281,15 +289,11 @@ def pdf(co_id, filename):
 # The PDF emits CJK table headers one glyph per line, so the text is flattened
 # to a single whitespace-collapsed string before anything is matched. Numbers
 # arrive as "( $ 144,217 )" split across lines; a bare "-" is nil, not missing.
-BLOCK = re.compile(r"(利率|匯率)\s*風\s*險\s*敏\s*感\s*度\s*分\s*析\s*表")
-PERIOD = re.compile(r"(\d{2,3})\s*年\s*(\d{1,2})\s*月\s*\d{1,2}\s*日\s*至\s*"
-                    r"(\d{1,2})\s*月\s*(\d{1,2})\s*日")
-RATE_ROW = re.compile(r"殖利率曲線\s*\(\s*([^)]+?)\s*\)\s*平移上升\s*(\d+)\s*bp")
-FX_ROW = re.compile(r"([一-鿿]{2,4})兌([一-鿿]{2,4})升值\s*(\d+)\s*%")
-# Each numeric alternative must START with a digit. Written as [\d,]+ it also
-# matches a bare "," — and flattening the PDF's one-glyph-per-line CJK leaves
-# plenty of stray separators — whereupon "".replace(",","") is the empty string
-# and float() raises. That killed a whole CI run over one comma.
+# Numbers arrive as "( $ 144,217 )" split across lines; a bare "-" is nil, not
+# missing. Each numeric alternative must START with a digit -- written [\d,]+ it
+# also matches a bare ",", and flattening the PDF's one-glyph-per-line CJK
+# leaves plenty of stray separators, whereupon "".replace(",","") is the empty
+# string and float() raises. That killed a whole CI run over one comma.
 NUM = re.compile(r"\(\s*\$?\s*(\d[\d,]*)\s*\)|\$?\s*(-)(?![\d,])|\$?\s*(\d[\d,]*)")
 
 
@@ -308,76 +312,26 @@ def numbers(seg, n):
     return out
 
 
-def sensitivities(path):
-    """Every 利率/匯率 sensitivity row in one filing, both periods it prints."""
-    import pymupdf
-    doc = pymupdf.open(path)
-    pages = [unicodedata.normalize("NFKC", p.get_text()) for p in doc]
-    text = "\n".join(t for t in pages if "敏感度分析表" in t)
-    if not text:
-        return []
-    flat = re.sub(r"\s+", " ", text)
-    marks = [m for m in BLOCK.finditer(flat)]
-    out = []
-    for i, m in enumerate(marks):
-        # bound each block at the next one, or a stray tail duplicates the rows
-        # of the following block under this block's period
-        seg = flat[m.start(): marks[i + 1].start() if i + 1 < len(marks) else len(flat)]
-        per = PERIOD.search(seg)
-        if not per:
-            continue
-        yr, _, m2, d2 = per.groups()
-        end = f"{1911 + int(yr)}-{int(m2):02d}-{int(d2):02d}"
-        kind = "rate" if m.group(1) == "利率" else "fx"
-        # the FX table carries a third column (the FX volatility reserve) only
-        # where the firm runs one; read the column count off the header
-        ncol = 3 if (kind == "fx" and "準" in seg[:220]) else 2
-        pat = RATE_ROW if kind == "rate" else FX_ROW
-        body = seg[per.end():]
-        hits = list(pat.finditer(body))
-        for j, h in enumerate(hits):
-            stop = hits[j + 1].start() if j + 1 < len(hits) else min(len(body),
-                                                                     h.end() + 140)
-            vals = numbers(body[h.end():stop], ncol)
-            if len(vals) < 2:
-                continue
-            row = {"period_end": end, "table": kind,
-                   "label": h.group(1) if kind == "rate"
-                            else f"{h.group(1)}/{h.group(2)}",
-                   "shock": h.group(2) + ("bp" if kind == "rate" else ""),
-                   "pnl_ntd_k": vals[0], "equity_ntd_k": vals[1],
-                   "fx_reserve_ntd_k": vals[2] if len(vals) > 2 else None}
-            if kind == "fx":
-                row["shock"] = h.group(3) + "pct"
-            out.append(row)
-    # a filing prints the current and comparative periods; identical rows can
-    # appear twice when a table straddles a page break
-    seen, uniq = set(), []
-    for r in out:
-        k = (r["period_end"], r["table"], r["label"])
-        if k not in seen:
-            seen.add(k)
-            uniq.append(r)
-    return uniq
+# The market-risk sensitivity disclosure is ONE table covering equity, rate and
+# FX risk, headed 敏感度分析表 with an optional (本公司)/(子公司X) scope, not the
+# two separate 利率風險敏感度分析表 / 匯率風險敏感度分析表 this used to look
+# for. Nothing matched, so every filing reported "0 sens" while the table sat
+# in the document unread.
+BLOCK = re.compile(r"敏\s*感\s*度\s*分\s*析\s*表\s*(?:[（(]\s*([^）)]{1,20})\s*[）)])?")
+# Periods inside it are dot dates (113.12.31), not the 年/月/日至/月/日 range.
+PERIOD = re.compile(r"\b(\d{2,3})\.(\d{1,2})\.(\d{1,2})\b")
+# 殖利率曲線(美元)平行上移50BPS -- 平行上移/下移, and BPS, not 平移上升 ... bp.
+# The shock is 50bp, not 1bp, so these are NOT DV01s and must not be labelled
+# as such; the size is carried on every row.
+RATE_ROW = re.compile(r"殖利率曲線\s*[（(]\s*([^）)]{1,8}?)\s*[）)]\s*"
+                      r"平行(上移|下移)\s*([\d.]+)\s*(?:BPS|bps|bp|基點)")
+# 新台幣兌所有外幣升值3% -- the counter-currency may be 所有外幣 rather than a
+# single currency, and the shock is 3%, not 1%.
+FX_ROW = re.compile(r"([一-鿿]{2,4})\s*兌\s*([一-鿿]{2,6})\s*(升值|貶值)\s*"
+                    r"([\d.]+)\s*%")
+EQ_ROW = re.compile(r"價格指數\s*(上升|下跌)\s*([\d.]+)\s*%")
 
 
-# ------------------------------------------------- hedge notionals
-# THE TRAP, WHICH IS THE WHOLE REASON THIS IS LABELLED RATHER THAN SUMMED.
-# A filing can disclose FX derivative notionals in two different notes and they
-# mean different things:
-#
-#   designated   — the 避險活動 / 避險會計 note lists ONLY instruments formally
-#                  designated for hedge accounting. Cathay's designated forward
-#                  notional is NT$44bn against a ~NT$5tn foreign book, so summing
-#                  this across firms understates the sector by two orders of
-#                  magnitude for any firm that designates (decisions 4.36).
-#   currency_risk — the 外幣/匯率風險 note, where a firm stating 並未採用避險會計
-#                  reports its ECONOMIC hedges. This is the one that corresponds
-#                  to 傳統避險本金 in the FSC notice §三(九).
-#
-# So every row carries note_kind, and nothing is aggregated here. A firm that
-# discloses only `designated` has NOT disclosed its hedge principal, and must be
-# recorded as unknown rather than as a small number.
 # 匯率交換合約 was missing, and it is the LARGEST line in the book: Fubon Life
 # at 113.12.31 disclosed NT$1,213.8bn of it against NT$198.0bn of forwards --
 # 84% of the total notional, invisible to the pattern that omitted it.
@@ -395,8 +349,70 @@ TRADITIONAL = {"遠期外匯合約", "匯率交換合約", "換匯換利合約",
 COLHEAD = re.compile(r"(帳面價值|名目本金|合約金額|契約金額|公允價值)")
 # 113.12.31 style period headers used by the derivatives note
 DOTDATE = re.compile(r"(\d{2,3})\.(\d{1,2})\.(\d{1,2})")
+# Which note a page belongs to. 避險活動 lists only instruments formally
+# DESIGNATED as hedges (Fubon: NT$67bn) -- a small subset of the economic book
+# (NT$1,437bn), so the two must never be summed together.
 DESIG = re.compile(r"避險活動|避險會計|避險工具之明細|現金流量避險|公允價值避險")
 CCYRISK = re.compile(r"匯率風險|外幣.{0,6}風險|未避險|並未採用避險會計")
+
+
+def sensitivities(path):
+    """The market-risk sensitivity table: equity, rate and FX rows, per period.
+
+    One table, not two, and the shocks are NOT unit shocks: Fubon discloses a
+    50bp parallel curve move and a 3% FX move. Reporting these as DV01s would
+    overstate per-basis-point sensitivity fiftyfold, so the shock size travels
+    with every row and the caller divides if it wants a DV01.
+
+    Rows carry two columns, 損益變動 and 權益變動 -- P&L and equity. A "-" is a
+    genuine nil (a TWD curve move does not touch P&L when the TWD book is at
+    amortised cost), not a missing value.
+    """
+    import pymupdf
+    doc = pymupdf.open(path)
+    out = []
+    for page in doc:
+        raw = unicodedata.normalize("NFKC", page.get_text())
+        if not BLOCK.search(raw) or not RATE_ROW.search(raw) \
+                and not FX_ROW.search(raw):
+            continue
+        flat = re.sub(r"\s+", " ", raw)
+        scope = (BLOCK.search(flat).group(1) or "本公司").strip()
+        # each row belongs to the nearest period header ABOVE it; the table
+        # prints the current period then the comparative, same shape twice
+        heads = [(m.start(),
+                  f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-"
+                  f"{int(m.group(3)):02d}")
+                 for m in PERIOD.finditer(flat)]
+        if not heads:
+            continue
+
+        def emit(m, table, label, shock, sign):
+            vals = numbers(flat[m.end(): m.end() + 90], 2)
+            if len(vals) < 2:
+                return
+            d = next((x for pos, x in reversed(heads) if pos < m.start()), None)
+            if not d:
+                return
+            out.append({"period_end": d, "scope": scope, "table": table,
+                        "label": label, "shock": shock, "direction": sign,
+                        "pnl_ntd_k": vals[0], "equity_ntd_k": vals[1]})
+
+        for m in RATE_ROW.finditer(flat):
+            emit(m, "rate", m.group(1), f"{m.group(3)}bp", m.group(2))
+        for m in FX_ROW.finditer(flat):
+            emit(m, "fx", f"{m.group(1)}/{m.group(2)}",
+                 f"{m.group(4)}%", m.group(3))
+        for m in EQ_ROW.finditer(flat):
+            emit(m, "equity", "價格指數", f"{m.group(2)}%", m.group(1))
+    seen, uniq = set(), []
+    for r in out:
+        k = (r["period_end"], r["scope"], r["table"], r["label"],
+             r["shock"], r["direction"])
+        if k not in seen:
+            seen.add(k)
+            uniq.append(r)
+    return uniq
 
 
 def parse_note(flat):
@@ -511,7 +527,7 @@ ATTEMPTED = ROOT / "reports" / "mops_parsed_filings.json"
 # wrong after fixing one: without this, a run that recorded 400 filings under a
 # broken parser would cause the fixed parser to skip all 400 and quietly keep
 # the bad numbers. A version change invalidates the record and re-parses.
-PARSER_VERSION = 2
+PARSER_VERSION = 3
 
 
 def build_index(years):
