@@ -378,14 +378,81 @@ def sensitivities(path):
 # So every row carries note_kind, and nothing is aggregated here. A firm that
 # discloses only `designated` has NOT disclosed its hedge principal, and must be
 # recorded as unknown rather than as a small number.
-INSTR = re.compile(r"(遠期外匯合約|換匯換利合約|換匯合約|貨幣交換合約|"
-                   r"無本金交割遠期外匯|利率交換合約)")
+# 匯率交換合約 was missing, and it is the LARGEST line in the book: Fubon Life
+# at 113.12.31 disclosed NT$1,213.8bn of it against NT$198.0bn of forwards --
+# 84% of the total notional, invisible to the pattern that omitted it.
+# Order matters: 換匯換利合約 must precede 換匯合約, or the shorter alternative
+# matches its prefix and mislabels a CCS as an FX swap.
+INSTR = re.compile(r"(遠期外匯合約|換匯換利合約|匯率交換合約|換匯合約|"
+                   r"貨幣交換合約|無本金交割遠期外匯(?:合約)?|利率交換合約|"
+                   r"選擇權合約)")
+# §三(五) counts only 傳統避險: forwards, FX swaps, CCS and NDFs against TWD.
+# Interest-rate swaps and options are disclosed in the same table and are not
+# part of it, so the instrument label decides inclusion, not the table.
+TRADITIONAL = {"遠期外匯合約", "匯率交換合約", "換匯換利合約", "換匯合約",
+               "貨幣交換合約", "無本金交割遠期外匯", "無本金交割遠期外匯合約"}
+# The columns of the derivatives note, in the order they are headed.
+COLHEAD = re.compile(r"(帳面價值|名目本金|合約金額|契約金額|公允價值)")
+# 113.12.31 style period headers used by the derivatives note
+DOTDATE = re.compile(r"(\d{2,3})\.(\d{1,2})\.(\d{1,2})")
 DESIG = re.compile(r"避險活動|避險會計|避險工具之明細|現金流量避險|公允價值避險")
 CCYRISK = re.compile(r"匯率風險|外幣.{0,6}風險|未避險|並未採用避險會計")
 
 
+def parse_note(flat):
+    """Rows of one derivatives-note table, read off its column headers.
+
+    The table is laid out period-major:
+
+        113.12.31              112.12.31
+        帳面價值    名目本金     帳面價值    名目本金
+        遠期外匯合約 $ (1,309,890) 198,008,832 2,769,845 634,021,774
+
+    so the notional is the SECOND number after the instrument name, not the
+    first. Reading the first number -- which is what this did -- silently
+    recorded 帳面價值, the carrying value, as though it were the notional.
+    Nothing about the output looked wrong; the magnitudes are simply someone
+    else's.
+
+    So the header is parsed rather than assumed: the run of column labels gives
+    both the width of a row and which position within each period is the
+    notional, and the run of period dates says which period each block belongs
+    to. A table whose header does not divide evenly into the dates is refused
+    rather than guessed at.
+    """
+    dates = [f"{1911 + int(y)}-{int(m):02d}-{int(d):02d}"
+             for y, m, d in DOTDATE.findall(flat[:400])]
+    heads = COLHEAD.findall(flat[:400])
+    if not dates or not heads or len(heads) % len(dates):
+        return []
+    per = len(heads) // len(dates)                    # columns per period
+    want = [i for i, h in enumerate(heads[:per])
+            if h in ("名目本金", "合約金額", "契約金額")]
+    if not want:
+        return []
+    out = []
+    for h in INSTR.finditer(flat):
+        vals = numbers(flat[h.end():h.end() + 260], per * len(dates))
+        if len(vals) < per * len(dates):
+            continue
+        for di, date in enumerate(dates):
+            for w in want:
+                v = vals[di * per + w]
+                if v > 0:
+                    out.append({"as_of": date, "instrument": h.group(1),
+                                "notional_ntd_k": v,
+                                "traditional": h.group(1) in TRADITIONAL})
+    return out
+
+
 def notionals(path):
-    """Every disclosed derivative notional, labelled by the note it came from."""
+    """Every disclosed derivative notional, labelled by the note it came from.
+
+    The total row is the check: the instrument notionals of a period must sum
+    to the 合計 the filing prints for it. That is what catches a column read at
+    the wrong offset, which is otherwise invisible -- wrong numbers of the
+    right order of magnitude, in the right shape.
+    """
     import pymupdf
     doc = pymupdf.open(path)
     out = []
@@ -396,22 +463,35 @@ def notionals(path):
         kind = ("designated" if DESIG.search(raw)
                 else "currency_risk" if CCYRISK.search(raw) else "unclassified")
         flat = re.sub(r"\s+", " ", raw)
-        # One page carries the current period AND its comparatives, each under
-        # its own date header. Attributing every row to the page's first date
-        # would silently stamp last year's numbers with this year's date, so
-        # each row takes the nearest date header ABOVE it.
-        heads = [(m.start(),
-                  f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-{int(m.group(3)):02d}")
-                 for m in re.finditer(r"(\d{2,3})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日", flat)]
-        for h in INSTR.finditer(flat):
-            tail = flat[h.end():h.end() + 160]
-            v = numbers(tail, 1)
-            if not (v and v[0] > 0):
-                continue
-            asof = next((d for pos, d in reversed(heads) if pos < h.start()), None)
-            out.append({"as_of": asof, "note_kind": kind,
-                        "instrument": h.group(1), "notional_ntd_k": v[0],
-                        "page": page.number + 1})
+        rows = parse_note(flat)
+        if not rows:
+            continue
+        # 合計 / 合 計 -- the printed total for each period
+        tot = {}
+        m = re.search(r"合\s*計\s*(.{0,200})", flat)
+        if m:
+            dates = [f"{1911 + int(y)}-{int(mm):02d}-{int(d):02d}"
+                     for y, mm, d in DOTDATE.findall(flat[:400])]
+            heads = COLHEAD.findall(flat[:400])
+            if dates and heads and not len(heads) % len(dates):
+                per = len(heads) // len(dates)
+                w = [i for i, h in enumerate(heads[:per])
+                     if h in ("名目本金", "合約金額", "契約金額")]
+                v = numbers(m.group(1), per * len(dates))
+                if w and len(v) >= per * len(dates):
+                    for di, d in enumerate(dates):
+                        tot[d] = v[di * per + w[0]]
+        for r in rows:
+            r["note_kind"] = kind
+            r["page"] = page.number + 1
+            r["total_ntd_k"] = tot.get(r["as_of"])
+        # additivity, per period: a mis-offset column still looks like data
+        for d, t in tot.items():
+            s = sum(r["notional_ntd_k"] for r in rows if r["as_of"] == d)
+            if t and abs(s - t) > max(1.0, 5e-4 * t):
+                print(f"    ! p{page.number + 1} {d}: instruments sum to "
+                      f"{s:,.0f} but 合計 says {t:,.0f}")
+        out += rows
     seen, uniq = set(), []
     for r in out:
         k = (r["as_of"], r["note_kind"], r["instrument"], r["notional_ntd_k"])
@@ -426,6 +506,12 @@ IDX = ROOT / "reports" / "mops_filing_index.json"
 # no rows leaves no trace in either CSV, so without this list it would be
 # re-downloaded on every future run for ever.
 ATTEMPTED = ROOT / "reports" / "mops_parsed_filings.json"
+# Bump whenever the extraction changes meaning. The resume logic skips filings
+# already attempted, which is right for re-running the SAME parser and exactly
+# wrong after fixing one: without this, a run that recorded 400 filings under a
+# broken parser would cause the fixed parser to skip all 400 and quietly keep
+# the bad numbers. A version change invalidates the record and re-parses.
+PARSER_VERSION = 2
 
 
 def build_index(years):
@@ -512,8 +598,28 @@ def pull():
     notional_rows, done_not = _prior(NOTIONAL_OUT)
     # A filing that parsed to nothing is still done: without recording it, an
     # empty result would be retried on every future run, for ever.
-    attempted = set(json.loads(ATTEMPTED.read_text(encoding="utf-8"))
-                    ) if ATTEMPTED.exists() else set()
+    attempted, prior_ver = set(), None
+    if ATTEMPTED.exists():
+        rec = json.loads(ATTEMPTED.read_text(encoding="utf-8"))
+        if isinstance(rec, dict):
+            prior_ver = rec.get("parser_version")
+            attempted = set(rec.get("filings", []))
+        else:                       # v1 wrote a bare list
+            attempted = set(rec)
+    if prior_ver != PARSER_VERSION:
+        # the stored results came from a different extraction; keeping them
+        # would preserve the very numbers the new parser exists to replace
+        print(f"  parser v{prior_ver} -> v{PARSER_VERSION}: discarding "
+              f"{len(attempted)} prior filings and {len(rows)} + "
+              f"{len(notional_rows)} prior rows, re-parsing from scratch")
+        attempted, rows, notional_rows = set(), [], []
+        done_sens = done_not = set()
+        # Clearing the in-memory rows is not enough: _write() leaves an
+        # existing file untouched when it has nothing to write, so a run that
+        # parsed nothing would leave the previous parser's CSV in place and
+        # looking current.
+        for f in (OUT, NOTIONAL_OUT):
+            f.unlink(missing_ok=True)
     done = (done_sens | done_not | attempted)
     if done:
         print(f"  {len(done)} filings already extracted; skipping those\n")
@@ -532,7 +638,9 @@ def pull():
         timeout costs is the firm in progress, not the whole run.
         """
         ATTEMPTED.parent.mkdir(parents=True, exist_ok=True)
-        ATTEMPTED.write_text(json.dumps(sorted(attempted), indent=0), encoding="utf-8")
+        ATTEMPTED.write_text(json.dumps(
+            {"parser_version": PARSER_VERSION, "filings": sorted(attempted)},
+            indent=0), encoding="utf-8")
         _write(NOTIONAL_OUT, notional_rows,
                lambda r: (r["entity_id"], r["as_of"], r["note_kind"],
                           r["instrument"], r["notional_ntd_k"]))
