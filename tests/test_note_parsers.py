@@ -122,6 +122,31 @@ def test_cathay_ifrs17():
     return ok
 
 
+def test_nanshan_trailing_parens():
+    """Accounting marks TRAIL the number; the middle column is negative."""
+    print("\nnan shan 115Q2 FX sensitivity (trailing parentheses)")
+    rows = m.parse_sensitivity_nanshan(flat("nanshan_115q2_fx_sensitivity.txt"))
+    ok = check("row count", len(rows), 6)
+    if len(rows) != 6:
+        return ok
+    a, b, c, d, e, _ = rows
+    ok &= check("assets, TWD +5%",
+                (a["pnl_ntd_k"], a["oci_ntd_k"], a["equity_ntd_k"]),
+                (36169702.0, -950095.0, 35219607.0))
+    ok &= check("insurance liabilities, TWD +5%",
+                (b["pnl_ntd_k"], b["oci_ntd_k"], b["equity_ntd_k"]),
+                (-36971568.0, -169395.0, -37140963.0))
+    # the FX reserve absorbs the whole P&L effect (100% offset from 2025-05)
+    ok &= check("company total P&L is nil", c["pnl_ntd_k"], 0.0)
+    ok &= check("company total equity", c["equity_ntd_k"], -1119490.0)
+    # depreciation must mirror appreciation exactly, or a sign was misread
+    ok &= check("assets mirror", (d["pnl_ntd_k"], d["equity_ntd_k"]),
+                (-a["pnl_ntd_k"], -a["equity_ntd_k"]))
+    ok &= check("liabilities mirror", (e["pnl_ntd_k"], e["equity_ntd_k"]),
+                (-b["pnl_ntd_k"], -b["equity_ntd_k"]))
+    return ok
+
+
 def test_numbers():
     """A bare comma is not a number; a bare dash is a nil."""
     print("\nnumber parsing")
@@ -134,7 +159,8 @@ def test_numbers():
 
 def main():
     tests = [test_numbers, test_fubon_notionals, test_fubon_sensitivity,
-             test_taiwan_life_by_currency, test_cathay_ifrs17]
+             test_taiwan_life_by_currency, test_cathay_ifrs17,
+             test_nanshan_trailing_parens]
     results = [(t.__name__, t()) for t in tests]
     print("\n" + "=" * 60)
     for name, ok in results:

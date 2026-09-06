@@ -419,6 +419,59 @@ def parse_sensitivity_ifrs17(flat):
     return out
 
 
+# Nan Shan's FX sensitivity table extracts RIGHT-TO-LEFT, so the accounting
+# marks TRAIL their number instead of surrounding it:
+#     36,169,702 $   950,095) ($   35,219,607 $
+# meaning 36,169,702 / (950,095) / 35,219,607. numbers() reads the middle one
+# as POSITIVE — the magnitudes all look right and one sign is silently
+# inverted, which on a hedge disclosure reverses the direction of the effect.
+NS_ROW = re.compile(r"(金融資產|保險合約及所持有之再保險合約|公司整體[^ ]{0,12})\s*"
+                    r"外幣兌新台幣\s*(升值|貶值)\s*([\d.]+)\s*%")
+# The trailing ")" is INSPECTED, not consumed. Matching it as part of the
+# token ate the whitespace the next token needed to start, so a three-column
+# row yielded two values and was dropped -- the row vanished rather than
+# arriving wrong, which at least fails loudly, but it dropped four of six.
+NS_NUM = re.compile(r"(?<![\d,])(\d[\d,]*|-)(?![\d,])")
+
+
+def numbers_trailing(seg, n):
+    """Read n numbers whose negative marker follows them rather than wraps."""
+    out = []
+    for m in NS_NUM.finditer(seg):
+        tok = m.group(1)
+        v = 0.0 if tok == "-" else float(tok.replace(",", ""))
+        after = seg[m.end(): m.end() + 4].lstrip()
+        out.append(-v if after.startswith(")") else v)
+        if len(out) == n:
+            break
+    return out
+
+
+def parse_sensitivity_nanshan(flat):
+    """FX sensitivity where the parentheses trail the figure."""
+    rows = list(NS_ROW.finditer(flat))
+    if not rows:
+        return []
+    # the period header sits AFTER the table here, not before it
+    d = None
+    for m in PERIOD_CJK.finditer(flat):
+        d = (f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-"
+             f"{int(m.group(3)):02d}")
+    if not d:
+        return []
+    out = []
+    for i, m in enumerate(rows):
+        end = rows[i + 1].start() if i + 1 < len(rows) else len(flat)
+        v = numbers_trailing(flat[m.end():end], 3)
+        if len(v) < 3:
+            continue
+        out.append({"period_end": d, "scope": m.group(1), "table": "fx",
+                    "label": "外幣/新台幣", "shock": f"{m.group(3)}%",
+                    "direction": m.group(2), "pnl_ntd_k": v[0],
+                    "oci_ntd_k": v[1], "equity_ntd_k": v[2]})
+    return out
+
+
 def sensitivities(path):
     """The market-risk sensitivity table: equity, rate and FX rows, per period.
 
