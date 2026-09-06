@@ -4718,3 +4718,59 @@ stopgap; it is the definitional difference between two published bases, and it
 converts between them exactly. That is a stronger footing than the entry
 implied, though the caution about extrapolating it before 2024 stands — it is
 the FX-policy liability book relative to foreign investment, and both have moved.
+
+### 4.56 Cathay does not disclose an economic hedge notional, which caps the bottom-up route permanently
+
+Across all 37 captured Cathay Life filings, the largest figure anywhere near a
+notional heading is NT$44–56bn — about 1% of its NT$5,400bn foreign investment.
+It discloses designated hedges (44.4bn of forwards), their maturity profile
+with contracted USD/TWD rates, and a related-party volume table. Nothing else.
+
+Nan Shan discloses 37–48% of its foreign investment and Fubon 42–63%, so this
+is a disclosure choice, not a parsing failure. Cathay is roughly a quarter of
+the sector's foreign investment, so **no bottom-up sum over the disclosing
+firms can be scaled to a sector numerator** without assuming Cathay hedges like
+the others — which is precisely the thing a bottom-up construction exists to
+avoid assuming.
+
+The sector numerator therefore remains the FSC's published figure. The
+firm-level panel is useful for composition, timing and dispersion, not for
+replacing it.
+
+### 4.57 What the verified panel actually supports, and what it does not
+
+41 firm-period observations survive a reconciliation gate: Fubon 12, Nan Shan
+11, BankTaiwan 13, Hontai 5. Two-thirds of extracted rows were dropped, because
+where no filing reconciles to its printed 合計 the surviving value is merely the
+least-bad parse — Fubon's 2020-12-31 came out at NT$16bn between quarters of
+~1,400bn. A gap is visible; a wrong level is not.
+
+**The duration finding.** Fubon's disclosed USD sensitivity is NT$33.2bn of
+equity per 50bp at 2024-12, i.e. a USD DV01 of about USD 20mn per bp. Against a
+USD 106bn foreign book that implies only USD 13–25bn of rate-exposed bonds at
+plausible durations of 8–16 years — **12% to 24% of the book**. The rest moves
+no equity because it is held at amortised cost.
+
+That is the single most important number for the duration-demand question, and
+it cuts against the simple reading. The stock of USD duration held by
+Taiwanese lifers is large, but the portion that marks to market through equity
+— and therefore the portion whose holders face capital pressure from a
+repricing — is a minority of it. Forced selling into a rate shock is
+correspondingly less mechanical than gross holdings suggest.
+
+**The FX finding, from Nan Shan's IFRS 17 table.** A 5% TWD appreciation moves
+financial assets −NT$35.2bn and insurance-contract liabilities +NT$37.1bn,
+netting to −1.9bn before the FX reserve and −1.1bn after, with the P&L effect
+exactly nil. Gross FX asset exposure and net exposure differ by roughly 97% for
+that firm.
+
+**The timing finding.** Fubon's forward book ran 198bn (2024-12) → 413bn
+(2025-03) → 1,234bn (2025-06) → 27bn (2025-12) while USD/TWD went 32.78 → 33.18
+→ 29.93 → 31.44. A violent tactical hedge into the appreciation and an almost
+complete unwind after it, with the FX-swap book eroding far more gently. The
+sector numerator fell 34% between 2024-12 and 2026-07; Fubon's fell 45%.
+
+**What this does not support.** A sector hedge-ratio history built bottom-up
+(4.56). A per-currency duration series for Cathay, whose rate row is 各幣別 —
+all currencies together. Any claim that the four firms' behaviour generalises:
+they are 4 of 10, and the largest is absent.
