@@ -1,0 +1,48 @@
+# Read ONE filing's derivatives note and print it. See
+# scripts/probe_derivative_note.py for why: the notional extractor returns a
+# single row per filing, which cannot be right, and the fix depends on a table
+# layout that has to be seen rather than guessed.
+#
+# Its own concurrency group, so it does not queue behind (or cancel) the long
+# pull-firm-statements run. It costs two requests against doc.twse.com.tw,
+# which is negligible beside that run's thousands.
+name: probe-derivative-note
+on:
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - 'scripts/probe_derivative_note.py'
+      - '.github/workflows/probe-derivative-note.yml'
+  workflow_dispatch:
+    inputs:
+      co_id:
+        description: 'filing code, e.g. 5865'
+        required: false
+        default: '5865'
+      filename:
+        description: 'MOPS filename, e.g. 202404_5865_AI2.pdf'
+        required: false
+        default: '202404_5865_AI2.pdf'
+concurrency:
+  group: probe-derivative-note
+  cancel-in-progress: true
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --quiet pymupdf
+      - name: Dump the note
+        env:
+          TLFX_MOPS_GAP: '4'
+          TLFX_MOPS_BLOCK_WAIT: '60'
+        run: |
+          python3 scripts/probe_derivative_note.py \
+            "${{ github.event.inputs.co_id || '5865' }}" \
+            "${{ github.event.inputs.filename || '202404_5865_AI2.pdf' }}"
