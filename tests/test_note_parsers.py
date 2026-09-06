@@ -147,6 +147,28 @@ def test_nanshan_trailing_parens():
     return ok
 
 
+def test_nanshan_notionals():
+    """Asset/liability blocks summed; instruments carry no 合約 suffix."""
+    print("\nnan shan 115Q2 derivatives note (asset/liability blocks)")
+    rows = m.parse_note_nanshan(flat("nanshan_115q2_notional.txt"))
+    ok = check("row count", len(rows), 12)
+    agg = {}
+    for r in rows:
+        agg[r["as_of"]] = agg.get(r["as_of"], 0.0) + r["notional_ntd_k"]
+    # each equals the filing's own printed subtotal for assets plus liabilities
+    ok &= check("2026-06-30 total", agg.get("2026-06-30"), 1510111252.0)
+    ok &= check("2025-12-31 total", agg.get("2025-12-31"), 1634729164.0)
+    ok &= check("2025-06-30 total", agg.get("2025-06-30"), 2008817182.0)
+    # the asset/liability split inverts after the May 2025 TWD appreciation:
+    # short-USD hedges that were liabilities become assets
+    a26 = sum(r["notional_ntd_k"] for r in rows
+              if r["as_of"] == "2026-06-30" and r["side"] == "金融資產")
+    a25 = sum(r["notional_ntd_k"] for r in rows
+              if r["as_of"] == "2025-06-30" and r["side"] == "金融資產")
+    ok &= check("asset side 2026-06 < 2025-06", a26 < a25, True)
+    return ok
+
+
 def test_numbers():
     """A bare comma is not a number; a bare dash is a nil."""
     print("\nnumber parsing")
@@ -160,7 +182,8 @@ def test_numbers():
 def main():
     tests = [test_numbers, test_fubon_notionals, test_fubon_sensitivity,
              test_taiwan_life_by_currency, test_cathay_ifrs17,
-             test_nanshan_trailing_parens]
+             test_nanshan_trailing_parens,
+             test_nanshan_notionals]
     results = [(t.__name__, t()) for t in tests]
     print("\n" + "=" * 60)
     for name, ok in results:

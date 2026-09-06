@@ -558,6 +558,80 @@ def sensitivities(path):
     return uniq
 
 
+def header_span(flat):
+    """Where the column headers stop: at the first instrument row.
+
+    A fixed character window is the wrong tool — too short and a firm with a
+    long preamble loses its dates, too long and it swallows data rows and their
+    dates, which breaks the columns-per-period arithmetic. Widening 400 to 520
+    gained one firm and lost another for exactly that reason. The header block
+    is, by construction, everything before the first data row.
+    """
+    m = INSTR.search(flat)
+    return min(m.start(), 900) if m else 520
+
+
+def find_dates(flat, window=None):
+    """Period headers in a table, in printed order, from EITHER date style.
+
+    Fubon heads its columns 113.12.31; Cathay, Nan Shan and Hontai head theirs
+    115年6月30日. parse_note only knew the dotted form, so it returned nothing
+    for those firms and they read as "discloses nothing" rather than "not
+    parsed" — three of the ten insurers, including the largest.
+    """
+    w = window or header_span(flat)
+    hits = [(mm.start(), int(mm.group(1)), int(mm.group(2)), int(mm.group(3)))
+            for mm in DOTDATE.finditer(flat[:w])]
+    hits += [(mm.start(), int(mm.group(1)), int(mm.group(2)), int(mm.group(3)))
+             for mm in PERIOD_CJK.finditer(flat[:w])]
+    out, seen = [], set()
+    for _, y, mo, d in sorted(hits):
+        iso = f"{1911 + y:04d}-{mo:02d}-{d:02d}"
+        if iso not in seen:
+            seen.add(iso)
+            out.append(iso)
+    return out
+
+
+# Nan Shan's derivatives note is a fourth shape again. Its instruments carry
+# no 合約 suffix (匯率交換, 遠期外匯), so INSTR matches nothing at all; the
+# figures use the trailing-$ layout; the book is split into 金融資產 and
+# 金融負債 blocks that must be SUMMED to get the gross notional; and the period
+# headers are printed at the END, after all six blocks.
+NS_BLOCK = re.compile(r"(金融資產|金融負債)")
+NS_INSTR = re.compile(r"(匯率交換|遠期外匯|換匯換利|無本金交割遠期外匯)"
+                      r"(?:\(註\d\))?")
+
+
+def parse_note_nanshan(flat):
+    """Gross derivative notionals from the asset/liability block layout."""
+    if "名目本金" not in flat or not NS_BLOCK.search(flat):
+        return []
+    dates = find_dates(flat, len(flat))       # headers trail the table here
+    blocks = list(NS_BLOCK.finditer(flat))
+    if not dates or len(blocks) < 2:
+        return []
+    # blocks run asset, liability, asset, liability ... one PAIR per period,
+    # in the same order as the dates printed at the foot
+    if len(blocks) != 2 * len(dates):
+        return []
+    out = []
+    for i, b in enumerate(blocks):
+        end = blocks[i + 1].start() if i + 1 < len(blocks) else len(flat)
+        seg = flat[b.end():end]
+        d = dates[i // 2]
+        for h in NS_INSTR.finditer(seg):
+            v = numbers_trailing(seg[h.end(): h.end() + 70], 2)
+            if len(v) < 2 or v[1] <= 0:
+                continue
+            out.append({"as_of": d, "instrument": h.group(1),
+                        "notional_ntd_k": v[1],
+                        "carrying_ntd_k": v[0],
+                        "side": b.group(1),
+                        "traditional": True})
+    return out
+
+
 def parse_note(flat):
     """Rows of one derivatives-note table, read off its column headers.
 
@@ -579,9 +653,9 @@ def parse_note(flat):
     to. A table whose header does not divide evenly into the dates is refused
     rather than guessed at.
     """
-    dates = [f"{1911 + int(y)}-{int(m):02d}-{int(d):02d}"
-             for y, m, d in DOTDATE.findall(flat[:400])]
-    heads = COLHEAD.findall(flat[:400])
+    w = header_span(flat)
+    dates = find_dates(flat, w)
+    heads = COLHEAD.findall(flat[:w])
     if not dates or not heads or len(heads) % len(dates):
         return []
     per = len(heads) // len(dates)                    # columns per period
@@ -669,9 +743,9 @@ def note_total(flat):
     m = re.search(r"合\s*計\s*(.{0,220})", flat)
     if not m:
         return {}
-    dates = [f"{1911 + int(y)}-{int(mm):02d}-{int(d):02d}"
-             for y, mm, d in DOTDATE.findall(flat[:400])]
-    heads = COLHEAD.findall(flat[:400])
+    w = header_span(flat)
+    dates = find_dates(flat, w)
+    heads = COLHEAD.findall(flat[:w])
     if not dates or not heads or len(heads) % len(dates):
         return {}
     per = len(heads) // len(dates)
@@ -1057,9 +1131,14 @@ def reparse():
             # NT$ column, and running the NT$ parser over it would read the
             # currency rows as if they were NT$ figures — wrong numbers rather
             # than none, which is the harder error to notice.
-            byccy = parse_note_by_currency(flat)
-            rows_here = byccy or parse_note(flat)
-            tot = {} if byccy else note_total(flat)
+            # Four shapes, tried most-specific first. Nan Shan's asset/
+            # liability blocks and Taiwan Life's by-currency table both look
+            # like nothing at all to the NT$ parser, so neither can be a
+            # fallback for the other.
+            ns = parse_note_nanshan(flat)
+            byccy = [] if ns else parse_note_by_currency(flat)
+            rows_here = ns or byccy or parse_note(flat)
+            tot = {} if (ns or byccy) else note_total(flat)
             # Mark each row with whether ITS table reconciles to the filing's
             # own 合計. Shipping 900 rows of mixed provenance and letting the
             # reader guess which are sound is worse than shipping fewer: the
