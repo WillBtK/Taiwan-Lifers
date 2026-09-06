@@ -15,21 +15,17 @@ on:
       - '.github/workflows/probe-derivative-note.yml'
   workflow_dispatch:
     inputs:
-      co_id:
-        description: 'filing code, e.g. 5865'
+      specs:
+        description: 'space-separated co_id:filename, blank = the four large lifers'
         required: false
-        default: '5865'
-      filename:
-        description: 'MOPS filename, e.g. 202404_5865_AI1.pdf'
-        required: false
-        default: '202404_5865_AI1.pdf'
+        default: ''
 concurrency:
   group: probe-derivative-note
   cancel-in-progress: true
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,6 +39,4 @@ jobs:
           TLFX_MOPS_GAP: '4'
           TLFX_MOPS_BLOCK_WAIT: '60'
         run: |
-          python3 scripts/probe_derivative_note.py \
-            "${{ github.event.inputs.co_id || '5865' }}" \
-            "${{ github.event.inputs.filename || '202404_5865_AI1.pdf' }}"
+          python3 scripts/probe_derivative_note.py ${{ github.event.inputs.specs }}
