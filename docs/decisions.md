@@ -4478,3 +4478,74 @@ not one route among several, it is the only route to a defensible history.
 
 **Also recorded.** `firm_fund_utilisation` needs an account-type column and a
 uniqueness constraint; three duplicate groups are latent join hazards today.
+
+### 4.51 The relay is live with POST, and the table I said it would unlock is the wrong table
+
+The Taiwan relay redeployed successfully (`/health` reports `post`, and a
+`/fetch` against ins-info returns HTTP 200), so the Taiwan-egress route is
+working and the POST endpoint is in place. The deploy script that produced it
+had to be repaired first: its heredoc was terminated by `PYEOF'` and followed
+by a second, older copy of the relay source, so bash wrote both into `main.py`
+and the later definitions won. Pasting it would have deployed the old build —
+no `/post`, no `VERIFY_X509_STRICT` fix — while printing success. The
+verification now asserts on `/health`, because `/fetch` exists in every build
+the service has ever run and so cannot distinguish a redeploy from an old
+revision still serving.
+
+**The correction.** I said the pre-2024 denominator "exists in one place:
+表06021011". That was wrong on two counts, and the relay is what made it
+checkable. 表06021011 is 財務報表摘要表 — a balance-sheet summary whose fields
+are total assets, liabilities, equity and 自有資本 (the sample's AMOUNT1 =
+AMOUNT2 + AMOUNT3 confirms the identity). It contains no 國外投資 at all. The
+彙計表 menu holds ten tables and none of them is a fund-utilisation table.
+
+**Where 國外投資 actually is.** `Info2-1.aspx?UID=<統編>` — 資金運用表 — line 6.
+It needs no POST: a plain GET returns 國外投資 for the latest month plus the
+three prior year-ends (Taiwan Life, Aug 2026: 1,520,010,661 thousand TWD, with
+114/113/112 alongside). So the page I most needed was reachable all along, and
+the POST endpoint the redeploy delivered is not what unlocks it.
+
+**But it is a rolling four-column window**, which caps per-firm history at
+FY112 — precisely the 2023 floor `firm_fund_utilisation` already has. That
+explains the floor rather than removing it.
+
+**Two routes ruled out.** 各項財務業務指標 (Info2-12 / 表06161610) has a
+year-quarter range panel but its nineteen indicators contain no 國外投資比率.
+Wayback holds 51 captures of Info2-1 across 18 UIDs back to 2016, and each
+capture carries its own four-year window — but the UIDs are overwhelmingly
+產物保險 (non-life); among life insurers only Taiwan Life (3 captures) and
+Fubon Life (1) appear. That would add two firms and a few years, not a sector.
+
+**Consequence for 4.50.** The bottom-up Σnotional ÷ Σdenominator construction
+depends on the statutory statements for both legs, not on ins-info. The MOPS
+puller is the critical path, and nothing else on the table substitutes for it.
+
+### 4.52 The statement puller works; what it lacked was persistence
+
+The first non-crashing run proved the two-step download end to end — nine
+filings fetched and hedge notionals extracted from them — and then committed
+nothing, for two reasons.
+
+`NUM`'s numeric alternatives were written `[\d,]+`, which also matches a bare
+`","`. Flattening the PDF's one-glyph-per-line CJK leaves stray separators, and
+`float("")` raised on the first one, killing the run and every earlier firm's
+downloads with it. Every alternative now has to start with a digit, and parsing
+is wrapped per filing.
+
+The deeper problem: PDFs are not committed, so each run re-fetched from
+scratch, and at eight seconds a request a decade of filings does not fit in one
+run's budget. Output is now carried forward and deduped, extracted filings are
+skipped, and state is checkpointed after every firm — so a timeout costs the
+firm in progress, not the run. Filings that parse to nothing are recorded
+separately, or an empty result would be retried for ever. With runs additive
+the index widens from four years to ROC 115–102.
+
+**Deduping across runs needed care**: rows read back from CSV are all strings
+while freshly parsed rows hold floats and `None`, so the key is stringified on
+both sides. Keyed naively, every resumed row would fail to match its own
+predecessor and the file would grow without bound each run.
+
+**Still open**: every filing parsed `0 sens`. The notional extraction works;
+the 敏感度分析表 matcher does not fire on these filings and has not yet been
+diagnosed — the artifact host is blocked from this sandbox, so it needs either
+a filing fetched another way or diagnostics added to the CI run.
