@@ -110,6 +110,19 @@ MIN_YEAR = int(_envf("TLFX_MOPS_MIN_YEAR", 105))
 # the difference between "resume from here" and "work out where it died".
 DEADLINE = _envf("TLFX_MOPS_DEADLINE_MIN", 280) * 60
 _started = time.time()
+# The relative deadline is measured from when THIS process starts, which is the
+# download step — but the job's ceiling runs from when the JOB started, and the
+# index step before it took anywhere from 39 to 60 minutes. On the current run
+# the two land within a minute of each other, so the "stop cleanly with time to
+# spare" margin is gone precisely when a slow index makes it matter most.
+#
+# An absolute epoch passed by the workflow removes the guesswork: the workflow
+# knows when the job began and what its ceiling is, and this only has to obey.
+# Falls back to the relative deadline when unset.
+_abs = (os.environ.get("TLFX_MOPS_DEADLINE_EPOCH") or "").strip()
+if _abs:
+    DEADLINE = max(60.0, float(_abs) - _started)
+    print(f"  deadline: {DEADLINE / 60:.0f} min from now (absolute, set by the job)")
 # The WAF answers 200 with a "FOR SECURITY REASONS" page rather than a 4xx. A
 # first pass at 3s between requests hit it, and — worse — cached the block page,
 # so a rate-limited company-year became a permanent "0 filings". Blocked
