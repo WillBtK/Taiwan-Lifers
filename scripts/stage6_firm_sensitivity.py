@@ -363,6 +363,62 @@ DESIG = re.compile(r"避險活動|避險會計|避險工具之明細|現金流�
 CCYRISK = re.compile(r"匯率風險|外幣.{0,6}風險|未避險|並未採用避險會計")
 
 
+# Cathay presents the same disclosure under IFRS 17, split across eight
+# columns: 損益變動 and 權益變動 each broken into 所發行之保險合約 /
+# 所持有之再保險合約 / 金融工具 / 小計. The 小計 columns are the comparable
+# figures; the financial-instruments column alone is what a pre-IFRS17 series
+# would have shown, so both are kept.
+#
+# Two things differ beyond layout and matter for interpretation. The shock is
+# 1bp and 1%, against Fubon's 50BPS and 3% — so the levels are NOT comparable
+# without dividing by the shock. And the rate row is 各幣別 (all currencies
+# together), not per currency, so no USD-specific figure exists in this table.
+IFRS17_COLS = re.compile(r"所\s*發\s*行\s*之\s*保\s*險\s*合\s*約")
+PERIOD_CJK = re.compile(r"(\d{2,3})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日")
+# Whitespace can fall ANYWHERE, including inside a two-character word: the
+# PDF wraps mid-term and flattening leaves "平移上 升1bp". Allowing \s* only
+# between terms and not within them is why the rate row matched nothing while
+# the FX row, which happened not to wrap, matched fine.
+IFRS17_FX = re.compile(r"各\s*外\s*幣\s*兌\s*新\s*台\s*幣\s*"
+                       r"(升\s*值|貶\s*值)\s*([\d.]+)\s*%")
+IFRS17_RATE = re.compile(r"各\s*幣\s*別\s*殖\s*利\s*率\s*曲\s*線\s*平\s*移\s*"
+                         r"(上\s*升|下\s*降)\s*([\d.]+)\s*(?:bp|BPS|bps|基點)")
+
+
+def parse_sensitivity_ifrs17(flat):
+    """The eight-column IFRS 17 sensitivity table (Cathay's shape)."""
+    if not IFRS17_COLS.search(flat):
+        return []
+    heads = [(m.start(),
+              f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-{int(m.group(3)):02d}")
+             for m in PERIOD_CJK.finditer(flat)]
+    heads += [(m.start(),
+               f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-{int(m.group(3)):02d}")
+              for m in DOTDATE.finditer(flat)]
+    heads.sort()
+    if not heads:
+        return []
+    out = []
+    for pat, table in ((IFRS17_RATE, "rate"), (IFRS17_FX, "fx")):
+        for m in pat.finditer(flat):
+            v = numbers(flat[m.end(): m.end() + 320], 8)
+            if len(v) < 8:
+                continue
+            d = next((x for pos, x in reversed(heads) if pos < m.start()), None)
+            if not d:
+                continue
+            out.append({"period_end": d, "scope": "ifrs17", "table": table,
+                        "label": "各幣別" if table == "rate" else "各外幣/新台幣",
+                        "shock": (f"{m.group(2)}bp" if table == "rate"
+                                  else f"{m.group(2)}%"),
+                        "direction": re.sub(r"\s+", "", m.group(1)),
+                        "pnl_insurance_ntd_k": v[0], "pnl_reinsurance_ntd_k": v[1],
+                        "pnl_instruments_ntd_k": v[2], "pnl_ntd_k": v[3],
+                        "eq_insurance_ntd_k": v[4], "eq_reinsurance_ntd_k": v[5],
+                        "eq_instruments_ntd_k": v[6], "equity_ntd_k": v[7]})
+    return out
+
+
 def sensitivities(path):
     """The market-risk sensitivity table: equity, rate and FX rows, per period.
 
@@ -464,6 +520,60 @@ def parse_note(flat):
                 if v > 0:
                     out.append({"as_of": date, "instrument": h.group(1),
                                 "notional_ntd_k": v,
+                                "traditional": h.group(1) in TRADITIONAL})
+    return out
+
+
+# Taiwan Life states notionals BY CURRENCY, in thousands of that currency,
+# with no NT$ column at all:
+#     名目本金/合約金額明細如下(單位:千元):
+#     幣別      114.12.31   113.12.31
+#     匯率交換合約
+#       USD      5,775,000   5,555,000
+# parse_note() sees the instrument, reads the next numbers as if they were the
+# NT$ notional and its comparative, and produces two wrong figures instead of
+# nothing — which is worse. The header is what distinguishes the two shapes.
+CCY = re.compile(r"\b(USD|EUR|JPY|AUD|HKD|RMB|CNY|GBP|CHF|CAD|NZD|SGD|THB|ZAR|KRW)\b")
+BYCCY_HEAD = re.compile(r"幣\s*別")
+
+
+def parse_note_by_currency(flat):
+    """Instrument -> currency -> per-period notional, in FX thousands.
+
+    No conversion happens here. The rate to use is the reporting date's
+    closing rate, which belongs with the loader that has the FX series, not
+    with a text parser; carrying the currency through keeps that explicit
+    rather than burying a conversion nobody can audit later.
+    """
+    dates = [f"{1911 + int(y)}-{int(m):02d}-{int(d):02d}"
+             for y, m, d in DOTDATE.findall(flat)]
+    if not dates or not BYCCY_HEAD.search(flat):
+        return []
+    # de-duplicate while preserving order: the page may print the dates twice
+    seen_d, order = set(), []
+    for d in dates:
+        if d not in seen_d:
+            seen_d.add(d)
+            order.append(d)
+    dates = order[:2] if len(order) >= 2 else order
+
+    out = []
+    hits = list(INSTR.finditer(flat))
+    for i, h in enumerate(hits):
+        seg = flat[h.end(): hits[i + 1].start() if i + 1 < len(hits) else len(flat)]
+        for c in CCY.finditer(seg):
+            tail = seg[c.end(): c.end() + 60]
+            # stop at the next currency code so a missing value cannot borrow
+            # the following row's numbers
+            nxt = CCY.search(tail)
+            if nxt:
+                tail = tail[:nxt.start()]
+            vals = numbers(tail, len(dates))
+            for di, d in enumerate(dates):
+                if di < len(vals) and vals[di] > 0:
+                    out.append({"as_of": d, "instrument": h.group(1),
+                                "currency": c.group(1),
+                                "notional_ccy_k": vals[di],
                                 "traditional": h.group(1) in TRADITIONAL})
     return out
 
@@ -819,15 +929,26 @@ def reparse():
         flat_all = " ".join(rec["pages"].values())
         n = s = 0
         for page, flat in rec["pages"].items():
-            for r in parse_note(flat):
-                r.update(entity_id=rec["entity_id"], co_id=rec["co_id"],
-                         filing=filing, page=int(page),
-                         note_kind=("designated" if DESIG.search(flat)
-                                    else "currency_risk" if CCYRISK.search(flat)
-                                    else "unclassified"),
-                         total_ntd_k=None)
+            kind = ("designated" if DESIG.search(flat)
+                    else "currency_risk" if CCYRISK.search(flat)
+                    else "unclassified")
+            meta = dict(entity_id=rec["entity_id"], co_id=rec["co_id"],
+                        filing=filing, page=int(page), note_kind=kind)
+            # Two notional shapes, and they are mutually exclusive: a page
+            # headed 幣別 states amounts in foreign-currency thousands with no
+            # NT$ column, and running the NT$ parser over it would read the
+            # currency rows as if they were NT$ figures — wrong numbers rather
+            # than none, which is the harder error to notice.
+            byccy = parse_note_by_currency(flat)
+            rows_here = byccy or parse_note(flat)
+            for r in rows_here:
+                r.update(meta, total_ntd_k=None)
                 notional_rows.append(r)
                 n += 1
+            for r in (parse_sensitivity_ifrs17(flat) or []):
+                r.update(meta)
+                rows.append(r)
+                s += 1
         st = per_firm.setdefault(rec["entity_id"], [0, 0, 0])
         st[0] += 1
         st[1] += n
