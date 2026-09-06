@@ -80,6 +80,13 @@ CACHE = ROOT / "cache" / "mops_stmt"
 PDFS = ROOT / "cache" / "mops_pdf"
 OUT = ROOT / "data" / "firm_sensitivity.csv"
 NOTIONAL_OUT = ROOT / "data" / "firm_hedge_notional.csv"
+# The flattened text of every page carrying a note we parse. This is the
+# expensive thing: each filing costs two rate-limited requests, so a full
+# pull is hours, and until now a parser change meant paying that again. The
+# text is small enough to commit gzipped and makes re-parsing free - which
+# matters because every firm lays these notes out differently and the parser
+# will need many more passes.
+NOTE_TEXT = ROOT / "data" / "mops_note_text.json.gz"
 DOC = "https://doc.twse.com.tw/server-java/t57sb01"
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
@@ -527,7 +534,7 @@ ATTEMPTED = ROOT / "reports" / "mops_parsed_filings.json"
 # wrong after fixing one: without this, a run that recorded 400 filings under a
 # broken parser would cause the fixed parser to skip all 400 and quietly keep
 # the bad numbers. A version change invalidates the record and re-parses.
-PARSER_VERSION = 3
+PARSER_VERSION = 4
 
 
 def build_index(years):
@@ -551,6 +558,42 @@ def build_index(years):
         IDX.write_text(json.dumps(idx, indent=1, ensure_ascii=False), encoding="utf-8")
     print(f"\nindex: {IDX.relative_to(ROOT)}")
     return idx
+
+
+def load_note_text():
+    if not NOTE_TEXT.exists():
+        return {}
+    import gzip
+    with gzip.open(NOTE_TEXT, "rt", encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def save_note_text(store):
+    import gzip
+    NOTE_TEXT.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(NOTE_TEXT, "wt", encoding="utf-8") as fh:
+        json.dump(store, fh, ensure_ascii=False)
+
+
+def note_pages(path):
+    """Flattened text of the pages carrying a note we care about.
+
+    Kept deliberately generous: a page is captured if it mentions an
+    instrument, a notional heading or 敏感度 with numbers on it. Being
+    over-inclusive costs a little disk; being under-inclusive costs another
+    full download when a parser turns out to need a page that was not kept.
+    """
+    import pymupdf
+    out = {}
+    for page in pymupdf.open(path):
+        raw = unicodedata.normalize("NFKC", page.get_text())
+        if not (INSTR.search(raw) or "敏感度" in raw
+                or re.search(r"名目本金|合約金額|契約金額", raw)):
+            continue
+        if len(re.findall(r"\d{1,3}(?:,\d{3})+", raw)) < 4:
+            continue                      # prose mentioning it, not a table
+        out[str(page.number + 1)] = re.sub(r"\s+", " ", raw)
+    return out
 
 
 def _write(path, rows, keyf):
@@ -636,6 +679,9 @@ def pull():
         # looking current.
         for f in (OUT, NOTIONAL_OUT):
             f.unlink(missing_ok=True)
+        # NOTE_TEXT is deliberately NOT cleared: it is raw captured input, not
+        # a parser output, and discarding it would throw away the downloads
+        # this whole mechanism exists to avoid repeating.
     done = (done_sens | done_not | attempted)
     if done:
         print(f"  {len(done)} filings already extracted; skipping those\n")
@@ -657,12 +703,14 @@ def pull():
         ATTEMPTED.write_text(json.dumps(
             {"parser_version": PARSER_VERSION, "filings": sorted(attempted)},
             indent=0), encoding="utf-8")
+        save_note_text(notes)
         _write(NOTIONAL_OUT, notional_rows,
                lambda r: (r["entity_id"], r["as_of"], r["note_kind"],
                           r["instrument"], r["notional_ntd_k"]))
         _write(OUT, rows,
                lambda r: (r["entity_id"], r["period_end"], r["table"], r["label"]))
 
+    notes = load_note_text()
     stopped = [False]
     for co, name in FIRMS.items():
         if stopped[0]:
@@ -690,6 +738,17 @@ def pull():
             if not p:
                 continue
             attempted.add(f["filename"])
+            # Capture the note text BEFORE parsing. This is what makes future
+            # parser passes free: the download is the expensive half and every
+            # firm lays these notes out differently, so there will be many.
+            try:
+                notes[f["filename"]] = {"entity_id": name, "co_id": co,
+                                        "roc_year": f["roc_year"],
+                                        "quarter": f["quarter"],
+                                        "pages": note_pages(p)}
+            except Exception as e:
+                print(f"    ! {f['filename']}: text capture failed: "
+                      f"{type(e).__name__}: {e}")
             # One malformed filing must cost that filing, not the run. Each
             # download is minutes of rate-limited fetching, so an exception
             # raised here discards every earlier firm's work as well — which
@@ -739,8 +798,57 @@ def pull():
     return uniq
 
 
+def reparse():
+    """Re-run the parsers over the captured note text. No network at all.
+
+    This is the loop that matters now. Every firm lays the derivatives and
+    sensitivity notes out differently - Cathay shocks by 1bp and splits
+    insurance from financial instruments, Fubon by 50bp in one table, Nan Shan
+    by 5% with trailing currency marks, Taiwan Life states notionals by
+    currency in FX units rather than NT$ - so the parsers will need many more
+    passes. Each one used to cost a full re-download; from the captured text it
+    costs seconds.
+    """
+    notes = load_note_text()
+    if not notes:
+        print(f"no captured text at {NOTE_TEXT.relative_to(ROOT)}; run `pull` first")
+        return 1
+    rows, notional_rows = [], []
+    per_firm = {}
+    for filing, rec in sorted(notes.items()):
+        flat_all = " ".join(rec["pages"].values())
+        n = s = 0
+        for page, flat in rec["pages"].items():
+            for r in parse_note(flat):
+                r.update(entity_id=rec["entity_id"], co_id=rec["co_id"],
+                         filing=filing, page=int(page),
+                         note_kind=("designated" if DESIG.search(flat)
+                                    else "currency_risk" if CCYRISK.search(flat)
+                                    else "unclassified"),
+                         total_ntd_k=None)
+                notional_rows.append(r)
+                n += 1
+        st = per_firm.setdefault(rec["entity_id"], [0, 0, 0])
+        st[0] += 1
+        st[1] += n
+        st[2] += s
+        _ = flat_all
+    print(f"{len(notes)} filings with captured text\n")
+    print(f"  {'firm':<18}{'filings':>8}{'notional rows':>15}")
+    for ent, (f, n, s) in sorted(per_firm.items()):
+        print(f"  {ent:<18}{f:>8}{n:>15}" + ("   <- NO ROWS" if not n else ""))
+    _write(NOTIONAL_OUT, notional_rows,
+           lambda r: (r["entity_id"], r["as_of"], r["note_kind"],
+                      r["instrument"], r["notional_ntd_k"]))
+    print(f"\n{len(notional_rows)} notional rows -> "
+          f"{NOTIONAL_OUT.relative_to(ROOT)}")
+    return 0
+
+
 def main():
     args = sys.argv[1:]
+    if args and args[0] == "reparse":
+        return reparse()
     if args and args[0] == "pull":
         pull()
         return 0

@@ -80,7 +80,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add reports/mops_filing_index.json reports/mops_parsed_filings.json \
                   data/firm_sensitivity.csv data/firm_hedge_notional.csv \
-                  2>/dev/null || true
+                  data/mops_note_text.json.gz 2>/dev/null || true
           if git diff --cached --quiet; then echo 'unchanged'; else
             git commit -m 'Pull: firm statutory statements (rate/FX sensitivity, hedge notionals)'
             git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true
