@@ -4774,3 +4774,61 @@ sector numerator fell 34% between 2024-12 and 2026-07; Fubon's fell 45%.
 (4.56). A per-currency duration series for Cathay, whose rate row is 各幣別 —
 all currencies together. Any claim that the four firms' behaviour generalises:
 they are 4 of 10, and the largest is absent.
+
+### 4.58 The JP Morgan definition, placed in the taxonomy — and why it is not the FSC's
+
+An analyst at JP Morgan defines the hedge ratio as
+
+    (FX swap + NDF + natural hedge) / total overseas investment
+
+which in the notation of 4.55 is **(N + L) / F**: instrument hedges plus the
+FX-denominated policy liabilities, over gross 國外投資. That is the "economic"
+construction, and it is a third distinct object — not the FSC's, and not the
+gross ratio.
+
+| month | gross N/F | **JPM (N+L)/F** | **FSC N/(F−L)** | gap |
+|---|---|---|---|---|
+| 2024-12 | 45.0% | 77.2% | 66.4% | 10.8pp |
+| 2025-10 | 39.9% | 71.7% | 58.6% | 13.2pp |
+| 2025-12 | 33.9% | 66.4% | 50.2% | 16.2pp |
+
+**The two treat the same balance-sheet object on opposite sides of the
+fraction.** The FSC removes L from the denominator; JP Morgan adds it to the
+numerator. They coincide only when F = N + L:
+
+    (N+L)/F = N/(F−L)  ⟺  (N+L)(F−L) = NF  ⟺  L(F − N − L) = 0
+
+i.e. only for a fully hedged book. Otherwise JPM reads HIGHER, and the gap
+widens as hedging falls — 10.8pp to 16.2pp over 2024-12 to 2025-12. Anyone
+splicing the two series without adjustment imports a trend that is pure
+definition.
+
+**The gap is the unhedged residual**, F − N − L: NT$5.24兆 (22.8% of the book)
+at 2024-12 rising to NT$7.66兆 (33.6%) at 2025-12.
+
+**That residual is NOT independent corroboration, and it would be easy to
+present it as such.** F − N − L simplifies to exposure × (1 − ratio), which is
+precisely how the Bureau derives the net open FX position it publishes — 7.70兆
+at 2025-12 against my 7.66兆. The agreement is arithmetic identity, not
+confirmation. What it does establish is that the three published figures form
+one consistent system, so the widening JPM-minus-FSC gap and the rising
+published net open position (7.70兆 at 2025-12 to 9.04兆 at 2026-07, +17%) are
+the same fact stated twice.
+
+**Method, as described.** JP Morgan builds this from company presentations and
+gets the FX-swap versus NDF split by asking IR directly. That corroborates two
+findings here: the split is not in public disclosure (4.54, 4.56), and the FSC
+publishes only industry-wide hedging costs, hedge ratios and the FX reserve
+balance — not the components.
+
+**Where this project is complementary rather than redundant.** The deck-derived
+`economic_hedge_ratio_deck_composite` is the same construction as JP Morgan's,
+built the same way (Setser's first method, from decks). What the statutory
+extraction adds is different in kind: notionals that reconcile to a filing's own
+printed total rather than to a slide, and the per-currency rate sensitivity
+(4.57), which does not appear in the presentations at all.
+
+**The question to put back.** Whether "natural hedge" means the FX-denominated
+policy liability specifically, or a broader matched-liability notion. The
+mapping above assumes the former; if it is the latter, L differs from the FSC's
+deduction and the arithmetic linking the two ratios no longer closes.
