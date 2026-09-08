@@ -4832,3 +4832,81 @@ printed total rather than to a slide, and the per-currency rate sensitivity
 policy liability specifically, or a broader matched-liability notion. The
 mapping above assumes the former; if it is the latter, L differs from the FSC's
 deduction and the arithmetic linking the two ratios no longer closes.
+
+## 4.59 The duration gap, measured: every insurer is short asset duration against its liabilities
+
+The hedge-ratio work (4.50–4.58) measures currency. The question it does not
+touch is duration — the exposure that makes these firms a bid for long USD
+credit in the first place. The statutory market-risk note carries it directly,
+and all ten insurers disclose it. Until now only Fubon's was being read.
+
+`scripts/stage6_rate_sensitivity.py` reads all ten from the captured note text,
+across seven distinct layouts; `scripts/stage6_duration_panel.py` turns them
+into the gap. Coverage: 2015-03 to 2026-06, 240 firm-periods.
+
+**The result, at each firm's latest disclosure. NT$mn of equity per basis
+point; positive means a rate RISE increases equity.**
+
+| firm | as of | assets | liabilities | net |
+|---|---|---|---|---|
+| Cathay | 2026-06-30 | −2,830 | +6,817 | **+3,974** |
+| Shinkong | 2025-12-31 | −58 | +2,883 | **+2,825** |
+| Fubon | 2026-06-30 | −1,427 | +3,940 | **+2,512** |
+| KGI | 2026-06-30 | −569 | +2,090 | **+1,521** |
+| Taiwan Life | 2026-06-30 | −483 | +1,765 | **+1,281** |
+| TransGlobe | 2026-06-30 | −216 | +1,429 | **+1,214** |
+
+Every firm that discloses both sides shows the same sign, and the magnitudes
+are large: for the six together, +NT$12.4bn of equity per basis point, or
+NT$1.24兆 per 100bp against a sector equity base of roughly NT$2兆. The sign is
+the finding. These books are short asset duration against their liabilities by
+a wide margin, which is the structural reason the sector buys long USD paper
+and keeps buying it — the demand is a balance-sheet requirement, not a view.
+
+**The measure overstates the gap, and by how much is knowable in one
+direction.** Only fair-valued assets reach equity; a bond at amortised cost
+carries duration that never appears in the asset column. The liability side has
+no such exemption under IFRS 17. So the disclosed gap is an upper bound. The
+size of the exemption is visible in the same table: the asset DV01 implies a
+fair-valued bond book, at D=13, of 27% of invested assets for Cathay, 19% for
+Fubon, 18% KGI, 16% Taiwan Life, 5% Nan Shan, **1% for Shinkong**. Shinkong's
+near-nil asset column against a NT$2,883mn liability column is not a parse
+failure — it is a firm whose assets are almost entirely at amortised cost while
+its liabilities are marked in full.
+
+**Nan Shan states the same fact explicitly** rather than by omission: its rate
+table has no asset/liability split at all, only 透過損益 and 透過其他綜合損益
+buckets. The amortised-cost book is excluded by construction, and the firm says
+so in the table's own row labels.
+
+**USD-specific, the two firms that break it out.** Cathay's disclosed USD asset
+DV01 rose from NT$1,376mn/bp at 2025-03-31 to NT$2,530mn/bp at 2026-03-31 —
++84%, presented side by side in one table in the Q1-2026 filing, so the
+comparison is the company's own. At D≈13 that is an implied fair-valued USD
+bond book going from about USD 34bn to USD 61bn. Cathay's 國外投資 grew far
+less than that over the same year, so the increase is duration extension and/or
+reclassification into FVOCI at the IFRS 17 transition — NOT a doubling of
+holdings, and it should not be read as one. Fubon's USD DV01 is flat over the
+same period at NT$580–650mn/bp (USD 19–21mn/bp).
+
+**Validation.** Cathay publishes two independently laid-out rate tables in the
+same filing — the per-currency table and the eight-column IFRS 17 split. Where
+both are captured they agree to 0.8% (2025-06-30: −1,327 against −1,338mn/bp),
+and to 3.6% at 2026-03. Six new fixtures, 13/13 tests passing.
+
+**Six defects found on real text, each of which produced plausible output.**
+Fubon's Korean subsidiary carries comparative periods the parent's page does
+not, so four quarters silently took a book a fortieth the size; the per-currency
+tables collapsed onto one key and the survivor was the USD row reported as a
+total; Cathay's interim tables are headed by a date RANGE and taking its start
+dated eight quarters to 1 January of the wrong year; 英鎊 and 港幣 had no
+currency mapping and fell through to "all"; Mercuries' lead-in sentence
+"上升或下降100BPS" matched as a data row and cost the firm its whole series; and
+Nan Shan's trailing period footers are not in column order on 4 of 25 tables,
+which had been mis-dating those periods in the notional panel too (2020-12-31
+moves 1.5%).
+
+**What would settle the Cathay question.** The FVOCI financial-asset balance
+from the balance sheet, at 2025-03 and 2026-03. If it roughly doubled, the DV01
+increase is reclassification; if it did not, it is duration extension. Both are
+in the same filings this project already holds.
