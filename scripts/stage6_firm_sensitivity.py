@@ -402,6 +402,9 @@ ECONOMIC = re.compile(r"名目本金|合約金額|契約金額")
 # together), not per currency, so no USD-specific figure exists in this table.
 IFRS17_COLS = re.compile(r"所\s*發\s*行\s*之\s*保\s*險\s*合\s*約")
 PERIOD_CJK = re.compile(r"(\d{2,3})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日")
+# 115年1月1日至3月31日 -- the reporting date is the END of the range.
+PERIOD_RANGE = re.compile(r"(\d{2,3})\s*年\s*\d{1,2}\s*月\s*\d{1,2}\s*日\s*至\s*"
+                          r"(?:(\d{2,3})\s*年\s*)?(\d{1,2})\s*月\s*(\d{1,2})\s*日")
 # Whitespace can fall ANYWHERE, including inside a two-character word: the
 # PDF wraps mid-term and flattening leaves "平移上 升1bp". Allowing \s* only
 # between terms and not within them is why the rate row matched nothing while
@@ -416,12 +419,26 @@ def parse_sensitivity_ifrs17(flat):
     """The eight-column IFRS 17 sensitivity table (Cathay's shape)."""
     if not IFRS17_COLS.search(flat):
         return []
-    heads = [(m.start(),
-              f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-{int(m.group(3)):02d}")
-             for m in PERIOD_CJK.finditer(flat)]
-    heads += [(m.start(),
-               f"{1911 + int(m.group(1))}-{int(m.group(2)):02d}-{int(m.group(3)):02d}")
-              for m in DOTDATE.finditer(flat)]
+    # An interim table is headed by a RANGE -- 115年1月1日至3月31日 -- and the
+    # balance it reports is the one at the END of it. Taking the range's first
+    # date dated every Cathay observation to 1 January of the wrong year: eight
+    # quarters that looked like a plausible annual series and were each two to
+    # six months out, which is worse than a gap because it lines up with
+    # nothing and nothing says so.
+    spans = []
+    heads = []
+    for m in PERIOD_RANGE.finditer(flat):
+        y = int(m.group(2) or m.group(1))
+        heads.append((m.start(), f"{1911 + y}-{int(m.group(3)):02d}-"
+                                 f"{int(m.group(4)):02d}"))
+        spans.append((m.start(), m.end()))
+    for pat in (PERIOD_CJK, DOTDATE):
+        for m in pat.finditer(flat):
+            if any(a <= m.start() < b for a, b in spans):
+                continue
+            heads.append((m.start(), f"{1911 + int(m.group(1))}-"
+                                     f"{int(m.group(2)):02d}-"
+                                     f"{int(m.group(3)):02d}"))
     heads.sort()
     if not heads:
         return []
@@ -618,7 +635,16 @@ def parse_note_nanshan(flat):
                if NS_INSTR.search(flat[b.end(): b.end() + 130])]
     if not _blocks:
         return []
-    dates = find_dates(flat[_blocks[-1].start():], len(flat))
+    # Newest first, NOT printed order. The trailing dates come out of the PDF
+    # in whatever order the extractor walked the footer, and on 4 of 25 Nan Shan
+    # tables that is not the order the columns are in: 202502 yields
+    # 2025-06-30, 2024-06-30, 2024-12-31, which would put the year-end block
+    # under the prior interim and vice versa. Taiwanese interim statements
+    # print current period, prior year-end, prior interim, so descending is the
+    # column order and the footer is only evidence of WHICH dates, not their
+    # sequence.
+    dates = sorted(find_dates(flat[_blocks[-1].start():], len(flat)),
+                   reverse=True)
     # Only blocks that actually HEAD a table. The words 金融資產 and 金融負債
     # also appear in surrounding prose ("金融資產及金融負債互抵資訊請詳..."),
     # which on the real page gave 8 blocks against 6 real ones and failed the

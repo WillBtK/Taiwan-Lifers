@@ -22,6 +22,28 @@ spec = importlib.util.spec_from_file_location(
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 
+_rspec = importlib.util.spec_from_file_location(
+    "rs", ROOT / "scripts" / "stage6_rate_sensitivity.py")
+rs = importlib.util.module_from_spec(_rspec)
+_rspec.loader.exec_module(rs)
+
+
+def rate(name):
+    """Every rate observation on a fixture page, keyed for assertion.
+
+    The RISE is preferred where a table prints both directions, exactly as the
+    panel does. Keeping whichever came last instead read every up/down pair off
+    the fall row and inverted the sign of the whole table.
+    """
+    f = flat(name)
+    got = rs.parse_nanshan(f) or rs.parse_page(f)
+    out = {}
+    for r in got:
+        k = (r["as_of"], r["currency"], r["subject"], r["measure"])
+        if k not in out or (out[k]["shock_bp"] < 0 <= r["shock_bp"]):
+            out[k] = r
+    return out
+
 
 def flat(name):
     raw = (FIX / name).read_text(encoding="utf-8")
@@ -169,6 +191,98 @@ def test_nanshan_notionals():
     return ok
 
 
+def test_taiwan_life_rate():
+    """權益 comes BEFORE 損益 here, the reverse of Fubon's identical subjects."""
+    print("\ntaiwan life 115Q2 rate sensitivity (equity column first)")
+    g = rate("taiwan_life_115q2_rate.txt")
+    v = lambda s, ms: (g.get(("2026-06-30", "all", s, ms)) or {}).get("value_ntd_k")
+    ok = check("asset equity", v("asset", "equity"), -483308.0)
+    ok &= check("asset pnl", v("asset", "pnl"), -121940.0)
+    ok &= check("liability equity", v("liability", "equity"), 1764544.0)
+    ok &= check("net equity", v("net", "equity"), 1281236.0)
+    # the equity-price row must not be read as a rate row
+    ok &= check("no 1% equity row", any(k[3] == "equity" and abs(
+        (g[k]["shock_bp"])) == 100 for k in g), False)
+    return ok
+
+
+def test_transglobe_rate():
+    """Measure is the OUTER axis: 損益變動 splits into liability then asset."""
+    print("\ntransglobe 115Q2 rate sensitivity (measure-major)")
+    g = rate("transglobe_115q2_rate.txt")
+    v = lambda s, ms: (g.get(("2026-06-30", "all", s, ms)) or {}).get("value_ntd_k")
+    ok = check("pnl liability", v("liability", "pnl"), 1511.0)
+    ok &= check("pnl asset", v("asset", "pnl"), -26201.0)
+    ok &= check("equity liability", v("liability", "equity"), 1429370.0)
+    ok &= check("equity asset", v("asset", "equity"), -215644.0)
+    return ok
+
+
+def test_banktaiwan_rate():
+    """Stated in 億元, so the raw figure is 100,000x the usual unit."""
+    print("\nbank taiwan 115Q2 rate sensitivity (億元, two columns)")
+    g = rate("banktaiwan_115q2_rate.txt")
+    r = g.get(("2026-06-30", "all", "total", "equity"))
+    ok = check("equity, +50bp", r and r["value_ntd_k"], -7451000.0)
+    ok &= check("equity per bp", r and r["per_bp_ntd_k"], -149020.0)
+    ok &= check("pnl, +50bp",
+                (g.get(("2026-06-30", "all", "total", "pnl")) or {}).get(
+                    "value_ntd_k"), -2101000.0)
+    return ok
+
+
+def test_mercuries_rate():
+    """The inner axis is TIME, and the lead-in sentence is not a data row."""
+    print("\nmercuries 115Q2 rate sensitivity (period-major)")
+    g = rate("mercuries_115q2_rate.txt")
+    ok = check("row count", len(g), 4)
+    ok &= check("2026 pnl", (g.get(("2026-06-30", "all", "asset", "pnl")) or {}
+                             ).get("value_ntd_k"), -420864.0)
+    ok &= check("2025 pnl", (g.get(("2025-06-30", "all", "asset", "pnl")) or {}
+                             ).get("value_ntd_k"), -282641.0)
+    ok &= check("2026 oci", (g.get(("2026-06-30", "all", "asset", "oci")) or {}
+                             ).get("value_ntd_k"), -36998772.0)
+    ok &= check("2025 oci", (g.get(("2025-06-30", "all", "asset", "oci")) or {}
+                             ).get("value_ntd_k"), -9665454.0)
+    return ok
+
+
+def test_cathay_rate_by_currency():
+    """Per-currency 1bp rows, and the period is the END of a date range."""
+    print("\ncathay 115Q1 rate sensitivity (by currency, range-dated)")
+    g = rate("cathay_115q1_rate_by_ccy.txt")
+    # 115年1月1日至3月31日 -> 2026-03-31, not 2026-01-01
+    ok = check("period is the range end",
+               sorted({k[0] for k in g}), ["2026-03-31"])
+    v = lambda c, ms: (g.get(("2026-03-31", c, "total", ms)) or {}).get(
+        "value_ntd_k")
+    ok &= check("USD equity", v("USD", "equity"), -2530065.0)
+    ok &= check("USD pnl", v("USD", "pnl"), -144217.0)
+    ok &= check("TWD equity", v("TWD", "equity"), -86711.0)
+    # 英鎊 has no mapping and must keep its own label, not collapse into "all"
+    ok &= check("GBP equity", v("GBP", "equity"), -18922.0)
+    ok &= check("CNY pnl is a genuine nil", v("CNY", "pnl"), 0.0)
+    return ok
+
+
+def test_nanshan_rate_buckets():
+    """Accounting-bucket rows, trailing marks, dates printed after the table."""
+    print("\nnan shan 114Q4 rate sensitivity (buckets, trailing marks)")
+    g = rate("nanshan_114q4_rate.txt")
+    v = lambda d, s: (g.get((d, "all", s, "oci")) or {}).get("value_ntd_k")
+    ok = check("row count", len(g), 8)
+    # the newest period is the FIRST block, whatever order the footer prints
+    ok &= check("2025 FVOCI", v("2025-12-31", "asset_fvoci"), -30096862.0)
+    ok &= check("2025 FVPL", v("2025-12-31", "asset_fvpl"), -6968522.0)
+    ok &= check("2024 FVOCI", v("2024-12-31", "asset_fvoci"), -27856506.0)
+    ok &= check("2024 FVPL", v("2024-12-31", "asset_fvpl"), -7196054.0)
+    # a 1% shock is 100bp, so the per-bp figure is a hundredth
+    r = g.get(("2025-12-31", "all", "asset_fvoci", "oci"))
+    ok &= check("shock is 100bp", r and r["shock_bp"], 100.0)
+    ok &= check("per bp", r and r["per_bp_ntd_k"], -300968.62)
+    return ok
+
+
 def test_numbers():
     """A bare comma is not a number; a bare dash is a nil."""
     print("\nnumber parsing")
@@ -183,7 +297,10 @@ def main():
     tests = [test_numbers, test_fubon_notionals, test_fubon_sensitivity,
              test_taiwan_life_by_currency, test_cathay_ifrs17,
              test_nanshan_trailing_parens,
-             test_nanshan_notionals]
+             test_nanshan_notionals,
+             test_taiwan_life_rate, test_transglobe_rate,
+             test_banktaiwan_rate, test_mercuries_rate,
+             test_cathay_rate_by_currency, test_nanshan_rate_buckets]
     results = [(t.__name__, t()) for t in tests]
     print("\n" + "=" * 60)
     for name, ok in results:
