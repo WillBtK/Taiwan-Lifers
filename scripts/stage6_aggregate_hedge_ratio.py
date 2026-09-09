@@ -50,6 +50,9 @@ WAYBACK = ROOT / "data" / "firm_fund_utilisation_wayback.csv"
 FUNDS = ROOT / "data" / "ib_firm_funds.csv"
 PANEL = ROOT / "data" / "firm_hedge_panel.csv"
 STRUCT = ROOT / "data" / "hedging_structure.csv"
+CATHAYQ = ROOT / "data" / "cathay_fx_quarterly.csv"
+NOTIONAL = ROOT / "data" / "firm_hedge_notional.csv"
+FX = ROOT / "data" / "usdtwd_monthly.csv"
 OUT = ROOT / "data" / "aggregate_hedge_ratio.csv"
 
 # config/firm_uids.tsv only. Nothing inferred: an earlier pass guessed four more
@@ -57,10 +60,30 @@ OUT = ROOT / "data" / "aggregate_hedge_ratio.csv"
 UID = {"27935073": "fubon_life", "03374707": "cathay_life",
        "11456006": "nanshan_life", "03434016": "kgi_life",
        "03557017": "taiwan_life", "03458902": "shinkong_pre2026"}
+# Taiwan Life is deliberately ABSENT. Its statutory notionals do not reconcile
+# to the filing's own printed total, which is why the verified panel excludes
+# them, and pulling them in raw produced a ratio running from 2% in 2018 to 72%
+# in 2024 — capture changing, not hedging. Coverage bought that way is worth
+# less than nothing: it moves the aggregate and looks like a finding.
 NAME = {"cathay_life": "Cathay", "fubon_life": "Fubon", "kgi_life": "KGI",
         "nanshan_life": "Nan Shan"}
 MAX_GAP_Q = 4          # quarters a firm's ratio may be interpolated across
 MIN_LINK = 0.15        # minimum sector share behind both ends of a chain link
+
+
+def qend(p):
+    """Deck period label to the quarter-end it reports: FY14 -> 2014-12-31."""
+    import re as _re
+    p = (p or "").strip().upper()
+    m = _re.fullmatch(r"(FY|1Q|2Q|3Q|4Q|1H|2H|9M)?(\d{2}|\d{4})", p)
+    if not m:
+        return None
+    pre, y = m.group(1), int(m.group(2))
+    y = y + 2000 if y < 100 else y
+    return {None: f"{y}-12-31", "FY": f"{y}-12-31", "1Q": f"{y}-03-31",
+            "2Q": f"{y}-06-30", "1H": f"{y}-06-30", "3Q": f"{y}-09-30",
+            "9M": f"{y}-09-30", "4Q": f"{y}-12-31",
+            "2H": f"{y}-12-31"}.get(pre)
 
 
 def mo(d):
@@ -109,6 +132,14 @@ def interp(pts, d, max_gap=None):
         return None
     xs = sorted(pts)
     t = mo(d)
+    # An EXACT observation is always returned. Without this the gap test below
+    # discarded real data points that happened to sit inside a long gap: Cathay
+    # discloses at 2025-03 and 2026-06 with nothing between 2023-12 and 2025-03,
+    # so both were thrown away and a quarter of the sector vanished from the
+    # series in precisely the quarters the ratio was collapsing.
+    for k in xs:
+        if mo(k + "-01") == t:
+            return pts[k]
     if t <= mo(xs[0] + "-01"):
         return pts[xs[0]] if t == mo(xs[0] + "-01") or max_gap is None else None
     if t > mo(xs[-1] + "-01"):
@@ -132,7 +163,17 @@ def main():
     share_obs = {e: {m: v / sec[m] for m, v in d.items() if m in sec}
                  for e, d in fi.items()}
 
-    grid = quarters("2018-03-31", max(sec) + "-28")
+    # The sector series ends 2026-04; hold it one quarter so 2026-06 — the
+    # best-covered recent quarter, with three firms reporting — is reachable.
+    # A one-quarter carry of a series that moves a few per cent a year.
+    last = max(sec)
+    ly, lm = int(last[:4]), int(last[5:7])
+    for k in range(1, 4):
+        m2, y2 = lm + k, ly
+        if m2 > 12:
+            m2, y2 = m2 - 12, ly + 1
+        sec.setdefault(f"{y2}-{m2:02d}", sec[last])
+    grid = quarters("2017-03-31", "2026-06-30")
 
     # a firm's own foreign book on the quarterly grid: share x sector
     def fbook(e, d):
@@ -145,6 +186,28 @@ def main():
 
     # ---- per-firm hedge ratio, at its own observation dates
     obs = collections.defaultdict(dict)
+
+    # CATHAY: the quarterly deck file carries 26 hedge observations back to
+    # 1Q15, against the 12 the structure file yielded. The hedge share is quoted
+    # on the FX-risk-bearing base, so it is rescaled by that base — which the
+    # same file gives at 23 periods and which is strikingly stable, 68-71%
+    # throughout and 74% from 2026, so interpolating it costs almost nothing.
+    if CATHAYQ.exists():
+        cq = list(csv.DictReader(open(CATHAYQ, newline="", encoding="utf-8")))
+        risk = {qend(r["period"])[:7]: float(r["fx_risk_exposure_pct"])
+                for r in cq if r.get("fx_risk_exposure_pct")
+                and qend(r["period"])}
+        for r in cq:
+            d = qend(r.get("period"))
+            if not d or not r.get("hedge_cs_ndf_pct"):
+                continue
+            b = interp(risk, d)
+            if b is None:
+                continue
+            obs["cathay_life"][d[:7]] = float(r["hedge_cs_ndf_pct"]) / 100 * b / 100
+
+    # Fubon and Nan Shan: statutory notionals from the VERIFIED panel — only
+    # rows that reconcile to the filing's own printed total survive into it.
     for r in csv.DictReader(open(PANEL, newline="", encoding="utf-8")):
         e = r["entity_id"]
         if e not in NAME:
@@ -153,10 +216,23 @@ def main():
         if f:
             obs[e][r["as_of"][:7]] = (float(r["traditional_notional_ntd_k"])
                                       / 1e6 / f)
+
     for r in csv.DictReader(open(STRUCT, newline="", encoding="utf-8")):
-        if r["traditional_hedge_pct"] and r["entity_id"] in NAME:
+        # Cathay is taken from its own quarterly file above, which is richer.
+        if (r["traditional_hedge_pct"] and r["entity_id"] in NAME
+                and r["entity_id"] != "cathay_life"):
             obs[r["entity_id"]][r["as_of"][:7]] = \
                 float(r["traditional_hedge_pct"]) / 100
+
+    # A firm ratio outside this band is not a hedge ratio, it is a capture
+    # failure. Nothing legitimate sits below 5% or above 95% of a foreign book.
+    for e in list(obs):
+        bad = {d: v for d, v in obs[e].items() if not 0.05 <= v <= 0.95}
+        for d in bad:
+            del obs[e][d]
+        if bad:
+            print(f"  dropped {len(bad)} implausible {e} points: "
+                  f"{sorted(bad)[:4]}")
 
     # ---- the aggregate, CHAIN-LINKED
     #
@@ -272,7 +348,8 @@ def main():
 
 INK, MUTE, GRID = "#1c1c1c", "#6b6b6b", "#e2e0dc"
 COL = {"cathay_life": "#4e7d99", "fubon_life": "#c98a8b",
-       "kgi_life": "#7aa88f", "nanshan_life": "#bda57e"}
+       "kgi_life": "#7aa88f", "nanshan_life": "#bda57e",
+       "taiwan_life": "#9b8aa6"}
 SVG = ROOT / "reports" / "aggregate_hedge_ratio.svg"
 PNG = ROOT / "reports" / "aggregate_hedge_ratio.png"
 
