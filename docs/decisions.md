@@ -4850,15 +4850,14 @@ point; positive means a rate RISE increases equity.**
 | firm | as of | assets | liabilities | net |
 |---|---|---|---|---|
 | Cathay | 2026-06-30 | −2,830 | +6,817 | **+3,974** |
-| Shinkong | 2025-12-31 | −58 | +2,883 | **+2,825** |
 | Fubon | 2026-06-30 | −1,427 | +3,940 | **+2,512** |
 | KGI | 2026-06-30 | −569 | +2,090 | **+1,521** |
 | Taiwan Life | 2026-06-30 | −483 | +1,765 | **+1,281** |
 | TransGlobe | 2026-06-30 | −216 | +1,429 | **+1,214** |
 
 Every firm that discloses both sides shows the same sign, and the magnitudes
-are large: for the six together, +NT$12.4bn of equity per basis point, or
-NT$1.24兆 per 100bp against a sector equity base of roughly NT$2兆. The sign is
+are large: for the five together, +NT$9.5bn of equity per basis point, or
+NT$0.95兆 per 100bp against a sector equity base of roughly NT$2兆. The sign is
 the finding. These books are short asset duration against their liabilities by
 a wide margin, which is the structural reason the sector buys long USD paper
 and keeps buying it — the demand is a balance-sheet requirement, not a view.
@@ -4869,10 +4868,7 @@ carries duration that never appears in the asset column. The liability side has
 no such exemption under IFRS 17. So the disclosed gap is an upper bound. The
 size of the exemption is visible in the same table: the asset DV01 implies a
 fair-valued bond book, at D=13, of 27% of invested assets for Cathay, 19% for
-Fubon, 18% KGI, 16% Taiwan Life, 5% Nan Shan, **1% for Shinkong**. Shinkong's
-near-nil asset column against a NT$2,883mn liability column is not a parse
-failure — it is a firm whose assets are almost entirely at amortised cost while
-its liabilities are marked in full.
+Fubon, 18% KGI, 16% Taiwan Life and 5% for Nan Shan.
 
 **Nan Shan states the same fact explicitly** rather than by omission: its rate
 table has no asset/liability split at all, only 透過損益 and 透過其他綜合損益
@@ -4989,3 +4985,53 @@ history is published and archived and simply has not been harvested.
 **Coverage note on the workbook itself.** It covers Cathay, Fubon, Shinkong,
 China Life/KGI and Taiwan Life. It omits Nan Shan, which is the second-largest
 insurer in the sector by invested assets (NT$5.4兆, larger than Fubon).
+
+## 4.61 CORRECTION — MOPS code 6985 is two different insurers, and 4.59 published one of them as the other
+
+Decision 4.59 reported Shin Kong with an asset-side DV01 of −NT$58mn/bp against
+a liability side of +NT$2,883mn/bp, and drew from it that only **1%** of its
+invested assets are fair-valued — the sharpest single claim in that entry. It
+is withdrawn. The two numbers are not the same company.
+
+**What 6985 actually is.** It is Taishin Life, an insurer with roughly NT$300bn
+of invested assets, which was renamed **Shin Kong Life on 2026-01-01** after
+Taishin absorbed the Shin Kong group. The pre-2026 Shin Kong Life — the
+NT$3.5tn insurer that every external series, including the sell-side workbook
+of 4.60, means by "Shinkong" — is a different legal entity, 統編 03458902, and
+it files under a MOPS code this project has never indexed. The repository
+already recorded the two 統編 in `config/firm_uids.tsv`; what it did not do was
+carry that distinction into the filing index, where both sit under one
+`entity_id`.
+
+**How it shows up, and why it was missed.** The liability DV01 read off 6985's
+filings runs +205mn/bp at 2025-03, +191mn at 2025-06, then +2,883mn at 2025-12
+— a fourteenfold step. That is not a firm changing its book; it is the series
+changing companies. Every individual number is correctly parsed and correctly
+dated. Nothing in the extraction is wrong. The error is entirely in the join,
+which is the failure mode this project keeps meeting: output that is plausible,
+correctly shaped, right order of magnitude, and about the wrong thing.
+
+**Scope of the correction.** 6985 is withheld from the duration-gap headline
+and from the chart; its rows stay in `data/firm_rate_sensitivity.csv`, labelled.
+The sector sum in 4.59 falls from +NT$12.4bn to **+NT$9.5bn per bp** across five
+firms. Nothing else in 4.59 moves: Cathay, Fubon, KGI, Taiwan Life and
+TransGlobe are unaffected, every one still shows the same sign, and the
+conclusion — that these books are short asset duration against their
+liabilities by a wide margin — is unchanged.
+
+**What it means for the sell-side comparison (4.60).** The workbook's Shinkong
+column for 4Q18–1H25 is the OLD Shin Kong Life. This project holds no statutory
+filing for that entity at all, so Shinkong cannot yet be verified independently
+by any route — deck or filing. Finding its MOPS filing code is therefore a
+precondition for the Shinkong column, not an optional extra. The insurers in
+the index sit at 2823, 2833, 2867, 2876, 5846, 5865, 5873, 5874, 6025, 6985;
+Cathay, Fubon, TransGlobe and Nan Shan occupy a 58xx block, which is where the
+old Shin Kong Life most likely sits. MOPS answers that question and rate-limits
+this sandbox, so it is a CI probe.
+
+**The general lesson, recorded because it will recur.** Taiwan's insurance
+sector is mid-consolidation: Shin Kong into Taishin, China Life into KGI,
+Taiwan Life under CTBC. A filing code is not an entity, an entity is not a
+brand, and a brand is not a continuous series. Every firm-level series in this
+project should be keyed on 統編 and dated against the merger calendar, not on a
+filing code carried forward.

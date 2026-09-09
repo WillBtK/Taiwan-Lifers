@@ -63,6 +63,10 @@ def main():
     for r in csv.DictReader(open(GAP, newline="", encoding="utf-8")):
         if r["currency"] != "all" or not r["liability_dv01_ntd_k"]:
             continue
+        # 6985 is Taishin Life before 2026 and the Shin Kong survivor after;
+        # the series changes company mid-window (see stage6_duration_panel).
+        if r["entity_id"] == "shinkong_life":
+            continue
         k = r["entity_id"]
         if k not in latest or r["as_of"] > latest[k]["as_of"]:
             latest[k] = r

@@ -46,6 +46,24 @@ OUT = ROOT / "data" / "duration_gap_panel.csv"
 EQUITY_MEASURES = ("equity", "oci", "pnl_and_oci")
 ASSET_SUBJECTS = ("asset", "asset_fvoci", "asset_fvpl", "total")
 
+# MOPS code 6985 is not one company across this window. It is Taishin Life, an
+# insurer with about NT$300bn of invested assets, which was renamed Shin Kong
+# Life on 2026-01-01 after Taishin absorbed the Shin Kong group. The PRE-2026
+# Shin Kong Life — the NT$3.5tn insurer every external series means by
+# "Shinkong" — is a different legal entity (統編 03458902) that files under a
+# code this project has never indexed.
+#
+# The consequence is visible in the numbers and is not subtle: the liability
+# DV01 read off 6985's filings is +205mn/bp at 2025-03, +191mn at 2025-06 and
+# +2,883mn at 2025-12. That is not a firm changing its book, it is the series
+# changing companies. Publishing those three points as one insurer's history
+# would be wrong in the way that is hardest to catch — a plausible level, a
+# plausible trend, and two different balance sheets.
+#
+# So 6985 is withheld from the headline until its filings are separated by
+# reporting entity. The rows stay in the CSV, labelled.
+ENTITY_UNRESOLVED = {"shinkong_life"}
+
 
 def usdtwd():
     with open(FX, newline="", encoding="utf-8") as fh:
@@ -132,7 +150,7 @@ def main():
     # ---- the cross-section, at each firm's latest disclosed period
     latest = {}
     for r in rows:
-        if r["currency"] != "all":
+        if r["currency"] != "all" or r["entity_id"] in ENTITY_UNRESOLVED:
             continue
         k = r["entity_id"]
         if k not in latest or r["as_of"] > latest[k]["as_of"]:
@@ -156,6 +174,12 @@ def main():
           f"{tn / 1e3:>10,.0f}   {tn / 1e6:>10,.1f}bn")
     print("\n  The sum is indicative, not a sector total: the periods differ,\n"
           "  and firms that disclose only one side contribute only that side.")
+    if ENTITY_UNRESOLVED:
+        print(f"  WITHHELD pending entity resolution: "
+              f"{', '.join(sorted(ENTITY_UNRESOLVED))} — MOPS code 6985 covers\n"
+              f"  Taishin Life and, after the 2026 rename, the Shin Kong "
+              f"survivor. Two companies,\n  one series; see the note at the "
+              f"head of this file.")
 
     # ---- what the asset figure implies about the fair-valued bond book
     print("\nIMPLIED FAIR-VALUED BOND BOOK from the asset-side DV01")
