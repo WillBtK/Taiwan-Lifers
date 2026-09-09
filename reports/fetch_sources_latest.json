@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-09T23:47:26.376592+00:00",
+ "run_at": "2026-09-09T23:49:45.119369+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
@@ -38,301 +38,301 @@
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161610.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-06021011",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06021011.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-05010111",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05010111.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-05020511",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05020511.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-05030310",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05030310.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-05030311",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05030311.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-06161601",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161601.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-07010801",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07010801.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-07011010",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07011010.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "json-07090901",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07090901.aspx",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03374707",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03374707",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03374707",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=27935073",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=27935073",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=11456006",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=11456006",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=11456006",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03434016",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03434016",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03434016",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70789634",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70789634",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70789634",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03458902",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03458902",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03458902",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=28428384",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=28428384",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=28428384",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84443471",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84443471",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84443471",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84894313",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84894313",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84894313",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-1_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70817744",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-5_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70817744",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   },
   {
    "name": "Info2-14_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70817744",
    "needs_relay": true,
    "status": "unavailable",
-   "error": "RuntimeError: relay GET HTTP 403: {\"error\":\"forbidden\"}"
+   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html>\n<html lang=en>\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not al; bearer 403 {\"error\":\"forbidden\"}"
   }
  ],
  "summary": {
