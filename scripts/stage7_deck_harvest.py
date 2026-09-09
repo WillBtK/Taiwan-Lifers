@@ -150,21 +150,21 @@ def listing(co_id, roc_year):
         key.write_text(t, encoding="utf-8")
         parts.append(t)
     t = "\n".join(parts)
-    out = []
-    for tr in ROW.findall(t):
-        cells = [re.sub(r"<[^>]+>", " ", c) for c in CELL.findall(tr)]
-        flat = " ".join(cells)
-        d = DATE.search(flat)
-        # The Chinese deck. E001 is the English one, same content.
-        names = [n for n in PDF.findall(tr) if "M" in n[-8:]]
-        if not (d and names):
+    # The DATE COMES FROM THE FILENAME, not from the row. A row carries links to
+    # other conferences under 歷年法人說明會, so pairing the row's first date
+    # with the row's first PDF attached 2021-03-09 to a file stamped 20201123
+    # and gave three different dates the same file. 289120210325M001.pdf is
+    # co_id + YYYYMMDD + M001 and cannot disagree with itself.
+    out, seen = [], set()
+    for name in PDF.findall(t):
+        if "M" not in name[-8:]:      # E001 is the English deck, same content
             continue
-        if any(o["file"] == names[0] for o in out):
+        if name in seen:
             continue
+        seen.add(name)
+        y, m, d = name[4:8], name[8:10], name[10:12]
         out.append({"co_id": co_id, "roc_year": roc_year,
-                    "date": f"{1911 + int(d.group(1))}-{int(d.group(2)):02d}-"
-                            f"{int(d.group(3)):02d}",
-                    "file": names[0]})
+                    "date": f"{y}-{m}-{d}", "file": name})
     return out
 
 
