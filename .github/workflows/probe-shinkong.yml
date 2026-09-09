@@ -36,7 +36,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,4 +50,4 @@ jobs:
         env:
           TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
           TLFX_MOPS_BLOCK_WAIT: '120'
-        run: python3 scripts/probe_shinkong_code.py ${{ github.event.inputs.codes }}
+        run: python3 -u scripts/probe_shinkong_code.py ${{ github.event.inputs.codes }}

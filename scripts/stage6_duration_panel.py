@@ -13,9 +13,8 @@ WHAT THE EQUITY MEASURE DOES AND DOES NOT COVER
 Only assets carried at fair value reach equity. A bond held at amortised cost
 carries duration that never appears in this table, so the asset-side figure is a
 floor on asset duration, not a measure of it. Nan Shan makes this explicit by
-reporting the two fair-value buckets and nothing else; Shinkong's asset column
-is near nil against a liability column in the billions, which is the same fact
-stated by omission. The liability side has no such exemption — IFRS 17 discounts
+reporting the two fair-value buckets and nothing else, and says so in the
+table's own row labels. The liability side has no such exemption — IFRS 17 discounts
 it in full — so the gap this table shows is systematically WIDER than the
 economic one. It is an upper bound on the mismatch, and the direction is what
 survives the caveat: every firm that discloses both sides shows the same sign.

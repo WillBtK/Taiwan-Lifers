@@ -53,7 +53,8 @@ CANDIDATES = ["2888"] + [str(c) for c in range(5840, 5890)
                          if c not in (5846, 5865, 5873, 5874)]
 # Years chosen so the entity is unambiguously the OLD Shin Kong Life: well
 # before the 2025 group merger and the 2026-01-01 rename.
-YEARS = [112, 110]
+SWEEP_YEAR = 112
+CONFIRM_YEARS = [112, 110]
 NAME = re.compile(r"([一-鿿]{2,10}(?:人壽|金融控股|產物|保險)"
                   r"[一-鿿]{0,8}股份有限公司)")
 
@@ -76,36 +77,58 @@ def identify(co_id, filing):
     return m.group(1) if m else "(name not found on first pages)"
 
 
+def say(*a):
+    """Print and FLUSH.
+
+    The first run of this probe found a live candidate, wrote the result into
+    a buffer, and was killed at the job ceiling before Python flushed it. The
+    only line that survived was an incidental stderr warning. A probe whose
+    findings die with the process is worse than no probe: it costs the run and
+    reports nothing.
+    """
+    print(*a, flush=True)
+
+
 def main():
     cands = sys.argv[1:] or CANDIDATES
     s6.purge()
-    print(f"probing {len(cands)} candidate codes over ROC {YEARS}\n")
-    found = []
+    say(f"phase 1: index sweep, {len(cands)} codes, ROC {SWEEP_YEAR}\n")
+    # Two phases, because identification is the slow half. A hit costs a
+    # multi-megabyte statement download; doing that inline meant the sweep had
+    # not finished its first pass when the job ran out of time. The index pass
+    # alone answers "which codes exist", which is most of the question.
+    hits = {}
     for co in cands:
-        hits = []
-        for y in YEARS:
-            rows, err = s6.index(co, y)
-            if err:
-                print(f"  {co} ROC{y}: {err}")
-                continue
-            if rows:
-                hits += rows
-        if not hits:
+        rows, err = s6.index(co, SWEEP_YEAR)
+        if err:
+            say(f"  {co}: {err}")
             continue
-        who = identify(co, hits[0])
-        print(f"  {co}: {len(hits)} filings   filer = {who}")
-        found.append((co, len(hits), who))
-    print()
-    if not found:
-        print("no candidate returned filings. The pre-2026 Shin Kong Life may "
-              "not file on MOPS under any code of its own, in which case the "
-              "holding company's consolidated statements are the only route "
-              "and 2888 returning nothing would itself be the finding.")
+        if rows:
+            hits[co] = rows
+            say(f"  {co}: {len(rows)} filings  e.g. {rows[0]['filename']}")
+    say(f"\nphase 1 done: {len(hits)} of {len(cands)} codes have filings"
+        f" -> {sorted(hits)}\n")
+    if not hits:
+        say("no candidate returned filings. If 2888 is among the codes tried "
+            "and returned nothing, the pre-2026 Shin Kong Life does not file "
+            "on MOPS under the holding company either, and that is itself the "
+            "finding.")
         return 0
-    print(f"{'co_id':<8}{'filings':>8}  filer")
+
+    say("phase 2: read each filer's own name off page 1")
+    found = []
+    for co, rows in hits.items():
+        who = identify(co, rows[0])
+        say(f"  {co}: {who}")
+        found.append((co, len(rows), who))
+
+    say(f"\n{'co_id':<8}{'filings':>8}  filer")
     for co, n, who in found:
-        mark = "  <-- SHIN KONG" if ("新光" in who) else ""
-        print(f"{co:<8}{n:>8}  {who}{mark}")
+        mark = "  <-- SHIN KONG" if "新光" in who else ""
+        say(f"{co:<8}{n:>8}  {who}{mark}")
+    sk = [c for c, _, w in found if "新光" in w]
+    if sk:
+        say(f"\nPRE-2026 SHIN KONG LIFE FILES UNDER: {', '.join(sk)}")
     return 0
 
 

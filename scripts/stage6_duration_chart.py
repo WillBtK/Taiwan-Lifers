@@ -156,9 +156,10 @@ def main():
                    f'fill="{ASSET}"/>')
         out.append(f'<rect x="{mid:.1f}" y="{y + 1.5:.1f}" '
                    f'width="{li * scale:.1f}" height="{h:.1f}" fill="{LIAB}"/>')
-        # A bar too short to see reads as missing data, and Shinkong's asset
-        # column — 1% of invested assets — is the opposite of missing: it is
-        # the finding. Say so rather than let the reader infer a gap.
+        # A bar too short to see reads as missing data. Where a firm really
+        # does report a near-nil asset column against a full-sized liability
+        # one, that is the finding, not a gap — so it is labelled with its
+        # value rather than left to be inferred.
         if abs(a) * scale < 4:
             out.append(txt(mid + a * scale - 6, y - 3, f"{abs(a):,.0f}", 9.5,
                            ASSET, "end"))
