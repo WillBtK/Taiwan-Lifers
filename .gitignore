@@ -10,6 +10,7 @@ reports/*.json
 !reports/ins_info_map.json
 !reports/rpt_panel_probe.json
 !reports/mops_statements.json
+!reports/deck_index.json
 reports/*.html
 # data/raw holds the pipeline's provenance archive: each source's payload
 # exactly as published, one file per revision (scripts/fetch_sources.py).

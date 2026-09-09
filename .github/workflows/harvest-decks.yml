@@ -57,7 +57,12 @@ jobs:
         run: |
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add data/deck_fx_text.json.gz reports/deck_index.json 2>/dev/null || true
+          # Staged SEPARATELY and forced. `git add A B` where B is ignored by
+          # .gitignore stages NEITHER and exits non-zero; the `|| true` then
+          # swallowed it, git diff --cached saw nothing, and run 1 threw away
+          # three and a half hours of captured decks reporting 'unchanged'.
+          git add -f data/deck_fx_text.json.gz 2>/dev/null || true
+          git add -f reports/deck_index.json 2>/dev/null || true
           if git diff --cached --quiet; then echo 'unchanged'; else
             git commit -m 'Harvest: investor-conference deck FX pages from MOPS'
             git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true

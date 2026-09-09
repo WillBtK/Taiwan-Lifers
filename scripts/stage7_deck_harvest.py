@@ -206,8 +206,14 @@ def main():
             index += rows
     print(f"\n{len(index)} conferences listed", flush=True)
 
+    # MISSING FIRMS FIRST. Sorted by date, run 1 spent three hours on Cathay
+    # and Fubon decks from 2021-22 — firms this project already covers — and
+    # had not reached Shin Kong or Taiwan Life, the two it was built for. A run
+    # that is cut short must still have delivered the thing it was for.
+    PRIORITY = {"2888": 0, "2891": 1, "2833": 2, "2823": 3, "2887": 4}
     done = 0
-    for r in sorted(index, key=lambda x: x["date"]):
+    for r in sorted(index, key=lambda x: (PRIORITY.get(x["co_id"], 9),
+                                          x["date"])):
         if r["file"] in store:
             continue
         pages = deck_text(r["file"])
