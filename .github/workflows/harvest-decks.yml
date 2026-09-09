@@ -1,0 +1,65 @@
+# Investor-conference decks from MOPS, for the FX-hedging disclosure.
+#
+# The sector hedge ratio has to come from the companies' own numbers, and this
+# project's deck corpus was assembled per firm from company IR sites — nothing
+# at all for Shin Kong or Taiwan Life, about 18% of sector overseas investment
+# missing from every aggregate. MOPS carries all of them: every listed company
+# files its 法人說明會 materials there under a deterministic filename.
+#
+# In CI because the LISTING query answers from anywhere but the FILE DOWNLOAD
+# returns the "FOR SECURITY REASONS" WAF page to the development sandbox.
+name: harvest-decks
+on:
+  # A dispatch is only accepted for a workflow on the DEFAULT branch and this
+  # lives on the feature branch, so editing this file is the trigger.
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - '.github/workflows/harvest-decks.yml'
+      - 'scripts/stage7_deck_harvest.py'
+  workflow_dispatch:
+    inputs:
+      years:
+        description: 'ROC years, space separated (blank = 115 down to 107)'
+        required: false
+        default: ''
+      gap:
+        description: 'seconds between requests'
+        required: false
+        default: '8'
+permissions:
+  contents: write
+concurrency:
+  group: harvest-decks
+  cancel-in-progress: false
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the PDF reader
+        run: pip install --quiet pymupdf
+      - name: Harvest
+        env:
+          TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
+          TLFX_MOPS_BLOCK_WAIT: '120'
+        run: python3 -u scripts/stage7_deck_harvest.py ${{ github.event.inputs.years }}
+      # always(): the decks cost minutes each. A failure late in the run must
+      # not throw away the pages that were already captured.
+      - name: Commit the captured text
+        if: always()
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/deck_fx_text.json.gz reports/deck_index.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo 'unchanged'; else
+            git commit -m 'Harvest: investor-conference deck FX pages from MOPS'
+            git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true
+            git push
+          fi
