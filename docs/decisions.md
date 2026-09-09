@@ -5130,3 +5130,39 @@ capture of those four pages: fifty-one captures across eighteen 統編, and only
 TransGlobe among them.
 
 Together these are roughly fifteen points of sector coverage still outstanding.
+
+### 4.65 The pie reproduces the sell-side workbook to the decimal, including the pages read off images
+
+`scripts/stage7_benchmark_check.py` compares every overlapping cell. Thirty
+firm-quarters, four columns each:
+
+| column | mean absolute difference | cells |
+|---|---|---|
+| traditional hedge | 0.43pp | 30 |
+| FX policy | 0.11pp | 30 |
+| proxy / naked | 0.45pp | 30 |
+| equity & fund | 0.18pp | 30 |
+
+Twenty-six of the thirty agree to 0.0pp on all four columns, Cathay and KGI on
+every single cell. The seven transcribed Cathay quarters are among the exact
+ones, which is the point of transcribing them: a number read off a rendered
+slide is not a weaker number, it is the same number through a slower channel.
+
+Taiwan Life differs by up to 0.5pp, which is rounding — its deck prints whole
+percentages of foreign investment and the workbook carries one decimal.
+
+**The four cells that do not agree are theirs, not mine.** Cathay at 2018-12-31
+reads 48.3 in the workbook against 42.7 here — and 48.3 is exactly the figure
+Cathay's own 9M18 deck prints, which this project holds at 2018-09-30. Their
+4Q18 column carries 3Q18. This is the third such defect found in that file
+(4.60 records KGI's 4Q23 overseas investment carried forward from 3Q23, and
+sheet 3's overseas column stale for four of five firms), and it is the argument
+for sourcing rather than ingesting stated as plainly as it can be: a workbook
+cannot be checked against itself.
+
+**What remains uncomparable.** The currency-swap versus NDF split inside the
+traditional hedge is not in any public disclosure — the sell-side gets it by
+asking the IR teams, and there is no route to it from filings for any firm but
+Fubon and Bank Taiwan. Their Fubon column cannot be reproduced either, for the
+reason recorded at 4.58: Fubon's deck merges the traditional hedge with the
+natural hedge in all 173 rows and never separates them.

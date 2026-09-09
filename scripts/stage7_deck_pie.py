@@ -84,6 +84,19 @@ T_PAT = {
     "equity": re.compile(r"Equity\s*-?\s*OCI\s*(\d{1,3}(?:\.\d)?)\s*%"),
     "naked": re.compile(r"未\s*避\s*險\s*(\d{1,3}(?:\.\d)?)\s*%"),
 }
+# Taiwan Life redrew the slide in 2021. Before that the three shares are on the
+# NTD-POLICY-BACKED part of the foreign book only, with the FX-policy share
+# shown beside them as a separate 外幣保單 / 台幣保單 split:
+#
+#   2020-08  外幣保單 40% 台幣保單 60% | 已避險 62% Equity-OCI 14% 未避險 24%
+#   2021-05  外幣保單 40% 已避險 36% Equity-OCI 8% 未避險 15%
+#
+# which is the same disclosure: 62 x 0.60 = 37.2 against the 36 printed two
+# quarters later, and the 2021 deck proves the identity by printing BOTH — its
+# 台幣保單 sub-pie of 61/13/26 times 60% reproduces its own 36/8/15 exactly.
+# Read with the 2021 rule the old slide sums to 138 and is discarded, which is
+# why Taiwan Life began in 2021 and not 2018.
+TL_OLD_NTD = re.compile(r"台\s*幣\s*保\s*單\s*(\d{1,3})\s*%")
 S_ORDER = ("hedged", "fx_policy", "equity", "naked")
 S_NUMS = re.compile(r"(\d{1,2}\.\d)%\s*(\d{1,2}\.\d)%\s*(\d{1,2}\.\d)%\s*"
                     r"(\d{1,2}\.\d)%\s*股\s*票\s*及\s*基\s*金")
@@ -237,6 +250,21 @@ def main():
                         m = pat.search(text)
                         if m:
                             pie[k] = float(m.group(1))
+                    ntd = TL_OLD_NTD.search(text)
+                    if len(pie) == 4 and ntd:
+                        # the pre-2021 slide: rescale the three onto the whole
+                        # foreign book and take 外幣保單 as the policy slice
+                        f = float(ntd.group(1)) / 100.0
+                        three = pie["hedged"] + pie["equity"] + pie["naked"]
+                        if (abs(three - 100.0) <= 1.5
+                                and abs(pie["fx_policy"] + float(ntd.group(1))
+                                        - 100.0) <= 1.0):
+                            pie = {"hedged": round(pie["hedged"] * f, 1),
+                                   "equity": round(pie["equity"] * f, 1),
+                                   "naked": round(pie["naked"] * f, 1),
+                                   "fx_policy": pie["fx_policy"]}
+                        else:
+                            pie = {}
                 else:
                     m = S_NUMS.search(text)
                     if m:
@@ -244,8 +272,13 @@ def main():
                                zip(S_ORDER, m.groups())}
                 if len(pie) != 4:
                     continue
-                # the equity sliver of a bond book: smallest, and never large.
-                if pie["equity"] >= 12.0 or pie["equity"] != min(pie.values()):
+                # The equity sliver of a bond book is the smallest slice. The
+                # SIZE cap is only meaningful for Shin Kong, whose four numbers
+                # are read positionally and so could be transposed; Taiwan Life
+                # labels each slice, and capping it at 12 there silently dropped
+                # 1Q25, where Equity-OCI is exactly 12.
+                cap = 12.0 if ent == "shinkong_life" else 20.0
+                if pie["equity"] >= cap or pie["equity"] != min(pie.values()):
                     continue
                 as_of = period_of(text, ddate)
                 b = S_BASE.search(text)

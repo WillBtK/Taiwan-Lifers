@@ -57,6 +57,14 @@ shinkong_life,2025-09-30,foreign_investment,34.7,34.4,29.8,1.0,,,2330.6,28872025
 shinkong_life,2025-12-31,foreign_investment,34.7,34.0,30.2,1.1,,,,288720260331M001.pdf,2026-03-31,29,text,False
 shinkong_life,2026-03-31,foreign_investment,38.1,30.4,30.1,1.4,,,1988.8,288720260603M001.pdf,2026-06-03,29,text,False
 shinkong_life,2026-06-30,foreign_investment,32.2,35.4,30.3,2.1,,,2058.5,288720260901M001.pdf,2026-09-01,30,text,False
+taiwan_life,2018-12-31,foreign_investment,41.5,38.0,13.6,6.8,,,,289120190430M001.pdf,2019-04-30,27,text,False
+taiwan_life,2019-06-30,foreign_investment,40.9,38.0,14.3,6.8,,,,289120190813M001.pdf,2019-08-13,26,text,False
+taiwan_life,2019-09-30,foreign_investment,40.3,39.0,13.4,7.3,,,,289120191111M001.pdf,2019-11-11,26,text,False
+taiwan_life,2019-12-31,foreign_investment,38.4,40.0,13.2,7.8,,,,289120200312M001.pdf,2020-03-12,27,text,False
+taiwan_life,2020-03-31,foreign_investment,36.6,40.0,14.4,9.0,,,,289120200511M001.pdf,2020-05-11,27,text,False
+taiwan_life,2020-06-30,foreign_investment,37.2,40.0,14.4,8.4,,,,289120200812M001.pdf,2020-08-12,27,text,False
+taiwan_life,2020-09-30,foreign_investment,35.4,40.0,16.8,8.4,,,,289120201123M001.pdf,2020-11-23,27,text,False
+taiwan_life,2020-12-31,foreign_investment,38.4,40.0,13.2,8.4,,,,289120210325M001.pdf,2021-03-25,29,text,True
 taiwan_life,2021-03-31,foreign_investment,36.0,40.0,15.0,8.0,,,,289120210519M001.pdf,2021-05-19,28,text,False
 taiwan_life,2021-06-30,foreign_investment,40.0,40.0,12.0,8.0,,,,289120210823M001.pdf,2021-08-23,28,text,False
 taiwan_life,2021-09-30,foreign_investment,40.0,41.0,11.0,8.0,,,,289120211123M001.pdf,2021-11-23,28,text,False
@@ -73,6 +81,7 @@ taiwan_life,2024-03-31,foreign_investment,30.0,41.0,18.0,11.0,,,,289120240531M00
 taiwan_life,2024-06-30,foreign_investment,27.0,41.0,22.0,10.0,,,,289120240828M001.pdf,2024-08-28,28,text,False
 taiwan_life,2024-09-30,foreign_investment,37.0,41.0,12.0,11.0,,,,289120241119M001.pdf,2024-11-19,30,text,False
 taiwan_life,2024-12-31,foreign_investment,29.0,41.0,20.0,11.0,,,,289120250318M001.pdf,2025-03-18,31,text,False
+taiwan_life,2025-03-31,foreign_investment,27.0,41.0,21.0,12.0,,,,289120250516M001.pdf,2025-05-16,26,text,False
 taiwan_life,2025-06-30,foreign_investment,33.0,42.0,16.0,10.0,,,,289120250912M001.pdf,2025-09-12,26,text,False
 taiwan_life,2025-09-30,foreign_investment,29.0,42.0,19.0,10.0,,,,289120251117M001.pdf,2025-11-17,26,text,False
 taiwan_life,2025-12-31,foreign_investment,31.0,42.0,17.0,9.0,,,,289120260312M001.pdf,2026-03-12,27,text,False
