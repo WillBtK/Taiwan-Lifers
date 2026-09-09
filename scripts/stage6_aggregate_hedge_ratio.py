@@ -53,23 +53,32 @@ STRUCT = ROOT / "data" / "hedging_structure.csv"
 CATHAYQ = ROOT / "data" / "cathay_fx_quarterly.csv"
 NOTIONAL = ROOT / "data" / "firm_hedge_notional.csv"
 FX = ROOT / "data" / "usdtwd_monthly.csv"
-DECKFX = ROOT / "data" / "deck_fx_structure.csv"
+DECKPIE = ROOT / "data" / "deck_pie.csv"
 OUT = ROOT / "data" / "aggregate_hedge_ratio.csv"
 
 # config/firm_uids.tsv only. Nothing inferred: an earlier pass guessed four more
 # identifiers and produced hedge ratios of 1,534% and 10,610%.
 UID = {"27935073": "fubon_life", "03374707": "cathay_life",
        "11456006": "nanshan_life", "03434016": "kgi_life",
-       "03557017": "taiwan_life", "03458902": "shinkong_life"}
-# Taiwan Life and Shin Kong enter from their own investor decks, harvested from
-# MOPS. Taiwan Life's statutory notionals are still excluded — they do not
-# reconcile to the filing's printed total and raw they gave a ratio running 2%
-# to 72%, capture changing rather than hedging — but its DECK publishes the same
-# four-bucket pie the sell-side tabulates, and reproduces that workbook exactly
-# across eight overlapping quarters.
+       "03557017": "taiwan_life", "03458902": "shinkong_life",
+       "28428384": "banktaiwan_life", "84894313": "hontai_life",
+       "84443471": "mercuries_life", "70817744": "transglobe_life"}
+# Four firms enter from their own investor decks, harvested from MOPS and put on
+# one base by scripts/stage7_deck_pie.py. Taiwan Life's statutory notionals are
+# still excluded — they do not reconcile to the filing's printed total and raw
+# they gave a ratio running 2% to 72%, capture changing rather than hedging —
+# but its DECK publishes the same four-bucket pie the sell-side tabulates, and
+# reproduces that workbook exactly across eight overlapping quarters.
+#
+# Bank Taiwan Life, Hontai, Mercuries and TransGlobe are listed because each has
+# a hedge NOTIONAL and no 國外投資 to divide it by; they contribute nothing until
+# the Insurance Bureau's per-firm page for them lands (config/firm_uids.tsv),
+# and the coverage line will show it when they do.
 NAME = {"cathay_life": "Cathay", "fubon_life": "Fubon", "kgi_life": "KGI",
         "nanshan_life": "Nan Shan", "taiwan_life": "Taiwan Life",
-        "shinkong_life": "Shin Kong"}
+        "shinkong_life": "Shin Kong", "banktaiwan_life": "Bank Taiwan",
+        "hontai_life": "Hontai", "mercuries_life": "Mercuries",
+        "transglobe_life": "TransGlobe"}
 MAX_GAP_Q = 4          # quarters a firm's ratio may be interpolated across
 MIN_LINK = 0.15        # minimum sector share behind both ends of a chain link
 
@@ -117,6 +126,17 @@ def sector_bn():
 
 
 def firm_bn():
+    """A firm's own 國外投資, NT$bn, from every source that publishes it.
+
+    Ordered weakest to strongest so the stronger overwrites: an archived
+    snapshot of the Bureau page, then the live page, then the company's own
+    deck. The deck is last because it is BOTH the most frequent — Cathay states
+    "外幣資產 NT$5.54兆元" on the hedging slide every quarter, against four dates
+    a year from the Bureau — and demonstrably the same number: 5.36/5.60/5.61
+    against the Bureau's 5,358 / 5,600 / 5,613bn at FY23, FY24 and FY25. Before
+    this the largest firm's denominator was interpolated between two annual
+    observations across the very quarters its hedge ratio was collapsing.
+    """
     fi = collections.defaultdict(dict)
     for r in csv.DictReader(open(WAYBACK, newline="", encoding="utf-8")):
         e = UID.get(r.get("uid"))
@@ -126,6 +146,11 @@ def firm_bn():
         e = UID.get(r.get("uid"))
         if e and r.get("foreign_investment"):
             fi[e][r["obs_date"][:7]] = float(r["foreign_investment"]) / 1e3
+    if DECKPIE.exists():
+        for r in csv.DictReader(open(DECKPIE, newline="", encoding="utf-8")):
+            if r["entity_id"] in NAME and r.get("foreign_assets_ntd_bn"):
+                fi[r["entity_id"]][r["as_of"][:7]] = float(
+                    r["foreign_assets_ntd_bn"])
     return fi
 
 
@@ -190,25 +215,6 @@ def main():
     # ---- per-firm hedge ratio, at its own observation dates
     obs = collections.defaultdict(dict)
 
-    # CATHAY: the quarterly deck file carries 26 hedge observations back to
-    # 1Q15, against the 12 the structure file yielded. The hedge share is quoted
-    # on the FX-risk-bearing base, so it is rescaled by that base — which the
-    # same file gives at 23 periods and which is strikingly stable, 68-71%
-    # throughout and 74% from 2026, so interpolating it costs almost nothing.
-    if CATHAYQ.exists():
-        cq = list(csv.DictReader(open(CATHAYQ, newline="", encoding="utf-8")))
-        risk = {qend(r["period"])[:7]: float(r["fx_risk_exposure_pct"])
-                for r in cq if r.get("fx_risk_exposure_pct")
-                and qend(r["period"])}
-        for r in cq:
-            d = qend(r.get("period"))
-            if not d or not r.get("hedge_cs_ndf_pct"):
-                continue
-            b = interp(risk, d)
-            if b is None:
-                continue
-            obs["cathay_life"][d[:7]] = float(r["hedge_cs_ndf_pct"]) / 100 * b / 100
-
     # Fubon and Nan Shan: statutory notionals from the VERIFIED panel — only
     # rows that reconcile to the filing's own printed total survive into it.
     for r in csv.DictReader(open(PANEL, newline="", encoding="utf-8")):
@@ -220,20 +226,22 @@ def main():
             obs[e][r["as_of"][:7]] = (float(r["traditional_notional_ntd_k"])
                                       / 1e6 / f)
 
-    # Taiwan Life and Shin Kong: 已避險 as a share of foreign investment,
-    # straight off the company's own pie. Already on the right base, so no
-    # rescaling — which is why these two are the cleanest inputs in the whole
-    # construction.
-    if DECKFX.exists():
-        for r in csv.DictReader(open(DECKFX, newline="", encoding="utf-8")):
+    # The four listed firms that draw the pie, already restated onto foreign
+    # investment by stage7_deck_pie.py. This supersedes the per-firm files that
+    # used to feed Cathay and KGI: the deck corpus is quarterly and complete
+    # where those were annual and patchy, and it is the same disclosure read
+    # once instead of four times.
+    if DECKPIE.exists():
+        for r in csv.DictReader(open(DECKPIE, newline="", encoding="utf-8")):
             if r["entity_id"] in NAME:
                 obs[r["entity_id"]][r["as_of"][:7]] = \
                     float(r["hedged_pct"]) / 100
 
+    # A firm still absent after all of the above keeps whatever the older
+    # structure file had for it. Nothing overwrites a deck reading.
     for r in csv.DictReader(open(STRUCT, newline="", encoding="utf-8")):
-        # Cathay is taken from its own quarterly file above, which is richer.
         if (r["traditional_hedge_pct"] and r["entity_id"] in NAME
-                and r["entity_id"] != "cathay_life"):
+                and r["as_of"][:7] not in obs[r["entity_id"]]):
             obs[r["entity_id"]][r["as_of"][:7]] = \
                 float(r["traditional_hedge_pct"]) / 100
 
@@ -381,9 +389,9 @@ def _t(x, y, s, size=11, fill=INK, anchor="start", weight="normal"):
 
 def chart(rows, obs, share_obs):
     """One picture: the aggregate, the firms behind it, and the coverage."""
-    W, H = 1200, 660
+    W, H = 1200, 700
     L, R, TOP, BOT = 80, 1092, 118, 470
-    STRIP = 566
+    STRIP = 616
     m0, m1 = mo(rows[0]["as_of"]), mo(rows[-1]["as_of"])
 
     def xs(d):
@@ -418,9 +426,16 @@ def chart(rows, obs, share_obs):
     o.append(f'<line x1="{L}" y1="{BOT}" x2="{R}" y2="{BOT}" stroke="{INK}" '
              f'stroke-width="1"/>')
 
-    # the firms behind it, faint
+    # the firms behind it, faint. Drawn in descending order of their LAST
+    # value so the label stack, which can only push downwards, keeps the names
+    # in the same order as the lines they belong to; drawn in dict order the
+    # stack put Taiwan Life's name a full ten points below its own line.
     taken = []
-    for e, col in COL.items():
+    def _last(e):
+        p = sorted(obs.get(e, {}).items())
+        return p[-1][1] if p else -1
+    for e in sorted(COL, key=_last, reverse=True):
+        col = COL[e]
         pts = [(d, v) for d, v in sorted(obs.get(e, {}).items())]
         if not pts:
             continue
@@ -462,18 +477,23 @@ def chart(rows, obs, share_obs):
     o.append(_t(xs(mid[0]), ys(mid[1]) - 16, "AGGREGATE", 12, INK, "middle",
                 "bold"))
 
-    # coverage
-    o.append(_t(L, STRIP - 34, "Share of sector overseas investment behind "
-                               "each point", 12, INK, weight="bold"))
-    o.append(_t(L, STRIP - 18, "The chain-link means a firm entering or leaving "
-                               "cannot move the level — but a thin quarter is "
-                               "still a noisier one.", 10.5, MUTE))
+    # coverage. BAR is the height of a 100% bar, so the strip's own captions
+    # have to clear STRIP - BAR; written at STRIP - 34 they were printed across
+    # the bars themselves.
+    BAR = 52
+    o.append(_t(L, STRIP - BAR - 26, "Share of sector overseas investment "
+                                     "behind each point", 12, INK,
+                weight="bold"))
+    o.append(_t(L, STRIP - BAR - 10, "The chain-link means a firm entering or "
+                                     "leaving cannot move the level — but a "
+                                     "thin quarter is still a noisier one.",
+                10.5, MUTE))
     for r in rows:
-        h = r["coverage_share"] * 62
+        h = r["coverage_share"] * BAR
         o.append(f'<rect x="{xs(r["as_of"]) - 4:.1f}" y="{STRIP - h:.1f}" '
                  f'width="8" height="{h:.1f}" fill="{MUTE}" opacity="0.5"/>')
-    for pc in (0.25, 0.50):
-        y = STRIP - pc * 62
+    for pc in (0.25, 0.50, 0.75):
+        y = STRIP - pc * BAR
         o.append(f'<line x1="{L}" y1="{y:.1f}" x2="{R}" y2="{y:.1f}" '
                  f'stroke="{GRID}" stroke-width="1"/>')
         o.append(_t(L - 10, y + 4, f"{pc:.0%}", 10, MUTE, "end"))

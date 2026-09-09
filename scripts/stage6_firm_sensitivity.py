@@ -618,6 +618,23 @@ def find_dates(flat, window=None):
 NS_BLOCK = re.compile(r"(金融資產|金融負債)")
 NS_INSTR = re.compile(r"(匯率交換|遠期外匯|換匯換利|無本金交割遠期外匯)"
                       r"(?:\(註\d\))?")
+# A block header is followed IMMEDIATELY by the table it heads — the column
+# heading 帳面金額 (or 帳面價值, which is the wording before 2024) or, for the
+# liability block, its first instrument. Anchoring matters: the prose sentence
+# "金融資產及金融負債互抵資訊請詳附註六(九)" sits directly above the table, so a
+# WINDOW of any width sees the real table's own 帳面金額 through it and keeps the
+# prose as a block. That gave 8 blocks against 6 real ones, the asset/liability
+# pairing check then failed, and this parser returned NOTHING from 2024-12
+# onwards — Nan Shan, the sector's second-largest foreign book, simply stopped
+# at 2024-06 in the aggregate.
+NS_HEAD = re.compile(r"^[\s:：]*(?:帳面(?:金額|價值)|"
+                     r"匯率交換|遠期外匯|換匯換利|無本金交割遠期外匯)")
+
+
+def ns_blocks(flat):
+    """The 金融資產 / 金融負債 occurrences that actually head a table."""
+    return [b for b in NS_BLOCK.finditer(flat)
+            if NS_HEAD.match(flat[b.end(): b.end() + 40])]
 
 
 def parse_note_nanshan(flat):
@@ -631,8 +648,7 @@ def parse_note_nanshan(flat):
     # up instead, attaching block values to the wrong periods. The same four
     # figures then appeared under 2018-12-31 in one filing and 2020-12-31 in
     # another, which is what the doubling was.
-    _blocks = [b for b in NS_BLOCK.finditer(flat)
-               if NS_INSTR.search(flat[b.end(): b.end() + 130])]
+    _blocks = ns_blocks(flat)
     if not _blocks:
         return []
     # Newest first, NOT printed order. The trailing dates come out of the PDF
@@ -645,12 +661,7 @@ def parse_note_nanshan(flat):
     # sequence.
     dates = sorted(find_dates(flat[_blocks[-1].start():], len(flat)),
                    reverse=True)
-    # Only blocks that actually HEAD a table. The words 金融資產 and 金融負債
-    # also appear in surrounding prose ("金融資產及金融負債互抵資訊請詳..."),
-    # which on the real page gave 8 blocks against 6 real ones and failed the
-    # pairing check - the fixture, being trimmed, had exactly 6 and hid it.
-    blocks = [b for b in NS_BLOCK.finditer(flat)
-              if NS_INSTR.search(flat[b.end(): b.end() + 130])]
+    blocks = _blocks
     if not dates or len(blocks) < 2:
         return []
     # blocks run asset, liability, asset, liability ... one PAIR per period,
@@ -842,8 +853,18 @@ def note_total(flat):
     extraction: instrument rows that do not sum to it have been read at the
     wrong offset, matched in prose, or double-counted. Without it, 910 rows of
     unknown quality is all there is.
+
+    The 合計 taken is the one AFTER the last instrument row, not the first on
+    the page. Fubon prints an expected-credit-loss table above the derivatives
+    note with its own 合 計, and taking the first match read that one — the
+    derivative rows then failed to sum to a total belonging to a different
+    table, and every Fubon quarter from 2022-09 to 2024-09 was discarded as
+    unverifiable. Fifteen per cent of the sector, absent from nine quarters of
+    the aggregate, because of a table that happened to sit higher on the page.
     """
-    m = re.search(r"合\s*計\s*(.{0,220})", flat)
+    first = INSTR.search(flat)
+    m = re.search(r"合\s*計\s*(.{0,220})",
+                  flat[first.start():] if first else flat)
     if not m:
         return {}
     w = header_span(flat)
@@ -881,21 +902,12 @@ def notionals(path):
         rows = parse_note(flat)
         if not rows:
             continue
-        # 合計 / 合 計 -- the printed total for each period
-        tot = {}
-        m = re.search(r"合\s*計\s*(.{0,200})", flat)
-        if m:
-            dates = [f"{1911 + int(y)}-{int(mm):02d}-{int(d):02d}"
-                     for y, mm, d in DOTDATE.findall(flat[:400])]
-            heads = COLHEAD.findall(flat[:400])
-            if dates and heads and not len(heads) % len(dates):
-                per = len(heads) // len(dates)
-                w = [i for i, h in enumerate(heads[:per])
-                     if h in ("名目本金", "合約金額", "契約金額")]
-                v = numbers(m.group(1), per * len(dates))
-                if w and len(v) >= per * len(dates):
-                    for di, d in enumerate(dates):
-                        tot[d] = v[di * per + w[0]]
+        # 合計 / 合 計 -- the printed total for each period. Read by the same
+        # header logic parse_note uses, rather than a hardcoded 400-character
+        # window: the two disagreed on any page where the derivatives note is
+        # not the first table, and the rows then failed a check against a total
+        # that was never theirs.
+        tot = note_total(flat)
         for r in rows:
             r["note_kind"] = kind
             r["page"] = page.number + 1
@@ -1251,6 +1263,20 @@ def reparse():
             # own 合計. Shipping 900 rows of mixed provenance and letting the
             # reader guess which are sound is worse than shipping fewer: the
             # flag is what makes a subset defensible.
+            # A "notional" worth a ten-thousandth of its own table's 合計 is not
+            # a notional. Fubon's 2026 Q2 page 56 yields 匯率交換合約 4, 6 and
+            # 115 thousand alongside the real 708 billion, because a maturity
+            # or count column sits under the same instrument labels further
+            # down the page. Those rows are small enough that the additivity
+            # check still passes for the periods where the real figures are
+            # also present, and they become the ONLY rows for the periods where
+            # they are not — a 12-thousand hedge book reported as reconciled.
+            if tot:
+                rows_here = [r for r in rows_here
+                             if not r.get("notional_ntd_k")
+                             or not tot.get(r["as_of"])
+                             or r["notional_ntd_k"] >= 1e-4 * abs(
+                                 tot[r["as_of"]])]
             page_sum = {}
             for r in rows_here:
                 if r.get("notional_ntd_k"):

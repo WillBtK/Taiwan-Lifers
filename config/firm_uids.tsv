@@ -12,6 +12,16 @@
 #
 # KGI is listed under 中國人壽, its name before the 2023 rebrand; same legal
 # entity and same filing code 2823 (entities seed).
+#
+# The four smaller insurers below were added 2026-09-09 from the same K106 pull
+# (openapi.tii.org.tw needs the TWCA intermediate in config/certs/ appended to
+# the trust store, not substituted for it). They are here for one reason: each
+# has a VERIFIED hedge notional in data/firm_hedge_panel.csv or
+# data/firm_hedge_notional.csv and no denominator, so each is a numerator
+# looking for its 國外投資. Bank Taiwan Life is the substantial one — thirteen
+# reconciled periods from 2020-06 to 2026-06. Adding a row here is all that is
+# needed for scripts/fetch_sources.py to pull that firm's Info2-1 page on the
+# next relay run: firm_sources() reads this file directly.
 entity_id	uid	name_zh	note
 cathay_life	03374707	國泰人壽保險股份有限公司
 fubon_life	27935073	富邦人壽保險股份有限公司
@@ -20,3 +30,7 @@ kgi_life	03434016	中國人壽保險股份有限公司	renamed 凱基人壽 in 2
 taiwan_life	03557017	台灣人壽保險股份有限公司
 shinkong_life	70789634	新光人壽保險股份有限公司	surviving entity; K106 still shows 保德信國際人壽
 shinkong_life_pre2026	03458902	新光人壽保險股份有限公司	absorbed 2026-01-01
+banktaiwan_life	28428384	臺銀人壽保險股份有限公司	K106 機構代碼 451; MOPS 6025
+mercuries_life	84443471	三商美邦人壽保險股份有限公司	K106 機構代碼 473; MOPS 2867
+hontai_life	84894313	宏泰人壽保險股份有限公司	K106 機構代碼 480; MOPS 2876
+transglobe_life	70817744	全球人壽保險股份有限公司	K106 lists it as 全球人壽保險(股)公司; MOPS 5873

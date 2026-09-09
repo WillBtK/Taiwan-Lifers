@@ -5035,3 +5035,98 @@ Taiwan Life under CTBC. A filing code is not an entity, an entity is not a
 brand, and a brand is not a continuous series. Every firm-level series in this
 project should be keyed on 統編 and dated against the merger calendar, not on a
 filing code carried forward.
+
+### 4.62 Four repairs that took the aggregate from 18–64% of the sector to 41–81%
+
+The series stood at thirty-two quarters, one to five firms, and a median of
+53% of sector overseas investment behind each point. Three holes accounted
+for almost all of the shortfall, and each turned out to be a defect in this
+project rather than a limit of the disclosure.
+
+**Cathay's pie became an image in 2024, and the parser did not say so.**
+From 1Q24 to 1Q26 the three slice percentages on Cathay's "FX asset hedging
+structure" slide carry no text layer — the surrounding words extract, the
+numbers do not. Seven quarters of the largest insurer, a quarter of the
+sector, simply stopped. They are now transcribed in
+`config/deck_pie_transcribed.tsv` with the deck and page each was read from,
+and every row is checked three ways: the three slices sum to 100, the risk
+and policy shares sum to 100, and currency swap & NDF times the FX-risk share
+equals the sell-side workbook's traditional hedge figure — 1Q24 57 × 0.69 =
+39.33 against their 39.3, 9M24 63 × 0.69 = 43.47 against 43.5, 1Q25
+69 × 0.68 = 46.92 against 46.9. `stage7_deck_pie.py` now names any image-only
+pie page that has no transcription, so the next one cannot go missing quietly.
+
+**The slice order is not stable and must never be read positionally.** FY23
+prints 63/11/26 and 9M25 prints 60/31/9 against the same legend. Read by
+position, 9M25 puts 31% of the book in an equity overlay that has never
+exceeded 17%. What holds across every deck from FY17 to 1H26 is that the
+first number is currency swap & NDF and the FVOCI overlay is the smaller of
+the remaining two.
+
+**Nan Shan stopped at 2024-06 because of a sentence.** The prose line
+"金融資產及金融負債互抵資訊請詳附註六(九)" sits directly above the derivatives
+table, and the 130-character window used to identify a block header saw the
+real table's own 匯率交換 through it. Eight blocks against six real ones, the
+asset/liability pairing check failed, and the parser returned nothing from
+2024-12 onwards. A block header is now required to be followed IMMEDIATELY by
+its column heading or its first instrument. Nan Shan runs 2017-12 to 2026-06,
+seventeen periods against eleven.
+
+**Fubon lost nine quarters to a credit-loss table.** The printed 合計 was taken
+as the first match on the page; Fubon prints an expected-credit-loss table
+above the derivatives note, with its own 合 計. The derivative rows were then
+checked against a total belonging to a different table, failed, and were
+discarded as unverifiable for every quarter from 2022-09 to 2024-09. The total
+is now the one following the first instrument row, read with the same header
+logic the row parser uses. Fubon runs twenty-three periods against fourteen.
+
+A fifth repair came out of the fourth: a row worth less than a ten-thousandth
+of its own table's 合計 is not a notional. Fubon's 2026 Q2 page yields 匯率交換
+合約 at 4, 6 and 115 thousand alongside the real 708 billion, and for the two
+periods where only the junk appeared it was reported as a reconciled hedge
+book of twelve thousand NT dollars.
+
+**Where it leaves the series.** Thirty-five quarters, 2017-12 to 2026-06, two
+to six firms, 41% to 81% of sector overseas investment and 70%+ in every
+quarter from 2022. The sell-side workbook is a constant 64% on five firms
+across thirty quarters, so from 2022 this is the wider panel in every quarter
+and the longer one at both ends; before 2021 it is thinner, because only
+Cathay and Nan Shan disclose that far back.
+
+### 4.63 The deck states the denominator, and it is the Bureau's number
+
+Cathay's hedging slide prints "外幣資產 NT$5.54兆元" every quarter. That is not
+a company-specific construct: it equals the Insurance Bureau's 國外投資 for the
+same firm-date to three significant figures at FY23 (5.36 against 5,358bn),
+FY24 (5.60 against 5,600bn) and FY25 (5.61 against 5,613bn), and it matches the
+sell-side workbook's own overseas-investment column. Shin Kong prints the same
+thing as 外幣資產總計.
+
+This matters more than the hedge percentages do. The per-firm denominator was
+the weakest joint in the whole construction — the Bureau's page carries four
+dates and everything between them was interpolated off the firm's share of the
+monthly sector total. For the two firms that print it, the denominator is now
+quarterly and published, over precisely the quarters in which their hedge
+ratios were collapsing.
+
+### 4.64 What is still missing, and why
+
+**Shin Kong Life before 3Q25.** MOPS code 2887 is Taishin, whose decks describe
+Taishin Life until the 2025-07-24 merger; Shin Kong Life appears in them only
+from 3Q25. The pre-merger decks belong to Shin Kong Financial, code 2888, which
+files no investor-conference materials on MOPS. Its own IR hosts return 403 to
+automated clients (www.irpro.co, www.ir-cloud.com) and www.skfh.com.tw is
+refused by this environment's egress policy. Ten per cent of the sector, with
+no route from here.
+
+**Bank Taiwan Life, Hontai, Mercuries, TransGlobe.** Each has a hedge notional
+and no 國外投資 to divide it by; Bank Taiwan Life's is the substantial one,
+thirteen reconciled periods from 2020-06 to 2026-06. Their 統一編號 are now in
+`config/firm_uids.tsv` (28428384, 84894313, 84443471, 70817744, from TII K106
+via data.gov.tw 122361), which is all `fetch_sources.firm_sources()` needs to
+pull their Bureau pages — the Insurance Bureau refuses non-Taiwan egress, so
+that is a relay job in CI, not a sandbox one. The Wayback Machine holds no
+capture of those four pages: fifty-one captures across eighteen 統編, and only
+TransGlobe among them.
+
+Together these are roughly fifteen points of sector coverage still outstanding.

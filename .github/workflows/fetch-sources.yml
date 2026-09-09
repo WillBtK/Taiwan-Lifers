@@ -22,6 +22,10 @@ on:
     paths:                                                 # so a re-run is a no-op
       - '.github/workflows/fetch-sources.yml'
       - 'scripts/fetch_sources.py'
+      # firm_sources() reads this file, so a firm added to it is a new set of
+      # per-company pages to pull. Without this path the row landed in the repo
+      # and nothing fetched it until the weekly cron came round.
+      - 'config/firm_uids.tsv'
 permissions:
   contents: write
 jobs:

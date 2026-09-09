@@ -1,0 +1,33 @@
+# Cathay's FX-hedging pie, for the decks that print it as an IMAGE.
+#
+# From 1Q24 to 1Q26 Cathay's "FX asset hedging structure" pie carries no text
+# layer: the slide's own words are extractable, the three slice percentages are
+# not. Every other quarter parses from the text and is NOT listed here — this
+# file covers only the pages where the number exists solely as pixels.
+#
+# Each row was read off the rendered page named in source_deck/source_page,
+# fetched from the company's own IR site (the URL is in data/cathay_deck_fx.csv
+# against the same deck_date). The reading is checkable three ways and all
+# three hold on every row below:
+#   cs_ndf + proxy_open + fvoci = 100
+#   fx_risk + fx_policy         = 100
+#   cs_ndf x fx_risk / 100      = the sell-side workbook's traditional hedge %
+# The third is the strongest: 1Q24 57 x 0.69 = 39.33 against their 39.3, 1H24
+# 54 x 0.69 = 37.26 against 37.3, 9M24 63 x 0.69 = 43.47 against 43.5, FY24
+# 65 x 0.69 = 44.85 against 44.9, 1Q25 69 x 0.68 = 46.92 against 46.9. The
+# workbook stops at 2Q25; FY25 and 1Q26 stand on the first two checks alone.
+#
+# fx_assets_ntd_tn is the slide's own "FX asset NT$X.XXTN", which reconciles to
+# the Insurance Bureau's 國外投資 for the same firm-date to three significant
+# figures (FY23 5.36/5.358, FY24 5.60/5.600, FY25 5.61/5.613).
+#
+# The parser prints a warning naming any image-only pie page that has no row
+# here, so a future quarter cannot go missing silently.
+entity_id	period	cs_ndf_pct	proxy_open_pct	fvoci_pct	fx_risk_pct	fx_policy_pct	fx_assets_ntd_tn	source_deck	source_page
+cathay_life	1Q24	57	33	10	69	31	5.47	2024-05-24	26
+cathay_life	1H24	54	37	9	69	31	5.53	2024-08-23	28
+cathay_life	9M24	63	29	8	69	31	5.54	2024-11-27	26
+cathay_life	FY24	65	25	10	69	31	5.60	2025-03-14	27
+cathay_life	1Q25	69	22	9	68	32	5.65	2025-05-23	26
+cathay_life	FY25	41	50	9	69	31	5.61	2026-03-27	23
+cathay_life	1Q26	35.7	61	3	74	26	5.44	2026-05-29	25

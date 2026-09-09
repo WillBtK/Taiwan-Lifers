@@ -1,0 +1,353 @@
+#!/usr/bin/env python3
+"""The FX hedging pie for every firm that publishes one, on one common base.
+
+WHAT THIS REPLACES
+Each of the five listed insurers draws the same picture and none of them draws
+it the same way, so until now each was parsed by its own script onto its own
+base and the aggregate had to know which was which. This reads all five out of
+the MOPS deck corpus and puts them on the base the sell-side workbook uses —
+percent of TOTAL foreign investment — so the rows are directly comparable and
+the aggregate needs no per-firm arithmetic at all.
+
+  Cathay  pie is a share of the FX-RISK-BEARING portion, and the slide states
+          that portion separately: "FX risk exposure 69% / Reserve for FX policy
+          31%". So hedged = currency swap & NDF x 69%, and the policy bucket is
+          the 31% itself. Three slices: currency swap & NDF, proxy & open,
+          FVOCI & FVTPL (overlay).
+  KGI     the same construction, labelled differently: currency swap & NDF,
+          overseas equity, USD & other currency, over 具外匯風險資產.
+  Taiwan  pie is already on foreign investment. No rescaling.
+  Life
+  Shin    the same, and its slide also prints the base in NT$ (外幣資產總計).
+  Kong
+
+WHY THE SLICE ORDER IS ASSERTED AND NOT ASSUMED
+Cathay's slide is the dangerous one. The three percentages are drawn in wedge
+order and the legend in legend order, and the two orders do not agree — FY23
+prints 63/11/26 against a legend reading proxy, swap, FVOCI, while 9M25 prints
+60/31/9 against the same legend. Read positionally, 9M25 puts 31% of the book
+in an equity overlay that has never exceeded 17%. What IS stable across every
+deck from FY17 to 1H26 is that the first number is currency swap & NDF and the
+FVOCI overlay is the smaller of the remaining two, and that rule reproduces the
+sell-side workbook exactly wherever the two overlap. It is applied as a rule and
+the three-slice sum to 100 is the gate.
+
+THE PAGES WITH NO TEXT LAYER
+From 1Q24 to 1Q26 Cathay's pie percentages exist only as pixels. Those seven
+quarters are transcribed in config/deck_pie_transcribed.tsv with the deck and
+page they were read from and the checks that hold on them. Any image-only pie
+page WITHOUT a transcription is named in a warning, so the next one cannot go
+missing quietly the way 1Q24 did.
+
+Run: python3 scripts/stage7_deck_pie.py
+"""
+import csv
+import gzip
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+SRC = ROOT / "data" / "deck_fx_text.json.gz"
+TRANS = ROOT / "config" / "deck_pie_transcribed.tsv"
+OUT = ROOT / "data" / "deck_pie.csv"
+
+NAME = {"cathay_life": "Cathay", "kgi_life": "KGI",
+        "taiwan_life": "Taiwan Life", "shinkong_life": "Shin Kong"}
+
+# ---------------------------------------------------------------- Cathay
+C_PAGE = re.compile(r"外\s*幣\s*資\s*產\s*避\s*險\s*結\s*構|FX asset hedging "
+                    r"structure|Currency hedging structure", re.I)
+C_BASE = re.compile(r"外\s*幣\s*資\s*產\s*NT\$\s*([\d.]+)\s*兆元")
+C_RISK = re.compile(r"具\s*外\s*匯\s*風\s*險\s*資\s*產\s*(\d{1,2})\s*%")
+C_POL = re.compile(r"外\s*幣\s*保\s*單\s*(?:負\s*債)?\s*(\d{1,2})\s*%")
+C_PER = re.compile(r"((?:FY|[1-4]Q|[12]H|9M)\s?\d{2})\s*"
+                   r"(?:避\s*險\s*成\s*本|外\s*幣\s*資\s*產\s*避\s*險\s*結\s*構)")
+C_DATE = re.compile(r"(20\d{2})\s*/\s*(\d{1,2})\s*/\s*(\d{1,2})\s*"
+                    r"外\s*幣\s*資\s*產\s*避\s*險\s*結\s*構")
+PCT = re.compile(r"(\d{1,3}(?:\.\d)?)\s*%")
+
+# ---------------------------------------------------------------- KGI
+K_CS = re.compile(r"Currency\s*swap\s*&\s*NDF\s*(\d{1,3}(?:\.\d)?)\s*%", re.I)
+K_EQ = re.compile(r"Overseas\s*equity\s*(\d{1,3}(?:\.\d)?)\s*%", re.I)
+K_OP = re.compile(r"USD\s*&\s*other\s*currency\s*(\d{1,3}(?:\.\d)?)\s*%", re.I)
+K_RISK = re.compile(r"具\s*外\s*匯\s*風\s*險\s*資\s*產\s*(\d{1,2})\s*%")
+K_POL = re.compile(r"外\s*幣\s*保\s*單\s*(\d{1,2})\s*%")
+# "3Q 22 避險結構(%)", "2024 避險結構(%)", "1H 26 避險結構(%)"
+K_PER = re.compile(r"((?:[1-4]Q|[12]H|9M)\s?\d{2}|20\d{2})\s*避\s*險\s*結\s*構")
+
+# ------------------------------------------------- Taiwan Life / Shin Kong
+T_PAT = {
+    "fx_policy": re.compile(r"外\s*幣\s*保\s*單\s*(\d{1,3}(?:\.\d)?)\s*%"),
+    "hedged": re.compile(r"已\s*避\s*險\s*(\d{1,3}(?:\.\d)?)\s*%"),
+    "equity": re.compile(r"Equity\s*-?\s*OCI\s*(\d{1,3}(?:\.\d)?)\s*%"),
+    "naked": re.compile(r"未\s*避\s*險\s*(\d{1,3}(?:\.\d)?)\s*%"),
+}
+S_ORDER = ("hedged", "fx_policy", "equity", "naked")
+S_NUMS = re.compile(r"(\d{1,2}\.\d)%\s*(\d{1,2}\.\d)%\s*(\d{1,2}\.\d)%\s*"
+                    r"(\d{1,2}\.\d)%\s*股\s*票\s*及\s*基\s*金")
+S_BASE = re.compile(r"外\s*幣\s*資\s*產\s*總\s*計\s*=\s*新\s*台\s*幣\s*"
+                    r"([\d,]+)\s*億\s*元")
+S_PER = re.compile(r"(\d)M(\d{2})\s*外幣投資資產|(\d)[QH](\d{2})\s*外幣"
+                   r"|(20\d{2})\s*外幣投資資產"
+                   r"|新光人壽[^0-9]{0,40}?(\d)[QH](\d{2})")
+PROXY = re.compile(r"避\s*險\s*部\s*位\s*包\s*含[^。]{0,40}proxy", re.I)
+
+
+def qend(period):
+    """FY24 / 1Q24 / 1H24 / 9M24 -> the quarter end it reports."""
+    m = re.fullmatch(r"(FY|[1-4]Q|[12]H|9M)\s?(\d{2}|\d{4})", period.strip())
+    if not m:
+        return None
+    pre, y = m.group(1), int(m.group(2))
+    y = y + 2000 if y < 100 else y
+    return {"FY": f"{y}-12-31", "1Q": f"{y}-03-31", "2Q": f"{y}-06-30",
+            "3Q": f"{y}-09-30", "4Q": f"{y}-12-31", "1H": f"{y}-06-30",
+            "2H": f"{y}-12-31", "9M": f"{y}-09-30"}.get(pre)
+
+
+def kgi_qend(period):
+    p = period.strip().replace(" ", "")
+    if re.fullmatch(r"20\d{2}", p):          # a bare year on KGI's slide is FY
+        return f"{p}-12-31"
+    return qend(p)
+
+
+def triple(text):
+    """The three pie slices, as the first consecutive run summing to 100.
+
+    Deliberately NOT positional beyond the first value. See the module note:
+    the wedge order and the legend order disagree, and the only thing stable
+    across nine years of these slides is that the run sums to 100 and the FVOCI
+    overlay is the smaller of the two that follow currency swap & NDF.
+    """
+    stripped = C_RISK.sub(" ", C_POL.sub(" ", text))
+    vals = [float(v) for v in PCT.findall(stripped)]
+    for a, b, c in zip(vals, vals[1:], vals[2:]):
+        if not all(1.0 <= v <= 90.0 for v in (a, b, c)):
+            continue
+        if 98.5 <= a + b + c <= 101.5:
+            fvoci, proxy = min(b, c), max(b, c)
+            return a, proxy, fvoci
+    return None
+
+
+def harmonise(cs_ndf, proxy, fvoci, risk):
+    """A pie drawn on the FX-risk-bearing base, restated on foreign investment.
+
+    The policy bucket is the complement of the risk-bearing share, which is
+    what makes the four add to 100 on the common base.
+    """
+    f = risk / 100.0
+    return {"hedged_pct": round(cs_ndf * f, 2),
+            "fx_policy_pct": round(100.0 - risk, 2),
+            "naked_pct": round(proxy * f, 2),
+            "equity_pct": round(fvoci * f, 2)}
+
+
+def keep(d):
+    tot = sum(d[k] for k in ("hedged_pct", "fx_policy_pct", "naked_pct",
+                             "equity_pct"))
+    return 98.0 <= tot <= 102.0 and d["equity_pct"] < 20.0
+
+
+def transcribed():
+    """Cathay's image-only pies, and the decks they were read from."""
+    if not TRANS.exists():
+        return {}, set()
+    out, decks = {}, set()
+    for line in TRANS.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#") or line.startswith(
+                "entity_id\t"):
+            continue
+        (ent, per, cs, proxy, fvoci, risk, pol, base, deck,
+         page) = line.split("\t")
+        d = qend(per)
+        row = harmonise(float(cs), float(proxy), float(fvoci), float(risk))
+        row.update(entity_id=ent, as_of=d, basis="fx_risk_base",
+                   cs_ndf_pct_of_risk=float(cs), fx_risk_pct=float(risk),
+                   foreign_assets_ntd_bn=float(base) * 1000,
+                   deck=deck, deck_date=deck, page=int(page),
+                   source="transcribed", includes_proxy=False)
+        out[(ent, d)] = row
+        decks.add((ent, d))
+    return out, decks
+
+
+def main():
+    if not SRC.exists():
+        print(f"no harvested decks at {SRC.name}")
+        return 1
+    with gzip.open(SRC, "rt", encoding="utf-8") as fh:
+        decks = json.load(fh)
+
+    rows, blank = {}, []
+    for name, rec in sorted(decks.items(), key=lambda kv: kv[1]["date"]):
+        ent, ddate = rec["entity_id"], rec["date"]
+        if ent not in NAME:
+            continue
+        for page, text in rec["pages"].items():
+            got = None
+            if ent == "cathay_life":
+                if not C_PAGE.search(text):
+                    continue
+                risk, pol = C_RISK.search(text), C_POL.search(text)
+                if not (risk and pol):
+                    continue
+                per, dt = C_PER.search(text), C_DATE.search(text)
+                as_of = (qend(per.group(1)) if per else
+                         (f"{dt.group(1)}-{int(dt.group(2)):02d}-"
+                          f"{int(dt.group(3)):02d}" if dt else None))
+                if not as_of:
+                    continue
+                t = triple(text)
+                if not t:
+                    # the pie is an image; the transcription file covers it
+                    blank.append((ent, as_of, name, page))
+                    continue
+                cs, proxy, fvoci = t
+                got = harmonise(cs, proxy, fvoci, float(risk.group(1)))
+                b = C_BASE.search(text)
+                got.update(basis="fx_risk_base", cs_ndf_pct_of_risk=cs,
+                           fx_risk_pct=float(risk.group(1)),
+                           foreign_assets_ntd_bn=(float(b.group(1)) * 1000
+                                                  if b else None))
+            elif ent == "kgi_life":
+                cs, eq, op = (K_CS.search(text), K_EQ.search(text),
+                              K_OP.search(text))
+                risk, per = K_RISK.search(text), K_PER.search(text)
+                if not (cs and eq and op and risk and per):
+                    continue
+                as_of = kgi_qend(per.group(1))
+                if not as_of:
+                    continue
+                cs, eq, op = (float(cs.group(1)), float(eq.group(1)),
+                              float(op.group(1)))
+                if not 98.5 <= cs + eq + op <= 101.5:
+                    continue
+                got = harmonise(cs, op, eq, float(risk.group(1)))
+                got.update(basis="fx_risk_base", cs_ndf_pct_of_risk=cs,
+                           fx_risk_pct=float(risk.group(1)),
+                           foreign_assets_ntd_bn=None)
+            else:
+                pie = {}
+                if ent == "taiwan_life":
+                    for k, pat in T_PAT.items():
+                        m = pat.search(text)
+                        if m:
+                            pie[k] = float(m.group(1))
+                else:
+                    m = S_NUMS.search(text)
+                    if m:
+                        pie = {k: float(v) for k, v in
+                               zip(S_ORDER, m.groups())}
+                if len(pie) != 4:
+                    continue
+                # the equity sliver of a bond book: smallest, and never large.
+                if pie["equity"] >= 12.0 or pie["equity"] != min(pie.values()):
+                    continue
+                as_of = period_of(text, ddate)
+                b = S_BASE.search(text)
+                got = {"hedged_pct": pie["hedged"],
+                       "fx_policy_pct": pie["fx_policy"],
+                       "naked_pct": pie["naked"], "equity_pct": pie["equity"],
+                       "basis": "foreign_investment",
+                       "cs_ndf_pct_of_risk": None, "fx_risk_pct": None,
+                       "foreign_assets_ntd_bn": (
+                           float(b.group(1).replace(",", "")) / 10
+                           if b else None)}
+            if not got or not keep(got):
+                continue
+            got.update(entity_id=ent, as_of=as_of, deck=name, deck_date=ddate,
+                       page=int(page), source="text",
+                       includes_proxy=bool(PROXY.search(text)))
+            k = (ent, as_of)
+            # One pie per firm-period. The deck that REPORTS that period is
+            # preferred over a later deck showing it again on a recap slide,
+            # and among equals the newest restatement wins.
+            old = rows.get(k)
+            if old is None or (ddate[:4] + ddate[5:7]) > (old["deck_date"][:4]
+                                                          + old["deck_date"][5:7]):
+                rows[k] = got
+
+    tr, _ = transcribed()
+    for k, v in tr.items():
+        rows.setdefault(k, v)          # text always outranks a transcription
+
+    missing = sorted({(e, d) for e, d, _, _ in blank} - set(rows))
+    out = sorted(rows.values(), key=lambda r: (r["entity_id"], r["as_of"]))
+    cols = ["entity_id", "as_of", "basis", "hedged_pct", "fx_policy_pct",
+            "naked_pct", "equity_pct", "cs_ndf_pct_of_risk", "fx_risk_pct",
+            "foreign_assets_ntd_bn", "deck", "deck_date", "page", "source",
+            "includes_proxy"]
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    with open(OUT, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=cols)
+        w.writeheader()
+        for r in out:
+            w.writerow({c: r.get(c) for c in cols})
+
+    print(f"{len(out)} firm-period pies -> {OUT.relative_to(ROOT)}\n")
+    print(f"  {'firm':<12}{'as of':<12}{'hedged':>8}{'policy':>8}{'naked':>8}"
+          f"{'equity':>8}{'sum':>6}{'FX assets':>11}  src")
+    for r in out:
+        tot = (r["hedged_pct"] + r["fx_policy_pct"] + r["naked_pct"]
+               + r["equity_pct"])
+        fa = ("-" if r["foreign_assets_ntd_bn"] is None
+              else f"{r['foreign_assets_ntd_bn']:,.0f}")
+        print(f"  {NAME[r['entity_id']]:<12}{r['as_of']:<12}"
+              f"{r['hedged_pct']:>7.1f}%{r['fx_policy_pct']:>7.1f}%"
+              f"{r['naked_pct']:>7.1f}%{r['equity_pct']:>7.1f}%{tot:>6.0f}"
+              f"{fa:>11}  {r['source']}")
+    per = {}
+    for r in out:
+        per[r["entity_id"]] = per.get(r["entity_id"], 0) + 1
+    print()
+    for e, n in sorted(per.items()):
+        ds = [r["as_of"] for r in out if r["entity_id"] == e]
+        print(f"  {NAME[e]:<12}{n:>3}  {min(ds)} .. {max(ds)}")
+    if missing:
+        print("\n  IMAGE-ONLY pie pages with no transcription — add them to "
+              f"{TRANS.relative_to(ROOT)}:")
+        for e, d in missing:
+            src = [(f, p) for x, y, f, p in blank if (x, y) == (e, d)]
+            print(f"    {NAME[e]:<12}{d}  {src[0][0]} p{src[0][1]}")
+    return 0
+
+
+def period_of(text, deck_date):
+    """Taiwan Life / Shin Kong: the pie's own period, else the deck's quarter.
+
+    A deck published in August reports the first half; one published in March
+    reports the prior year. Dating a pie by publication puts it a quarter late.
+    """
+    m = S_PER.search(text)
+    if m:
+        if m.group(1):
+            return _q(m.group(2), m.group(1))
+        if m.group(3):
+            return _q(m.group(4), m.group(3))
+        if m.group(5):
+            return f"{m.group(5)}-12-31"
+        if m.group(6):
+            return _q(m.group(7), m.group(6))
+    y, mo = int(deck_date[:4]), int(deck_date[5:7])
+    if mo <= 4:
+        return f"{y - 1}-12-31"
+    if mo <= 7:
+        return f"{y}-03-31"
+    if mo <= 10:
+        return f"{y}-06-30"
+    return f"{y}-09-30"
+
+
+def _q(y, part):
+    y = 2000 + int(y) if int(y) < 100 else int(y)
+    return {"1": f"{y}-03-31", "3": f"{y}-03-31", "6": f"{y}-06-30",
+            "2": f"{y}-06-30", "9": f"{y}-09-30", "4": f"{y}-12-31"}.get(
+                str(part))
+
+
+if __name__ == "__main__":
+    sys.exit(main())
