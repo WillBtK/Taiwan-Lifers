@@ -1,0 +1,7 @@
+entity_id,as_of,traditional_notional_ntd_k,foreign_investment_ntd_k,ratio_on_foreign_investment,ratio_wedge_adjusted,ratio_wedge_lo,ratio_wedge_hi,basis
+fubon_life,2019-12-31,1261748425.0,2524767859.0,0.49975,0.73492,0.73277,0.74037,estimated: denominator = 國外投資 x (1 - 0.320); the wedge is measured post-2024 only (4.53)
+fubon_life,2020-12-31,4372834414.0,2705253359.0,1.61642,2.37709,2.37012,2.3947,estimated: denominator = 國外投資 x (1 - 0.320); the wedge is measured post-2024 only (4.53)
+fubon_life,2021-12-31,1551873192.0,3031253809.0,0.51196,0.75288,0.75067,0.75846,estimated: denominator = 國外投資 x (1 - 0.320); the wedge is measured post-2024 only (4.53)
+taiwan_life,2018-12-31,19543000.0,1147986967.0,0.01702,0.02503,0.02496,0.02522,estimated: denominator = 國外投資 x (1 - 0.320); the wedge is measured post-2024 only (4.53)
+transglobe_life,2021-12-31,7000.0,754955517.0,1e-05,1e-05,1e-05,1e-05,estimated: denominator = 國外投資 x (1 - 0.320); the wedge is measured post-2024 only (4.53)
+transglobe_life,2022-12-31,122000.0,838349693.0,0.00015,0.00021,0.00021,0.00022,estimated: denominator = 國外投資 x (1 - 0.320); the wedge is measured post-2024 only (4.53)
