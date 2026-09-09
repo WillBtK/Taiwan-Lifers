@@ -1,0 +1,56 @@
+source,as_of,entity_id,firm_label,currency_swap_pct,ndf_pct,traditional_hedge_pct,fx_policy_pct,proxy_naked_pct,equity_fund_pct,overseas_investment_ntd_bn,total_investment_ntd_bn
+jpm_workbook,2018-12-31,cathay_life,Cathay,,,48.3,30.0,10.5,11.2,3846.1,5761.0
+jpm_workbook,2018-12-31,fubon_life,Fubon,,,47.4,28.8,10.7,13.2,2338.2,3622.3
+jpm_workbook,2018-12-31,shinkong_life,Shinkong,,,63.6,19.0,12.6,4.8,1868.7,2608.5
+jpm_workbook,2018-12-31,kgi_life,China Life,,,59.3,22.0,14.8,3.9,1131.2,1602.1
+jpm_workbook,2018-12-31,taiwan_life,Taiwan Life,,,46.0,37.0,8.2,8.8,1148.0,1681.6
+jpm_workbook,2019-03-31,cathay_life,Cathay,34.7,6.0,40.6,30.0,18.9,10.5,4002.4,5985.9
+jpm_workbook,2019-03-31,fubon_life,Fubon,42.3,0.6,42.8,29.2,12.4,15.5,2394.8,3788.9
+jpm_workbook,2019-03-31,shinkong_life,Shinkong,39.1,16.0,55.1,19.8,18.7,6.4,1923.4,2679.1
+jpm_workbook,2019-03-31,kgi_life,China Life,41.5,17.8,59.3,22.0,14.8,3.9,1202.6,1697.8
+jpm_workbook,2019-03-31,taiwan_life,Taiwan Life,32.9,8.7,41.5,38.0,13.6,6.8,1199.2,1732.6
+jpm_workbook,2023-06-30,cathay_life,Cathay,33.3,6.8,40.1,32.0,20.4,7.5,5261.1,7529.1
+jpm_workbook,2023-06-30,fubon_life,Fubon,36.2,1.6,37.9,28.3,18.2,15.6,3151.3,4820.7
+jpm_workbook,2023-06-30,shinkong_life,Shinkong,25.3,22.4,47.7,30.3,20.1,1.9,2459.8,3434.0
+jpm_workbook,2023-06-30,kgi_life,China Life,27.7,18.5,46.2,32.0,15.0,6.8,1676.8,2253.8
+jpm_workbook,2023-06-30,taiwan_life,Taiwan Life,14.2,18.8,33.0,43.0,14.0,10.0,1391.7,1950.0
+jpm_workbook,2023-09-30,cathay_life,Cathay,32.6,9.5,42.2,32.0,18.4,7.5,5360.4,7600.3
+jpm_workbook,2023-09-30,fubon_life,Fubon,35.3,1.5,36.8,28.2,20.2,14.7,3218.4,4880.4
+jpm_workbook,2023-09-30,shinkong_life,Shinkong,28.7,21.6,50.3,30.8,17.2,1.7,2496.9,3456.4
+jpm_workbook,2023-09-30,kgi_life,China Life,26.5,17.7,44.2,32.0,17.7,6.1,1720.1,2282.5
+jpm_workbook,2023-09-30,taiwan_life,Taiwan Life,14.0,18.6,32.6,42.3,14.5,10.6,1426.6,1964.0
+jpm_workbook,2023-12-31,cathay_life,Cathay,33.6,10.5,44.1,30.0,18.2,7.7,5358.4,7638.1
+jpm_workbook,2023-12-31,fubon_life,Fubon,35.6,11.0,46.6,27.1,10.2,16.1,3159.2,4818.1
+jpm_workbook,2023-12-31,shinkong_life,Shinkong,27.4,20.6,48.0,30.0,20.6,1.4,2371.9,3422.9
+jpm_workbook,2023-12-31,kgi_life,China Life,26.9,18.0,44.9,32.0,17.7,5.4,1720.1,2219.5
+jpm_workbook,2023-12-31,taiwan_life,Taiwan Life,15.3,14.3,29.6,41.6,17.7,11.1,1379.8,1968.0
+jpm_workbook,2024-03-31,cathay_life,Cathay,33.8,5.5,39.3,31.0,22.8,6.9,5470.1,7815.3
+jpm_workbook,2024-03-31,fubon_life,Fubon,35.8,1.1,36.9,26.7,20.4,15.9,3309.3,4993.4
+jpm_workbook,2024-03-31,shinkong_life,Shinkong,27.4,17.5,44.9,30.4,23.2,1.5,2455.6,3493.2
+jpm_workbook,2024-03-31,kgi_life,China Life,24.5,16.3,40.8,32.0,21.1,6.1,1701.4,2293.9
+jpm_workbook,2024-03-31,taiwan_life,Taiwan Life,13.2,16.4,29.6,41.4,18.4,10.6,1423.4,1957.0
+jpm_workbook,2024-06-30,cathay_life,Cathay,33.1,4.1,37.3,31.0,25.5,6.2,5534.8,7937.0
+jpm_workbook,2024-06-30,fubon_life,Fubon,35.5,1.8,37.3,26.3,19.7,16.7,3416.9,5106.1
+jpm_workbook,2024-06-30,shinkong_life,Shinkong,27.7,26.7,54.4,30.3,13.9,1.4,2480.6,3494.4
+jpm_workbook,2024-06-30,kgi_life,China Life,23.9,12.9,36.7,32.0,25.8,5.4,1726.2,2315.1
+jpm_workbook,2024-06-30,taiwan_life,Taiwan Life,13.6,13.5,27.1,40.9,21.7,10.3,1454.7,1962.0
+jpm_workbook,2024-09-30,cathay_life,Cathay,33.1,10.4,43.5,31.0,20.0,5.5,5539.2,7956.9
+jpm_workbook,2024-09-30,fubon_life,Fubon,34.2,7.7,41.9,26.0,16.4,15.8,3300.8,5017.1
+jpm_workbook,2024-09-30,shinkong_life,Shinkong,28.1,24.9,53.0,29.7,15.9,1.4,2431.1,3480.9
+jpm_workbook,2024-09-30,kgi_life,KGI Life,21.2,14.1,35.4,32.0,27.2,5.4,1697.6,2296.2
+jpm_workbook,2024-09-30,taiwan_life,Taiwan Life,13.4,23.5,36.9,40.6,11.7,10.8,1440.9,1971.0
+jpm_workbook,2024-12-31,cathay_life,Cathay,33.1,11.7,44.9,31.0,17.3,6.9,5600.2,7990.6
+jpm_workbook,2024-12-31,fubon_life,Fubon,33.8,2.9,36.7,26.0,21.3,16.0,3445.6,5176.0
+jpm_workbook,2024-12-31,shinkong_life,Shinkong,28.4,16.7,45.0,29.2,24.2,1.6,2509.3,3496.0
+jpm_workbook,2024-12-31,kgi_life,KGI Life,23.5,23.5,46.9,33.0,14.1,6.0,1746.9,2338.5
+jpm_workbook,2024-12-31,taiwan_life,Taiwan Life,13.0,15.6,28.6,41.0,19.7,10.7,1455.7,1979.0
+jpm_workbook,2025-03-31,cathay_life,Cathay,32.6,14.3,46.9,32.0,15.0,6.1,5647.8,8014.3
+jpm_workbook,2025-03-31,fubon_life,Fubon,31.5,3.2,34.7,26.6,25.1,13.6,3398.6,5139.5
+jpm_workbook,2025-03-31,shinkong_life,Shinkong,27.5,9.6,37.1,29.5,32.2,1.2,2524.8,3501.8
+jpm_workbook,2025-03-31,kgi_life,KGI Life,23.0,9.8,32.8,33.0,28.1,6.0,1774.8,2340.4
+jpm_workbook,2025-03-31,taiwan_life,Taiwan Life,14.7,12.0,26.7,41.2,20.6,11.5,1478.1,1992.0
+jpm_workbook,2025-06-30,cathay_life,Cathay,33.1,8.3,41.4,31.0,21.4,6.2,5287.8,7816.3
+jpm_workbook,2025-06-30,fubon_life,Fubon,26.6,15.0,41.6,26.3,18.1,14.0,3157.1,4972.4
+jpm_workbook,2025-06-30,shinkong_life,Shinkong,24.7,12.2,36.9,28.8,33.2,1.1,2260.9,3355.0
+jpm_workbook,2025-06-30,kgi_life,KGI Life,21.6,7.2,28.8,33.0,31.5,6.7,1613.3,2187.5
+jpm_workbook,2025-06-30,taiwan_life,Taiwan Life,15.2,17.5,32.7,41.6,15.8,9.9,1342.2,2008.0

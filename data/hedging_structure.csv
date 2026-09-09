@@ -1,0 +1,74 @@
+entity_id,as_of,currency_swap_pct,ndf_fwd_pct,traditional_hedge_pct,hedge_plus_policy_pct,fx_policy_pct,proxy_naked_pct,equity_fund_pct,swap_share_of_hedge,overseas_investment_ntd_bn,total_investment_ntd_bn,basis
+cathay_life,2014-03-31,,,,,24.0,,,,,,deck pie x FX-risk share
+cathay_life,2017-03-31,,,,,29.0,,,,,,deck pie x FX-risk share
+cathay_life,2017-09-30,,,,,30.0,,,,,,deck pie x FX-risk share
+cathay_life,2018-12-31,,,42.7,,30.0,15.4,11.9,,,,deck pie x FX-risk share
+cathay_life,2019-03-31,,,40.6,,30.0,,,,,,deck pie x FX-risk share
+cathay_life,2019-12-31,,,42.7,,30.0,,,,,,deck pie x FX-risk share
+cathay_life,2020-03-31,,,43.47,,31.0,,,,,,deck pie x FX-risk share
+cathay_life,2021-06-30,,,44.73,,29.0,,,,,,deck pie x FX-risk share
+cathay_life,2021-09-30,,,41.89,,29.0,,,,,,deck pie x FX-risk share
+cathay_life,2021-12-31,,,44.02,,29.0,,,,,,deck pie x FX-risk share
+cathay_life,2022-03-31,,,45.5,,30.0,14.7,9.8,,,,deck pie x FX-risk share
+cathay_life,2022-06-30,,,43.52,,32.0,,,,,,deck pie x FX-risk share
+cathay_life,2023-03-31,,,,,31.0,,,,,,deck pie x FX-risk share
+cathay_life,2023-06-30,,,40.12,,32.0,,,,,,deck pie x FX-risk share
+cathay_life,2023-09-30,,,42.16,,32.0,,,,,,deck pie x FX-risk share
+cathay_life,2024-03-31,,,,,31.0,,,,,,deck pie x FX-risk share
+cathay_life,2024-06-30,,,,,31.0,,,,,,deck pie x FX-risk share
+cathay_life,2024-09-30,,,,,31.0,,,,,,deck pie x FX-risk share
+cathay_life,2024-12-31,,,,,31.0,,,,5600.2,7821.0,deck pie x FX-risk share
+cathay_life,2025-09-30,,,,,31.0,,,,,,deck pie x FX-risk share
+cathay_life,2025-12-31,,,,,31.0,,,,5612.6,7931.8,deck pie x FX-risk share
+cathay_life,2026-03-31,,,,,26.0,,,,,,deck pie x FX-risk share
+cathay_life,2026-06-30,,,26.64,,26.0,44.4,2.96,,,,deck pie x FX-risk share
+fubon_life,2014-06-30,,,,65.88,,8.08,14.0,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2014-09-30,,,,66.78,,10.84,11.9,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2014-12-31,,,,65.77,,8.53,13.8,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2015-06-30,,,,64.25,,8.17,14.9,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2015-09-30,,,,65.27,,10.07,13.2,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2015-12-31,,,,77.09,,10.81,12.1,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2016-03-31,,,,76.3,,10.8,12.9,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2016-06-30,,,,77.09,,11.21,11.7,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2016-09-30,,,,83.91,,4.79,11.3,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2016-12-31,,,,78.23,,10.67,11.1,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2017-06-30,,,,80.55,,2.15,17.3,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2017-09-30,,,,80.23,,3.87,15.9,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2017-12-31,,,,80.98,,5.82,13.2,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2018-03-31,,,,82.63,,4.17,13.2,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2018-06-30,,,,80.57,,6.63,12.8,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2018-09-30,,,,80.65,,6.35,13.0,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2018-12-31,,,,76.12,,10.68,13.2,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2019-03-31,,,,72.08,,12.42,15.5,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2019-06-30,,,,70.89,,14.01,15.1,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2019-09-30,,,,73.49,,8.71,17.8,0.7473,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2019-12-31,,,,73.7,,9.3,17.0,0.7854,2524.8,4112.6,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2020-03-31,,,,71.79,,11.11,17.1,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2020-06-30,,,,72.58,,11.44,15.9,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2020-12-31,,,,72.16,,12.24,15.6,,2705.3,4487.2,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2021-03-31,,,,68.97,,13.33,17.7,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2021-06-30,,,,70.89,,12.81,16.3,0.8181,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2021-09-30,,,,73.75,,10.15,16.1,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2021-12-31,,,,74.99,,8.61,16.4,0.8096,3031.3,4804.5,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2022-03-31,,,,70.22,,13.38,16.4,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2022-06-30,,,,70.14,,13.46,16.4,0.8195,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2022-09-30,,,,68.3,,15.5,16.2,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2022-12-31,,,,70.21,,14.98,14.9,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2023-09-30,,,,65.08,,20.22,14.7,,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2023-12-31,,,,73.66,,10.24,16.1,,3248.6,4930.5,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2026-03-31,,,,33.69,,59.11,7.2,0.9836,,,deck pie x ex-equity share; hedge and policy not separated
+fubon_life,2026-06-30,,,,36.75,,57.25,6.0,0.9328,,,deck pie x ex-equity share; hedge and policy not separated
+kgi_life,2023-03-31,,,,,32.0,,13.6,,,,deck pie x FX-risk share
+kgi_life,2023-06-30,,,,,32.0,,,,,,deck pie x FX-risk share
+kgi_life,2023-09-30,,,44.2,,32.0,17.68,6.12,,,,deck pie x FX-risk share
+kgi_life,2023-12-31,,,44.88,,32.0,17.68,5.44,,1646.8,2214.0,deck pie x FX-risk share
+kgi_life,2024-03-31,,,40.8,,32.0,21.08,6.12,,,,deck pie x FX-risk share
+kgi_life,2024-06-30,,,36.72,,32.0,25.84,5.44,,,,deck pie x FX-risk share
+kgi_life,2024-09-30,,,35.36,,32.0,27.2,5.44,,,,deck pie x FX-risk share
+kgi_life,2024-12-31,,,46.9,,33.0,14.07,6.03,,1746.9,2333.0,deck pie x FX-risk share
+kgi_life,2025-03-31,,,32.83,,33.0,28.14,6.03,,,,deck pie x FX-risk share
+kgi_life,2025-06-30,,,28.81,,33.0,31.49,6.7,,,,deck pie x FX-risk share
+kgi_life,2025-09-30,,,44.22,,33.0,16.08,6.7,,,,deck pie x FX-risk share
+kgi_life,2025-12-31,,,42.9,,34.0,17.16,5.94,,1711.3,2347.5,deck pie x FX-risk share
+kgi_life,2026-03-31,,,28.47,,27.0,42.34,2.19,,,,deck pie x FX-risk share
+kgi_life,2026-06-30,,,27.01,,27.0,43.07,2.92,,,,deck pie x FX-risk share

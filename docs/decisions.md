@@ -4910,3 +4910,82 @@ moves 1.5%).
 from the balance sheet, at 2025-03 and 2026-03. If it roughly doubled, the DV01
 increase is reclassification; if it did not, it is duration extension. Both are
 in the same filings this project already holds.
+
+## 4.60 The sell-side hedging-structure grid, reverse-engineered and rebuilt from source
+
+A sell-side workbook circulating on the desk decomposes each of five insurers'
+overseas investment into four buckets, quarterly from 4Q18 to 1H25:
+
+    traditional hedge (CS+NDF) + FX policy + proxy/naked + equity & fund = 100
+
+plus the currency-swap/NDF split of the first, and total overseas and total
+invested assets. It was supplied as photographs of a spreadsheet. Ingesting it
+would leave the desk with no way to check it and no way to extend it, so it is
+treated as a BENCHMARK only — `data/benchmark_jpm_hedging_structure.csv`, 55
+rows transcribed from the images, never an input to any derived series — and
+the construction is rebuilt from primary sources in
+`scripts/stage6_hedging_structure.py`.
+
+**The construction, recovered.** Two identities hold on all 55 transcribed
+rows: `CS + NDF = traditional hedge` and the four buckets sum to 100. The grid
+is the company investor-deck FX pie rescaled onto total overseas investment —
+and each firm publishes its pie on a DIFFERENT base, which is where the whole
+difficulty sits:
+
+| firm | deck's pie base | mapping to the grid |
+|---|---|---|
+| Cathay, KGI | the FX-risk-bearing portion only, with that portion given separately (69/31, 67/33) | D = cs_ndf × fx_risk; E = fx_policy; F = naked × fx_risk; G = equity × fx_risk |
+| Fubon | overseas investment EXCLUDING equity and fund, stated in the deck as "FX assets: bonds %" | G = 100 − bond_share; (D+E) = cs_ndf_policy × bond_share; F = naked × bond_share |
+
+Fubon's pie prints the traditional and the natural hedge as a single slice and
+does not separate them; the sell-side's split of the two for Fubon comes from
+somewhere the deck does not contain.
+
+**Agreement, independently sourced, on 21 overlapping firm-periods.**
+
+| column | n | mean abs. difference | max |
+|---|---|---|---|
+| FX policy % | 17 | 0.00pp | 0.0pp |
+| equity & fund % | 13 | 0.07pp | 0.7pp |
+| proxy/naked % | 13 | 0.40pp | 4.9pp |
+| traditional hedge % | 12 | 0.48pp | 5.6pp |
+
+Every KGI quarter reproduces exactly across all four columns. The whole of the
+hedge and naked error is ONE observation — Cathay at 2018-12-31, where my
+parser reads the 2019-03 deck's pie as 61/22/17 and the workbook implies
+69/15/16. Both are internally consistent, so one of the two is reading a
+different chart on the page; the neighbouring quarter (1Q19, pie 58) reproduces
+to 0.0pp. That is a single traceable open item, not a systematic divergence.
+
+**國外投資 is the Insurance Bureau's 資金運用表, confirmed to the decimal.**
+Cathay at 2024-12: 5,600.2 against 5,600.2. KGI at 2024-12: 1,746.9 against
+1,746.9.
+
+**The independent build already found an error in the workbook.** Its KGI
+overseas figure for 4Q23 (1,720.1) is identical to its own 3Q23 figure, while
+the Bureau's 2023-12 number is 1,646.8 — a cell carried forward, 4.5% high.
+This is precisely what having no second source costs.
+
+**What does NOT reproduce, and why.** The currency-swap versus NDF split of the
+traditional hedge appears in no deck; the sell-side obtains it by asking
+investor relations (4.58). The independent route is the statutory derivatives
+note, which names the instruments — 匯率交換/換匯換利/換匯 against 遠期外匯/
+無本金交割遠期外匯 — and yields a swap share for Fubon (12 periods, 2019-09 to
+2026-06, 93% swap latest) and Bank Taiwan (13 periods, 96%). It does NOT yield
+one for Cathay, Shinkong or KGI, which is three of the workbook's five firms.
+One caveat travels with the number: a firm printing only 遠期外匯合約 may be
+reporting deliverable forwards and NDFs together, so this is a swap-versus-
+FORWARDS split and equals swap-versus-NDF only where the firm says so.
+
+**The two coverage gaps, and their cost.** Shinkong Life and Taiwan Life have
+no deck extraction in this project at all, so two of five firms cannot yet be
+built. CTBC's IR host (Taiwan Life's parent) is already on the allowlist;
+Shin Kong's is not, and since the Shin Kong/Taishin merger completed in 2025
+the current source would be Taishin's. Separately the Bureau fund table is held
+only at scattered month-ends (mostly Decembers plus the current month), which
+is why only 4 of 21 overlapping rows could compare H and I at all — the monthly
+history is published and archived and simply has not been harvested.
+
+**Coverage note on the workbook itself.** It covers Cathay, Fubon, Shinkong,
+China Life/KGI and Taiwan Life. It omits Nan Shan, which is the second-largest
+insurer in the sector by invested assets (NT$5.4兆, larger than Fubon).
