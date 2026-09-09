@@ -400,7 +400,7 @@ def chart(rows, obs, share_obs):
                        f"more than halved, {a0:.0%} to {a1:.0%}", 19, INK,
                 weight="bold"))
     o.append(_t(L, 63, "Traditional hedge notional over overseas investment, "
-                       "chain-linked across four insurers. Built firm by firm "
+                       "chain-linked across six insurers. Built firm by firm "
                        "from statutory", 11.5, MUTE))
     o.append(_t(L, 79, "filings and company decks; no sector hedge-ratio "
                        "series is used in the construction. Gross basis, not "
@@ -419,6 +419,7 @@ def chart(rows, obs, share_obs):
              f'stroke-width="1"/>')
 
     # the firms behind it, faint
+    taken = []
     for e, col in COL.items():
         pts = [(d, v) for d, v in sorted(obs.get(e, {}).items())]
         if not pts:
@@ -434,7 +435,13 @@ def chart(rows, obs, share_obs):
             o.append(f'<circle cx="{xs(d):.1f}" cy="{ys(v):.1f}" r="2.4" '
                      f'fill="{col}" opacity="0.85"/>')
         d, v = pp[-1]
-        o.append(_t(xs(d) + 7, ys(v) + 3.5, NAME[e], 10, col, "start"))
+        # Five series converge into a fifteen-point band by 2026; without this
+        # the labels sit on top of each other and name the wrong lines.
+        y = ys(v) + 3.5
+        while any(abs(y - t) < 13 for t in taken):
+            y += 13
+        taken.append(y)
+        o.append(_t(xs(d) + 7, y, NAME[e], 10, col, "start"))
 
     # the aggregate
     ag = [(r["as_of"], r["hedge_ratio"]) for r in rows]
@@ -479,9 +486,9 @@ def chart(rows, obs, share_obs):
                            "moves the level.", 10.5, MUTE))
     o.append(_t(L, H - 28, "Cathay, KGI, Taiwan Life and Shin Kong from their "
                            "own investor decks; Fubon and Nan Shan from "
-                           "statutory notionals reconciled to the filing\u2019s "
-                           "printed total. Weights are each firm\u2019s share "
-                           "of sector overseas investment.", 10.5, MUTE))
+                           "statutory notionals. Weights are each "
+                           "firm\u2019s share of sector overseas investment.",
+                10.5, MUTE))
     o.append(_t(L, H - 12, "Source: MOPS statutory filings, company investor "
                            "presentations, Insurance Bureau monthly statistics. "
                            "Author\u2019s extraction.", 10.5, MUTE))
