@@ -49,8 +49,13 @@ _spec.loader.exec_module(s6)
 # 2888 first because it is the hypothesis. The rest of the list is the 58xx
 # block the other unlisted insurers occupy (5846 Cathay, 5865 Fubon, 5873
 # TransGlobe, 5874 Nan Shan are known), swept for a retired neighbour.
-CANDIDATES = ["2888"] + [str(c) for c in range(5840, 5890)
-                         if c not in (5846, 5865, 5873, 5874)]
+# The codes the first full sweep found to have filings, so the run goes
+# straight to identification instead of re-sweeping fifty codes for twenty
+# minutes. 2888 leads because it is still the hypothesis.
+CANDIDATES = ["2888", "5840", "5841", "5842", "5843", "5844", "5847", "5848",
+              "5849", "5852", "5854", "5857", "5858", "5859", "5862", "5863",
+              "5864", "5866", "5867", "5870", "5871", "5872", "5875", "5876",
+              "5878"]
 # Years chosen so the entity is unambiguously the OLD Shin Kong Life: well
 # before the 2025 group merger and the 2026-01-01 rename.
 SWEEP_YEAR = 112
@@ -69,7 +74,11 @@ def identify(co_id, filing):
         return "(no pdf)"
     try:
         import fitz
-        doc = fitz.open(stream=raw, filetype="pdf")
+        # s6.pdf() returns a PATH, not bytes. fitz.open(stream=Path) raises
+        # TypeError, which is why the first full run identified nothing at all:
+        # 24 codes found, 24 "(unreadable: TypeError)".
+        doc = fitz.open(str(raw)) if isinstance(raw, Path) else \
+            fitz.open(stream=raw, filetype="pdf")
         head = " ".join(doc[i].get_text() for i in range(min(3, doc.page_count)))
     except Exception as e:                                   # noqa: BLE001
         return f"(unreadable: {type(e).__name__})"
