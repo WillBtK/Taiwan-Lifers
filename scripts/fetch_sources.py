@@ -183,7 +183,8 @@ def fetch(url, needs_relay, needs_cert, timeout=60):
                 return r.read()
         except urllib.error.HTTPError as e:
             try:
-                detail = e.read()[:120].decode("utf-8", "replace").strip()
+                detail = " ".join(
+                    e.read()[:200].decode("utf-8", "replace").split())[:90]
             except Exception:                                # noqa: BLE001
                 detail = ""
             tried.append(f"{label} {e.code} {detail or e.reason}")

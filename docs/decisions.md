@@ -5166,3 +5166,29 @@ asking the IR teams, and there is no route to it from filings for any firm but
 Fubon and Bank Taiwan. Their Fubon column cannot be reproduced either, for the
 reason recorded at 4.58: Fubon's deck merges the traditional hedge with the
 natural hedge in all 173 rows and never separates them.
+
+### 4.66 The Taiwan relay is up and refusing: the stored token no longer matches
+
+Every ins-info source — the ten aggregate JSON endpoints and all thirty-three
+per-company pages, the four new firms among them — came back unavailable on
+2026-09-09, having fetched normally on 2026-09-05. Three runs narrowed it to
+one cause. From the same job, in the same minute:
+
+| probe | result |
+|---|---|
+| `/health` | `{"allowed_hosts":["ins-info.ib.gov.tw"],"ok":true,"post":true}` |
+| `GET /fetch?url=…` with `X-Relay-Token` | 403 `{"error":"forbidden"}` |
+| `POST /fetch` with the target in a JSON body | 405 Method Not Allowed |
+| `GET /fetch?url=…` with `Authorization: Bearer` | 403 `{"error":"forbidden"}` |
+
+Both secrets reach the job — the workflow's relay step prints that they are
+set. So: the service is running, `/fetch` exists and is GET-only, the host
+allow-list is right, and the rejection is the relay's own JSON rather than
+anything from the origin. That is a credential mismatch, not an outage, not a
+blocked path and not a changed method. The remedy is on the operator's side —
+re-set `TAIWAN_RELAY_TOKEN` in the repository's Actions secrets to whatever the
+redeployed service now expects.
+
+Recorded because the failure was invisible in the workflow's own summary: the
+run went green, committed a report saying "unavailable 43", and pushed. A
+source that stops arriving must be as loud as one that arrives wrong.
