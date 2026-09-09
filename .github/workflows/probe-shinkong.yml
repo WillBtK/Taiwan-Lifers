@@ -1,0 +1,53 @@
+# Where the PRE-2026 Shin Kong Life files its statements.
+#
+# MOPS code 6985 turned out to be Taishin Life, renamed Shin Kong Life on
+# 2026-01-01 (decision 4.61), so this project holds no filing for the NT$3.5tn
+# insurer every external series means by "Shinkong". It was a wholly owned
+# subsidiary of Shin Kong Financial Holding, code 2888, so the probe tests that
+# first and sweeps the 58xx block the other unlisted insurers occupy.
+#
+# In CI because doc.twse.com.tw answers with a WAF page rather than a 4xx and is
+# currently blocking the development sandbox — a probe from there returned four
+# consecutive block pages. Same reasoning as probe-derivative-note.
+name: probe-shinkong
+on:
+  # A dispatch is only accepted for a workflow present on the DEFAULT branch,
+  # and this lives on the feature branch, so editing this file is the trigger.
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - '.github/workflows/probe-shinkong.yml'
+      - 'scripts/probe_shinkong_code.py'
+  workflow_dispatch:
+    inputs:
+      codes:
+        description: 'co_ids to probe, space separated (blank = 2888 then the 58xx sweep)'
+        required: false
+        default: ''
+      gap:
+        description: 'seconds between requests'
+        required: false
+        default: '8'
+permissions:
+  contents: read
+concurrency:
+  group: probe-shinkong
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the PDF reader
+        run: pip install --quiet pymupdf
+      - name: Probe
+        env:
+          TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
+          TLFX_MOPS_BLOCK_WAIT: '120'
+        run: python3 scripts/probe_shinkong_code.py ${{ github.event.inputs.codes }}

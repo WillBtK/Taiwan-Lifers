@@ -283,6 +283,27 @@ def test_nanshan_rate_buckets():
     return ok
 
 
+def test_shinkong_usd_prose():
+    """A notional stated in a SENTENCE, in USD thousands, not a table."""
+    print("\nshin kong 115Q2 notionals (USD prose sentence)")
+    rows = m.parse_note_usd_prose(flat("shinkong_115q2_usd_notional.txt"))
+    got = {(r["as_of"], r["instrument"]): r["notional_ccy_k"] for r in rows}
+    # five, not six: the third period's forward row is a dash
+    ok = check("row count", len(rows), 5)
+    ok &= check("2026 CCS", got.get(("2026-06-30", "匯率交換合約")), 19200000.0)
+    ok &= check("2025-12 CCS", got.get(("2025-12-31", "匯率交換合約")), 19700000.0)
+    ok &= check("2025-06 CCS", got.get(("2025-06-30", "匯率交換合約")), 800000.0)
+    ok &= check("2026 forward", got.get(("2026-06-30", "遠期外匯合約")), 1675000.0)
+    ok &= check("2025-06 forward absent",
+                ("2025-06-30", "遠期外匯合約") in got, False)
+    # the NT$ carrying-value table ABOVE the anchor must not be read as notional
+    ok &= check("no NT$ contamination",
+                any(v in (8146235.0, 18935630.0, 203576.0)
+                    for v in got.values()), False)
+    ok &= check("all USD", {r["currency"] for r in rows}, {"USD"})
+    return ok
+
+
 def test_numbers():
     """A bare comma is not a number; a bare dash is a nil."""
     print("\nnumber parsing")
@@ -300,7 +321,8 @@ def main():
              test_nanshan_notionals,
              test_taiwan_life_rate, test_transglobe_rate,
              test_banktaiwan_rate, test_mercuries_rate,
-             test_cathay_rate_by_currency, test_nanshan_rate_buckets]
+             test_cathay_rate_by_currency, test_nanshan_rate_buckets,
+             test_shinkong_usd_prose]
     results = [(t.__name__, t()) for t in tests]
     print("\n" + "=" * 60)
     for name, ok in results:

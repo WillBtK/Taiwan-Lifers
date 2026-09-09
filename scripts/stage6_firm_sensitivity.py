@@ -674,6 +674,67 @@ def parse_note_nanshan(flat):
     return out
 
 
+# A FIFTH shape, and the only one that is not a table at all. Shin Kong/Taishin,
+# Hontai and Mercuries state the notional in a sentence, denominated in USD:
+#
+#   (2) 本集團尚未到期之衍生工具合約金額(名目本金)如下:
+#       115.6.30      114.12.31     114.6.30
+#       匯率交換合約   USD 19,200,000千元 USD19,700,000千元 USD800,000千元
+#       遠期外匯合約   USD 1,675,000千元  USD7,700,000千元  -
+#
+# No table reader finds this, which is why 13 Shin Kong filings produced zero
+# notional rows and read as "discloses nothing". It is in fact the CLEANEST
+# disclosure of the five: an explicit per-instrument notional already in
+# dollars, needing no FX conversion and no reconciliation to a printed total.
+# The amounts can also run together without a separator —
+# "USD695,000千元USD890,000千元" — so the reader must not depend on whitespace.
+USD_ANCHOR = re.compile(r"尚\s*未\s*到\s*期\s*之\s*衍\s*生\s*工\s*具"
+                        r"[^。]{0,40}?名\s*目\s*本\s*金")
+USD_STOP = re.compile(r"本\s*[公集][司團]\s*從\s*事|避\s*險\s*會\s*計|"
+                      r"[（(]\s*\d+\s*[）)]\s*本\s*[公集]")
+USD_AMT = re.compile(r"(?:USD|美\s*[元金])\s*([\d,]+)\s*千\s*元"
+                     r"|(?<![\d,])(-)(?![\d,])")
+# 外匯換匯合約 is Taishin's wording for an FX swap. Without it INSTR matches the
+# 換匯合約 tail and the row is still an FX swap, but the label loses the 外匯
+# prefix; naming it explicitly keeps the instrument taxonomy honest.
+USD_INSTR = re.compile(r"(外匯換匯合約|" + INSTR.pattern[1:-1] + r")")
+
+
+def parse_note_usd_prose(flat):
+    """Per-instrument notionals stated in a sentence, in USD thousands."""
+    m = USD_ANCHOR.search(flat)
+    if not m:
+        return []
+    tail = flat[m.end(): m.end() + 900]
+    stop = USD_STOP.search(tail)
+    seg = tail[: stop.start()] if stop else tail
+    first = USD_INSTR.search(seg)
+    if not first:
+        return []
+    dates = find_dates(seg[: first.start()], first.start())
+    if not dates:
+        return []
+    out = []
+    hits = list(USD_INSTR.finditer(seg))
+    for i, h in enumerate(hits):
+        end = hits[i + 1].start() if i + 1 < len(hits) else len(seg)
+        vals = []
+        for a in USD_AMT.finditer(seg[h.end():end]):
+            vals.append(None if a.group(2) else
+                        float(a.group(1).replace(",", "")))
+            if len(vals) == len(dates):
+                break
+        for d, v in zip(dates, vals):
+            # A dash is a genuine absence, not a zero to be carried forward.
+            if v is None or v <= 0:
+                continue
+            out.append({"as_of": d, "instrument": h.group(1),
+                        "currency": "USD", "notional_ccy_k": v,
+                        "traditional": h.group(1) in TRADITIONAL
+                        or h.group(1) == "外匯換匯合約"})
+    return out
+
+
 def parse_note(flat):
     """Rows of one derivatives-note table, read off its column headers.
 
@@ -1177,10 +1238,15 @@ def reparse():
             # liability blocks and Taiwan Life's by-currency table both look
             # like nothing at all to the NT$ parser, so neither can be a
             # fallback for the other.
-            ns = parse_note_nanshan(flat)
-            byccy = [] if ns else parse_note_by_currency(flat)
-            rows_here = ns or byccy or parse_note(flat)
-            tot = {} if (ns or byccy) else note_total(flat)
+            # Five shapes now, tried most-specific first. The USD prose
+            # sentence goes FIRST because the pages carrying it also carry an
+            # NT$ table of derivative CARRYING values, and letting the table
+            # reader see the page would record fair values as notionals.
+            usd = parse_note_usd_prose(flat)
+            ns = [] if usd else parse_note_nanshan(flat)
+            byccy = [] if (usd or ns) else parse_note_by_currency(flat)
+            rows_here = usd or ns or byccy or parse_note(flat)
+            tot = {} if (usd or ns or byccy) else note_total(flat)
             # Mark each row with whether ITS table reconciles to the filing's
             # own 合計. Shipping 900 rows of mixed provenance and letting the
             # reader guess which are sound is worse than shipping fewer: the
