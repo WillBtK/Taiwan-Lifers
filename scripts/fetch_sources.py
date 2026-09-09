@@ -114,23 +114,68 @@ def ssl_context(needs_cert):
     return ctx
 
 
+def _relay_get(base, token, url):
+    req = urllib.request.Request(
+        base.rstrip("/") + "/fetch?url=" + urllib.parse.quote(url, safe=""),
+        headers={"User-Agent": UA})
+    if token:
+        req.add_header("X-Relay-Token", token)
+    return req
+
+
+def _relay_post(base, token, url):
+    """The same request as a POST with the target in the body.
+
+    The relay's /health advertises "post": true, and a rebuilt relay that moved
+    /fetch to POST answers a GET with 403 rather than 405 — which is
+    indistinguishable, from the client, from a token that no longer matches.
+    Trying both settles it in one run instead of one run per guess.
+    """
+    req = urllib.request.Request(
+        base.rstrip("/") + "/fetch",
+        data=json.dumps({"url": url}).encode(),
+        headers={"User-Agent": UA, "Content-Type": "application/json"})
+    if token:
+        req.add_header("X-Relay-Token", token)
+    return req
+
+
 def fetch(url, needs_relay, needs_cert, timeout=60):
     """Return bytes, or raise. Relay-bound URLs go through the Taiwan relay."""
-    if needs_relay:
-        base = os.environ.get("TAIWAN_RELAY_URL", "").strip()
-        if not base:
-            raise RuntimeError("no TAIWAN_RELAY_URL configured (Taiwan egress unavailable)")
-        target = base.rstrip("/") + "/fetch?url=" + urllib.parse.quote(url, safe="")
-        req = urllib.request.Request(target, headers={"User-Agent": UA})
-        token = os.environ.get("TAIWAN_RELAY_TOKEN", "").strip()
-        if token:
-            req.add_header("X-Relay-Token", token)
-        ctx = ssl_context(False)
-    else:
+    if not needs_relay:
         req = urllib.request.Request(url, headers={"User-Agent": UA})
-        ctx = ssl_context(needs_cert)
-    with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
-        return r.read()
+        with urllib.request.urlopen(req, timeout=timeout,
+                                    context=ssl_context(needs_cert)) as r:
+            return r.read()
+    base = os.environ.get("TAIWAN_RELAY_URL", "").strip()
+    if not base:
+        raise RuntimeError(
+            "no TAIWAN_RELAY_URL configured (Taiwan egress unavailable)")
+    token = os.environ.get("TAIWAN_RELAY_TOKEN", "").strip()
+    ctx = ssl_context(False)
+    first = None
+    for build in (_relay_get, _relay_post):
+        try:
+            with urllib.request.urlopen(build(base, token, url),
+                                        timeout=timeout, context=ctx) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            # The relay's own error body names the reason — a rejected token
+            # and a wrong method read identically as a bare "403: Forbidden",
+            # and every ins-info source failed that way with the relay
+            # reporting itself healthy. The body is the relay's, not the
+            # origin's, and carries no credential.
+            try:
+                detail = e.read()[:200].decode("utf-8", "replace").strip()
+            except Exception:                                # noqa: BLE001
+                detail = ""
+            err = RuntimeError(f"relay {build.__name__[7:].upper()} "
+                               f"HTTP {e.code}: {detail or e.reason}")
+            if first is None:
+                first = err
+            if e.code not in (403, 404, 405):
+                raise err from None
+    raise first
 
 
 def newest_existing(d, name, ext):
