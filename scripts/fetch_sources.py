@@ -129,7 +129,6 @@ def _relay_post(base, token, url):
     The relay's /health advertises "post": true, and a rebuilt relay that moved
     /fetch to POST answers a GET with 403 rather than 405 — which is
     indistinguishable, from the client, from a token that no longer matches.
-    Trying both settles it in one run instead of one run per guess.
     """
     req = urllib.request.Request(
         base.rstrip("/") + "/fetch",
@@ -137,6 +136,21 @@ def _relay_post(base, token, url):
         headers={"User-Agent": UA, "Content-Type": "application/json"})
     if token:
         req.add_header("X-Relay-Token", token)
+    return req
+
+
+def _relay_bearer(base, token, url):
+    """The third possibility: the token moved to a standard Authorization.
+
+    Sent as its own attempt rather than added to the others, because a Cloud
+    Run service that does enforce IAM would reject an Authorization it cannot
+    validate and turn a legible 403 into a misleading 401.
+    """
+    req = urllib.request.Request(
+        base.rstrip("/") + "/fetch?url=" + urllib.parse.quote(url, safe=""),
+        headers={"User-Agent": UA})
+    if token:
+        req.add_header("Authorization", "Bearer " + token)
     return req
 
 
@@ -153,29 +167,32 @@ def fetch(url, needs_relay, needs_cert, timeout=60):
             "no TAIWAN_RELAY_URL configured (Taiwan egress unavailable)")
     token = os.environ.get("TAIWAN_RELAY_TOKEN", "").strip()
     ctx = ssl_context(False)
-    first = None
-    for build in (_relay_get, _relay_post):
+    # Three shapes, all reported. A rejected token, a /fetch that has moved to
+    # POST and a token that has moved to Authorization are one 403 each from
+    # the client's side, and every ins-info source failed that way while the
+    # relay's own /health answered ok with ins-info on its allow list. Trying
+    # all three and printing every code settles which in one run rather than
+    # one run per guess. The bodies are the relay's, not the origin's, and
+    # carry no credential.
+    tried = []
+    for build in (_relay_get, _relay_post, _relay_bearer):
+        label = build.__name__[7:]
         try:
             with urllib.request.urlopen(build(base, token, url),
                                         timeout=timeout, context=ctx) as r:
                 return r.read()
         except urllib.error.HTTPError as e:
-            # The relay's own error body names the reason — a rejected token
-            # and a wrong method read identically as a bare "403: Forbidden",
-            # and every ins-info source failed that way with the relay
-            # reporting itself healthy. The body is the relay's, not the
-            # origin's, and carries no credential.
             try:
-                detail = e.read()[:200].decode("utf-8", "replace").strip()
+                detail = e.read()[:120].decode("utf-8", "replace").strip()
             except Exception:                                # noqa: BLE001
                 detail = ""
-            err = RuntimeError(f"relay {build.__name__[7:].upper()} "
-                               f"HTTP {e.code}: {detail or e.reason}")
-            if first is None:
-                first = err
-            if e.code not in (403, 404, 405):
-                raise err from None
-    raise first
+            tried.append(f"{label} {e.code} {detail or e.reason}")
+            if e.code not in (401, 403, 404, 405):
+                break
+        except Exception as e:                               # noqa: BLE001
+            tried.append(f"{label} {type(e).__name__}: {e}")
+            break
+    raise RuntimeError("relay refused: " + "; ".join(tried))
 
 
 def newest_existing(d, name, ext):
