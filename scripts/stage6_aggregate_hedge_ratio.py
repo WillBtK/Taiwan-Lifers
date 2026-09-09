@@ -53,20 +53,23 @@ STRUCT = ROOT / "data" / "hedging_structure.csv"
 CATHAYQ = ROOT / "data" / "cathay_fx_quarterly.csv"
 NOTIONAL = ROOT / "data" / "firm_hedge_notional.csv"
 FX = ROOT / "data" / "usdtwd_monthly.csv"
+DECKFX = ROOT / "data" / "deck_fx_structure.csv"
 OUT = ROOT / "data" / "aggregate_hedge_ratio.csv"
 
 # config/firm_uids.tsv only. Nothing inferred: an earlier pass guessed four more
 # identifiers and produced hedge ratios of 1,534% and 10,610%.
 UID = {"27935073": "fubon_life", "03374707": "cathay_life",
        "11456006": "nanshan_life", "03434016": "kgi_life",
-       "03557017": "taiwan_life", "03458902": "shinkong_pre2026"}
-# Taiwan Life is deliberately ABSENT. Its statutory notionals do not reconcile
-# to the filing's own printed total, which is why the verified panel excludes
-# them, and pulling them in raw produced a ratio running from 2% in 2018 to 72%
-# in 2024 — capture changing, not hedging. Coverage bought that way is worth
-# less than nothing: it moves the aggregate and looks like a finding.
+       "03557017": "taiwan_life", "03458902": "shinkong_life"}
+# Taiwan Life and Shin Kong enter from their own investor decks, harvested from
+# MOPS. Taiwan Life's statutory notionals are still excluded — they do not
+# reconcile to the filing's printed total and raw they gave a ratio running 2%
+# to 72%, capture changing rather than hedging — but its DECK publishes the same
+# four-bucket pie the sell-side tabulates, and reproduces that workbook exactly
+# across eight overlapping quarters.
 NAME = {"cathay_life": "Cathay", "fubon_life": "Fubon", "kgi_life": "KGI",
-        "nanshan_life": "Nan Shan"}
+        "nanshan_life": "Nan Shan", "taiwan_life": "Taiwan Life",
+        "shinkong_life": "Shin Kong"}
 MAX_GAP_Q = 4          # quarters a firm's ratio may be interpolated across
 MIN_LINK = 0.15        # minimum sector share behind both ends of a chain link
 
@@ -217,6 +220,16 @@ def main():
             obs[e][r["as_of"][:7]] = (float(r["traditional_notional_ntd_k"])
                                       / 1e6 / f)
 
+    # Taiwan Life and Shin Kong: 已避險 as a share of foreign investment,
+    # straight off the company's own pie. Already on the right base, so no
+    # rescaling — which is why these two are the cleanest inputs in the whole
+    # construction.
+    if DECKFX.exists():
+        for r in csv.DictReader(open(DECKFX, newline="", encoding="utf-8")):
+            if r["entity_id"] in NAME:
+                obs[r["entity_id"]][r["as_of"][:7]] = \
+                    float(r["hedged_pct"]) / 100
+
     for r in csv.DictReader(open(STRUCT, newline="", encoding="utf-8")):
         # Cathay is taken from its own quarterly file above, which is richer.
         if (r["traditional_hedge_pct"] and r["entity_id"] in NAME
@@ -290,21 +303,26 @@ def main():
             if va and vb:
                 links[b] = (a, vb / va)
             break
-    # chain forward and backward from the best-covered quarter
-    anchor = max(live, key=lambda d: (direct[d][1], -abs(mo(d) - mo(live[-1]))))
-    idx = {anchor: direct[anchor][0]}
-    for d in live[live.index(anchor) + 1:]:
-        if d not in links or links[d][0] not in idx:
+    # ONE FORWARD WALK, then rescale. The previous version chained forward
+    # from an anchor and backward from it, and the backward pass assumed each
+    # link joined ADJACENT quarters. Links look back to the most recent quarter
+    # thick enough to support them, so they routinely skip one — and the moment
+    # they did, the backward walk stopped and took eight quarters of 2022-24
+    # with it. Walking forward from the earliest quarter cannot hit that,
+    # because a link's reference is always a quarter already visited.
+    idx = {}
+    for i, d in enumerate(live):
+        if i == 0:
+            idx[d] = 1.0
             continue
-        a, f = links[d]
-        idx[d] = idx[a] * f
-    for d in reversed(live[:live.index(anchor)]):
-        # find the forward link that starts here
-        fwd = [(b, v) for b, v in links.items() if v[0] == d and b in idx]
-        if not fwd:
-            continue
-        b, (_, f) = fwd[0]
-        idx[d] = idx[b] / f
+        ref = links.get(d)
+        if ref and ref[0] in idx:
+            idx[d] = idx[ref[0]] * ref[1]
+        # no usable link: the chain cannot cross this gap, so the quarter is
+        # left out rather than bridged on an assumption
+    anchor = max((d for d in idx), key=lambda d: (direct[d][1], d))
+    scale = direct[anchor][0] / idx[anchor]
+    idx = {d: v * scale for d, v in idx.items()}
 
     rows = []
     for d in grid:
@@ -349,7 +367,7 @@ def main():
 INK, MUTE, GRID = "#1c1c1c", "#6b6b6b", "#e2e0dc"
 COL = {"cathay_life": "#4e7d99", "fubon_life": "#c98a8b",
        "kgi_life": "#7aa88f", "nanshan_life": "#bda57e",
-       "taiwan_life": "#9b8aa6"}
+       "taiwan_life": "#9b8aa6", "shinkong_life": "#7f8c8d"}
 SVG = ROOT / "reports" / "aggregate_hedge_ratio.svg"
 PNG = ROOT / "reports" / "aggregate_hedge_ratio.png"
 
@@ -459,11 +477,11 @@ def chart(rows, obs, share_obs):
                            "measured only across firms present in BOTH "
                            "quarters, then chained, so composition never "
                            "moves the level.", 10.5, MUTE))
-    o.append(_t(L, H - 28, "Cathay and KGI from their own investor decks; "
-                           "Fubon and Nan Shan from statutory notionals "
-                           "reconciled to the filing\u2019s own printed total. "
-                           "Weights are each firm\u2019s share of sector "
-                           "overseas investment.", 10.5, MUTE))
+    o.append(_t(L, H - 28, "Cathay, KGI, Taiwan Life and Shin Kong from their "
+                           "own investor decks; Fubon and Nan Shan from "
+                           "statutory notionals reconciled to the filing\u2019s "
+                           "printed total. Weights are each firm\u2019s share "
+                           "of sector overseas investment.", 10.5, MUTE))
     o.append(_t(L, H - 12, "Source: MOPS statutory filings, company investor "
                            "presentations, Insurance Bureau monthly statistics. "
                            "Author\u2019s extraction.", 10.5, MUTE))

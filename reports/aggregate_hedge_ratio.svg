@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660"><rect width="1200" height="660" fill="#faf9f7"/>
-<text x="80.0" y="40.0" font-size="19" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Taiwan life sector: the bottom-up FX hedge ratio has more than halved, 61% to 22%</text>
+<text x="80.0" y="40.0" font-size="19" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Taiwan life sector: the bottom-up FX hedge ratio has more than halved, 64% to 26%</text>
 <text x="80.0" y="63.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Traditional hedge notional over overseas investment, chain-linked across four insurers. Built firm by firm from statutory</text>
 <text x="80.0" y="79.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">filings and company decks; no sector hedge-ratio series is used in the construction. Gross basis, not the regulatory denominator.</text>
 <line x1="80" y1="470.0" x2="1092" y2="470.0" stroke="#e2e0dc" stroke-width="1"/>
@@ -85,13 +85,42 @@
 <circle cx="775.8" cy="253.8" r="2.4" fill="#bda57e" opacity="0.85"/>
 <circle cx="839.0" cy="256.1" r="2.4" fill="#bda57e" opacity="0.85"/>
 <text x="846.0" y="259.6" font-size="10" fill="#bda57e" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Nan Shan</text>
-<polyline points="80.0,199.9 111.6,204.5 143.2,221.5 174.9,235.5 206.5,242.3 238.1,243.8 269.8,249.4 301.4,250.2 333.0,248.0 364.6,248.8 396.2,252.4 427.9,251.9 459.5,259.5 491.1,263.7 522.8,258.4 554.4,256.2 586.0,260.5 617.6,261.7 649.2,277.4 680.9,279.4 712.5,274.3 744.1,267.4 775.8,263.5 807.4,269.6 839.0,275.8 902.2,301.5 933.9,311.2 965.5,333.9 997.1,331.0 1028.8,350.1 1060.4,377.2 1092.0,372.5" fill="none" stroke="#1c1c1c" stroke-width="3" stroke-linejoin="round"/>
-<circle cx="80.0" cy="199.9" r="4.5" fill="#1c1c1c"/>
-<circle cx="1092.0" cy="372.5" r="4.5" fill="#1c1c1c"/>
-<text x="90.0" y="187.9" font-size="11.5" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">61.4%  2018-06-30</text>
-<text x="1080.0" y="394.5" font-size="14" fill="#1c1c1c" text-anchor="end" font-weight="bold" font-family="Georgia,'Times New Roman',serif">22.2%</text>
-<text x="1080.0" y="409.5" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">2026-06-30</text>
-<text x="586.0" y="244.5" font-size="12" fill="#1c1c1c" text-anchor="middle" font-weight="bold" font-family="Georgia,'Times New Roman',serif">AGGREGATE</text>
+<polyline points="427.9,311.6 459.5,294.0 491.1,294.0 522.8,307.2 554.4,316.0 586.0,316.0 617.6,324.8 649.2,338.0 680.9,338.0 712.5,324.8 744.1,324.8 775.8,338.0 807.4,338.0 839.0,351.2 870.6,307.2 902.2,342.4 965.5,324.8 997.1,342.4 1028.8,333.6 1060.4,346.8 1092.0,382.0" fill="none" stroke="#9b8aa6" stroke-width="1.1" stroke-dasharray="3 3" opacity="0.85"/>
+<circle cx="427.9" cy="311.6" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="459.5" cy="294.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="491.1" cy="294.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="522.8" cy="307.2" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="554.4" cy="316.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="586.0" cy="316.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="617.6" cy="324.8" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="649.2" cy="338.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="680.9" cy="338.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="712.5" cy="324.8" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="744.1" cy="324.8" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="775.8" cy="338.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="807.4" cy="338.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="839.0" cy="351.2" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="870.6" cy="307.2" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="902.2" cy="342.4" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="965.5" cy="324.8" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="997.1" cy="342.4" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="1028.8" cy="333.6" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="1060.4" cy="346.8" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<circle cx="1092.0" cy="382.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
+<text x="1099.0" y="385.5" font-size="10" fill="#9b8aa6" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Taiwan Life</text>
+<polyline points="997.1,317.3 1028.8,317.3 1060.4,302.4 1092.0,328.3" fill="none" stroke="#7f8c8d" stroke-width="1.1" stroke-dasharray="3 3" opacity="0.85"/>
+<circle cx="997.1" cy="317.3" r="2.4" fill="#7f8c8d" opacity="0.85"/>
+<circle cx="1028.8" cy="317.3" r="2.4" fill="#7f8c8d" opacity="0.85"/>
+<circle cx="1060.4" cy="302.4" r="2.4" fill="#7f8c8d" opacity="0.85"/>
+<circle cx="1092.0" cy="328.3" r="2.4" fill="#7f8c8d" opacity="0.85"/>
+<text x="1099.0" y="331.8" font-size="10" fill="#7f8c8d" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Shin Kong</text>
+<polyline points="80.0,187.1 111.6,191.9 143.2,209.7 174.9,224.5 206.5,231.5 238.1,233.1 269.8,239.0 301.4,239.8 333.0,237.5 364.6,238.3 396.2,242.1 427.9,241.6 459.5,246.8 491.1,250.8 522.8,247.2 554.4,246.0 586.0,250.1 617.6,252.6 649.2,269.3 680.9,271.0 712.5,264.2 744.1,257.7 775.8,255.6 807.4,261.1 839.0,269.7 902.2,291.5 933.9,298.3 965.5,316.5 997.1,318.0 1028.8,328.8 1060.4,344.3 1092.0,354.2" fill="none" stroke="#1c1c1c" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="80.0" cy="187.1" r="4.5" fill="#1c1c1c"/>
+<circle cx="1092.0" cy="354.2" r="4.5" fill="#1c1c1c"/>
+<text x="90.0" y="175.1" font-size="11.5" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">64.3%  2018-06-30</text>
+<text x="1080.0" y="376.2" font-size="14" fill="#1c1c1c" text-anchor="end" font-weight="bold" font-family="Georgia,'Times New Roman',serif">26.3%</text>
+<text x="1080.0" y="391.2" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">2026-06-30</text>
+<text x="586.0" y="234.1" font-size="12" fill="#1c1c1c" text-anchor="middle" font-weight="bold" font-family="Georgia,'Times New Roman',serif">AGGREGATE</text>
 <text x="80.0" y="532.0" font-size="12" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Share of sector overseas investment behind each point</text>
 <text x="80.0" y="548.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">The chain-link means a firm entering or leaving cannot move the level — but a thin quarter is still a noisier one.</text>
 <rect x="76.0" y="555.1" width="8" height="10.9" fill="#6b6b6b" opacity="0.5"/>
@@ -105,33 +134,33 @@
 <rect x="329.0" y="530.9" width="8" height="35.1" fill="#6b6b6b" opacity="0.5"/>
 <rect x="360.6" y="530.9" width="8" height="35.1" fill="#6b6b6b" opacity="0.5"/>
 <rect x="392.2" y="530.9" width="8" height="35.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="423.9" y="530.8" width="8" height="35.2" fill="#6b6b6b" opacity="0.5"/>
-<rect x="455.5" y="530.7" width="8" height="35.3" fill="#6b6b6b" opacity="0.5"/>
-<rect x="487.1" y="530.6" width="8" height="35.4" fill="#6b6b6b" opacity="0.5"/>
-<rect x="518.8" y="530.5" width="8" height="35.5" fill="#6b6b6b" opacity="0.5"/>
-<rect x="550.4" y="530.5" width="8" height="35.5" fill="#6b6b6b" opacity="0.5"/>
-<rect x="582.0" y="530.6" width="8" height="35.4" fill="#6b6b6b" opacity="0.5"/>
-<rect x="613.6" y="539.9" width="8" height="26.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="645.2" y="539.9" width="8" height="26.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="676.9" y="539.9" width="8" height="26.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="708.5" y="539.9" width="8" height="26.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="740.1" y="535.2" width="8" height="30.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="771.8" y="535.2" width="8" height="30.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="803.4" y="550.5" width="8" height="15.5" fill="#6b6b6b" opacity="0.5"/>
-<rect x="835.0" y="550.5" width="8" height="15.5" fill="#6b6b6b" opacity="0.5"/>
-<rect x="898.2" y="551.9" width="8" height="14.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="929.9" y="536.9" width="8" height="29.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="961.5" y="552.1" width="8" height="13.9" fill="#6b6b6b" opacity="0.5"/>
-<rect x="993.1" y="552.1" width="8" height="13.9" fill="#6b6b6b" opacity="0.5"/>
-<rect x="1024.8" y="552.2" width="8" height="13.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="1056.4" y="552.2" width="8" height="13.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="1088.0" y="536.9" width="8" height="29.1" fill="#6b6b6b" opacity="0.5"/>
+<rect x="423.9" y="526.5" width="8" height="39.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="455.5" y="526.5" width="8" height="39.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="487.1" y="526.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
+<rect x="518.8" y="526.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
+<rect x="550.4" y="526.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
+<rect x="582.0" y="526.5" width="8" height="39.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="613.6" y="535.9" width="8" height="30.1" fill="#6b6b6b" opacity="0.5"/>
+<rect x="645.2" y="535.9" width="8" height="30.1" fill="#6b6b6b" opacity="0.5"/>
+<rect x="676.9" y="535.9" width="8" height="30.1" fill="#6b6b6b" opacity="0.5"/>
+<rect x="708.5" y="536.0" width="8" height="30.0" fill="#6b6b6b" opacity="0.5"/>
+<rect x="740.1" y="531.3" width="8" height="34.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="771.8" y="531.3" width="8" height="34.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="803.4" y="546.6" width="8" height="19.4" fill="#6b6b6b" opacity="0.5"/>
+<rect x="835.0" y="546.6" width="8" height="19.4" fill="#6b6b6b" opacity="0.5"/>
+<rect x="898.2" y="548.0" width="8" height="18.0" fill="#6b6b6b" opacity="0.5"/>
+<rect x="929.9" y="532.9" width="8" height="33.1" fill="#6b6b6b" opacity="0.5"/>
+<rect x="961.5" y="548.1" width="8" height="17.9" fill="#6b6b6b" opacity="0.5"/>
+<rect x="993.1" y="541.5" width="8" height="24.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="1024.8" y="541.6" width="8" height="24.4" fill="#6b6b6b" opacity="0.5"/>
+<rect x="1056.4" y="541.6" width="8" height="24.4" fill="#6b6b6b" opacity="0.5"/>
+<rect x="1088.0" y="526.3" width="8" height="39.7" fill="#6b6b6b" opacity="0.5"/>
 <line x1="80" y1="550.5" x2="1092" y2="550.5" stroke="#e2e0dc" stroke-width="1"/>
 <text x="70.0" y="554.5" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">25%</text>
 <line x1="80" y1="535.0" x2="1092" y2="535.0" stroke="#e2e0dc" stroke-width="1"/>
 <text x="70.0" y="539.0" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">50%</text>
 <line x1="80" y1="566" x2="1092" y2="566" stroke="#1c1c1c" stroke-width="1"/>
 <text x="80.0" y="616.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Chain-linked: each quarter-on-quarter change is measured only across firms present in BOTH quarters, then chained, so composition never moves the level.</text>
-<text x="80.0" y="632.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Cathay and KGI from their own investor decks; Fubon and Nan Shan from statutory notionals reconciled to the filing’s own printed total. Weights are each firm’s share of sector overseas investment.</text>
+<text x="80.0" y="632.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Cathay, KGI, Taiwan Life and Shin Kong from their own investor decks; Fubon and Nan Shan from statutory notionals reconciled to the filing’s printed total. Weights are each firm’s share of sector overseas investment.</text>
 <text x="80.0" y="648.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Source: MOPS statutory filings, company investor presentations, Insurance Bureau monthly statistics. Author’s extraction.</text>
 </svg>
