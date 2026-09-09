@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-05T04:55:09.839310+00:00",
+ "run_at": "2026-09-09T23:42:32.106684+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
@@ -37,283 +37,307 @@
    "name": "json-06161610",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161610.aspx",
    "needs_relay": true,
-   "status": "unchanged",
-   "sha256": "052ec8bd169e1188c351dedd040c33641171de29d04e81f2b887730837c850ba",
-   "matches": "json-06161610_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-06021011",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06021011.aspx",
    "needs_relay": true,
-   "status": "unchanged",
-   "sha256": "a4b4fad25e8ba73e05e91cddb69b99ca56e7e1a62defaebd9e7e7c7ebe282e27",
-   "matches": "json-06021011_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-05010111",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05010111.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "5e5ffa6dd1c1ea7fdc6ceb5ebeb79604f88b61cfee6a8558d293e3947da3baf1",
-   "bytes": 17584,
-   "path": "data/raw/ins-info/json-05010111_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-05020511",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05020511.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "2a594ef68a29ad19eab0c64c7c9f4420cabe9cfdcdb0e2003e880da114dedc00",
-   "bytes": 8457,
-   "path": "data/raw/ins-info/json-05020511_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-05030310",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05030310.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "384eb17accd45f31e546b5090943d8d47ed77f3ff6eda7e63ee2f4587a3319ab",
-   "bytes": 52286,
-   "path": "data/raw/ins-info/json-05030310_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-05030311",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05030311.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "a30e02cafb133936954adb35ca98accfe587790bcd85c937975dc5cee433acdc",
-   "bytes": 5989,
-   "path": "data/raw/ins-info/json-05030311_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-06161601",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161601.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "d68e2b454845ec752bdc08868f87f83ec36370c73695fcb710c90dfd806e671d",
-   "bytes": 7970,
-   "path": "data/raw/ins-info/json-06161601_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-07010801",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07010801.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "f75ff22881b1ef82e572e5a08161d34d599af5a3101491142f476761fe80f68f",
-   "bytes": 4962,
-   "path": "data/raw/ins-info/json-07010801_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-07011010",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07011010.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "185f0a03217b0b0ec6b5d3237ef411f484ff734dea1dbe5f0830ad8147369acf",
-   "bytes": 7295,
-   "path": "data/raw/ins-info/json-07011010_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "json-07090901",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07090901.aspx",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "2cca97975dde8b777e960eb22163088e7428626c842ba3b744f9d45b1f148f9e",
-   "bytes": 9591,
-   "path": "data/raw/ins-info/json-07090901_20260905.json"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-1_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03374707",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "7ddeeed1c38c1032ce3b30b6f348385f18d9699bddcca22bdb70597aaf2f6897",
-   "bytes": 31428,
-   "path": "data/raw/ins-info-firm/Info2-1_cathay_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-5_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03374707",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "2a2554d41993b47f8265c673faf16f446b1e0f2a022f909063bf1deaf7014ee1",
-   "bytes": 22599,
-   "path": "data/raw/ins-info-firm/Info2-5_cathay_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-14_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03374707",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "a9346f775aa69177caa8b1aaa75178a2633d80e4fe16a3c35f3d0ed02561e0b9",
-   "bytes": 21924,
-   "path": "data/raw/ins-info-firm/Info2-14_cathay_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-1_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=27935073",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "67bff2a818849d5488f7e884b144ec5a014ae42813fa7bca31477b7884731823",
-   "bytes": 32123,
-   "path": "data/raw/ins-info-firm/Info2-1_fubon_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-5_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "62d25018190fce4632cedb31ced9ba0ee74d5ee0a0e021f4cdc35b5fa9dcab84",
-   "bytes": 22775,
-   "path": "data/raw/ins-info-firm/Info2-5_fubon_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-14_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=27935073",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "77bc8cb479c4b65719bf3173d24bc1c901ae7605a5f2f1037c4fd8df3616390e",
-   "bytes": 21922,
-   "path": "data/raw/ins-info-firm/Info2-14_fubon_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-1_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=11456006",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "fae142a47938cd83f87d0c67672ebb43b9701390c175dfec5abef764036f9a71",
-   "bytes": 32769,
-   "path": "data/raw/ins-info-firm/Info2-1_nanshan_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-5_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=11456006",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "b213963b135bd3caf2be06e20f660148ffc8ac1ca460639b6c7f68f22b6cbe7a",
-   "bytes": 22859,
-   "path": "data/raw/ins-info-firm/Info2-5_nanshan_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-14_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=11456006",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "d8c9845bd44462de53b67ce57cf4c8b55a208d2d4656f3af6bfa7a62ef673ed7",
-   "bytes": 22064,
-   "path": "data/raw/ins-info-firm/Info2-14_nanshan_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-1_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03434016",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "5354362d4120697986de5e1e5b8d9ba22f3ba3f0535604ef67750f81c9256817",
-   "bytes": 31597,
-   "path": "data/raw/ins-info-firm/Info2-1_kgi_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-5_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03434016",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "efcd648f49ad148662a545b1000a2dbd63ade57d17dee9eda82919284e17f431",
-   "bytes": 22315,
-   "path": "data/raw/ins-info-firm/Info2-5_kgi_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-14_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03434016",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "1e9d3522429d2f3b9778daec7a2dbf630ab23bdb04d803b1d856b448ebe1e237",
-   "bytes": 21638,
-   "path": "data/raw/ins-info-firm/Info2-14_kgi_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-1_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "a4e29c240bc0445e1634d0135b8da39d7d59e6358d9d11c26ff216520d9dd7bf",
-   "bytes": 31985,
-   "path": "data/raw/ins-info-firm/Info2-1_taiwan_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-5_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "36554335c526cdff58a0dabf9215f18cf417dbfe1b2298228867cf7c1e5d6f5e",
-   "bytes": 22659,
-   "path": "data/raw/ins-info-firm/Info2-5_taiwan_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-14_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "9c26b63aa9392111bc0713d21f7dc0e4bddede7a105d9804a5dd2ff33f1d4ce4",
-   "bytes": 21988,
-   "path": "data/raw/ins-info-firm/Info2-14_taiwan_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-1_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70789634",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "466c7291bca10c2d13fd77b552a16d5dda9b52f12fbe864d37938b6fd3a88ef2",
-   "bytes": 31415,
-   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-5_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70789634",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "dba6c82a8bfe9672b5f1795a50d2bb43fce9333d7811ac44165bf6abea2b90e0",
-   "bytes": 22628,
-   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-14_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70789634",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "c6116207b7824f6a2e18e9dbd5b71bc4fdb7f73227787b11fef220d324cd5993",
-   "bytes": 21924,
-   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-1_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03458902",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "965127c8e8da438126962c5477b8d6cfacb5d0ac632a0f68f94d62bfbe90a4b6",
-   "bytes": 39259,
-   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_pre2026_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-5_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03458902",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "e8a0d3ccaeb66fbf3d1a88182fdc124037ae361ee177c5903b91632cf44819d4",
-   "bytes": 26543,
-   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_pre2026_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "name": "Info2-14_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03458902",
    "needs_relay": true,
-   "status": "written",
-   "sha256": "1bade5b6e3125c077152e84d8f2a7f7de640065e14d105e45c5ed8f7e438b6cd",
-   "bytes": 20050,
-   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_pre2026_20260905.html"
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-1_banktaiwan_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=28428384",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-5_banktaiwan_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=28428384",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-14_banktaiwan_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=28428384",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-1_mercuries_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84443471",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-5_mercuries_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84443471",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-14_mercuries_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84443471",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-1_hontai_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84894313",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-5_hontai_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84894313",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-14_hontai_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84894313",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-1_transglobe_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70817744",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-5_transglobe_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70817744",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
+  },
+  {
+   "name": "Info2-14_transglobe_life",
+   "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70817744",
+   "needs_relay": true,
+   "status": "unavailable",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   }
  ],
  "summary": {
-  "written": 29,
-  "unchanged": 6,
-  "unavailable": 0
+  "written": 0,
+  "unchanged": 4,
+  "unavailable": 43
  }
 }
