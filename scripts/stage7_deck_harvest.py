@@ -65,10 +65,23 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 BLOCKED = "FOR SECURITY REASONS"
 
 # holding company -> the life insurer whose disclosure the deck carries
+#
+# The three below are listed insurers in their OWN right rather than
+# subsidiaries of a financial holding company, and this harvest had never
+# looked at them — the issuer list was assembled from the five big groups and
+# nothing prompted a re-read of it. That matters more than their size suggests.
+# A firm without a deck can only be measured by the size of its currency
+# contracts, which is a CEILING on hedging rather than a measurement of it
+# (4.76), and the measure-consistent line covers a third of the sector for want
+# of firms that publish a hedge percentage. Mercuries alone is about 6% of
+# sector overseas investment. If any of the three holds investor conferences
+# with a hedging slide, it joins the line that can actually be interpreted.
 ISSUERS = {"2882": "cathay_life", "2881": "fubon_life",
            "2888": "shinkong_pre2026", "2891": "taiwan_life",
            "2883": "kgi_life", "2823": "kgi_life", "2833": "taiwan_life",
-           "2887": "shinkong_life"}
+           "2887": "shinkong_life",
+           "2867": "mercuries_life", "2876": "hontai_life",
+           "5873": "transglobe_life"}
 
 
 def _f(name, default):
