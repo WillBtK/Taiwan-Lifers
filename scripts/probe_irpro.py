@@ -36,32 +36,35 @@ import urllib.request
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
 
-IRPRO = "https://www.irpro.co/2888"           # already permitted
-CLOUD = "https://www.ir-cloud.com/taiwan/2888"  # needs RELAY_ALLOWED_HOSTS
+IRPRO = "https://www.irpro.co/2888"
+CLOUD = "https://www.ir-cloud.com/taiwan/2888"
 TARGETS = [
-    # The same app under the file-store prefix, on the host whose certificate
-    # is valid. Free to try: nothing has to change for these to answer.
-    ("irpro: library, all years",
-     f"{IRPRO}/irwebsite_c/downloadlibrary2.php?doctype=2&year=0"),
-    ("irpro: library, 2022",
-     f"{IRPRO}/irwebsite_c/downloadlibrary2.php?doctype=2&year=2022"),
-    ("irpro: library index",
-     f"{IRPRO}/irwebsite_c/downloadlibrary.php"),
-    ("irpro: old skin event list",
-     f"{IRPRO}/irwebsite/event.php"),
-    ("irpro: old skin conference 330",
-     f"{IRPRO}/irwebsite/recent.php?id=330"),
+    # A URL the archive proves returned 200 HTML on 2025-02-16, and a second
+    # from 2025-11-01. If these 500 now, the library is gone rather than
+    # mis-guessed, and no amount of path-hunting will find it.
+    ("cloud: downloadlibrary3, archive-proven",
+     f"{CLOUD}/irwebsite_c/downloadlibrary3.php?doctype=3&year=0"),
+    ("cloud: fillings, archive-proven",
+     f"{CLOUD}/irwebsite_c/fillings.php"),
+    # A static asset in the same directory, to separate "the app errors" from
+    # "the directory is not there".
+    ("cloud: neux.css, static control",
+     f"{CLOUD}/irwebsite_c/css/neux.css"),
+    # The event library proper — 活動訊息 — and the pre-2020 skin's per-
+    # conference page, which is what would give ids and filenames.
+    ("cloud: downloadlibrary2 (events)",
+     f"{CLOUD}/irwebsite_c/downloadlibrary2.php?doctype=2&year=0"),
+    ("cloud: old skin recent.php?id=287",
+     f"{CLOUD}/irwebsite/recent.php?id=287"),
+    ("cloud: known deck, control",
+     f"{CLOUD}/events/312/CH/2020Q4%20Chi%20(H)_GAjH2jEBEFqL.pdf"),
+    # Whether the same app is mounted under the newer host's file prefix.
+    ("irpro: downloadlibrary3",
+     f"{IRPRO}/irwebsite_c/downloadlibrary3.php?doctype=3&year=0"),
+    ("irpro: neux.css, static control",
+     f"{IRPRO}/irwebsite_c/css/neux.css"),
     ("irpro: known deck, control",
      f"{IRPRO}/events/357/CH/20230321175446-1.pdf"),
-    # The host the archive actually crawled these pages on. Refused until it
-    # is allow-listed; the control says whether that refusal is the only thing
-    # in the way.
-    ("ir-cloud: library, all years",
-     f"{CLOUD}/irwebsite_c/downloadlibrary2.php?doctype=2&year=0"),
-    ("ir-cloud: old skin event list",
-     f"{CLOUD}/irwebsite/event.php"),
-    ("ir-cloud: known deck, control",
-     f"{CLOUD}/events/312/CH/2020Q4%20Chi%20(H)_GAjH2jEBEFqL.pdf"),
 ]
 DUMP = 1200
 
