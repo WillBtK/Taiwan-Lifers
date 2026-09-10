@@ -34,18 +34,21 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
 
 # A file the archive proves exists, then the listing guesses.
+BASE = "https://skfh.irpro.co/tw/"
 TARGETS = [
+    ("conference list", BASE + "event-institutional-investor-conference-list.php"),
+    ("conference page id=421", BASE + "event-institutional-investor-conference-page.php?id=421"),
+    ("conference page id=404", BASE + "event-institutional-investor-conference-page.php?id=404"),
+    ("conference page id=357", BASE + "event-institutional-investor-conference-page.php?id=357"),
     ("known deck (FY22, event 357)",
      "https://www.irpro.co/2888/events/357/CH/20230321175446-1.pdf"),
-    ("known deck (event 404)",
-     "https://www.irpro.co/2888/events/404/CH/20240826083438-1.pdf"),
-    ("company root", "https://www.irpro.co/2888/"),
-    ("conferencelisttw", "https://www.irpro.co/2888/conferencelisttw"),
-    ("events index", "https://www.irpro.co/2888/events"),
-    ("events index, CH", "https://www.irpro.co/2888/events/CH"),
-    ("skfh page (already allowed, control)",
-     "https://www.skfh.com.tw/events-conferences/"),
 ]
+# The first harvest walked 310 ids and kept none, because its gate looked for
+# the literal string "conference" in a page served in Traditional Chinese. It
+# printed nothing either way, so a fetch failure and a gate rejection were
+# indistinguishable — the same defect as the note capture that wrote 62 empty
+# records. This prints enough of each body to write the parser against.
+DUMP = 2500
 
 
 def relay(base, token, url, timeout=90):
@@ -70,12 +73,13 @@ def relay(base, token, url, timeout=90):
 def describe(body):
     if body[:4] == b"%PDF":
         return f"PDF, {len(body):,} bytes"
-    text = body[:4000].decode("utf-8", "replace")
-    hit = [w for w in ("法人說明會", "法說會", "conference", "events")
-           if w.lower() in text.lower()]
-    return (f"{len(body):,} bytes"
-            + (f", mentions {'/'.join(hit)}" if hit else "")
-            + " | " + " ".join(text.split())[:120])
+    import re
+    text = body.decode("utf-8", "replace")
+    pdfs = sorted(set(re.findall(r'[^"\'\s>]+\.pdf', text, re.I)))
+    ids = sorted(set(re.findall(r'id=(\d+)', text)), key=int)
+    return (f"{len(body):,} bytes | {len(pdfs)} pdf links {pdfs[:3]} | "
+            f"ids {ids[:12]}\n      "
+            + " ".join(text.split())[:DUMP])
 
 
 def main():
