@@ -5794,3 +5794,47 @@ discloses the liability and the largest gap in the comparison closes, or it
 does not and 4.75's conclusion is upgraded from "the slide does not split it"
 to "neither the slide nor the statements do", which is a stronger claim than
 the evidence currently supports.
+
+---
+
+### 4.79 Five and a half hours of downloading lost at the last step, and the two fixes that make it not happen again
+
+Run 34433330818 indexed, downloaded and parsed successfully, and committed
+nothing. The commit step tried to rebase its generated data files onto a branch
+that had moved twelve commits during the run; the rebase conflicted on a
+gzipped JSON, which cannot be three-way merged; `git pull --rebase … || true`
+swallowed the failure; and the push that followed failed on a repository left
+mid-rebase. The step reported failure and the job's whole output was discarded.
+
+**A generated file does not want a merge.** The job now REPLANTS: it keeps its
+outputs, fetches, resets hard to the branch tip, restores them over the top,
+commits and pushes, retrying three times if the branch moves again. For a file
+that is produced rather than edited, the producing job's copy is the answer and
+a merge is a category error.
+
+**And it now commits only the capture, not the derived numbers.** The note text,
+the filing index and the parsed record are what cost hours; the two CSVs are
+seconds of parsing away from them. Committing the CSVs also carried a hazard I
+had flagged separately — a run that starts at 03:26 is checked out at that
+commit, so a five-hour job would have overwritten the morning's extraction work
+with output from the parser as it stood before any of it.
+
+**The lost work is recoverable without touching the regulator again.** The run's
+final step uploaded every PDF it fetched — `mops-pdfs`, 308MB, ID 10144332008,
+held until 15 September. The download is the expensive half and those bytes do
+not care which page filter reads them, so the job now restores that artifact
+into `cache/mops_pdf/` before it starts. `pdf()` returns a cached file when one
+exists, so that is the entire mechanism. This matters more than the one run:
+the widened filter of 4.78 requires re-capturing all 302 filings, and most of
+that is now a local re-read rather than a re-download.
+
+The artifact cannot be pulled into this session directly — GitHub redirects
+artifact downloads to `productionresultssa3.blob.core.windows.net`, which this
+environment's egress policy refuses. CI reaches it, which is where the work
+belongs anyway.
+
+Two smaller things the same failure exposed: the job needed `actions: read` to
+read another run's artifact, the default `contents: write` grant not being
+enough; and a step's own `env` is not in scope for that step's `if`, so the
+guard is `continue-on-error` — a missing or expired artifact should cost the
+run nothing and fall through to fetching normally.
