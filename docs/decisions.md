@@ -5838,3 +5838,41 @@ read another run's artifact, the default `contents: write` grant not being
 enough; and a step's own `env` is not in scope for that step's `if`, so the
 guard is `continue-on-error` — a missing or expired artifact should cost the
 run nothing and fall through to fetching normally.
+
+---
+
+### 4.80 The Fubon arithmetic is validated before the data arrives, on the workbook's own numbers
+
+4.78 proposed recovering Fubon's hedge/policy split from its statements rather
+than its slide. The step that needed checking is whether the other half of the
+identity — the merged wedge, restated onto the common base — is actually right,
+because if it is not then no amount of policy-liability data helps.
+
+It is right. On every date where both the deck and the workbook exist:
+
+| date | 100 − naked − equity, from Fubon's deck | workbook hedge + policy | difference |
+|---|---|---|---|
+| 2018-12-31 | 76.1% | 76.2% | −0.1 |
+| 2019-03-31 | 72.1% | 72.0% | +0.1 |
+| 2023-09-30 | 65.1% | 65.0% | +0.1 |
+| 2023-12-31 | 73.7% | 73.7% | 0.0 |
+
+A tenth of a point, four times. So the merged wedge is on the workbook's base
+and the only missing term is the policy share. The moment Fubon's
+foreign-currency policy liability is known:
+
+    hedge% = (100 − naked − equity) − policy%
+
+with the policy share being those liabilities over the firm's foreign assets,
+exactly as Mercuries' now reads at 19.4% and 19.2%.
+
+Two things follow. Fubon's eleven empty workbook cells — the single largest
+gap — are recoverable IF the disclosure exists, and the answer will be
+checkable against the workbook at four dates rather than asserted. And the
+same construction extends to any firm that merges the two on its slide, which
+is a general repair rather than a Fubon-specific one.
+
+The deck series behind it is quarterly and continuous: 1Q18 to FY25, running
+95.2% down to 57.7%, plus 2014-15. Fubon is about 15% of sector overseas
+investment and currently enters the aggregate only as a ceiling (4.76), so this
+would move the second-largest insurer onto the measure that can be interpreted.
