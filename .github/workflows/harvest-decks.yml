@@ -31,7 +31,12 @@ permissions:
   contents: write
 concurrency:
   group: harvest-decks
-  cancel-in-progress: false
+  # TRUE, deliberately. A full harvest costs about 270 billed minutes and this
+  # workflow fires on any edit to itself or its script, so a mistaken run used
+  # to have to be waited out. The harvest resumes — it skips decks already
+  # held, and its commit step runs on cancellation — so a superseding push
+  # loses nothing but the current download.
+  cancel-in-progress: true
 jobs:
   harvest:
     runs-on: ubuntu-latest
@@ -49,6 +54,13 @@ jobs:
         env:
           TLFX_MOPS_GAP: ${{ github.event.inputs.gap || '8' }}
           TLFX_MOPS_BLOCK_WAIT: '120'
+          # Ask the cheap question first. A full harvest is eleven issuers over
+          # nine years and costs about 270 billed minutes; the LISTING alone
+          # answers "does this company hold investor conferences at all" in
+          # about a minute, and that answer decides whether a download is worth
+          # running. Blank both to run a full harvest.
+          TLFX_DECK_ISSUERS: '2867 2876 5873'
+          TLFX_DECK_INDEX_ONLY: '1'
         run: python3 -u scripts/stage7_deck_harvest.py ${{ github.event.inputs.years }}
       # always(): the decks cost minutes each. A failure late in the run must
       # not throw away the pages that were already captured.

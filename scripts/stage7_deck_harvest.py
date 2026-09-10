@@ -204,13 +204,23 @@ def deck_text(name):
 
 def main():
     years = [int(x) for x in sys.argv[1:]] or list(range(115, 106, -1))
+    # A full harvest is eleven issuers over nine years and costs about 270
+    # billed minutes. Asking "does this company hold investor conferences at
+    # all" needs the LISTING only, which is a few seconds an issuer, and the
+    # answer decides whether a download is worth running. Running the full
+    # harvest to find out was the wrong instinct and an expensive one.
+    only = [x for x in (os.environ.get("TLFX_DECK_ISSUERS") or "").split() if x]
+    index_only = (os.environ.get("TLFX_DECK_INDEX_ONLY") or "").strip() == "1"
+    issuers = ({k: v for k, v in ISSUERS.items() if k in only} if only
+               else ISSUERS)
     store = {}
     if OUT.exists():
         with gzip.open(OUT, "rt", encoding="utf-8") as fh:
             store = json.load(fh)
     index = []
-    print(f"harvesting {len(ISSUERS)} issuers over ROC {years}\n", flush=True)
-    for co_id, ent in ISSUERS.items():
+    print(f"{'listing' if index_only else 'harvesting'} {len(issuers)} "
+          f"issuers over ROC {years}\n", flush=True)
+    for co_id, ent in issuers.items():
         for y in years:
             rows = listing(co_id, y)
             if rows:
@@ -218,6 +228,17 @@ def main():
                       flush=True)
             index += rows
     print(f"\n{len(index)} conferences listed", flush=True)
+    if index_only:
+        seen = {}
+        for r in index:
+            seen.setdefault(r["co_id"], []).append(r["date"])
+        for co_id in issuers:
+            ds = sorted(seen.get(co_id, []))
+            print(f"  {co_id} {issuers[co_id]:<18}"
+                  + (f"{len(ds):>4} conferences  {ds[0]} .. {ds[-1]}" if ds
+                     else "   none — files no investor conference on MOPS"),
+                  flush=True)
+        return 0
 
     # MISSING FIRMS FIRST. Sorted by date, run 1 spent three hours on Cathay
     # and Fubon decks from 2021-22 — firms this project already covers — and
