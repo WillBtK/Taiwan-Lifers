@@ -78,7 +78,17 @@ SOURCES = [
 # so close the question decisions 4.19 could only bound.
 #
 # Pages are Big5 HTML, ~20-130KB each, addressed by 統一編號 (config/firm_uids.tsv).
-FIRM_PAGES = [("Info2-1", "資金運用表"), ("Info2-5", "準備金"),
+#
+# Info2-2 is the BALANCE SHEET, added 2026-09-10 for the denominator. Info2-1
+# is the right table and the wrong frequency: it prints the latest month and
+# three preceding YEAR-ENDS, so 國外投資 is observed about four times a decade
+# per firm and interpolated everywhere else. Measured against the sell-side
+# workbook, an observed denominator is 0.4% out and an interpolated one 2.8%,
+# worst 8.3% — which is the precision limit on the whole aggregate, since the
+# structure shares are exact almost everywhere they exist (4.71). The balance
+# sheet carries 國外投資 as an asset line at quarterly rests.
+FIRM_PAGES = [("Info2-1", "資金運用表"), ("Info2-2", "資產負債表"),
+              ("Info2-5", "準備金"),
               ("Info2-14", "其他負債項下之特別準備及其他準備")]
 
 
