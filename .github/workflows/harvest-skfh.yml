@@ -54,3 +54,4 @@ jobs:
             git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true
             git push
           fi
+# 2026-09-10: first run, once skfh.irpro.co was permitted on the relay.
