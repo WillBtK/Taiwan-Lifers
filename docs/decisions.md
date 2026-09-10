@@ -5411,3 +5411,75 @@ prints the split of traditional hedging between currency swaps and NDFs —
 53/47 at 9M21, 51/49 at FY21, 53/47 at FY22 — and the annual hedging cost and
 FX volatility reserve balance beside it. 4.67 noted the split exists; this is
 ten years of it for one firm.
+
+---
+
+### 4.71 Cell by cell against the workbook: what is missing, what differs, and the two dating errors it found
+
+`stage7_benchmark_check.py` answers "where the two overlap, do they agree" and
+kept reporting a flattering number, because a mean absolute difference computed
+over the cells that happen to exist says nothing about the cells that do not.
+The workbook is a 55-cell rectangle — five firms, eleven quarters, no holes —
+so `stage7_benchmark_gaps.py` asks the prior question instead, per column,
+distinguishing what we cannot fill from what we fill differently.
+
+**The four structure shares: 40 of 55 filled, 39 of them exact.** The 15 that
+are not are three distinct problems, and only one is a parsing failure.
+
+| gap | cells | why |
+|---|---|---|
+| Fubon, all 11 | hedge and policy | the deck merges traditional and natural hedge into one wedge — all 173 rows, every year |
+| Fubon, 7 of 11 | naked and equity | no deck slide at all for those quarters |
+| Shin Kong, 9 of 11 | all four | 2023-06 to 2025-06: conference ids the archive never crawled, and the pre-merger 2887 decks describe Taishin Life (4.70) |
+| KGI, 2 of 11 | all four | the slide did not exist before 2022 |
+| Taiwan Life, 1 of 11 | all four | no FY18 deck in the corpus |
+
+**Two dating errors surfaced, one theirs and one ours.**
+
+*Ours.* Taiwan Life's slide is titled `3M19避險組合` until 2021 and
+`3M21外幣投資資產` after, and only the second form was recognised. The 1Q19 pie,
+published 30 April, fell through to the rule that a deck published by April
+reports the prior year, and was filed as FY18 — a quarter's error, on precisely
+the row the workbook disagreed with. Fixed by widening the label; the 1Q19 cell
+now matches on all four shares. **Widening the noun to a bare 外幣 as well
+looked tidier and silently re-dated eight later quarters onto each other**,
+which is why the label alone is widened and the diff was checked.
+
+*Theirs.* Cathay's 2018-12-31 row is the **9M18 slide**. Cathay printed 69/16/15
+at 9M18 and 61/22/17 at FY18, both against an FX-risk share of 70%. The
+workbook's 48.3 is 69 x 0.70; ours is 61 x 0.70 = 42.7, from the deck that says
+`FY18避險成本1.28%`. The workbook's own denominator for that row, 3,846.1, is the
+FY18 figure — the FY18 slide prints 外幣資產 NT$3.85兆 and the 9M18 slide prints
+3.80兆 — so the row carries a September structure on a December base. This is
+the first place the independent build contradicts the benchmark rather than
+merely failing to reach it, and it is the reason the project does not ingest
+the workbook.
+
+On that same slide the workbook also assigns the two non-swap wedges the other
+way round (naked 15, equity 16, against our naked 16, equity 15). At 9M18 the
+two are a point apart so the assignment is genuinely ambiguous; everywhere they
+are far apart the workbook uses our rule.
+
+**The swap/NDF split: 0 of the 50 cells the workbook publishes.** Not a parsing
+gap. Only Shin Kong prints it, in a footnote on the pie slide, and it does so at
+2016-12, 2017-09, 2018-09, 2018-12, 2020-12, 2021-09, 2021-12 and 2022-12 —
+none of which is a workbook date except 2018-12, where the workbook leaves the
+split blank. Cathay, Fubon, KGI and Taiwan Life do not disclose it.
+
+**The denominators are the weakest column and the report now says so.** 國外投資
+is observed at 22 of 55 cells (Bureau page or printed on the slide) and
+interpolated at 27; 資金運用總計 is observed at 11 and interpolated at 32. Where
+observed the mean absolute error is 0.4% and 1.6%; where interpolated it is
+2.8% and 2.1%, worst 8.3%. **The interpolated figures are what the aggregate
+weights by**, so this is the real precision limit on the sector line — not the
+structure shares, which are exact almost everywhere they exist. Six overseas
+cells and twelve total cells have nothing at either end to interpolate between,
+all of them Fubon, KGI or Cathay at 2018-12, 2019-03 or 2023-06/09.
+
+Three cells differ by more than 2% where we hold the firm's OWN figure — KGI
+2023-12 (1,647 against 1,720), Fubon 2023-12 (3,249 against 3,159), Taiwan Life
+2024-12 total (2,065 against 1,979). Those are definitional, not arithmetic,
+and the definition has not been run down. Formosa bonds are the obvious
+candidate — legally domestic, FX-denominated, excluded from the Bureau's
+國外投資 — but the sign is inconsistent across the three, so it is recorded as
+an open question rather than an explanation.

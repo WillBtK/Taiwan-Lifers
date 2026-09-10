@@ -1,0 +1,88 @@
+Against 55 workbook cells: 5 firms x 11 quarters, no holes.
+
+THE FOUR STRUCTURE SHARES
+  h = hedge, p = policy, n = naked, e = equity. . means we have no value; a digit is |difference| in pp, rounded; * is over 0.5pp.
+
+  firm            1812   1903   2306   2309   2312   2403   2406   2409   2412   2503   2506
+  Cathay          *0**   0000   0000   0000   0000   0000   0000   0000   0000   0000   0000
+  Fubon           ..00   ..00   ....   ..00   ..00   ....   ....   ....   ....   ....   ....
+  KGI             ....   ....   0000   0000   0000   0000   0000   0000   0000   0000   0000
+  Shin Kong       0000   0000   ....   ....   ....   ....   ....   ....   ....   ....   ....
+  Taiwan Life     ....   0000   0000   0000   0000   0000   0000   0000   0000   0000   0000
+
+  cells we cannot fill, by firm and column:
+    Fubon        fx_policy_pct            11 of 11
+    Fubon        traditional_hedge_pct    11 of 11
+    Shin Kong    equity_fund_pct           9 of 11
+    Shin Kong    fx_policy_pct             9 of 11
+    Shin Kong    proxy_naked_pct           9 of 11
+    Shin Kong    traditional_hedge_pct     9 of 11
+    Fubon        equity_fund_pct           7 of 11
+    Fubon        proxy_naked_pct           7 of 11
+    KGI          equity_fund_pct           2 of 11
+    KGI          fx_policy_pct             2 of 11
+    KGI          proxy_naked_pct           2 of 11
+    KGI          traditional_hedge_pct     2 of 11
+    Taiwan Life  equity_fund_pct           1 of 11
+    Taiwan Life  fx_policy_pct             1 of 11
+    Taiwan Life  proxy_naked_pct           1 of 11
+    Taiwan Life  traditional_hedge_pct     1 of 11
+
+  differences over 0.5pp where we DO have the value:
+    Cathay       2018-12-31  traditional_hedge_pct   workbook   48.3   ours   42.7    -5.6
+    Cathay       2018-12-31  proxy_naked_pct         workbook   10.5   ours   15.4    +4.9
+    Cathay       2018-12-31  equity_fund_pct         workbook   11.2   ours   11.9    +0.7
+
+
+THE CURRENCY-SWAP / NDF SPLIT
+  the workbook publishes it for 50 of 55 cells; we can fill 0 of those 50.
+  Only Shin Kong prints the split, in a footnote on the pie slide,
+  and it does so on these dates:
+    2016-12-31, 2017-09-30, 2018-09-30, 2018-12-31, 2020-12-31, 2021-09-30, 2021-12-31, 2022-12-31
+  None of them is a workbook date except 2018-12-31, where the
+  workbook itself leaves the split blank. Cathay, Fubon, KGI and
+  Taiwan Life do not publish it at all, so those cells are not a
+  parsing gap — the number is not disclosed by the firm.
+
+
+THE TWO DENOMINATORS
+  obs = the firm's own figure at that month, from the Bureau's page
+  or printed on the slide. est = interpolated between observations,
+  which is what the aggregate weights by. Error is ours vs theirs.
+
+  overseas_investment_ntd_bn  (國外投資)
+    observed 22, estimated 27, unavailable 6  of 55
+    obs: mean |error|  0.43%   worst   4.3% (KGI 2023-12-31: ours 1,647 vs 1,720)
+    est: mean |error|  2.75%   worst   8.3% (Fubon 2025-06-30: ours 3,419 vs 3,157)
+    over 2.0% (16 cells):
+      Fubon        2025-06-30  est  ours    3,419   workbook    3,157     +8.3%
+      Taiwan Life  2025-06-30  est  ours    1,453   workbook    1,342     +8.2%
+      KGI          2025-06-30  est  ours    1,729   workbook    1,613     +7.2%
+      Shin Kong    2025-06-30  est  ours    2,390   workbook    2,261     +5.7%
+      Shin Kong    2023-09-30  est  ours    2,385   workbook    2,497     -4.5%
+      KGI          2023-12-31  obs  ours    1,647   workbook    1,720     -4.3%
+      Taiwan Life  2023-09-30  est  ours    1,372   workbook    1,427     -3.8%
+      Fubon        2024-09-30  est  ours    3,416   workbook    3,301     +3.5%
+      Shin Kong    2025-03-31  est  ours    2,450   workbook    2,525     -3.0%
+      Fubon        2023-12-31  obs  ours    3,249   workbook    3,159     +2.8%
+      Taiwan Life  2019-03-31  est  ours    1,166   workbook    1,199     -2.7%
+      Taiwan Life  2024-06-30  est  ours    1,418   workbook    1,455     -2.5%
+
+  total_investment_ntd_bn  (資金運用總計)
+    observed 11, estimated 32, unavailable 12  of 55
+    obs: mean |error|  1.58%   worst   4.4% (Taiwan Life 2024-12-31: ours 2,065 vs 1,979)
+    est: mean |error|  2.14%   worst   7.0% (KGI 2025-06-30: ours 2,340 vs 2,188)
+    over 2.0% (21 cells):
+      KGI          2025-06-30  est  ours    2,340   workbook    2,188     +7.0%
+      Fubon        2025-06-30  est  ours    5,318   workbook    4,972     +7.0%
+      Shin Kong    2025-06-30  est  ours    3,516   workbook    3,355     +4.8%
+      Taiwan Life  2025-03-31  est  ours    2,079   workbook    1,992     +4.4%
+      Taiwan Life  2024-12-31  obs  ours    2,065   workbook    1,979     +4.4%
+      Taiwan Life  2025-06-30  est  ours    2,093   workbook    2,008     +4.3%
+      Cathay       2024-06-30  est  ours    7,639   workbook    7,937     -3.8%
+      Taiwan Life  2024-09-30  est  ours    2,045   workbook    1,971     +3.8%
+      Cathay       2024-03-31  est  ours    7,547   workbook    7,815     -3.4%
+      Taiwan Life  2024-06-30  est  ours    2,025   workbook    1,962     +3.2%
+      Cathay       2024-09-30  est  ours    7,730   workbook    7,957     -2.9%
+      Fubon        2024-09-30  est  ours    5,156   workbook    5,017     +2.8%
+

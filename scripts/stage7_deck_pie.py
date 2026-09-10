@@ -126,8 +126,18 @@ S_PIE = re.compile(r"股\s*票\s*及\s*基\s*金|股\s*票\s*備\s*供\s*出\s*�
 S_BASE = re.compile(r"(?:外\s*幣\s*資\s*產\s*)?總\s*計\s*=\s*新\s*台\s*幣\s*"
                     r"([\d,]+(?:\.\d+)?)\s*億\s*元"
                     r"|Total\s*=\s*NT\$\s*([\d,]+(?:\.\d+)?)\s*bn")
-S_PER = re.compile(r"(\d)M(\d{2})\s*外幣投資資產|(\d)[QH](\d{2})\s*外幣"
-                   r"|(20\d{2})\s*外幣投資資產"
+# The slide's own period label. Taiwan Life titles it "3M19避險組合" until 2021
+# and "3M21外幣投資資產" after, and only the second form was recognised — so the
+# 1Q19 pie, published 30 April, fell through to the rule that a deck published
+# by April reports the prior year and was filed as FY18. That is a quarter's
+# error on one row and it was the row the sell-side workbook disagreed with.
+#
+# Only the label is widened. Loosening the noun to a bare 外幣 as well looked
+# tidier and silently re-dated eight later quarters onto each other, because
+# 外幣 appears all over these pages.
+_LBL = r"(?:外\s*幣\s*投\s*資\s*資\s*產|避\s*險\s*組\s*合)"
+S_PER = re.compile(rf"(\d)M(\d{{2}})\s*{_LBL}|(\d)[QH](\d{{2}})\s*(?:外\s*幣"
+                   rf"|避\s*險\s*組\s*合)|(20\d{{2}})\s*{_LBL}"
                    r"|新光人壽[^0-9]{0,40}?(\d)[QH](\d{2})")
 PROXY = re.compile(r"避\s*險\s*部\s*位\s*包\s*含[^。]{0,40}proxy", re.I)
 
