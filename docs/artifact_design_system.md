@@ -414,6 +414,12 @@ details.more[open]>summary{ border-bottom:1px solid var(--line-2); }
 .more-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
 @media (max-width:720px){ .more-grid{ grid-template-columns:1fr; } }
 .asof-chip{ display:inline-block; font-size:11px; color:var(--teal); border:1px solid var(--teal); border-radius:99px; padding:1px 8px; font-variant-caps:small-caps; letter-spacing:0.03em; margin-left:8px; }
+/* phone width: the rail becomes a header, the main column takes the page */
+@media (max-width: 760px){
+  .app{ flex-direction:column; }
+  .rail{ width:100%; height:auto; position:static; border-right:none; border-bottom:1px solid var(--line); padding:20px 16px 18px; }
+  .main{ padding: 24px 16px 80px; }
+}
 ```
 
 ## 3. JS — core helpers (paste verbatim into the first `<script>` block, after parsing `DATA`)
@@ -960,3 +966,17 @@ Amendments so far:
   it previously failed the chroma floor in light and the lightness band in
   dark (§2, §7).
 - Text flow and editorial register specified (§8).
+- Phone width (TLFX, 2026-09-10). The 272px sticky rail beside a `.main`
+  column left no room for content at 400px and the page scrolled sideways,
+  which the Artifact host forbids. One media query at the end of §2 stacks
+  the rail above the main column below 760px and drops the main padding to a
+  16px gutter. Nothing else changes; the rail keeps its brand, nav and theme
+  toggle.
+- Live legend colours (TLFX, 2026-09-10). `lineChart()` bakes each series'
+  colour into the opts object at build time, so a theme switch redraws the
+  lines with the old palette and never touches the legend. A page-building
+  wrapper that rebuilds the opts from `COL()` inside the registered render
+  function, and re-emits `legend()` from the same series list, fixes both;
+  the §3 primitives are unchanged. Copy the `chartCard()` pattern from TLFX
+  (`artifact/index.template.html`) rather than calling `lineChart()` directly
+  when a chart's colours must follow the theme.

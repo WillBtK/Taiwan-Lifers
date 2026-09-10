@@ -5953,3 +5953,40 @@ website, neither cancellable from this session. A commit whose message contains
 `[no-pull]` now configures the workflow without running it, as a step rather
 than a job-level condition so the run still appears and says why it did
 nothing.
+
+### 4.83 The artifact answers the spillover question, not the disclosure one
+
+The page (`artifact/index.html`, built by `scripts/stage8_artifact_blob.py`
+from `artifact/index.template.html`) is organised around the question the user
+put on 2026-09-10: how large is the unhedged foreign-currency exposure, is the
+sector cutting the book or carrying the risk, and what does a large NT-dollar
+move do to it. It is not organised around the regulatory hedge ratio, the
+disclosure regime, or firm performance.
+
+The headline series is new to the repo as a published figure and is defined
+here. **Unhedged foreign assets** = sector foreign investments (FSC 表17-1,
+monthly, held one quarter past the last print) × the sector-weighted
+naked-plus-equity share of the firms that disclose it (the four pie firms and
+Fubon's merged wedge, `deck_pie.csv` and `hedging_structure.csv`), converted
+at CBC month-end USD/TWD. It is an estimate: the share is measured for firms
+holding 38–65% of the book depending on the quarter and applied to the rest.
+US$107bn at 2017-12, US$172bn at 2024-12, US$213bn at 2025-06, US$342bn at
+2026-06 (NT$10.87tn, 49% of US$697bn). The 2026 jump is mostly Fubon's
+re-entry with a 37% protected wedge against 56% for the four pie firms.
+
+Everything else on the page is drawn from files already in `data/`; the blob
+script is the single place the page's numbers are assembled, so a figure on
+the page traces to a CSV row and from there to a source URL. The JP Morgan
+benchmark is shown cell by cell in a disclosure and grouped by entity, not by
+the workbook's label (it calls KGI Life "China Life" before the rename).
+
+Two spec amendments were needed and are logged in the spec's own §10: a
+phone-width media query (the Artifact host forbids sideways scroll and the
+272px rail left nothing at 400px) and a chart-card wrapper that rebuilds
+series colours and the legend from `COL()` on every redraw, because
+`lineChart()` bakes colours in at build time and a theme switch left stale
+lines and an untouched legend. The §2 tokens and §3 helpers are otherwise
+pasted verbatim.
+
+Rendered once in Chromium before publishing: nine SVG charts, no console
+errors, 400px viewport with no horizontal overflow.
