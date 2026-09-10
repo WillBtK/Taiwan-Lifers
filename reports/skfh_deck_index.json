@@ -1,1 +1,100 @@
-[]
+[
+ {
+  "conf_id": "254",
+  "label": "SKFH Company Overview Apr 2017 (CH)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/254/CH/SKFH%20Company%20Overview%20Apr%202017%20Chi_HYA3rHfHR3Pj.pdf",
+  "fx_pages": 8,
+  "via": "live"
+ },
+ {
+  "conf_id": "269",
+  "label": "SKFH Company Overview Mar 2018 (CH)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/269/CH/SKFH%20Company%20Overview%20Mar%202018%20Chi_ABiDUKAtDhkA.pdf",
+  "fx_pages": 8,
+  "via": "live"
+ },
+ {
+  "conf_id": "282",
+  "label": "SKFH Company Overview January 2019 (EN)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/282/EN/SKFH%20Company%20Overview%20January%202019%20Eng_2QDI3GFcAKhr.pdf",
+  "fx_pages": 6,
+  "via": "live"
+ },
+ {
+  "conf_id": "283",
+  "label": "SKFH Company Overview January 2019 (EN)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/283/EN/SKFH%20Company%20Overview%20January%202019%20Eng_2HnFAdNkeT6J.pdf",
+  "fx_pages": 6,
+  "via": "live"
+ },
+ {
+  "conf_id": "284",
+  "label": "2018Q4 (EN)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/284/EN/2018Q4%20Eng%20(H)_caj32AT1n5t8.pdf",
+  "fx_pages": 9,
+  "via": "live"
+ },
+ {
+  "conf_id": "285",
+  "label": "2018Q4 (EN)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/285/EN/2018Q4%20Eng%20(H)_Aknqng8rb2DJ.pdf",
+  "fx_pages": 9,
+  "via": "live"
+ },
+ {
+  "conf_id": "287",
+  "label": "2019Q1 (EN)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/287/EN/2019Q1%20Eng%20(H)_elDcjFHHRbRA.pdf",
+  "fx_pages": 6,
+  "via": "live"
+ },
+ {
+  "conf_id": "289",
+  "label": "SKFH Company Overview May 2019 (EN)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/289/EN/SKFH%20Company%20Overview%20May%202019%20Eng_T5eDAJaNc7FC.pdf",
+  "fx_pages": 9,
+  "via": "live"
+ },
+ {
+  "conf_id": "312",
+  "label": "2020Q4 (CH)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/312/CH/2020Q4%20Chi%20(H)_GAjH2jEBEFqL.pdf",
+  "fx_pages": 10,
+  "via": "live"
+ },
+ {
+  "conf_id": "325",
+  "label": "SKFH Company Overview December 2021 (CH)",
+  "url": "https://www.ir-cloud.com/taiwan/2888/events/325/CH/SKFH%20Company%20Overview%20December%20%202021%20Chi_H6NirNI4efTe.pdf",
+  "fx_pages": 6,
+  "via": "live"
+ },
+ {
+  "conf_id": "330",
+  "label": "2022-03-15 conference (CH)",
+  "url": "https://www.irpro.co/2888/events/330/CH/20220315154743-1.pdf",
+  "fx_pages": 9,
+  "via": "live"
+ },
+ {
+  "conf_id": "331",
+  "label": "2022-03-15 conference (CH)",
+  "url": "https://www.irpro.co/2888/events/331/CH/20220315154821-1.pdf",
+  "fx_pages": 6,
+  "via": "live"
+ },
+ {
+  "conf_id": "357",
+  "label": "2023-03-21 conference, FY22 (CH)",
+  "url": "https://www.irpro.co/2888/events/357/CH/20230321175446-1.pdf",
+  "fx_pages": 9,
+  "via": "live"
+ },
+ {
+  "conf_id": "404",
+  "label": "2024-08-26 conference (CH)",
+  "url": "https://www.irpro.co/2888/events/404/CH/20240826083438-1.pdf",
+  "fx_pages": 0,
+  "via": "live"
+ }
+]
