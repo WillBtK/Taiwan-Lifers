@@ -5598,3 +5598,59 @@ of its 2023-2025 cells, in the same direction each time, which a random
 interpolation error would not do. Either this project's Fubon share of the
 sector is slightly too high, or the workbook's Fubon 國外投資 excludes something
 the Bureau's includes. Not resolved.
+
+---
+
+### 4.74 The aggregate weights two different measures of "hedged" together, and it is worth up to 14 points
+
+Four insurers draw a pie with a 已避險 slice. Five report a derivative notional
+in their statutory accounts and no pie. The aggregate weights them together as
+though the two were the same quantity, and 4.72 established that for one firm
+they are and for another they are not: Shin Kong's notional over foreign assets
+reproduces its own slide to under a point, three times running; Taiwan Life's
+runs about twice its slide, systematically, on a table that parses exactly
+against the page.
+
+`scripts/stage7_measure_check.py` runs the series twice — as built, and
+restricted to the pie-publishing firms — and writes both.
+
+| | 2017-12 | 2026-06 | change | coverage |
+|---|---|---|---|---|
+| mixed, as built | 61.6% | 30.7% | −30.9pp | 48–88% |
+| deck measure only | 47.4% | 30.0% | −17.3pp | 31–50% |
+
+**The difference is −4.8pp on average and −14.3pp at its widest, and it is
+concentrated in exactly the years where the pie-publishing firms are thinnest.**
+In 2017-18 the deck-only sample is Cathay and Shin Kong, a third of the sector;
+the notional firms carrying the rest are Nan Shan at 84% and Hontai at 94%
+against Cathay's 44%. By 2021 the two series are within two or three points and
+from 2025 they cross.
+
+**So the headline fall depends on which measure you believe.** Both series fall,
+and both end at about 30%, but one starts at 62% and the other at 47%. A
+sentence like "the sector has halved its hedge ratio since 2017" is true of the
+mixed series and not of the deck-only one, where the fall is a third.
+
+Neither is known to be the wrong series and the comparison is not an error bar.
+The deck measure is one definition consistently applied to a third of the
+sector; the mixed one is seven eighths of the sector on two definitions. What
+the comparison does is stop the choice being made silently. Until 4.72's
+question is answered — why a gross notional and a disclosed hedged share differ
+by a factor of two for one firm and not at all for another — **the early history
+of this series should be quoted with the deck-only line beside it.**
+
+### 4.75 Two gaps close as NOT DISCLOSED rather than not found
+
+**KGI before 2022.** Its slide begins in 2022 and its statements never carry a
+notional. All 42 held filings disclose derivatives twice: in the related-party
+note, as affiliate swaps of USD 420-630mn, and in the main statements as a fair
+value — 換匯及遠期外匯合約 NT$34.7bn as a liability at 3Q23 — never a contract
+amount. That is Cathay's position exactly (4.56). Both routes are shut, so
+KGI's pre-2022 cells are a property of the disclosure and not of this project.
+
+**Taiwan Life's FY18.** The MOPS conference index for CTBC (2891) runs
+2018-11-12 then 2019-04-30 with nothing between: no FY18 investor conference was
+held, so no FY18 slide exists. The parent's IR host was checked as well —
+`ir.ctbcholding.com/download/YYYYMMDD.pdf` is a real and constructible pattern,
+and `20181231.pdf` turns out to be the related-party exposure return, not a
+deck. The workbook's Taiwan Life 2018-12-31 cell has no independent counterpart.

@@ -41,6 +41,7 @@ Run: python3 scripts/stage6_aggregate_hedge_ratio.py
 """
 import csv
 import collections
+import os
 import sys
 from pathlib import Path
 
@@ -213,13 +214,27 @@ def main():
         return None if lvl is None else s * lvl
 
     # ---- per-firm hedge ratio, at its own observation dates
+    #
+    # TWO MEASURES SIT IN HERE AND THEY ARE NOT THE SAME MEASURE. A deck's
+    # 已避險 slice and a statutory derivative notional over foreign assets agree
+    # for Shin Kong (35.5 against 34.7, 38.8 against 38.1, 32.3 against 32.2)
+    # and do not agree for Taiwan Life, whose gross notional runs about twice
+    # its own slide (4.72). Every firm that enters on notionals — Nan Shan,
+    # Fubon, Hontai, Bank Taiwan Life, Mercuries — publishes no pie to check
+    # against, and Nan Shan reads 84% and Hontai 94% where Cathay reads 44%.
+    #
+    # TLFX_SOURCE=deck restricts the series to the pie-publishing firms, so the
+    # size of that question can be read off rather than argued about. It is a
+    # diagnostic, not the default: the deck-only series covers a third of the
+    # sector where the mixed one covers seven eighths.
+    only = (os.environ.get("TLFX_SOURCE") or "").strip().lower()
     obs = collections.defaultdict(dict)
 
     # Fubon and Nan Shan: statutory notionals from the VERIFIED panel — only
     # rows that reconcile to the filing's own printed total survive into it.
     for r in csv.DictReader(open(PANEL, newline="", encoding="utf-8")):
         e = r["entity_id"]
-        if e not in NAME:
+        if e not in NAME or only == "deck":
             continue
         f = fbook(e, r["as_of"])
         if f:
@@ -240,6 +255,8 @@ def main():
     # A firm still absent after all of the above keeps whatever the older
     # structure file had for it. Nothing overwrites a deck reading.
     for r in csv.DictReader(open(STRUCT, newline="", encoding="utf-8")):
+        if only == "deck":
+            break
         if (r["traditional_hedge_pct"] and r["entity_id"] in NAME
                 and r["as_of"][:7] not in obs[r["entity_id"]]):
             obs[r["entity_id"]][r["as_of"][:7]] = \
