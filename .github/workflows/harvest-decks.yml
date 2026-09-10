@@ -30,13 +30,17 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: harvest-decks
-  # TRUE, deliberately. A full harvest costs about 270 billed minutes and this
-  # workflow fires on any edit to itself or its script, so a mistaken run used
-  # to have to be waited out. The harvest resumes — it skips decks already
-  # held, and its commit step runs on cancellation — so a superseding push
-  # loses nothing but the current download.
-  cancel-in-progress: true
+  # ONE GROUP ACROSS EVERY WORKFLOW THAT TOUCHES MOPS. The deck listing and the
+  # filing pull ran at once and both were throttled: 324 listing requests took
+  # 65 minutes against an 8-second floor, and the index step alongside it
+  # crawled. They are the same regulator's website from two runners, and
+  # queueing them costs nothing but wall-clock.
+  group: mops-traffic
+  # FALSE on both, so a queued run waits rather than killing one that is
+  # halfway through hours of downloading. The protection this gives up — a
+  # push superseding a mistaken harvest — matters much less now the harvest
+  # defaults to a one-year listing of about 48 requests.
+  cancel-in-progress: false
 jobs:
   harvest:
     runs-on: ubuntu-latest

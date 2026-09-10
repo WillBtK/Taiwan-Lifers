@@ -144,12 +144,22 @@ DATE = re.compile(r"(\d{2,3})/(\d{1,2})/(\d{1,2})")
 MONTHS = (3, 4, 5, 6, 8, 9, 11, 12)
 
 
-def listing(co_id, roc_year):
-    """Every investor conference that company filed that year."""
+def listing(co_id, roc_year, stats=None):
+    """Every investor conference that company filed that year.
+
+    stats, when given, counts what actually happened: requests made, requests
+    that came back None, and months served from cache. Without it an empty
+    result means either "this company held no conferences" or "every request
+    failed", and those are opposite conclusions. A listing run reported zero
+    for three insurers across nine years and could not say which it was — the
+    same defect the Shin Kong harvester had, in a second harvester.
+    """
     parts = []
     for m in MONTHS:
         key = CACHE / f"{co_id}_{roc_year}_{m:02d}.html"
         if key.exists():
+            if stats is not None:
+                stats["cached"] += 1
             parts.append(key.read_text(encoding="utf-8", errors="replace"))
             continue
         t = _post(LIST_URL, {"encodeURIComponent": "1", "step": "1",
@@ -157,7 +167,11 @@ def listing(co_id, roc_year):
                              "year": str(roc_year), "month": f"{m:02d}",
                              "co_id": co_id},
                   "https://mopsov.twse.com.tw/mops/web/t100sb02_1")
+        if stats is not None:
+            stats["requests"] += 1
         if t is None:
+            if stats is not None:
+                stats["failed"] += 1
             continue
         CACHE.mkdir(parents=True, exist_ok=True)
         key.write_text(t, encoding="utf-8")
@@ -213,6 +227,17 @@ def main():
     index_only = (os.environ.get("TLFX_DECK_INDEX_ONLY") or "").strip() == "1"
     issuers = ({k: v for k, v in ISSUERS.items() if k in only} if only
                else ISSUERS)
+    if index_only:
+        # A CONTROL, because "no rows" and "every request refused" look the
+        # same from here. 2882 files a conference most quarters, so if it comes
+        # back empty in the same run the run is what is broken, not the answer.
+        issuers = dict(issuers)
+        issuers.setdefault("2882", "cathay_life")
+        # And one year rather than nine: the listing is twelve requests a
+        # company-year, so nine years across three issuers is 324 of them and
+        # an hour of an eight-second throttle. One year answers "do they hold
+        # conferences at all" just as well.
+        years = years[:1] if len(years) > 1 else years
     store = {}
     if OUT.exists():
         with gzip.open(OUT, "rt", encoding="utf-8") as fh:
@@ -220,9 +245,12 @@ def main():
     index = []
     print(f"{'listing' if index_only else 'harvesting'} {len(issuers)} "
           f"issuers over ROC {years}\n", flush=True)
+    counts = {}
     for co_id, ent in issuers.items():
+        st = {"requests": 0, "failed": 0, "cached": 0}
+        counts[co_id] = st
         for y in years:
-            rows = listing(co_id, y)
+            rows = listing(co_id, y, st)
             if rows:
                 print(f"  {co_id} {ent:<18} ROC{y}: {len(rows)} conferences",
                       flush=True)
@@ -232,12 +260,28 @@ def main():
         seen = {}
         for r in index:
             seen.setdefault(r["co_id"], []).append(r["date"])
+        bad = any(c["failed"] and not c["requests"] - c["failed"]
+                  for c in counts.values())
         for co_id in issuers:
             ds = sorted(seen.get(co_id, []))
+            c = counts[co_id]
+            served = c["requests"] - c["failed"] + c["cached"]
             print(f"  {co_id} {issuers[co_id]:<18}"
                   + (f"{len(ds):>4} conferences  {ds[0]} .. {ds[-1]}" if ds
-                     else "   none — files no investor conference on MOPS"),
-                  flush=True)
+                     else "   none listed")
+                  + f"   [{served} of {c['requests'] + c['cached']} months "
+                    f"answered, {c['failed']} refused]", flush=True)
+        ctrl = seen.get("2882")
+        if not ctrl:
+            print("\n  THE CONTROL FOUND NOTHING EITHER. 2882 files a "
+                  "conference most quarters, so this run is broken and its "
+                  "zeroes mean nothing.", flush=True)
+        elif bad:
+            print("\n  Some months went unanswered; a zero above is not "
+                  "yet a finding.", flush=True)
+        else:
+            print("\n  The control answered, so a zero above is a real "
+                  "absence rather than a failed query.", flush=True)
         return 0
 
     # MISSING FIRMS FIRST. Sorted by date, run 1 spent three hours on Cathay

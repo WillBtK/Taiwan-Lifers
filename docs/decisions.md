@@ -5876,3 +5876,46 @@ The deck series behind it is quarterly and continuous: 1Q18 to FY25, running
 95.2% down to 57.7%, plus 2014-15. Fubon is about 15% of sector overseas
 investment and currently enters the aggregate only as a ceiling (4.76), so this
 would move the second-largest insurer onto the measure that can be interpreted.
+
+---
+
+### 4.81 A second harvester reported zero and could not say whether that meant anything
+
+The listing run for Mercuries, Hontai and TransGlobe came back with **zero
+conferences for all three across nine years**, and that result is not usable.
+
+It made 324 requests, not the 27 I expected — the listing is queried a MONTH at
+a time, twelve per company-year — and a request that comes back None is
+silently skipped. So an empty answer means either "this insurer holds no
+investor conferences" or "every request was refused", and the run cannot
+distinguish them. That is precisely the defect corrected in the Shin Kong
+harvester at 4.69, recurring in a second harvester, and the lesson evidently
+did not travel: **a search that finds nothing must say which of the two it
+was.**
+
+Three changes.
+
+`listing()` now counts requests made, requests refused, and months served from
+cache, and the summary prints them beside each zero.
+
+The index-only mode adds a **control issuer**. 2882 files a conference most
+quarters, so it is queried in the same run: if the control comes back empty the
+run is broken and its zeroes mean nothing, and the output says so in those
+words rather than leaving it to be noticed.
+
+And it asks one year rather than nine. Twelve requests a company-year against
+an eight-second floor makes nine years across three issuers an hour of
+throttled querying, and one year answers "do they hold conferences at all"
+just as well.
+
+**The two MOPS workflows now share a concurrency group.** They ran at once,
+from two runners, against the same regulator's website, and both were
+throttled — 324 listing requests took 65 minutes and the filing pull's index
+step crawled alongside it. Queueing them costs wall-clock and nothing else.
+Both are `cancel-in-progress: false`, so a queued run waits rather than killing
+one that is hours into downloading; the protection given up — a push
+superseding a mistaken harvest — matters much less now that the harvest
+defaults to a one-year listing of about 48 requests.
+
+So the question of 4.77 is still open, and is now asked in a way that can
+answer it.
