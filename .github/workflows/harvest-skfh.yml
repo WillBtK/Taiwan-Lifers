@@ -1,12 +1,13 @@
-# Shin Kong Financial's investor decks from skfh.irpro.co, through the relay.
+# Shin Kong Financial's investor decks, through the relay, file by file.
 #
 # The pre-2026 Shin Kong Life is roughly a tenth of sector overseas investment
-# and absent from the aggregate before 3Q25. Its decks are on skfh.irpro.co,
-# which refuses this project's sandbox and GitHub's runners alike with a 403
-# and answers the relay — so this needs both CI (for the token) and the relay
-# (for the egress).
+# and absent from the aggregate before 3Q25. Its decks refuse this project's
+# sandbox and GitHub's runners alike with a 403 and answer the relay — so this
+# needs both CI (for the token) and the relay (for the egress).
 #
-# Requires skfh.irpro.co in the relay's RELAY_ALLOWED_HOSTS.
+# Requires www.irpro.co and www.ir-cloud.com in RELAY_ALLOWED_HOSTS. The decks
+# to fetch are listed in config/skfh_decks.tsv, since no reachable index lists
+# them; adding a deck there is what re-runs this.
 name: harvest-skfh
 on:
   push:
@@ -14,6 +15,7 @@ on:
     paths:
       - '.github/workflows/harvest-skfh.yml'
       - 'scripts/stage7_skfh_harvest.py'
+      - 'config/skfh_decks.tsv'
   workflow_dispatch:
 permissions:
   contents: write
@@ -50,7 +52,7 @@ jobs:
           git add -f data/skfh_deck_text.json.gz 2>/dev/null || true
           git add -f reports/skfh_deck_index.json 2>/dev/null || true
           if git diff --cached --quiet; then echo 'unchanged'; else
-            git commit -m 'Harvest: Shin Kong investor-deck FX pages from irpro'
+            git commit -m 'Harvest: Shin Kong investor-deck FX pages'
             git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true
             git push
           fi

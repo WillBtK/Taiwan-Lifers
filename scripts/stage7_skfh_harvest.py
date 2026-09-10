@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shin Kong Financial's investor decks, via the relay, from skfh.irpro.co.
+"""Shin Kong Financial's investor decks, one addressed file at a time.
 
 WHY THIS EXISTS
 The pre-2026 Shin Kong Life is roughly a tenth of sector overseas investment
@@ -8,20 +8,25 @@ investor-conference filings for code 2888, and 2887 is Taishin, whose decks
 describe Taishin Life until the July 2025 merger — so nothing in the MOPS
 corpus covers the entity (4.61, 4.67).
 
-WHERE THEY ARE, WHICH TOOK SOME FINDING
-skfh.com.tw/events-conferences is an empty Angular shell. Its content API names
-the function but not the URL; the front-end resolves it through a second call,
-GET /skfh-portal-api/SystemUrlInfo, which maps funcId to URL:
+WHY IT NO LONGER WALKS AN INDEX
+The first version walked conference ids on skfh.irpro.co. That host serves a
+certificate which does not cover its own hostname; verification is not being
+relaxed for it, and every path on the host whose certificate IS valid returns
+404, 403 or the origin's own 500 (4.69, 4.70). The files, meanwhile, are wide
+open: every deck URL tried comes back 200 from www.irpro.co and
+www.ir-cloud.com alike. So the constraint is not access but ADDRESSING — the
+older host names files by title plus a random suffix, the newer by upload
+timestamp, and neither is constructible from a date.
 
-    conferencelisttw -> https://skfh.irpro.co/tw/event-institutional-investor-
-                        conference-list.php
+What is enumerable is the Wayback Machine's record of the two file stores,
+prefix-queried, which yields fourteen decks between 2017 and 2024. They are
+listed in config/skfh_decks.tsv and fetched from the live host, with the
+archived capture as a fallback so a host outage does not cost the run.
 
-So the index and the decks are on skfh.irpro.co, a host that refuses this
-project's sandbox and GitHub's runners alike with a 403 and answers the relay.
-The list page is year-filtered and shows only a handful at a time, but the
-per-conference page takes a plain integer id — 330 and 331 are 2022, 357 is
-2023, 404 is 2024, 415 to 421 are 2025 — so walking the id range finds every
-conference without needing the index's pagination at all.
+That is roughly annual rather than quarterly. Annual is exactly what the
+chain-link tolerates (MAX_GAP_Q = 4), so it carries the firm through the years
+it was missing instead of leaving them empty — but it is a floor on what Shin
+Kong contributes, not the full history, and the record should say so.
 
 WHAT IS KEPT
 The same arrangement as the MOPS deck harvest: only pages matching the
@@ -46,32 +51,29 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+MANIFEST = ROOT / "config" / "skfh_decks.tsv"
 OUT = ROOT / "data" / "skfh_deck_text.json.gz"
 INDEX = ROOT / "reports" / "skfh_deck_index.json"
 
-PAGE = "https://skfh.irpro.co/tw/event-institutional-investor-conference-page.php?id={}"
-LIST = "https://skfh.irpro.co/tw/event-institutional-investor-conference-list.php"
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
 GAP = float((os.environ.get("TLFX_IRPRO_GAP") or "1.5").strip())
-# Ids seen in the archive span 330 (2022) to 421 (2025). The window is widened
-# either side: below to reach 2018-2021, above so a conference filed after this
-# was written is not silently missed.
-ID_FROM = int((os.environ.get("TLFX_IRPRO_FROM") or "150").strip())
-ID_TO = int((os.environ.get("TLFX_IRPRO_TO") or "460").strip())
 
 FXPAGE = re.compile(
     r"避\s*險|匯\s*率\s*風\s*險|外\s*幣\s*資\s*產|換\s*匯|NDF|"
     r"外匯價格變動準備|currency\s*swap|hedg(?:e|ing)")
-PDF = re.compile(r'href="([^"]+\.pdf)"', re.I)
-DATE = re.compile(r"(20\d{2})[/.-](\d{1,2})[/.-](\d{1,2})")
 _last = [0.0]
 
 
-def relay(url, binary=False, timeout=120):
+def _throttle():
     d = GAP - (time.time() - _last[0])
     if d > 0:
         time.sleep(d)
+
+
+def relay(url, timeout=120):
+    """The live file, through the Taiwan relay. None on any refusal."""
+    _throttle()
     base = (os.environ.get("TAIWAN_RELAY_URL") or "").strip()
     token = (os.environ.get("TAIWAN_RELAY_TOKEN") or "").strip()
     req = urllib.request.Request(
@@ -82,30 +84,64 @@ def relay(url, binary=False, timeout=120):
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             body = r.read()
-        _last[0] = time.time()
-        return body if binary else body.decode("utf-8", "replace")
-    except urllib.error.HTTPError:
-        _last[0] = time.time()
+        return body
+    except Exception as e:                                   # noqa: BLE001
+        print(f"    relay: {type(e).__name__}: {e}", flush=True)
         return None
-    except Exception:                                        # noqa: BLE001
+    finally:
         _last[0] = time.time()
+
+
+def archived(url, ts, timeout=180):
+    """The capture the CDX index says returned this file. Fallback only."""
+    if not ts:
+        return None
+    wb = f"https://web.archive.org/web/{ts}id_/{url}"
+    try:
+        req = urllib.request.Request(wb, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read()
+    except Exception as e:                                   # noqa: BLE001
+        print(f"    archive: {type(e).__name__}: {e}", flush=True)
         return None
 
 
 def deck_pages(raw):
-    """The FX-hedging pages of one deck, flattened."""
+    """The FX-hedging pages of one deck, flattened. None if it will not open."""
     import fitz
     try:
         doc = fitz.open(stream=raw, filetype="pdf")
-    except Exception:                                        # noqa: BLE001
+    except Exception as e:                                   # noqa: BLE001
+        print(f"    not a readable pdf: {e}", flush=True)
         return None
-    pages = {}
+    pages, chars = {}, 0
     for i in range(doc.page_count):
         t = doc[i].get_text()
+        chars += len(t or "")
         if t and FXPAGE.search(t):
             pages[str(i + 1)] = re.sub(
                 r"\s+", " ", unicodedata.normalize("NFKC", t))
+    if not pages:
+        # The same distinction the note capture had to learn (4.62): a scan
+        # and a deck whose vocabulary simply does not match need opposite
+        # treatment, and a bare zero cannot tell them apart.
+        why = ("no text layer (scan)" if chars < 200 * doc.page_count
+               else "text present, no fx page matched")
+        print(f"    0 fx pages of {doc.page_count} — {why}", flush=True)
     return pages
+
+
+def manifest():
+    rows = []
+    for line in MANIFEST.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        parts = line.split("\t")
+        if parts[0] == "conf_id":
+            continue
+        rows.append(dict(zip(("conf_id", "label", "url", "wayback_ts"),
+                             (p.strip() for p in parts))))
+    return rows
 
 
 def main():
@@ -116,50 +152,50 @@ def main():
     if OUT.exists():
         with gzip.open(OUT, "rt", encoding="utf-8") as fh:
             store = json.load(fh)
-    index, done = [], 0
-    print(f"walking conference ids {ID_FROM}..{ID_TO}\n", flush=True)
-    for cid in range(ID_FROM, ID_TO + 1):
-        html = relay(PAGE.format(cid))
-        if not html or "conference" not in html.lower():
+    rows = manifest()
+    print(f"{len(rows)} decks listed in {MANIFEST.relative_to(ROOT)}\n",
+          flush=True)
+    index, got = [], 0
+    for row in rows:
+        key = f"{row['conf_id']}_{row['url'].rsplit('/', 1)[-1]}"
+        if key in store:
+            print(f"  {row['conf_id']:>4}  {row['label']}: held", flush=True)
+            index.append({k: row[k] for k in ("conf_id", "label", "url")}
+                         | {"fx_pages": len(store[key]["pages"])})
             continue
-        links = [urllib.parse.urljoin(PAGE.format(cid), u)
-                 for u in PDF.findall(html)]
-        m = DATE.search(html)
-        date = (f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
-                if m else None)
-        if not links:
+        print(f"  {row['conf_id']:>4}  {row['label']}", flush=True)
+        raw = relay(row["url"])
+        via = "live"
+        if not raw or raw[:4] != b"%PDF":
+            raw = archived(row["url"], row.get("wayback_ts"))
+            via = "archive"
+        if not raw or raw[:4] != b"%PDF":
+            print("    ! not retrieved from either", flush=True)
             continue
-        index.append({"id": cid, "date": date, "files": links})
-        print(f"  id {cid}  {date or '?':<12} {len(links)} file(s)", flush=True)
-        for u in links:
-            key = f"{cid}_{u.rsplit('/', 1)[-1]}"
-            if key in store:
-                continue
-            raw = relay(u, binary=True)
-            if not raw or raw[:4] != b"%PDF":
-                print(f"    ! {key}: not retrieved", flush=True)
-                continue
-            pages = deck_pages(raw)
-            if pages is None:
-                continue
-            store[key] = {"entity_id": "shinkong_life_pre2026", "conf_id": cid,
-                          "date": date, "url": u, "pages": pages}
-            done += 1
-            print(f"    {key}  {len(pages)} fx pages", flush=True)
-            if done % 5 == 0:
-                OUT.parent.mkdir(parents=True, exist_ok=True)
-                with gzip.open(OUT, "wt", encoding="utf-8") as fh:
-                    json.dump(store, fh, ensure_ascii=False)
+        pages = deck_pages(raw)
+        if pages is None:
+            continue
+        store[key] = {"entity_id": "shinkong_life_pre2026",
+                      "conf_id": int(row["conf_id"]), "label": row["label"],
+                      "url": row["url"], "via": via, "pages": pages}
+        got += 1
+        print(f"    {len(raw):,} bytes via {via}, {len(pages)} fx pages",
+              flush=True)
+        index.append({k: row[k] for k in ("conf_id", "label", "url")}
+                     | {"fx_pages": len(pages), "via": via})
+        if got % 4 == 0:
+            OUT.parent.mkdir(parents=True, exist_ok=True)
+            with gzip.open(OUT, "wt", encoding="utf-8") as fh:
+                json.dump(store, fh, ensure_ascii=False)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(OUT, "wt", encoding="utf-8") as fh:
         json.dump(store, fh, ensure_ascii=False)
     INDEX.parent.mkdir(parents=True, exist_ok=True)
     INDEX.write_text(json.dumps(index, ensure_ascii=False, indent=1),
                      encoding="utf-8")
-    ds = sorted(v["date"] for v in store.values() if v.get("date"))
-    print(f"\n{len(store)} decks with FX pages -> {OUT.relative_to(ROOT)}")
-    if ds:
-        print(f"  {ds[0]} .. {ds[-1]}")
+    with_fx = sum(1 for v in store.values() if v["pages"])
+    print(f"\n{len(store)} decks held, {with_fx} with an fx page "
+          f"-> {OUT.relative_to(ROOT)}")
     return 0
 
 
