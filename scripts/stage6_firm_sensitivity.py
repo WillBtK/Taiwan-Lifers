@@ -1051,6 +1051,26 @@ def save_note_text(store):
         json.dump(store, fh, ensure_ascii=False)
 
 
+# The FX-denominated INSURANCE liability, which is a different disclosure from
+# anything above and was never being kept. It matters because Fubon's investor
+# slide merges its derivative hedge and its foreign-currency policies into one
+# wedge and never splits them — the one gap in the sell-side comparison that is
+# a property of the disclosure rather than of this project (4.71). If the
+# statements state the policy liability by currency, the split follows:
+# policy = FX policy liabilities / foreign assets, hedge = wedge - policy.
+#
+# Mercuries states it plainly — "以外幣計價之保險合約及再保險合約之帳面金額",
+# US$5,318,560 thousand at NT$31.98 — and its page survived the old filter only
+# because it happens to mention 遠期外匯合約 as well. Whether the other insurers
+# state it is unknown, because their equivalent pages were never captured.
+POLICY_FX = re.compile(r"以\s*外\s*幣\s*計\s*價\s*之\s*(?:所\s*發\s*行\s*之\s*)?"
+                       r"保\s*險\s*合\s*約|保\s*險\s*及\s*再\s*保\s*險\s*合\s*約")
+# A page kept for this reason alone would not otherwise be re-fetched, so the
+# capture version is what tells a later run that its stored pages predate the
+# widened filter and the filing is worth downloading again.
+CAPTURE_VERSION = 2
+
+
 def note_pages(path):
     """Flattened text of the pages carrying a note we care about.
 
@@ -1067,7 +1087,8 @@ def note_pages(path):
         raw = unicodedata.normalize("NFKC", page.get_text())
         chars += len(raw.strip())
         if not (INSTR.search(raw) or "敏感度" in raw
-                or re.search(r"名目本金|合約金額|契約金額", raw)):
+                or re.search(r"名目本金|合約金額|契約金額", raw)
+                or POLICY_FX.search(raw)):
             continue
         if len(re.findall(r"\d{1,3}(?:,\d{3})+", raw)) < 4:
             continue                      # prose mentioning it, not a table
@@ -1181,6 +1202,12 @@ def pull():
     _notes_now = load_note_text()
     retry = {k for k, v in _notes_now.items()
              if not v.get("pages") and not v.get("empty")}
+    stale = {k for k, v in _notes_now.items()
+             if v.get("capture_version", 1) < CAPTURE_VERSION}
+    if stale:
+        print(f"  {len(stale)} filings captured under an older page filter; "
+              f"re-fetching so the widened one sees them")
+        retry |= stale
     if retry:
         print(f"  {len(retry)} filings captured no note pages and no reason; "
               f"retrying those")
@@ -1247,7 +1274,7 @@ def pull():
                 pages, empty_why = note_pages(p)
                 rec = {"entity_id": name, "co_id": co,
                        "roc_year": f["roc_year"], "quarter": f["quarter"],
-                       "pages": pages}
+                       "capture_version": CAPTURE_VERSION, "pages": pages}
                 if empty_why:
                     rec["empty"] = empty_why
                     print(f"    ~ {f['filename']}: no note pages — "

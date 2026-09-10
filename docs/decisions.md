@@ -5758,3 +5758,39 @@ the harvest's 270. That is the wrong instinct whatever minutes cost.
 
 Free minutes make this cheaper, not unimportant: a five-hour job still delays
 every result behind it and still hammers a public regulator's website.
+
+---
+
+### 4.78 A route to Fubon's hedge/policy split, which the page filter had been throwing away
+
+4.75 closed Fubon's missing hedge and policy shares — all eleven workbook
+quarters, the largest single gap — as a property of the disclosure: the slide
+merges derivatives and foreign-currency policies into one wedge and never
+splits them, in 173 decks since 2014. That is still true of the SLIDE. It is
+not necessarily true of the statements.
+
+**Mercuries states the foreign-currency insurance liability outright**, by
+currency, under the heading 以外幣計價之保險合約及再保險合約之帳面金額 —
+US$5,318,560 thousand at 31.98, NT$170bn, at 1Q26. If Fubon's statements carry
+the same table, the split follows arithmetically: the policy share is those
+liabilities over foreign assets, and the traditional hedge is the merged wedge
+less the policy share. That would put Fubon — about 15% of sector overseas
+investment — onto the line that can be interpreted rather than the ceiling.
+
+**Whether they do is unknown, and the reason is this project's.** The page
+filter keeps a page only if it mentions a derivative instrument, 敏感度, or a
+notional heading. Mercuries' page survived it by accident, because the same
+page happens to mention 遠期外匯合約. Searching the captured corpus finds the
+disclosure for Mercuries and for nobody else, which is not evidence that nobody
+else makes it — the pages that would carry it were never kept.
+
+So the filter now also keeps 以外幣計價之保險合約 and 保險及再保險合約, and a
+`capture_version` on each stored record says whether its pages predate the
+widening. All 302 held filings do, so all 302 are re-fetched once. That was
+worth deferring while minutes were billed and is worth doing now they are not.
+
+**The two ways this can come out are both worth having.** Either Fubon
+discloses the liability and the largest gap in the comparison closes, or it
+does not and 4.75's conclusion is upgraded from "the slide does not split it"
+to "neither the slide nor the statements do", which is a stronger claim than
+the evidence currently supports.
