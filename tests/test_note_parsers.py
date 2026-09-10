@@ -314,6 +314,27 @@ def test_numbers():
     return ok
 
 
+def test_mercuries_fx_policy():
+    """The foreign-currency POLICY liability, which is not a derivative.
+
+    Fubon merges its hedge and its foreign-currency policies into one slide
+    wedge and never splits them; if a firm states the policy liability in its
+    accounts the split follows. Mercuries states it, and the currency rows must
+    sum to the printed total or the table has been read at the wrong offset.
+    """
+    print("\nmercuries foreign-currency policy liability")
+    rows = m.parse_policy_fx(flat("mercuries_115q1_fx_policy.txt"))
+    ok = check("one period", len(rows), 1)
+    if not rows:
+        return False
+    r = rows[0]
+    ok &= check("as_of", r["as_of"], "2026-03-31")
+    ok &= check("liability NT$k", r["policy_ntd_k"], 170461433.0)
+    ok &= check("reconciles to its own total", r["reconciles"], True)
+    ok &= check("USD leg", "美金=5,318,560" in r["currencies"], True)
+    return ok
+
+
 def main():
     tests = [test_numbers, test_fubon_notionals, test_fubon_sensitivity,
              test_taiwan_life_by_currency, test_cathay_ifrs17,
@@ -322,7 +343,7 @@ def main():
              test_taiwan_life_rate, test_transglobe_rate,
              test_banktaiwan_rate, test_mercuries_rate,
              test_cathay_rate_by_currency, test_nanshan_rate_buckets,
-             test_shinkong_usd_prose]
+             test_shinkong_usd_prose, test_mercuries_fx_policy]
     results = [(t.__name__, t()) for t in tests]
     print("\n" + "=" * 60)
     for name, ok in results:

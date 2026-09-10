@@ -80,6 +80,7 @@ CACHE = ROOT / "cache" / "mops_stmt"
 PDFS = ROOT / "cache" / "mops_pdf"
 OUT = ROOT / "data" / "firm_sensitivity.csv"
 NOTIONAL_OUT = ROOT / "data" / "firm_hedge_notional.csv"
+POLICY_OUT = ROOT / "data" / "firm_fx_policy.csv"
 # The flattened text of every page carrying a note we parse. This is the
 # expensive thing: each filing costs two rate-limited requests, so a full
 # pull is hours, and until now a parser change meant paying that again. The
@@ -892,6 +893,78 @@ def parse_note_by_currency(flat):
     return out
 
 
+# The FX-denominated insurance liability, by currency, with the rate and the
+# NT$ equivalent beside it:
+#
+#   本公司於資產負債表日以外幣計價之保險合約及再保險合約之帳面金額如下:
+#   115年3月31日        外 幣      匯 率     新 台 幣
+#   保險及再保險合約 資 產 貨幣性項目
+#     美 金        $ 125       31.98    $ 3,982
+#     ...                                $ 4,051
+#   保險及再保險合約 負 債 貨幣性項目
+#     美 金      5,318,560     31.98  $ 170,087,557
+#     ...                              $ 170,461,433
+#
+# The LIABILITY total is the quantity that matters: it is the foreign-currency
+# policy book, which is the bucket Fubon's slide merges into its hedge wedge
+# and never splits (4.78). Its own printed total is the check — the currency
+# rows must sum to it, or the table has been read at the wrong offset.
+POLICY_HEAD = re.compile(r"以\s*外\s*幣\s*計\s*價\s*之\s*保\s*險\s*合\s*約"
+                         r"\s*及\s*再\s*保\s*險\s*合\s*約")
+POLICY_SIDE = re.compile(r"(資\s*產|負\s*債)\s*貨\s*幣\s*性\s*項\s*目")
+# A currency name, then three figures: the foreign amount, the rate, the NT$.
+POLICY_ROW = re.compile(
+    r"(美\s*金|澳\s*幣|歐\s*元|日\s*圓|英\s*鎊|港\s*幣|人民幣(?:\(離岸\))?|"
+    r"南\s*非\s*幣|紐\s*幣|新\s*加\s*坡\s*幣|加\s*拿\s*大\s*幣|瑞\s*士\s*法\s*郎)"
+    r"[^0-9(]{0,6}\(?\$?\s*([\d,]+(?:\.\d+)?)\s*\)?"
+    r"[^0-9]{0,4}([\d]+\.\d+)"
+    r"[^0-9(]{0,6}\(?\$?\s*([\d,]+)")
+
+
+def parse_policy_fx(flat):
+    """Foreign-currency insurance liabilities, NT$ thousands, per period.
+
+    Returns one row per balance-sheet date found, with the printed total and
+    whether the currency rows reconcile to it. A table that does not reconcile
+    is reported rather than dropped: the number is wanted precisely where a
+    firm's layout is new, and a silent drop would look like non-disclosure.
+    """
+    out = []
+    for h in POLICY_HEAD.finditer(flat):
+        seg = flat[h.end(): h.end() + 1400]
+        d = PERIOD_CJK.search(seg)
+        if not d:
+            continue
+        as_of = (f"{1911 + int(d.group(1))}-{int(d.group(2)):02d}-"
+                 f"{int(d.group(3)):02d}")
+        sides = list(POLICY_SIDE.finditer(seg))
+        for i, sd in enumerate(sides):
+            if "負" not in sd.group(1):
+                continue
+            end = sides[i + 1].start() if i + 1 < len(sides) else len(seg)
+            block = seg[sd.end(): end]
+            rows = [(m.group(1), float(m.group(2).replace(",", "")),
+                     float(m.group(3)), float(m.group(4).replace(",", "")))
+                    for m in POLICY_ROW.finditer(block)]
+            if not rows:
+                continue
+            # The printed total is the last large figure in the block. Where a
+            # layout omits it this picks up the last row instead, the check
+            # fails, and the row is flagged rather than silently wrong.
+            nums = [float(x.replace(",", ""))
+                    for x in re.findall(r"([\d,]{7,})", block)]
+            summed = sum(r[3] for r in rows)
+            total = nums[-1] if nums else summed
+            out.append({"as_of": as_of, "policy_ntd_k": summed,
+                        "printed_total_ntd_k": total,
+                        "currencies": ";".join(
+                            f"{c.replace(' ', '')}={v:,.0f}" for c, v, _r, _n
+                            in rows),
+                        "reconciles": abs(summed - total) <= max(
+                            1.0, 5e-4 * abs(total))})
+    return out
+
+
 def note_total(flat):
     """The 合計 notional printed on the page, per period.
 
@@ -1166,6 +1239,7 @@ def pull():
     idx = json.loads(IDX.read_text(encoding="utf-8"))
     rows, done_sens = _prior(OUT)
     notional_rows, done_not = _prior(NOTIONAL_OUT)
+    policy_rows = []
     # A filing that parsed to nothing is still done: without recording it, an
     # empty result would be retried on every future run, for ever.
     attempted, prior_ver = set(), None
@@ -1358,7 +1432,7 @@ def reparse():
               f"nothing to re-parse. The pull that produces it is the source, "
               f"and it takes hours — this is not an error.")
         return 0
-    rows, notional_rows = [], []
+    rows, notional_rows, policy_rows = [], [], []
     per_firm = {}
     for filing, rec in sorted(notes.items()):
         flat_all = " ".join(rec["pages"].values())
@@ -1437,6 +1511,10 @@ def reparse():
                 r.update(meta)
                 rows.append(r)
                 s += 1
+            for r in parse_policy_fx(flat):
+                r.update(entity_id=meta["entity_id"], co_id=meta["co_id"],
+                         filing=meta["filing"], page=meta["page"])
+                policy_rows.append(r)
         st = per_firm.setdefault(rec["entity_id"], [0, 0, 0])
         st[0] += 1
         st[1] += n
@@ -1450,6 +1528,18 @@ def reparse():
     # rows carry notional_ccy_k plus a currency. Keying on the NT$ field alone
     # raises on the currency rows, and dropping the currency from the key would
     # collapse a firm's USD and JPY legs into one.
+    if policy_rows:
+        _write(POLICY_OUT, policy_rows,
+               lambda r: (r["entity_id"], r["as_of"]))
+        ok = sum(1 for r in policy_rows if r["reconciles"])
+        firms = sorted({r["entity_id"] for r in policy_rows})
+        print(f"\n  {len(policy_rows)} foreign-currency policy-liability rows "
+              f"({ok} reconcile to their own printed total) "
+              f"-> {POLICY_OUT.relative_to(ROOT)}")
+        print(f"    firms disclosing it: {', '.join(firms)}")
+    else:
+        print("\n  no firm's captured pages carry the foreign-currency "
+              "policy liability")
     _write(NOTIONAL_OUT, notional_rows,
            lambda r: (r["entity_id"], r["as_of"], r["note_kind"],
                       r["instrument"], r.get("currency") or "NTD",
