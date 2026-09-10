@@ -76,3 +76,6 @@ jobs:
                        -m 'Automated by .github/workflows/fetch-sources.yml.'
             git push
           fi
+# 2026-09-10: re-run to verify the relay redeploy — the "Relay configuration"
+# step's /health output names the allowed hosts, and the fetch statuses say
+# whether the token now matches.
