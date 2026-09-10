@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
-"""Can the relay reach irpro.co, and where is Shin Kong's conference list?
+"""Where is a Shin Kong conference index the relay can actually reach?
 
-Two questions in one cheap run.
+The decks are open and the index is not (4.69): every deck URL tried on
+www.irpro.co returns 200, while the app that lists them answers only on
+skfh.irpro.co, which serves a certificate that does not cover its own
+hostname. Verification is not being relaxed for that, so the index has to be
+found somewhere else or the decks stay unreachable — their filenames carry a
+random suffix and cannot be constructed.
 
-FIRST, whether irpro.co answers the relay at all. It refuses this project's
-sandbox and GitHub's runners with a 403 — a bot filter rather than a geography
-one, since both are refused identically (4.13). The relay egresses from Taiwan
-with a browser user-agent, which may or may not be enough. The test is a file
-whose URL is already known to be good: the FY22 Shin Kong deck, recovered from
-the Wayback Machine, which carries the four-bucket pie on page 16. If that
-comes back as a PDF the route works and nothing else about it is in doubt.
+The archive says where else to look. Shin Kong's IR site is built by the same
+vendor on an older host, www.ir-cloud.com, whose certificate IS valid and
+which serves the same files under /taiwan/2888/. Crawled captures of it show
+a document library — downloadlibrary2.php?doctype=2&year=N, 活動訊息, with a
+year selector back to 2016 — and, on the pre-2020 skin, per-conference pages
+at irwebsite/recent.php?id=N. Either is the index this needs.
 
-SECOND, where the listing lives. skfh.com.tw/events-conferences is an iframe
-onto irpro.co and its content API names the function — systemId "irpro-tw",
-funcId "conferencelisttw" — but not the URL, which the front-end builds. The
-archive holds irpro files and no index, so the candidates below are guesses
-from that naming. One of them answering with HTML mentioning 法人說明會 is the
-index this project needs; all of them 404ing means the listing is built from a
-POST or a parameterised endpoint and the next step is reading the page's JS.
+So the candidates below split in two. The www.irpro.co ones cost nothing to
+try because the host is already permitted; if the same PHP app answers there
+under the /2888/ prefix, the problem is solved with no console work at all.
+The www.ir-cloud.com ones will be refused by the relay until that host is
+added to RELAY_ALLOWED_HOSTS, and are here to say whether asking for that is
+worth it.
 
 Nothing is written. This prints and exits.
 
@@ -33,28 +36,34 @@ import urllib.request
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
 
-# A file the archive proves exists, then the listing guesses.
-# skfh.irpro.co serves a certificate that does not cover its own hostname, so
-# the relay's TLS verification refuses it and no amount of allow-listing helps.
-# Verification is NOT being relaxed to get round that — a certificate that does
-# not match the host is exactly the case it exists to catch. So the question
-# becomes whether the same PHP app answers on a hostname the certificate IS
-# valid for, which is where the PDFs already come from.
+IRPRO = "https://www.irpro.co/2888"           # already permitted
+CLOUD = "https://www.ir-cloud.com/taiwan/2888"  # needs RELAY_ALLOWED_HOSTS
 TARGETS = [
-    ("www + /tw/ path",
-     "https://www.irpro.co/tw/event-institutional-investor-conference-list.php"),
-    ("www + /2888/tw/ path",
-     "https://www.irpro.co/2888/tw/event-institutional-investor-conference-list.php"),
-    ("www + /skfh/tw/ path",
-     "https://www.irpro.co/skfh/tw/event-institutional-investor-conference-list.php"),
-    ("www conference page id=357",
-     "https://www.irpro.co/tw/event-institutional-investor-conference-page.php?id=357"),
-    ("event directory",
-     "https://www.irpro.co/2888/events/357/CH/"),
-    ("known deck, control",
-     "https://www.irpro.co/2888/events/357/CH/20230321175446-1.pdf"),
+    # The same app under the file-store prefix, on the host whose certificate
+    # is valid. Free to try: nothing has to change for these to answer.
+    ("irpro: library, all years",
+     f"{IRPRO}/irwebsite_c/downloadlibrary2.php?doctype=2&year=0"),
+    ("irpro: library, 2022",
+     f"{IRPRO}/irwebsite_c/downloadlibrary2.php?doctype=2&year=2022"),
+    ("irpro: library index",
+     f"{IRPRO}/irwebsite_c/downloadlibrary.php"),
+    ("irpro: old skin event list",
+     f"{IRPRO}/irwebsite/event.php"),
+    ("irpro: old skin conference 330",
+     f"{IRPRO}/irwebsite/recent.php?id=330"),
+    ("irpro: known deck, control",
+     f"{IRPRO}/events/357/CH/20230321175446-1.pdf"),
+    # The host the archive actually crawled these pages on. Refused until it
+    # is allow-listed; the control says whether that refusal is the only thing
+    # in the way.
+    ("ir-cloud: library, all years",
+     f"{CLOUD}/irwebsite_c/downloadlibrary2.php?doctype=2&year=0"),
+    ("ir-cloud: old skin event list",
+     f"{CLOUD}/irwebsite/event.php"),
+    ("ir-cloud: known deck, control",
+     f"{CLOUD}/events/312/CH/2020Q4%20Chi%20(H)_GAjH2jEBEFqL.pdf"),
 ]
-DUMP = 2500
+DUMP = 1200
 
 
 def relay(base, token, url, timeout=90):
@@ -83,7 +92,7 @@ def describe(body):
     text = body.decode("utf-8", "replace")
     pdfs = sorted(set(re.findall(r'[^"\'\s>]+\.pdf', text, re.I)))
     ids = sorted(set(re.findall(r'id=(\d+)', text)), key=int)
-    return (f"{len(body):,} bytes | {len(pdfs)} pdf links {pdfs[:3]} | "
+    return (f"{len(body):,} bytes | {len(pdfs)} pdf links {pdfs[:4]} | "
             f"ids {ids[:12]}\n      "
             + " ".join(text.split())[:DUMP])
 
@@ -101,7 +110,9 @@ def main():
             h = json.load(r)
         print(f"relay /health: {h}")
         hosts = h.get("allowed_hosts", [])
-        print(f"  irpro allowed: {'www.irpro.co' in hosts}\n")
+        for want in ("www.irpro.co", "www.ir-cloud.com"):
+            print(f"  {want} allowed: {want in hosts}")
+        print()
     except Exception as e:                                   # noqa: BLE001
         print(f"relay /health failed: {e}\n")
 
