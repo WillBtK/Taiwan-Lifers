@@ -79,14 +79,16 @@ SOURCES = [
 #
 # Pages are Big5 HTML, ~20-130KB each, addressed by 統一編號 (config/firm_uids.tsv).
 #
-# Info2-2 is the BALANCE SHEET, added 2026-09-10 for the denominator. Info2-1
-# is the right table and the wrong frequency: it prints the latest month and
-# three preceding YEAR-ENDS, so 國外投資 is observed about four times a decade
-# per firm and interpolated everywhere else. Measured against the sell-side
-# workbook, an observed denominator is 0.4% out and an interpolated one 2.8%,
-# worst 8.3% — which is the precision limit on the whole aggregate, since the
-# structure shares are exact almost everywhere they exist (4.71). The balance
-# sheet carries 國外投資 as an asset line at quarterly rests.
+# Info2-2 is the per-firm BALANCE SHEET, added 2026-09-10. It was added to get
+# a quarterly 國外投資 and it DOES NOT CARRY ONE: it is the IFRS statement by
+# account code — 現金及約當現金, 透過損益按公允價值衡量之金融資產, 資產總額 —
+# and 國外投資 is a regulatory fund-utilisation classification that appears
+# only on Info2-1. It also prints one period, not a history.
+#
+# It is kept because the page is per firm, per quarter, and free once fetched:
+# total assets and equity by insurer at quarterly rests are worth having. It is
+# NOT the denominator fix, and the denominator did not need the fix it was
+# added for — see the correction in 4.73.
 FIRM_PAGES = [("Info2-1", "資金運用表"), ("Info2-2", "資產負債表"),
               ("Info2-5", "準備金"),
               ("Info2-14", "其他負債項下之特別準備及其他準備")]

@@ -5555,3 +5555,46 @@ does not carry at all.
 **Effect on the aggregate.** Nine firms behind the 2022 anchor rather than
 eight, coverage at the anchor 84% to **88%**, and Mercuries added at 26 dates
 from 2019-09. The series reads 61.6% (2017-12) to 30.7% (2026-06).
+
+---
+
+### 4.73 CORRECTION to 4.71: the denominator error was measured with an interpolant the aggregate does not use
+
+4.71 reported the estimated 國外投資 denominator as **2.75% mean absolute error
+against the workbook, worst 8.3%**, and called it "the real precision limit on
+the sector line". Both numbers are wrong and the conclusion drawn from them was
+wrong with them.
+
+The gap script interpolated the LEVEL of a firm's foreign investment linearly
+between observations. The aggregate does not do that and never has. It
+interpolates the firm's SHARE of the sector and multiplies by the sector total,
+which is monthly and observed — because a firm's share of the market moves
+slowly where its level moves with the whole market. Measured the way the
+aggregate actually computes it, the estimated denominator is **1.38% mean, 3.1%
+worst**, against 0.43% where the figure is observed outright.
+
+So the denominator is roughly twice as good as reported, the gap between an
+observed and an estimated one is about a point rather than two and a half, and
+it is NOT the binding constraint on the series. Measuring your own precision
+with a method you do not use, and getting a worse answer than the truth, is
+still getting it wrong.
+
+**The work that error justified was undertaken and found nothing.** Info2-2,
+the Bureau's per-firm balance sheet, was added to `fetch_sources.py` to get a
+quarterly 國外投資. It does not carry one: it is the IFRS statement by account
+code — 現金及約當現金, 透過損益按公允價值衡量之金融資產, 資產總額 — and 國外投資
+is a regulatory fund-utilisation classification that appears only on Info2-1.
+It also prints one period rather than a history. The page is kept, because
+total assets and equity per insurer at quarterly rests are worth having, with
+its docstring rewritten to say what it is rather than what it was fetched for.
+
+**The archive route for the denominator is separately exhausted.** A CDX sweep
+of `ins-info.ib.gov.tw/customer/Info2-1.aspx` returns captures for two of the
+ten insurers — Taiwan Life 2021, Fubon 2022 — and both are already loaded.
+
+**What the corrected measurement leaves.** One systematic bias worth a note:
+Fubon's estimated denominator runs 2.4% to 3.1% ABOVE the workbook at every one
+of its 2023-2025 cells, in the same direction each time, which a random
+interpolation error would not do. Either this project's Fubon share of the
+sector is slightly too high, or the workbook's Fubon 國外投資 excludes something
+the Bureau's includes. Not resolved.

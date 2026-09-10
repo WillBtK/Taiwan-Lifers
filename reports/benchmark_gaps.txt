@@ -47,26 +47,25 @@ THE CURRENCY-SWAP / NDF SPLIT
 
 THE TWO DENOMINATORS
   obs = the firm's own figure at that month, from the Bureau's page
-  or printed on the slide. est = interpolated between observations,
-  which is what the aggregate weights by. Error is ours vs theirs.
+  or printed on the slide. est = the aggregate's own estimate: the
+  firm's SHARE of the sector interpolated, times the sector total,
+  which is monthly and observed. Error is ours against theirs.
 
   overseas_investment_ntd_bn  (國外投資)
     observed 22, estimated 27, unavailable 6  of 55
     obs: mean |error|  0.43%   worst   4.3% (KGI 2023-12-31: ours 1,647 vs 1,720)
-    est: mean |error|  2.75%   worst   8.3% (Fubon 2025-06-30: ours 3,419 vs 3,157)
-    over 2.0% (16 cells):
-      Fubon        2025-06-30  est  ours    3,419   workbook    3,157     +8.3%
-      Taiwan Life  2025-06-30  est  ours    1,453   workbook    1,342     +8.2%
-      KGI          2025-06-30  est  ours    1,729   workbook    1,613     +7.2%
-      Shin Kong    2025-06-30  est  ours    2,390   workbook    2,261     +5.7%
-      Shin Kong    2023-09-30  est  ours    2,385   workbook    2,497     -4.5%
+    est: mean |error|  1.38%   worst   3.1% (Fubon 2024-09-30: ours 3,404 vs 3,301)
+    over 2.0% (10 cells):
       KGI          2023-12-31  obs  ours    1,647   workbook    1,720     -4.3%
-      Taiwan Life  2023-09-30  est  ours    1,372   workbook    1,427     -3.8%
-      Fubon        2024-09-30  est  ours    3,416   workbook    3,301     +3.5%
-      Shin Kong    2025-03-31  est  ours    2,450   workbook    2,525     -3.0%
+      Fubon        2024-09-30  est  ours    3,404   workbook    3,301     +3.1%
       Fubon        2023-12-31  obs  ours    3,249   workbook    3,159     +2.8%
-      Taiwan Life  2019-03-31  est  ours    1,166   workbook    1,199     -2.7%
-      Taiwan Life  2024-06-30  est  ours    1,418   workbook    1,455     -2.5%
+      Fubon        2025-03-31  est  ours    3,493   workbook    3,399     +2.8%
+      Fubon        2023-06-30  est  ours    3,234   workbook    3,151     +2.6%
+      Shin Kong    2023-09-30  est  ours    2,433   workbook    2,497     -2.6%
+      Fubon        2025-06-30  est  ours    3,235   workbook    3,157     +2.5%
+      Taiwan Life  2025-06-30  est  ours    1,374   workbook    1,342     +2.4%
+      Fubon        2023-09-30  est  ours    3,296   workbook    3,218     +2.4%
+      Shin Kong    2025-06-30  est  ours    2,312   workbook    2,261     +2.2%
 
   total_investment_ntd_bn  (資金運用總計)
     observed 11, estimated 32, unavailable 12  of 55

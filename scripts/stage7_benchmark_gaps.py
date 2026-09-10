@@ -30,6 +30,7 @@ DECKPIE = ROOT / "data" / "deck_pie.csv"
 STRUCT = ROOT / "data" / "hedging_structure.csv"
 WAYBACK = ROOT / "data" / "firm_fund_utilisation_wayback.csv"
 FUNDS = ROOT / "data" / "ib_firm_funds.csv"
+SECTOR = ROOT / "data" / "ib_indicators_monthly.csv"
 SKFH = ROOT / "data" / "skfh_deck_text.json.gz"
 SKFH_MAN = ROOT / "config" / "skfh_decks.tsv"
 
@@ -149,6 +150,15 @@ def firm_bn():
     return fi, tot
 
 
+def sector_bn():
+    """Sector 國外投資, NT$bn, monthly and observed."""
+    out = {}
+    for r in csv.DictReader(open(SECTOR, newline="", encoding="utf-8")):
+        if r.get("foreign_investments"):
+            out[r["obs_month"][:7]] = float(r["foreign_investments"]) / 1e3
+    return out
+
+
 def main():
     B, O = bench(), ours()
     SP = swap_split()
@@ -243,8 +253,10 @@ def main():
     # ---------------------------------------------------- denominators
     print("\n\nTHE TWO DENOMINATORS")
     print("  obs = the firm's own figure at that month, from the Bureau's page\n"
-          "  or printed on the slide. est = interpolated between observations,\n"
-          "  which is what the aggregate weights by. Error is ours vs theirs.\n")
+          "  or printed on the slide. est = the aggregate's own estimate: the\n"
+          "  firm's SHARE of the sector interpolated, times the sector total,\n"
+          "  which is monthly and observed. Error is ours against theirs.\n")
+    SEC = sector_bn()
     for col, src, unit in (("overseas_investment_ntd_bn", FI, "國外投資"),
                            ("total_investment_ntd_bn", TOT, "資金運用總計")):
         print(f"  {col}  ({unit})")
@@ -258,7 +270,22 @@ def main():
                     v, kind = pts[d[:7]], "obs"
                     n_obs += 1
                 else:
-                    v = _interp(pts, d)
+                    # The aggregate does NOT interpolate the level. It
+                    # interpolates the firm's SHARE of the sector and
+                    # multiplies by the sector total, which is monthly and
+                    # observed — a firm's share moves slowly where its level
+                    # moves with the whole market. Measuring the level
+                    # interpolation instead overstates the error the series
+                    # actually carries, which is the wrong direction to be
+                    # wrong about your own precision.
+                    v = None
+                    if col.startswith("overseas") and SEC:
+                        sh = _interp({m: x / SEC[m] for m, x in pts.items()
+                                      if m in SEC}, d)
+                        lvl = SEC.get(d[:7]) or _interp(SEC, d)
+                        v = None if (sh is None or lvl is None) else sh * lvl
+                    if v is None:
+                        v = _interp(pts, d)
                     kind = "est"
                     if v is None:
                         n_none += 1
