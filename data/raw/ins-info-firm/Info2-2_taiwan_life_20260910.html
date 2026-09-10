@@ -1,0 +1,1686 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head id="ctl00_Head1"><title>
+	保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資產負債表
+</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link href="/assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="/assets/css/bootstrap-3.3.6.min.css" rel="stylesheet" /><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick.css" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick-theme.css" /><link href="/assets/css/main.css?v1.1" rel="stylesheet" />
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-27907866-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119881418-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119881418-1');
+</script>
+
+    
+</head>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
+<script language=javascript >
+
+
+    function prep() {
+        //alert('go back');
+        history.go(-1);
+        //window.location.href = "default.aspx"
+    }
+    //-------------------
+    //      有問題
+    //-------------------
+    function postData(url) {
+        document.forms[0].action = url;
+        document.forms[0].submit();
+    }
+
+    function sendURL(url) {
+        window.location = url;
+    }
+
+    function setInsuType(type) {
+        var idx = 0;
+        if (type == "A")
+            idx = 0;
+        else if (type == "產險")
+            idx = 1;
+        else if (type == "壽險")
+            idx = 2;
+
+        //document.getElementById("insurancetype").selectedIndex = idx;
+        document.getElementById('insurancetype').options(idx).selected = true;
+    }
+
+</script>
+
+<body>
+<noscript><div style="z-index: 99999;color: black;background: #fff;right: 0;top: 0;width:100%;padding: 10px;">您的瀏覽器不支援JavaScript語法，若網頁功能無法正常使用時，請開啟瀏覽器JavaScript功能</div></noscript>
+    <form name="aspnetForm" method="post" action="Info2-2.aspx?UID=03557017" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="FAE5C337" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+    <a href="#C" id="gotocenter" title="跳到主要內容" tabindex="1" class="sr-only sr-only-focusable">跳到主要內容</a>
+
+    <div class="app">
+        <!--最外層包裝 開始 -->
+        <!-- HEADER -->
+        <header class="home">
+            <div class="container">
+                <div class="header-wrapper">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-8 logo">
+                            <a href="/index.aspx">
+                                <h1>
+                                    <img src="/assets/img/logo.gif" alt="保險業公開資訊網站" /></h1>
+                            </a>
+                        </div>
+
+                        <div class="col-md-9 col-xs-4">
+                            <div class="menu-mobile">
+                                <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" target="_blank">
+								搜尋
+                                    <img src="assets/img/search-icon.svg" alt="搜尋" /><span style="display:none">Search</span>
+                                </a>
+
+                                <a href="#" onclick="openMobileMenu()" title="選單">
+                                    選單
+                                </a>
+                            </div>
+
+                            <ul class="top-nav">
+                                <li>
+                                    <a href="#U" accesskey="U" name="U" title="上方區塊" class="accesskey">:::</a>
+                                    <a href="/index.aspx">
+                                        <img src="/assets/img/nav01.svg" width="20" alt="" />
+                                        回首頁
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/sitemap.html">
+                                        <img src="/assets/img/nav02.svg" width="20" alt="" />
+                                        網站導覽
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)">
+                                        <img src="/assets/img/nav03.svg" width="20" alt="" />
+                                        常見問題
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)">
+                                        <img src="/assets/img/nav04.svg" width="20" alt="" />
+                                        意見信箱
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/FSC/sales/login.aspx">
+                                        <img src="/assets/img/nav05.svg" width="20" alt="" />
+                                        業者登入
+                                    </a>
+                                </li>
+
+                                <li class="last">
+                                    <a href="javascript:;" class="font-sm">
+                                        <span>小</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-md">
+                                        <span>中</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-lg">
+                                        <span>大</span>
+                                    </a>
+                                    <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" title="搜尋(另開視窗)" target="_blank" class="search">
+                                        <i class="fa fa-search">
+                                        </i>搜尋
+                                    </a>
+                                    <!--
+                                    <form id="cse-search-box" target="_blank" action="https://www.google.com/cse"  rel="noopener noreferrer">
+                                    <span class="search">全文檢索
+                              
+                                            <input type="text" name="q" id="textfield" />
+                                            <input type="image" src="images/srch.gif" width="17" height="18" style="float:inherit" alt="搜尋" />
+                                            <input type="hidden" value="008155887231287897481:ghdoakum-vk" name="cx" />
+                                
+                                    </span>
+                                    </form>
+                                    -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- LEFT SIDEBAR -->
+        <div class="left-sidebar text-center">
+            <a href="/customer/accountquery.aspx">
+                <div class="wrap-option">
+                    <div class="img-01">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>統計查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="http://insprod.tii.org.tw/database/insurance/index.asp" target="_blank" title="財團法人保險事業發展中心保險商品查詢(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-02">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>財團法人保險事業發展中心 保險商品查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0" target="_blank" title="政策法規資訊(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-03">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>政策法規資訊</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://rm.ib.gov.tw/Pages/index.aspx" target="_blank" title="教育宣導(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-04">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>教育宣導</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+        </div>
+
+        <section class="slick-banner  page">
+            <div class="wrapper" style="background: url('/assets/img/banner.jpg') no-repeat center center"></div>
+        </section>
+
+        <!-- MOBILE MENU -->
+        <div class="overlay-menu hide">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeMobileMenu()">&times;
+            </a>
+
+            <div class="overlay-content">
+                <!-- <div class="icon text-left">
+                <a href="">網站導覽</a> | <a href="">EN</a> |
+                <a href=""><i class="fa fa-search"></i></a>
+              </div>
+
+              <div class="icon text-left">
+                <a href="">常見問答</a> | <a href="">雙語詞彙</a>
+              </div> -->
+
+                <div class="mobile-nav text-left">
+                    <ul>
+                        <li><a href="/index.aspx"" class="overlink">回首頁</a></li>
+                        <li><a href="/customer/sitemap.html" class="overlink">網站導覽</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)" class="overlink">常見問題</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)" class="overlink">意見信箱</a></li>
+                        <li><a href="/FSC/sales/login.aspx" class="overlink">業者登入</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END OF HEADER -->
+
+       <!-- <div id="MENU">
+            <ul>
+                <li class="c"><a href="announceinfo.aspx"> 
+                    保險業資訊公開</a>  </li>
+                <li><a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0">
+                    政策法規資訊</a></li>
+                <li><a href="https://rm.ib.gov.tw/Pages/index.aspx">
+                    教育宣導</a></li>
+                    <li><a href="accountquery.aspx">
+                    統計查詢</a></li>
+                <li><a href="http://insprod.tii.org.tw/database/insurance/index.asp">
+                    財團法人保險事業發展中心保險商品查詢</a></li>
+            </ul>
+        </div>-->
+
+        <section class="page">
+            <div class="bg-gradient">
+                <div class="container">
+                
+                <div class="row">
+                    <div class="col-md-2 bg-gradient-yellow"></div>
+
+                    <div class="col-md-10 detail">
+                        <a href="#C" accesskey="C" name="C" class="accesskey-content02" title="中央內容區塊">:::</a>
+                                    
+                            <!--內容 開始-->
+                            
+
+
+    <div class="row text-left breadcrumbs">
+        <div class="col-md-12">
+            <a id="ctl00_MainContent_HyperLink2" href="../index.aspx">首頁</a>
+            /
+            <a id="ctl00_MainContent_HyperLink3" href="announceinfo.aspx">保險資訊公開查詢</a>
+            /
+            <a id="ctl00_MainContent_HyperLink1" href="announceinfo.aspx">單一查詢</a>
+            / 
+            <a id="A1" href="life.aspx?UID=03557017">台灣人壽保險股份有限公司</a>
+            
+                        / 資產負債表
+        </div>
+    </div>
+
+    <div class="row page-title">
+        <div class="col-md-12">
+            <h2><span id="ctl00_MainContent_lbCompanyName">台灣人壽保險股份有限公司</span>
+            - 資訊公開說明文件</h2>
+        </div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">財務狀況 - 資產負債表</div>
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+        <tr>
+            <td valign="top" class="contentbg">
+                <div id="contentbox">
+                    <div id="form_date">
+                        <span id="ctl00_MainContent_lblQyDate">資料日期：中華民國115年8月</span></br>單位：新臺幣仟元
+                    </div>
+
+                     <div id="ctl00_MainContent_Panel2">
+	
+                        <div class="title">
+                            依國際會計準則(IFRSs)編製之資產負債表(自民國115年第1季起適用)      
+                        </div>
+                        <div>
+		<table class="table table-bordered" cellspacing="1" summary="依國際會計準則(IFRSs)編製之資產負債表" border="0" id="ctl00_MainContent_GridView4" style="width:100%;">
+			<tr class="info">
+				<th scope="col" style="width:5%;">列號</th><th scope="col" style="width:10%;">科目代碼</th><th scope="col" style="width:35%;">項目</th><th scope="col">115年度第2季金額</th>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        1
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        資產
+                                    </td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        2
+                                    </td><td>
+                                        11000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;現金及約當現金
+                                    </td><td align="right" style="width:12%;">58,736,593</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        3
+                                    </td><td>
+                                        12000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;應收款項
+                                    </td><td align="right" style="width:12%;">37,173,076</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        4
+                                    </td><td>
+                                        12600
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;本期所得稅資產
+                                    </td><td align="right" style="width:12%;">2,365,040</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        5
+                                    </td><td>
+                                        13000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;待出售資產
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        6
+                                    </td><td>
+                                        14110
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;透過損益按公允價值衡量之金融資產
+                                    </td><td align="right" style="width:12%;">173,874,872</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        7
+                                    </td><td>
+                                        14130
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;避險之金融資產
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        8
+                                    </td><td>
+                                        14145
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;按攤銷後成本衡量之金融資產
+                                    </td><td align="right" style="width:12%;">880,836,688</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        9
+                                    </td><td>
+                                        14150
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;採用權益法之投資
+                                    </td><td align="right" style="width:12%;">21,098,563</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        10
+                                    </td><td>
+                                        14180
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他金融資產
+                                    </td><td align="right" style="width:12%;">18,380,786</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        11
+                                    </td><td>
+                                        14190
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;透過其他綜合損益按公允價值衡量之金融資產
+                                    </td><td align="right" style="width:12%;">941,246,192</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        12
+                                    </td><td>
+                                        14200
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;投資性不動產
+                                    </td><td align="right" style="width:12%;">121,607,221</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        13
+                                    </td><td>
+                                        14300
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;放款
+                                    </td><td align="right" style="width:12%;">45,571,312</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        14
+                                    </td><td>
+                                        15400
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;保險合約資產
+                                    </td><td align="right" style="width:12%;">7,270</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        15
+                                    </td><td>
+                                        15500
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;再保險合約資產
+                                    </td><td align="right" style="width:12%;">26,654,599</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        16
+                                    </td><td>
+                                        16000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;不動產及設備
+                                    </td><td align="right" style="width:12%;">11,022,322</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        17
+                                    </td><td>
+                                        16700
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;使用權資產
+                                    </td><td align="right" style="width:12%;">2,055,111</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        18
+                                    </td><td>
+                                        17000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;無形資產
+                                    </td><td align="right" style="width:12%;">10,313,073</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        19
+                                    </td><td>
+                                        17800
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;遞延所得稅資產
+                                    </td><td align="right" style="width:12%;">6,537,481</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        20
+                                    </td><td>
+                                        18000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他資產
+                                    </td><td align="right" style="width:12%;">29,484,297</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        21
+                                    </td><td>
+                                        18900
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;分離帳戶保險商品資產
+                                    </td><td align="right" style="width:12%;">151,062,258</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        22
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        資產總額
+                                    </td><td align="right" style="width:12%;">2,538,026,754</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        23
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        負債
+                                    </td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        24
+                                    </td><td>
+                                        21000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;應付款項
+                                    </td><td align="right" style="width:12%;">17,340,322</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        25
+                                    </td><td>
+                                        21700
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;本期所得稅負債
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        26
+                                    </td><td>
+                                        22000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;與待出售資產直接相關之負債
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        27
+                                    </td><td>
+                                        23100
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;短期債務
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        28
+                                    </td><td>
+                                        23200
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;透過損益按公允價值衡量之金融負債
+                                    </td><td align="right" style="width:12%;">117,590,019</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        29
+                                    </td><td>
+                                        23300
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;避險之金融負債
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        30
+                                    </td><td>
+                                        23401
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;按攤銷後成本衡量之金融負債
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        31
+                                    </td><td>
+                                        23500
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;應付債券
+                                    </td><td align="right" style="width:12%;">58,098,895</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        32
+                                    </td><td>
+                                        23600
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;特別股負債
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        33
+                                    </td><td>
+                                        23700
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他金融負債
+                                    </td><td align="right" style="width:12%;">2,125,000</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        34
+                                    </td><td>
+                                        23800
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;租賃負債
+                                    </td><td align="right" style="width:12%;">12,477,341</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        35
+                                    </td><td>
+                                        24101
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;保險合約負債
+                                    </td><td align="right" style="width:12%;">1,879,941,097</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        36
+                                    </td><td>
+                                        24201
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;再保險合約負債
+                                    </td><td align="right" style="width:12%;">8,467,511</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        37
+                                    </td><td>
+                                        25000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他負債
+                                    </td><td align="right" style="width:12%;">68,526,216</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        38
+                                    </td><td>
+                                        27000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;負債準備
+                                    </td><td align="right" style="width:12%;">18,168</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        39
+                                    </td><td>
+                                        28000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;遞延所得稅負債
+                                    </td><td align="right" style="width:12%;">21,065,244</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        40
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        負債總額
+                                    </td><td align="right" style="width:12%;">2,185,649,813</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        41
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        歸屬於母公司業主之權益
+                                    </td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        42
+                                    </td><td>
+                                        31000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;股本
+                                    </td><td align="right" style="width:12%;">62,267,319</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        43
+                                    </td><td>
+                                        32000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;資本公積
+                                    </td><td align="right" style="width:12%;">34,223,537</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        44
+                                    </td><td>
+                                        33000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;保留盈餘
+                                    </td><td align="right" style="width:12%;">156,537,136</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        45
+                                    </td><td>
+                                        34000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他權益
+                                    </td><td align="right" style="width:12%;">97,810,032</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        46
+                                    </td><td>
+                                        35000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;庫藏股票
+                                    </td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        47
+                                    </td><td>
+                                        36000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;非控制權益
+                                    </td><td align="right" style="width:12%;">1,538,917</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        48
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        權益總計
+                                    </td><td align="right" style="width:12%;">352,376,941</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        49
+                                    </td><td>
+                                        MEMO
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;附註說明
+                                    </td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        50
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        負債及權益總計
+                                    </td><td align="right" style="width:12%;">2,538,026,754</td>
+			</tr>
+		</table>
+	</div>
+
+                        <div class="memo">
+                            <span id="ctl00_MainContent_Label5" class="info2"><span class='brown'>※115年度備註：</span><pre title='年度備註'> 無 </pre></span>
+                            <span id="ctl00_MainContent_Label6" class="info2"></span>
+                            <span id="ctl00_MainContent_Label7" class="info2"></span>
+                            <span id="ctl00_MainContent_Label8" class="info2"></span>
+                            <p>
+                                <br />
+                                <br />
+                                <span class="brown">※附註：</span><br />
+                                保險業財務報告編製係依據「保險業財務報告編製準則」第7條編製合併財務報告，若無子公司者則編製個別財務報告。
+                            </p>
+                        </div>
+                        <br />
+                        
+                    
+</div>
+
+
+
+
+
+                    <div class="title">
+                        依國際會計準則(IFRSs)編製之資產負債表(自民國110年第1季起適用)      
+                    </div>
+                    <div>
+	<table class="table table-bordered" cellspacing="1" summary="資產負債表" border="0" id="ctl00_MainContent_GridView3" style="width:100%;">
+		<tr class="info">
+			<th scope="col" style="width:5%;">列號</th><th scope="col" style="width:10%;">科目代碼</th><th scope="col" style="width:35%;">項目</th><th scope="col">114年度金額</th><th scope="col">113年度金額</th><th scope="col">112年度金額</th><th scope="col">110年度金額</th>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    1
+                                </td><td>
+                                    
+                                </td><td>
+                                    資產
+                                </td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    2
+                                </td><td>
+                                    11000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;現金及約當現金
+                                </td><td align="right" style="width:12%;">71,734,435</td><td align="right" style="width:12%;">49,719,300</td><td align="right" style="width:12%;">66,730,087</td><td align="right" style="width:12%;">99,044,239</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    3
+                                </td><td>
+                                    12000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  應收款項
+                                </td><td align="right" style="width:12%;">42,245,286</td><td align="right" style="width:12%;">32,973,810</td><td align="right" style="width:12%;">23,545,160</td><td align="right" style="width:12%;">29,579,666</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    4
+                                </td><td>
+                                    12600
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; 本期所得稅資產
+                                </td><td align="right" style="width:12%;">3,010,784</td><td align="right" style="width:12%;">4,374,104</td><td align="right" style="width:12%;">7,094,997</td><td align="right" style="width:12%;">344,001</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    5
+                                </td><td>
+                                    13000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  待出售資產
+                                </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    6
+                                </td><td>
+                                    14110
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  透過損益按公允價值衡量之金融資產
+                                </td><td align="right" style="width:12%;">412,553,158</td><td align="right" style="width:12%;">393,637,850</td><td align="right" style="width:12%;">367,161,530</td><td align="right" style="width:12%;">377,082,943</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    7
+                                </td><td>
+                                    14130
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  避險之金融資產
+                                </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    8
+                                </td><td>
+                                    14145
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  按攤銷後成本衡量之金融資產
+                                </td><td align="right" style="width:12%;">1,129,589,487</td><td align="right" style="width:12%;">1,177,697,987</td><td align="right" style="width:12%;">1,132,083,932</td><td align="right" style="width:12%;">1,002,645,537</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    9
+                                </td><td>
+                                    14150
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  採用權益法之投資
+                                </td><td align="right" style="width:12%;">19,160,463</td><td align="right" style="width:12%;">17,374,331</td><td align="right" style="width:12%;">15,022,313</td><td align="right" style="width:12%;">13,332,032</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    10
+                                </td><td>
+                                    14180
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  其他金融資產
+                                </td><td align="right" style="width:12%;">20,979,367</td><td align="right" style="width:12%;">48,559,928</td><td align="right" style="width:12%;">25,231,051</td><td align="right" style="width:12%;">920,746</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    11
+                                </td><td>
+                                    14190
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  透過其他綜合損益按公允價值衡量之金融資產
+                                </td><td align="right" style="width:12%;">253,912,326</td><td align="right" style="width:12%;">197,899,209</td><td align="right" style="width:12%;">204,670,506</td><td align="right" style="width:12%;">281,870,497</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    12
+                                </td><td>
+                                    14200
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  投資性不動產
+                                </td><td align="right" style="width:12%;">122,576,145</td><td align="right" style="width:12%;">106,255,480</td><td align="right" style="width:12%;">99,871,010</td><td align="right" style="width:12%;">82,964,680</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    13
+                                </td><td>
+                                    14300
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  放款
+                                </td><td align="right" style="width:12%;">74,055,613</td><td align="right" style="width:12%;">68,537,835</td><td align="right" style="width:12%;">70,427,145</td><td align="right" style="width:12%;">58,224,283</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    14
+                                </td><td>
+                                    15000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;再保險合約資產
+                                </td><td align="right" style="width:12%;">5,729,679</td><td align="right" style="width:12%;">5,191,999</td><td align="right" style="width:12%;">4,908,937</td><td align="right" style="width:12%;">3,672,734</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    15
+                                </td><td>
+                                    16000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;不動產及設備
+                                </td><td align="right" style="width:12%;">10,243,977</td><td align="right" style="width:12%;">6,936,311</td><td align="right" style="width:12%;">7,062,148</td><td align="right" style="width:12%;">7,620,117</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    16
+                                </td><td>
+                                    16700
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;使用權資產
+                                </td><td align="right" style="width:12%;">1,415,634</td><td align="right" style="width:12%;">274,492</td><td align="right" style="width:12%;">91,435</td><td align="right" style="width:12%;">47,156</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    17
+                                </td><td>
+                                    17000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;無形資產
+                                </td><td align="right" style="width:12%;">10,349,629</td><td align="right" style="width:12%;">9,789,375</td><td align="right" style="width:12%;">9,304,713</td><td align="right" style="width:12%;">7,893,850</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    18
+                                </td><td>
+                                    17800
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;遞延所得稅資產
+                                </td><td align="right" style="width:12%;">7,124,304</td><td align="right" style="width:12%;">8,828,707</td><td align="right" style="width:12%;">2,108,169</td><td align="right" style="width:12%;">8,599,983</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    19
+                                </td><td>
+                                    18000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;其他資產
+                                </td><td align="right" style="width:12%;">21,051,176</td><td align="right" style="width:12%;">18,812,255</td><td align="right" style="width:12%;">14,518,909</td><td align="right" style="width:12%;">14,170,934</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    20
+                                </td><td>
+                                    18900
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;分離帳戶保險商品資產
+                                </td><td align="right" style="width:12%;">139,628,331</td><td align="right" style="width:12%;">139,560,818</td><td align="right" style="width:12%;">154,240,571</td><td align="right" style="width:12%;">171,346,575</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    21
+                                </td><td>
+                                    
+                                </td><td>
+                                    資產總額
+                                </td><td align="right" style="width:12%;">2,345,359,794</td><td align="right" style="width:12%;">2,286,423,791</td><td align="right" style="width:12%;">2,204,072,613</td><td align="right" style="width:12%;">2,159,359,973</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    22
+                                </td><td>
+                                    
+                                </td><td>
+                                    負債
+                                </td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    23
+                                </td><td>
+                                    21000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;應付款項
+                                </td><td align="right" style="width:12%;">24,411,099</td><td align="right" style="width:12%;">12,886,502</td><td align="right" style="width:12%;">13,554,464</td><td align="right" style="width:12%;">13,013,800</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    24
+                                </td><td>
+                                    21700
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; 本期所得稅負債
+                                </td><td align="right" style="width:12%;">2,648,928</td><td align="right" style="width:12%;">3,370</td><td align="right" style="width:12%;">3,370</td><td align="right" style="width:12%;">2,380,524</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    25
+                                </td><td>
+                                    22000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;與待出售資產直接相關之負債
+                                </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    26
+                                </td><td>
+                                    23100
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;短期債務
+                                </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">21,599,994</td><td align="right" style="width:12%;">20,272,000</td><td align="right" style="width:12%;">8,196,527</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    27
+                                </td><td>
+                                    23200
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;透過損益按公允價值衡量之金融負債
+                                </td><td align="right" style="width:12%;">25,461,240</td><td align="right" style="width:12%;">36,240,267</td><td align="right" style="width:12%;">9,414,168</td><td align="right" style="width:12%;">633,556</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    28
+                                </td><td>
+                                    23300
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;避險之金融負債
+                                </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    29
+                                </td><td>
+                                    23500
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;應付債券
+                                </td><td align="right" style="width:12%;">51,991,659</td><td align="right" style="width:12%;">27,980,430</td><td align="right" style="width:12%;">27,976,274</td><td align="right" style="width:12%;">14,983,827</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    30
+                                </td><td>
+                                    23600
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;特別股負債
+                                </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    31
+                                </td><td>
+                                    23700
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;其他金融負債
+                                </td><td align="right" style="width:12%;">2,148,893</td><td align="right" style="width:12%;">735,782</td><td align="right" style="width:12%;">463,791</td><td align="right" style="width:12%;">1,042,805</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    32
+                                </td><td>
+                                    23800
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;租賃負債
+                                </td><td align="right" style="width:12%;">12,067,370</td><td align="right" style="width:12%;">1,501,500</td><td align="right" style="width:12%;">1,282,436</td><td align="right" style="width:12%;">1,167,724</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    33
+                                </td><td>
+                                    24000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;保險負債
+                                </td><td align="right" style="width:12%;">1,867,403,254</td><td align="right" style="width:12%;">1,852,817,655</td><td align="right" style="width:12%;">1,819,509,720</td><td align="right" style="width:12%;">1,773,593,510</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    34
+                                </td><td>
+                                    24800
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;具金融商品性質之保險契約準備
+                                </td><td align="right" style="width:12%;">8,806</td><td align="right" style="width:12%;">6,396</td><td align="right" style="width:12%;">4,050</td><td align="right" style="width:12%;">2,071</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    35
+                                </td><td>
+                                    24900
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;外匯價格變動準備
+                                </td><td align="right" style="width:12%;">27,933,493</td><td align="right" style="width:12%;">10,594,653</td><td align="right" style="width:12%;">5,986,159</td><td align="right" style="width:12%;">2,943,740</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    36
+                                </td><td>
+                                    25000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;其他負債
+                                </td><td align="right" style="width:12%;">2,544,246</td><td align="right" style="width:12%;">1,378,122</td><td align="right" style="width:12%;">1,970,825</td><td align="right" style="width:12%;">3,115,902</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    37
+                                </td><td>
+                                    26000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;分離帳戶保險商品負債
+                                </td><td align="right" style="width:12%;">139,628,331</td><td align="right" style="width:12%;">139,560,818</td><td align="right" style="width:12%;">154,240,571</td><td align="right" style="width:12%;">171,346,575</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    38
+                                </td><td>
+                                    27000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;負債準備
+                                </td><td align="right" style="width:12%;">22,133</td><td align="right" style="width:12%;">32,949</td><td align="right" style="width:12%;">66,518</td><td align="right" style="width:12%;">121,282</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    39
+                                </td><td>
+                                    28000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;遞延所得稅負債
+                                </td><td align="right" style="width:12%;">10,315,597</td><td align="right" style="width:12%;">17,720,623</td><td align="right" style="width:12%;">7,486,117</td><td align="right" style="width:12%;">4,039,816</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    40
+                                </td><td>
+                                    
+                                </td><td>
+                                    負債總額
+                                </td><td align="right" style="width:12%;">2,166,585,049</td><td align="right" style="width:12%;">2,123,059,061</td><td align="right" style="width:12%;">2,062,230,463</td><td align="right" style="width:12%;">1,996,581,659</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    41
+                                </td><td>
+                                    
+                                </td><td>
+                                    歸屬於母公司業主之權益
+                                </td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    42
+                                </td><td>
+                                    31000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;股本
+                                </td><td align="right" style="width:12%;">62,267,319</td><td align="right" style="width:12%;">62,267,319</td><td align="right" style="width:12%;">62,267,319</td><td align="right" style="width:12%;">62,267,319</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    43
+                                </td><td>
+                                    32000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;資本公積
+                                </td><td align="right" style="width:12%;">34,168,203</td><td align="right" style="width:12%;">34,100,749</td><td align="right" style="width:12%;">34,040,753</td><td align="right" style="width:12%;">33,950,760</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    44
+                                </td><td>
+                                    33000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;保留盈餘
+                                </td><td align="right" style="width:12%;">94,102,325</td><td align="right" style="width:12%;">74,138,318</td><td align="right" style="width:12%;">55,043,309</td><td align="right" style="width:12%;">50,584,609</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    45
+                                </td><td>
+                                    34000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;其他權益
+                                </td><td align="right" style="width:12%;">-13,109,559</td><td align="right" style="width:12%;">-7,168,223</td><td align="right" style="width:12%;">-9,535,315</td><td align="right" style="width:12%;">15,975,626</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    46
+                                </td><td>
+                                    35000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;庫藏股票
+                                </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    47
+                                </td><td>
+                                    36000
+                                </td><td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;非控制權益
+                                </td><td align="right" style="width:12%;">1,346,457</td><td align="right" style="width:12%;">26,567</td><td align="right" style="width:12%;">26,084</td><td align="right" style="width:12%;">0</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    48
+                                </td><td>
+                                    
+                                </td><td>
+                                    權益總計
+                                </td><td align="right" style="width:12%;">178,774,745</td><td align="right" style="width:12%;">163,364,730</td><td align="right" style="width:12%;">141,842,150</td><td align="right" style="width:12%;">162,778,314</td>
+		</tr><tr class="tb3" align="left">
+			<td>
+                                    49
+                                </td><td>
+                                    
+                                </td><td>
+                                    負債及權益總計
+                                </td><td align="right" style="width:12%;">2,345,359,794</td><td align="right" style="width:12%;">2,286,423,791</td><td align="right" style="width:12%;">2,204,072,613</td><td align="right" style="width:12%;">2,159,359,973</td>
+		</tr>
+	</table>
+</div>
+
+                    <div class="memo">
+                        <span id="ctl00_MainContent_Label1" class="info2"><span class='brown'>※114年度備註：</span><pre title='年度備註'>無</pre></span>
+                        <span id="ctl00_MainContent_Label2" class="info2"><span class='brown'>※113年度備註：</span><pre title='年度備註'>無</pre></span>
+                        <span id="ctl00_MainContent_Label3" class="info2"><span class='brown'>※112年度備註：</span><pre title='年度備註'>無</pre></span>
+                        <span id="ctl00_MainContent_Label4" class="info2"><span class='brown'>※110年度備註：</span><pre title='年度備註'>本公司於110/5/27股東會決議盈餘轉增資6,386,612仟元。</pre></span>
+                        <p>
+                            <br />
+                            <span class="brown">※附註：</span><br />
+                            保險業財務報告編製係依據「保險業財務報告編製準則」第7條編製合併財務報告，若無子公司者則編製個別財務報告。
+                        </p>
+                    </div>
+                    <br />
+
+
+                    
+                    <div id="ctl00_MainContent_Panel1">
+	
+                        <div class="title">
+                            依國際會計準則(IFRSs)編製之資產負債表(自民國107年第1季起適用)      
+                        </div>
+                        <div>
+		<table class="table table-bordered" cellspacing="1" summary="依國際會計準則(IFRSs)編製之資產負債表" border="0" id="ctl00_MainContent_GridView2" style="width:100%;">
+			<tr class="info">
+				<th scope="col" style="width:5%;">列號</th><th scope="col" style="width:10%;">科目代碼</th><th scope="col" style="width:35%;">項目</th><th scope="col">109年度金額</th><th scope="col">108年度金額</th><th scope="col">107年度金額</th>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        1
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        資產
+                                    </td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        2
+                                    </td><td>
+                                        11000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;現金及約當現金
+                                    </td><td align="right" style="width:12%;">96,269,460</td><td align="right" style="width:12%;">98,123,732</td><td align="right" style="width:12%;">77,635,660</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        3
+                                    </td><td>
+                                        12000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  應收款項
+                                    </td><td align="right" style="width:12%;">25,820,977</td><td align="right" style="width:12%;">23,361,915</td><td align="right" style="width:12%;">23,398,786</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        4
+                                    </td><td>
+                                        12600
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  當期所得稅資產
+                                    </td><td align="right" style="width:12%;">348,252</td><td align="right" style="width:12%;">3,085,338</td><td align="right" style="width:12%;">1,933,906</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        5
+                                    </td><td>
+                                        13000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  待出售資產
+                                    </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">523,182</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        6
+                                    </td><td>
+                                        14110
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  透過損益按公允價值衡量之金融資產
+                                    </td><td align="right" style="width:12%;">324,576,047</td><td align="right" style="width:12%;">319,655,859</td><td align="right" style="width:12%;">195,352,752</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        7
+                                    </td><td>
+                                        14130
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  避險之金融資產
+                                    </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        8
+                                    </td><td>
+                                        14146
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  按攤銷後成本衡量之金融資產
+                                    </td><td align="right" style="width:12%;">1,034,827,717</td><td align="right" style="width:12%;">1,017,227,403</td><td align="right" style="width:12%;">1,023,539,629</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        9
+                                    </td><td>
+                                        14151
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  採用權益法之投資
+                                    </td><td align="right" style="width:12%;">11,727,349</td><td align="right" style="width:12%;">7,682,101</td><td align="right" style="width:12%;">15,757,993</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        10
+                                    </td><td>
+                                        14180
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  其他金融資產
+                                    </td><td align="right" style="width:12%;">462,132</td><td align="right" style="width:12%;">361,977</td><td align="right" style="width:12%;">949,894</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        11
+                                    </td><td>
+                                        14190
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  透過其他綜合損益按公允價值衡量之金融資產
+                                    </td><td align="right" style="width:12%;">276,288,561</td><td align="right" style="width:12%;">240,728,604</td><td align="right" style="width:12%;">202,842,262</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        12
+                                    </td><td>
+                                        14200
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  投資性不動產
+                                    </td><td align="right" style="width:12%;">78,229,068</td><td align="right" style="width:12%;">73,157,894</td><td align="right" style="width:12%;">52,809,008</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        13
+                                    </td><td>
+                                        14300
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;  放款
+                                    </td><td align="right" style="width:12%;">52,349,139</td><td align="right" style="width:12%;">53,841,015</td><td align="right" style="width:12%;">50,637,324</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        14
+                                    </td><td>
+                                        15000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;再保險合約資產
+                                    </td><td align="right" style="width:12%;">3,062,366</td><td align="right" style="width:12%;">2,092,664</td><td align="right" style="width:12%;">2,597,327</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        15
+                                    </td><td>
+                                        16000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;不動產及設備
+                                    </td><td align="right" style="width:12%;">6,029,637</td><td align="right" style="width:12%;">6,083,085</td><td align="right" style="width:12%;">5,676,045</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        16
+                                    </td><td>
+                                        16700
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;使用權資產
+                                    </td><td align="right" style="width:12%;">201,177</td><td align="right" style="width:12%;">29,921</td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        17
+                                    </td><td>
+                                        17000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;無形資產
+                                    </td><td align="right" style="width:12%;">7,420,744</td><td align="right" style="width:12%;">7,226,291</td><td align="right" style="width:12%;">6,885,124</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        18
+                                    </td><td>
+                                        17800
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;遞延所得稅資產
+                                    </td><td align="right" style="width:12%;">10,056,153</td><td align="right" style="width:12%;">5,441,322</td><td align="right" style="width:12%;">8,254,389</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        19
+                                    </td><td>
+                                        18000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他資產
+                                    </td><td align="right" style="width:12%;">14,620,743</td><td align="right" style="width:12%;">12,881,969</td><td align="right" style="width:12%;">26,518,903</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        20
+                                    </td><td>
+                                        18900
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;分離帳戶保險商品資產
+                                    </td><td align="right" style="width:12%;">125,640,620</td><td align="right" style="width:12%;">91,886,404</td><td align="right" style="width:12%;">72,962,418</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        21
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        資產總額
+                                    </td><td align="right" style="width:12%;">2,067,930,142</td><td align="right" style="width:12%;">1,962,867,494</td><td align="right" style="width:12%;">1,768,274,602</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        22
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        負債
+                                    </td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        23
+                                    </td><td>
+                                        21000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;應付款項
+                                    </td><td align="right" style="width:12%;">13,459,169</td><td align="right" style="width:12%;">13,150,688</td><td align="right" style="width:12%;">15,022,389</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        24
+                                    </td><td>
+                                        21700
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;當期所得稅負債
+                                    </td><td align="right" style="width:12%;">2,691,605</td><td align="right" style="width:12%;">135,552</td><td align="right" style="width:12%;">13,291</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        25
+                                    </td><td>
+                                        22000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;與待出售資產直接相關之負債
+                                    </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        26
+                                    </td><td>
+                                        23100
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;短期債務
+                                    </td><td align="right" style="width:12%;">7,007,044</td><td align="right" style="width:12%;">6,499,239</td><td align="right" style="width:12%;">7,383,999</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        27
+                                    </td><td>
+                                        23200
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;透過損益按公允價值衡量之金融負債
+                                    </td><td align="right" style="width:12%;">1,587,517</td><td align="right" style="width:12%;">405,174</td><td align="right" style="width:12%;">13,120,549</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        28
+                                    </td><td>
+                                        23300
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;避險之金融負債
+                                    </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        29
+                                    </td><td>
+                                        23500
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;應付債券
+                                    </td><td align="right" style="width:12%;">14,980,871</td><td align="right" style="width:12%;">14,977,916</td><td align="right" style="width:12%;">15,924,960</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        30
+                                    </td><td>
+                                        23600
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;特別股負債
+                                    </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        31
+                                    </td><td>
+                                        23700
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他金融負債
+                                    </td><td align="right" style="width:12%;">3,468,283</td><td align="right" style="width:12%;">3,457,072</td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        32
+                                    </td><td>
+                                        23800
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;租賃負債
+                                    </td><td align="right" style="width:12%;">1,332,315</td><td align="right" style="width:12%;">1,133,554</td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        33
+                                    </td><td>
+                                        24000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;保險負債
+                                    </td><td align="right" style="width:12%;">1,746,219,622</td><td align="right" style="width:12%;">1,700,154,234</td><td align="right" style="width:12%;">1,571,502,365</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        34
+                                    </td><td>
+                                        24800
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;具金融商品性質之保險契約準備
+                                    </td><td align="right" style="width:12%;">1,644</td><td align="right" style="width:12%;">4,196</td><td align="right" style="width:12%;">3,329</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        35
+                                    </td><td>
+                                        24900
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;外匯價格變動準備
+                                    </td><td align="right" style="width:12%;">3,251,865</td><td align="right" style="width:12%;">3,331,629</td><td align="right" style="width:12%;">2,273,640</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        36
+                                    </td><td>
+                                        25000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他負債
+                                    </td><td align="right" style="width:12%;">2,794,756</td><td align="right" style="width:12%;">4,696,798</td><td align="right" style="width:12%;">3,365,855</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        37
+                                    </td><td>
+                                        26000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;分離帳戶保險商品負債
+                                    </td><td align="right" style="width:12%;">125,640,620</td><td align="right" style="width:12%;">91,886,404</td><td align="right" style="width:12%;">72,962,418</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        38
+                                    </td><td>
+                                        27000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;負債準備
+                                    </td><td align="right" style="width:12%;">137,864</td><td align="right" style="width:12%;">150,730</td><td align="right" style="width:12%;">127,467</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        39
+                                    </td><td>
+                                        28000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;遞延所得稅負債
+                                    </td><td align="right" style="width:12%;">6,729,155</td><td align="right" style="width:12%;">5,092,409</td><td align="right" style="width:12%;">1,260,334</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        40
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        負債總額
+                                    </td><td align="right" style="width:12%;">1,929,302,330</td><td align="right" style="width:12%;">1,845,075,595</td><td align="right" style="width:12%;">1,702,960,596</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        41
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        歸屬於母公司業主之權益
+                                    </td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td><td align="right" style="width:12%;">&nbsp;</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        42
+                                    </td><td>
+                                        31000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;股本
+                                    </td><td align="right" style="width:12%;">55,880,707</td><td align="right" style="width:12%;">45,124,335</td><td align="right" style="width:12%;">41,791,135</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        43
+                                    </td><td>
+                                        32000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;資本公積
+                                    </td><td align="right" style="width:12%;">33,946,149</td><td align="right" style="width:12%;">33,946,149</td><td align="right" style="width:12%;">27,279,200</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        44
+                                    </td><td>
+                                        33000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;保留盈餘
+                                    </td><td align="right" style="width:12%;">34,469,392</td><td align="right" style="width:12%;">29,925,207</td><td align="right" style="width:12%;">17,502,335</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        45
+                                    </td><td>
+                                        34000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;其他權益
+                                    </td><td align="right" style="width:12%;">14,331,564</td><td align="right" style="width:12%;">8,796,208</td><td align="right" style="width:12%;">-21,258,664</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        46
+                                    </td><td>
+                                        35000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;庫藏股票
+                                    </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        47
+                                    </td><td>
+                                        36000
+                                    </td><td>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;非控制權益
+                                    </td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td><td align="right" style="width:12%;">0</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        48
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        權益總計
+                                    </td><td align="right" style="width:12%;">138,627,812</td><td align="right" style="width:12%;">117,791,899</td><td align="right" style="width:12%;">65,314,006</td>
+			</tr><tr class="tb3" align="left">
+				<td>
+                                        49
+                                    </td><td>
+                                        
+                                    </td><td>
+                                        負債及權益總計
+                                    </td><td align="right" style="width:12%;">2,067,930,142</td><td align="right" style="width:12%;">1,962,867,494</td><td align="right" style="width:12%;">1,768,274,602</td>
+			</tr>
+		</table>
+	</div>
+
+                        <div class="memo">
+                            <span id="ctl00_MainContent_lblMemo1" class="info2"><span class='brown'>※109年度備註：</span><pre title='年度備註'>本公司於109/6/1股東會決議盈餘轉增資10,756,372仟元。</pre></span>
+                            <span id="ctl00_MainContent_lblMemo2" class="info2"><span class='brown'>※108年度備註：</span><pre title='年度備註'>註1:本公司與中國信託人壽保險股份有限公司已於105年1月1日合併，合併增資發行新股計15,099,432仟元。
+註2:本公司以民國105年1月1日為合併基準日，以1.23股換發中國信託人壽保險股份有限公司(以下稱中信人壽)1股之比例發行普通股合併中信人壽乙案，依國際財務報導準則第3號規定係為反向收購，故基於會計處理之目的，將法律上消滅公司中信人壽辨認為會計上收購者，自105年度起以中信人壽財務報告為合併財務報告主體延續編製，104年度以前為本公司原各年度之財務數據。
+註3:本公司於107/12/27股東會決議私募發行新股333,320仟股，每股價格新台幣30元，合計9,999,600仟元。</pre></span>
+                            <span id="ctl00_MainContent_lblMemo3" class="info2"><span class='brown'>※107年度備註：</span><pre title='年度備註'>註1:本公司與中國信託人壽保險股份有限公司已於105年1月1日合併，合併增資發行新股計15,099,432仟元。
+註2:本公司以民國105年1月1日為合併基準日，以1.23股換發中國信託人壽保險股份有限公司(以下稱中信人壽)1股之比例發行普通股合併中信人壽乙案，依國際財務報導準則第3號規定係為反向收購，故基於會計處理之目的，將法律上消滅公司中信人壽辨認為會計上收購者，自105年度起以中信人壽財務報告為合併財務報告主體延續編製，104年度以前為本公司原各年度之財務數據。
+註3:本公司於107/05/29股東會決議盈餘轉增資9,846,144仟元。</pre></span>
+                            <span id="ctl00_MainContent_lblMemo4" class="info2"></span>
+                            <p>
+                                <br />
+                                <br />
+                                <span class="brown">※附註：</span><br />
+                                保險業財務報告編製係依據「保險業財務報告編製準則」第7條編製合併財務報告，若無子公司者則編製個別財務報告。
+                            </p>
+                        </div>
+                        <br />
+                        
+                    
+</div>
+
+
+                    
+                </div>
+            </td>
+        </tr>
+    </table>
+
+                           
+                    </div>
+                </div>
+                </div>
+
+                <div class="row text-center">
+                <img src="/assets/img/bg-city.png" width="100%" class="bg-city" alt="" />
+                </div>
+            </div>
+        </section>
+
+
+        <section class="link">
+            <div class="row text-center">
+                <div class="col-md-4 col-xs-6">
+                    <a href="openData.aspx">資料開放宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="Information.aspx">資訊安全政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="privacy.aspx">隱私權政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="#" class="hide">無障礙聲明</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>
+                            金融監督管理委員會保險局 版權所有
+                            <br />
+                            220232 新北市板橋區縣民大道二段7號17樓
+                            <span>電話:(02)8968-0899</span> <span>傳真:(02)8969-1300</span><br />
+                            紐約辦事處：1 E.42 Street, 13F, New York, NY 10017, U.S.A. Tel:(1-212) 317-7326
+                            <br />
+                            倫敦辦事處：46-48 Grosvenor Gardens London SW1W 0EB,UK Tel:(44-20)7628-1501
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="border">
+                            歡迎連結使用金融監督管理委員會網站資料。引用時，請註明資料來源，請確保資料之完整性， 不得任意增刪，亦不得作為商業使用。
+                        </p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <a href="https://www.gov.tw/" target="_blank" title="我的e政府(另開視窗)"><img src="/assets/img/gov.png" alt="我的e政府" /></a>
+                        <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20230913102307" target="_blank" title="無障礙網站(另開視窗)"><img src="../assets/img/standard.jpg" alt="通過A檢測等級無障礙網頁檢測" /></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!--最外層包裝  END-->
+    </form>
+
+
+
+         
+
+                
+
+
+
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="Scripts/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/assets/js/slick/slick/slick.js"></script>
+
+    <script src="/assets/js/main.js?v1.1"></script>
+</body>
+</html>

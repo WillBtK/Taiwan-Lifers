@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head id="ctl00_Head1"><title>
+	保險業公開資訊觀測站 - 保險資訊公開查詢 > 單一查詢 > 資金運用表
+</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link href="/assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="/assets/css/bootstrap-3.3.6.min.css" rel="stylesheet" /><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick.css" /><link rel="stylesheet" type="text/css" href="/assets/js/slick/slick/slick-theme.css" /><link href="/assets/css/main.css?v1.1" rel="stylesheet" />
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-27907866-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119881418-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119881418-1');
+</script>
+
+    
+</head>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
+<script language=javascript >
+
+
+    function prep() {
+        //alert('go back');
+        history.go(-1);
+        //window.location.href = "default.aspx"
+    }
+    //-------------------
+    //      有問題
+    //-------------------
+    function postData(url) {
+        document.forms[0].action = url;
+        document.forms[0].submit();
+    }
+
+    function sendURL(url) {
+        window.location = url;
+    }
+
+    function setInsuType(type) {
+        var idx = 0;
+        if (type == "A")
+            idx = 0;
+        else if (type == "產險")
+            idx = 1;
+        else if (type == "壽險")
+            idx = 2;
+
+        //document.getElementById("insurancetype").selectedIndex = idx;
+        document.getElementById('insurancetype').options(idx).selected = true;
+    }
+
+</script>
+
+<body>
+<noscript><div style="z-index: 99999;color: black;background: #fff;right: 0;top: 0;width:100%;padding: 10px;">您的瀏覽器不支援JavaScript語法，若網頁功能無法正常使用時，請開啟瀏覽器JavaScript功能</div></noscript>
+    <form name="aspnetForm" method="post" action="Info2-1.aspx?UID=11456006" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="323BE611" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+    <a href="#C" id="gotocenter" title="跳到主要內容" tabindex="1" class="sr-only sr-only-focusable">跳到主要內容</a>
+
+    <div class="app">
+        <!--最外層包裝 開始 -->
+        <!-- HEADER -->
+        <header class="home">
+            <div class="container">
+                <div class="header-wrapper">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-8 logo">
+                            <a href="/index.aspx">
+                                <h1>
+                                    <img src="/assets/img/logo.gif" alt="保險業公開資訊網站" /></h1>
+                            </a>
+                        </div>
+
+                        <div class="col-md-9 col-xs-4">
+                            <div class="menu-mobile">
+                                <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" target="_blank">
+								搜尋
+                                    <img src="assets/img/search-icon.svg" alt="搜尋" /><span style="display:none">Search</span>
+                                </a>
+
+                                <a href="#" onclick="openMobileMenu()" title="選單">
+                                    選單
+                                </a>
+                            </div>
+
+                            <ul class="top-nav">
+                                <li>
+                                    <a href="#U" accesskey="U" name="U" title="上方區塊" class="accesskey">:::</a>
+                                    <a href="/index.aspx">
+                                        <img src="/assets/img/nav01.svg" width="20" alt="" />
+                                        回首頁
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/sitemap.html">
+                                        <img src="/assets/img/nav02.svg" width="20" alt="" />
+                                        網站導覽
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)">
+                                        <img src="/assets/img/nav03.svg" width="20" alt="" />
+                                        常見問題
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)">
+                                        <img src="/assets/img/nav04.svg" width="20" alt="" />
+                                        意見信箱
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/FSC/sales/login.aspx">
+                                        <img src="/assets/img/nav05.svg" width="20" alt="" />
+                                        業者登入
+                                    </a>
+                                </li>
+
+                                <li class="last">
+                                    <a href="javascript:;" class="font-sm">
+                                        <span>小</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-md">
+                                        <span>中</span>
+                                    </a>
+                                    <a href="javascript:;" class="font-lg">
+                                        <span>大</span>
+                                    </a>
+                                    <a href="https://cse.google.com/cse?q=&x=12&y=14&cx=008155887231287897481%3Aghdoakum-vk" title="搜尋(另開視窗)" target="_blank" class="search">
+                                        <i class="fa fa-search">
+                                        </i>搜尋
+                                    </a>
+                                    <!--
+                                    <form id="cse-search-box" target="_blank" action="https://www.google.com/cse"  rel="noopener noreferrer">
+                                    <span class="search">全文檢索
+                              
+                                            <input type="text" name="q" id="textfield" />
+                                            <input type="image" src="images/srch.gif" width="17" height="18" style="float:inherit" alt="搜尋" />
+                                            <input type="hidden" value="008155887231287897481:ghdoakum-vk" name="cx" />
+                                
+                                    </span>
+                                    </form>
+                                    -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- LEFT SIDEBAR -->
+        <div class="left-sidebar text-center">
+            <a href="/customer/accountquery.aspx">
+                <div class="wrap-option">
+                    <div class="img-01">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>統計查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="http://insprod.tii.org.tw/database/insurance/index.asp" target="_blank" title="財團法人保險事業發展中心保險商品查詢(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-02">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>財團法人保險事業發展中心 保險商品查詢</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0" target="_blank" title="政策法規資訊(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-03">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>政策法規資訊</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+
+            <a href="https://rm.ib.gov.tw/Pages/index.aspx" target="_blank" title="教育宣導(另開視窗)">
+                <div class="wrap-option">
+                    <div class="img-04">
+                        <div class="circle-wrap"></div>
+                    </div>
+                    <div class="hover-yellow">
+                        <div>教育宣導</div>
+                    </div>
+                    <div class="bubble-shadow"></div>
+                </div>
+            </a>
+        </div>
+
+        <section class="slick-banner  page">
+            <div class="wrapper" style="background: url('/assets/img/banner.jpg') no-repeat center center"></div>
+        </section>
+
+        <!-- MOBILE MENU -->
+        <div class="overlay-menu hide">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeMobileMenu()">&times;
+            </a>
+
+            <div class="overlay-content">
+                <!-- <div class="icon text-left">
+                <a href="">網站導覽</a> | <a href="">EN</a> |
+                <a href=""><i class="fa fa-search"></i></a>
+              </div>
+
+              <div class="icon text-left">
+                <a href="">常見問答</a> | <a href="">雙語詞彙</a>
+              </div> -->
+
+                <div class="mobile-nav text-left">
+                    <ul>
+                        <li><a href="/index.aspx"" class="overlink">回首頁</a></li>
+                        <li><a href="/customer/sitemap.html" class="overlink">網站導覽</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/FAQF/FAQF01001.aspx" target="_blank" title="常見問題(另開視窗)" class="overlink">常見問題</a></li>
+                        <li><a href="https://fscmail.fsc.gov.tw/swsfront35/SWSF/SWSF01014.aspx" target="_blank" title="意見信箱(另開視窗)" class="overlink">意見信箱</a></li>
+                        <li><a href="/FSC/sales/login.aspx" class="overlink">業者登入</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END OF HEADER -->
+
+       <!-- <div id="MENU">
+            <ul>
+                <li class="c"><a href="announceinfo.aspx"> 
+                    保險業資訊公開</a>  </li>
+                <li><a href="https://www.ib.gov.tw/ch/home.jsp?id=3&parentpath=0">
+                    政策法規資訊</a></li>
+                <li><a href="https://rm.ib.gov.tw/Pages/index.aspx">
+                    教育宣導</a></li>
+                    <li><a href="accountquery.aspx">
+                    統計查詢</a></li>
+                <li><a href="http://insprod.tii.org.tw/database/insurance/index.asp">
+                    財團法人保險事業發展中心保險商品查詢</a></li>
+            </ul>
+        </div>-->
+
+        <section class="page">
+            <div class="bg-gradient">
+                <div class="container">
+                
+                <div class="row">
+                    <div class="col-md-2 bg-gradient-yellow"></div>
+
+                    <div class="col-md-10 detail">
+                        <a href="#C" accesskey="C" name="C" class="accesskey-content02" title="中央內容區塊">:::</a>
+                                    
+                            <!--內容 開始-->
+                            
+
+
+    <div class="row text-left breadcrumbs">
+        <div class="col-md-12">
+            <a id="ctl00_MainContent_HyperLink2" href="../index.aspx">首頁</a>
+            /
+            <a id="ctl00_MainContent_HyperLink3" href="announceinfo.aspx">保險資訊公開查詢</a>
+            /
+            <a id="ctl00_MainContent_HyperLink1" href="announceinfo.aspx">單一查詢</a>
+            / 
+            <a id="A1" href="life.aspx?UID=11456006">南山人壽保險股份有限公司</a>
+            
+                        / 資金運用表
+        </div>
+    </div>
+
+    <div class="row page-title">
+        <div class="col-md-12">
+            <h2><span id="ctl00_MainContent_lbCompanyName">南山人壽保險股份有限公司</span>
+            - 資訊公開說明文件</h2>
+        </div>
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">財務狀況 - 資金運用表</div>
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+        <tr>
+            <td valign="top" class="contentbg">
+                <div id="form_date">
+                    <span id="ctl00_MainContent_lblQyDate">資料日期：中華民國115年8月</span></br>單位：新臺幣仟元
+                </div>
+                <div>
+	<table class="table table-bordered" cellspacing="1" summary="資金運用表" border="0" id="ctl00_MainContent_GridView1" style="width:100%;">
+		<tr class="info">
+			<th scope="col" style="width:5%;">列號</th><th scope="col" style="width:35%;">項目</th><th scope="col" style="width:15%;">115年度最新一期金額</th><th scope="col" style="width:15%;">114年度金額</th><th scope="col" style="width:15%;">113年度金額</th><th scope="col" style="width:15%;">112年度金額 </th>
+		</tr><tr class="tb3">
+			<td>
+                                1
+                            </td><td>銀行存款</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl02_Label1">34,274,331</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl02_Label2">152,875,302</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl02_Label3">50,284,401</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl02_Label4">17,573,627</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                2
+                            </td><td>有價證券</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl03_Label1">1,102,218,007</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl03_Label2">820,343,250</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl03_Label3">832,400,168</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl03_Label4">843,754,768</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                3
+                            </td><td>不動產</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl04_Label1">235,977,740</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl04_Label2">233,025,015</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl04_Label3">227,684,961</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl04_Label4">231,507,254</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                4
+                            </td><td>放款</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl05_Label1">97,187,225</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl05_Label2">97,955,337</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl05_Label3">99,593,317</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl05_Label4">101,041,218</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                5
+                            </td><td>專案運用及公共投資</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl06_Label1">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl06_Label2">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl06_Label3">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl06_Label4">0</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                6
+                            </td><td>國外投資</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl07_Label1">3,892,967,023</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl07_Label2">3,843,791,487</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl07_Label3">3,955,295,816</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl07_Label4">3,840,215,602</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                7
+                            </td><td>保險相關事業</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl08_Label1">11,938,026</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl08_Label2">10,723,311</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl08_Label3">9,479,008</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl08_Label4">8,701,991</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                8
+                            </td><td>衍生性商品</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl09_Label1">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl09_Label2">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl09_Label3">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl09_Label4">0</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                9
+                            </td><td>其他</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl10_Label1">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl10_Label2">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl10_Label3">0</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl10_Label4">0</span>
+                            </td>
+		</tr><tr class="tb3">
+			<td>
+                                10
+                            </td><td>資 金 運 用 總 計</td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl11_Label1">5,374,562,352</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl11_Label2">5,158,713,702</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl11_Label3">5,174,737,671</span>
+                            </td><td align="right">
+                                <span id="ctl00_MainContent_GridView1_ctl11_Label4">5,042,794,460</span>
+                            </td>
+		</tr>
+	</table>
+</div>
+
+                <div class="memo">
+                    <span id="ctl00_MainContent_lblMemo1" class="info2"><span class='brown'>※115年度備註：</span><pre title='年度備註'>1.銀行存款包含作為履約保證金之定期存款。
+2.有價證券包含抵繳存出保證金之債券。
+3.規避國外投資匯率變動之衍生工具係包含於國外投資項下。
+4.此資訊係以本公司個體財務資訊進行揭露。
+</pre></span>
+                    <span id="ctl00_MainContent_lblMemo2" class="info2"><span class='brown'>※114年度備註：</span><pre title='年度備註'>1.銀行存款包含作為履約保證金之定期存款。
+2.有價證券包含抵繳存出保證金之債券。
+3.規避國外投資匯率變動之衍生工具係包含於國外投資項下。
+4.此資訊係以本公司個體財務資訊進行揭露。
+</pre></span>
+                    <span id="ctl00_MainContent_lblMemo3" class="info2"><span class='brown'>※113年度備註：</span><pre title='年度備註'>1.銀行存款包含作為履約保證金之定期存款。
+2.有價證券包含抵繳存出保證金之債券。
+3.規避國外投資匯率變動之衍生工具係包含於國外投資項下。
+4.此資訊係以本公司個體財務資訊進行揭露。
+</pre></span>
+                    <span id="ctl00_MainContent_lblMemo4" class="info2"><span class='brown'>※112年度備註：</span><pre title='年度備註'>1.銀行存款包含作為履約保證金之定期存款。
+2.有價證券包含抵繳存出保證金之債券。
+3.規避國外投資匯率變動之衍生工具係包含於國外投資項下。
+4.此資訊係以本公司個體財務資訊進行揭露。
+</pre></span>
+                    <br />
+                    <p>
+                        <span class="brown">※備註</span><span class="brown">：</span>放款包含保險業以其所簽發且屬保險合約之人壽保險單為質之放款及墊繳保費。
+                            <br />
+                        <span class="brown">※申報頻率</span><span class="brown">：</span>每季更新
+                            <br />
+                    </p>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+                           
+                    </div>
+                </div>
+                </div>
+
+                <div class="row text-center">
+                <img src="/assets/img/bg-city.png" width="100%" class="bg-city" alt="" />
+                </div>
+            </div>
+        </section>
+
+
+        <section class="link">
+            <div class="row text-center">
+                <div class="col-md-4 col-xs-6">
+                    <a href="openData.aspx">資料開放宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="Information.aspx">資訊安全政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="privacy.aspx">隱私權政策宣告</a>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <a href="#" class="hide">無障礙聲明</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>
+                            金融監督管理委員會保險局 版權所有
+                            <br />
+                            220232 新北市板橋區縣民大道二段7號17樓
+                            <span>電話:(02)8968-0899</span> <span>傳真:(02)8969-1300</span><br />
+                            紐約辦事處：1 E.42 Street, 13F, New York, NY 10017, U.S.A. Tel:(1-212) 317-7326
+                            <br />
+                            倫敦辦事處：46-48 Grosvenor Gardens London SW1W 0EB,UK Tel:(44-20)7628-1501
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="border">
+                            歡迎連結使用金融監督管理委員會網站資料。引用時，請註明資料來源，請確保資料之完整性， 不得任意增刪，亦不得作為商業使用。
+                        </p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <a href="https://www.gov.tw/" target="_blank" title="我的e政府(另開視窗)"><img src="/assets/img/gov.png" alt="我的e政府" /></a>
+                        <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20230913102307" target="_blank" title="無障礙網站(另開視窗)"><img src="../assets/img/standard.jpg" alt="通過A檢測等級無障礙網頁檢測" /></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!--最外層包裝  END-->
+    </form>
+
+
+
+         
+
+                
+
+
+
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="Scripts/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/assets/js/slick/slick/slick.js"></script>
+
+    <script src="/assets/js/main.js?v1.1"></script>
+</body>
+</html>
