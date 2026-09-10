@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-10T07:48:42.575956+00:00",
+ "run_at": "2026-09-10T07:52:49.538991+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
@@ -118,396 +118,396 @@
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03374707",
    "needs_relay": true,
    "status": "written",
-   "sha256": "ddd255ddfbfce44984d3f2b0d4cb7a64304a725235328a6701f32283da123176",
+   "sha256": "abd1dc39897fe2380200d5be04005bf0fd0bfedf5afecb22a34974125cea2118",
    "bytes": 31428,
-   "path": "data/raw/ins-info-firm/Info2-1_cathay_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_cathay_life_20260910-3.html"
   },
   {
    "name": "Info2-2_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03374707",
    "needs_relay": true,
    "status": "written",
-   "sha256": "892273d9d99d20e39ddee61138ecd1641ea2e0de69671665092a5ed75b72ec2c",
+   "sha256": "08982a16d3cf8cfb2d5134bb107dddf6fa9a9f3b2141415e8fe1c2cacccd5300",
    "bytes": 125209,
-   "path": "data/raw/ins-info-firm/Info2-2_cathay_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_cathay_life_20260910-2.html"
   },
   {
    "name": "Info2-5_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03374707",
    "needs_relay": true,
    "status": "written",
-   "sha256": "0debaf4c2d46fa23a793cb3f3566a1f7d569d1a24cc1d1677c40747139aca393",
+   "sha256": "d65165cc2a2d8fb21dc1525b426132ffd495de61a0cf87e95fca13dd196ea733",
    "bytes": 22599,
-   "path": "data/raw/ins-info-firm/Info2-5_cathay_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_cathay_life_20260910-3.html"
   },
   {
    "name": "Info2-14_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03374707",
    "needs_relay": true,
    "status": "written",
-   "sha256": "b8d246666861b59e5b90e4d88c1f0d9ec8db8e91083fb88be6a67b77dbf62f23",
+   "sha256": "5054a512f883c1a3cdfc30c297eb3a530f2fd5799a19aee0ace539d4bfb89548",
    "bytes": 21924,
-   "path": "data/raw/ins-info-firm/Info2-14_cathay_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_cathay_life_20260910-3.html"
   },
   {
    "name": "Info2-1_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=27935073",
    "needs_relay": true,
    "status": "written",
-   "sha256": "7fab6b675d0ca6dd1df950bf9777054a1ec1aaf3a8f203dd50d04ab56b2a852a",
+   "sha256": "a0db0597410f48a4146e546af57bf7780fc3031033f01be5b565ade523e41092",
    "bytes": 32123,
-   "path": "data/raw/ins-info-firm/Info2-1_fubon_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_fubon_life_20260910-3.html"
   },
   {
    "name": "Info2-2_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=27935073",
    "needs_relay": true,
    "status": "written",
-   "sha256": "3e117d425f1b7ace2795a7377d6cde3d8a49e9cd04a9fe4ba69d2014e5e4bdee",
+   "sha256": "e19a8acf4340cea4d93123eeaf66b8419456ff08f8fe430c71d54b342732322c",
    "bytes": 127637,
-   "path": "data/raw/ins-info-firm/Info2-2_fubon_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_fubon_life_20260910-2.html"
   },
   {
    "name": "Info2-5_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073",
    "needs_relay": true,
    "status": "written",
-   "sha256": "33a11dd4a0791144aaf3706304286f50192ba821c63699ebedd1d5f8ae582764",
+   "sha256": "59fb3d7474fcca7523722a2db054a0a6e481df9c99c521befb339d536573ec47",
    "bytes": 22775,
-   "path": "data/raw/ins-info-firm/Info2-5_fubon_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_fubon_life_20260910-3.html"
   },
   {
    "name": "Info2-14_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=27935073",
    "needs_relay": true,
    "status": "written",
-   "sha256": "a236b25b8a98f33010376686de51db86c516ace2ed7f65c65e3c04e0afc91b34",
+   "sha256": "49b39e4f0124ac45fac9e31a007b7291dc2b7761a4c18afe4223e4b6f952f951",
    "bytes": 21922,
-   "path": "data/raw/ins-info-firm/Info2-14_fubon_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_fubon_life_20260910-3.html"
   },
   {
    "name": "Info2-1_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=11456006",
    "needs_relay": true,
    "status": "written",
-   "sha256": "51ffb1ac510e684e202d7de5a9c20f2847351ea0129e61966e4f5f10cc5827dc",
+   "sha256": "c3566b59a4afae54b83a155551523d2b2e386f15c10d1adfd89ee1207176ec14",
    "bytes": 32769,
-   "path": "data/raw/ins-info-firm/Info2-1_nanshan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_nanshan_life_20260910-3.html"
   },
   {
    "name": "Info2-2_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=11456006",
    "needs_relay": true,
    "status": "written",
-   "sha256": "8f75272515c8c0916b36df7f5f7bb4a1d99c471013e99dc2bcd2733e6834bdf4",
+   "sha256": "dbeb1dc8a4cbe4bdf357647ce5a2df0d1463ab523ad2e64a6d3f24143980f372",
    "bytes": 128927,
-   "path": "data/raw/ins-info-firm/Info2-2_nanshan_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_nanshan_life_20260910-2.html"
   },
   {
    "name": "Info2-5_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=11456006",
    "needs_relay": true,
    "status": "written",
-   "sha256": "cd49c19806e0e3575a6b35bb4a933555142b4b33daeab8484a2647ac23f7acdf",
+   "sha256": "baae2803a770cedfd60ee6fbf03b6db93b8c5d17fef54785bb06216aff5f77d7",
    "bytes": 22859,
-   "path": "data/raw/ins-info-firm/Info2-5_nanshan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_nanshan_life_20260910-3.html"
   },
   {
    "name": "Info2-14_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=11456006",
    "needs_relay": true,
    "status": "written",
-   "sha256": "65bf5e4dc97e05c9bf1337633fdf5fc613ee91de9652e5469a5dd3e36e73a684",
+   "sha256": "548febb39f95fb087b370f5bc4d7ca51dfd7ba59d7974ff526e5ca398b2705fb",
    "bytes": 22064,
-   "path": "data/raw/ins-info-firm/Info2-14_nanshan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_nanshan_life_20260910-3.html"
   },
   {
    "name": "Info2-1_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03434016",
    "needs_relay": true,
    "status": "written",
-   "sha256": "3eb85e86b74545f2084aade39cc2d1525d246b35df6ae4e967a765615f829812",
+   "sha256": "526e03579433657793bebc5dcebe5d3eeacdab597bb02e0b97455e6e138c700f",
    "bytes": 31597,
-   "path": "data/raw/ins-info-firm/Info2-1_kgi_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_kgi_life_20260910-3.html"
   },
   {
    "name": "Info2-2_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03434016",
    "needs_relay": true,
    "status": "written",
-   "sha256": "a133a46b768de6a78588611f9ce57126ef3ed74558624977b441c14195d7f8af",
+   "sha256": "f91c9caefef4e8e02284a9ae689be9f8e1bdbd86d0ac33c77ca2ca1e80450fc4",
    "bytes": 127646,
-   "path": "data/raw/ins-info-firm/Info2-2_kgi_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_kgi_life_20260910-2.html"
   },
   {
    "name": "Info2-5_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03434016",
    "needs_relay": true,
    "status": "written",
-   "sha256": "f476daf53e2b76bf07a0dd804aa02672e6f65dbfaf9c9dc8ae3f030e8c510683",
+   "sha256": "3e96c7d519b727a9889cdb4b2652ac177027efd7ba5a1bb5f81b8301fea2eedf",
    "bytes": 22315,
-   "path": "data/raw/ins-info-firm/Info2-5_kgi_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_kgi_life_20260910-3.html"
   },
   {
    "name": "Info2-14_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03434016",
    "needs_relay": true,
    "status": "written",
-   "sha256": "4d7740ecad7e8cca2d57100c382002c5cdbbca5774fd5a1075734f6c66cbb183",
+   "sha256": "db2933f494990baba934dc7bd87ada0d62178c44a7240ae818e226a290ecbb25",
    "bytes": 21638,
-   "path": "data/raw/ins-info-firm/Info2-14_kgi_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_kgi_life_20260910-3.html"
   },
   {
    "name": "Info2-1_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
    "needs_relay": true,
    "status": "written",
-   "sha256": "a19d6ed82ecace1cc0ab8b227c6b75afb4485ea176b9e490b63eacd087121bc5",
+   "sha256": "170ec37bb789c5b438acd0d4bbdd5198c9a19607056f6eb3600a75bd269ac359",
    "bytes": 31985,
-   "path": "data/raw/ins-info-firm/Info2-1_taiwan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_taiwan_life_20260910-3.html"
   },
   {
    "name": "Info2-2_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03557017",
    "needs_relay": true,
    "status": "written",
-   "sha256": "08e5a3ae477fd50d8024c7456ca97ab35595942ade720969ad986a3b598863a5",
+   "sha256": "cb23a74ac92a06a5bcc18e6f7ba6ac17d7550ebe10d6f7db17b5fb0ed3064797",
    "bytes": 129762,
-   "path": "data/raw/ins-info-firm/Info2-2_taiwan_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_taiwan_life_20260910-2.html"
   },
   {
    "name": "Info2-5_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017",
    "needs_relay": true,
    "status": "written",
-   "sha256": "0f54178775130289ce2a40474fa2df20ffc16429458ec7038706055847b0ecad",
+   "sha256": "c5ed88d545dbfc9ec9433e451308accafbeb86b3ffb540997de8565336bab16b",
    "bytes": 22659,
-   "path": "data/raw/ins-info-firm/Info2-5_taiwan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_taiwan_life_20260910-3.html"
   },
   {
    "name": "Info2-14_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017",
    "needs_relay": true,
    "status": "written",
-   "sha256": "349c946d2c40d8f7fecf40f027fed9d6971cfcd5112deeeb1a4f8be9c317c1bf",
+   "sha256": "417733d8b9f6761d216aa7a074e6608132d0aa63add655bfe6c19be552b20f14",
    "bytes": 21988,
-   "path": "data/raw/ins-info-firm/Info2-14_taiwan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_taiwan_life_20260910-3.html"
   },
   {
    "name": "Info2-1_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70789634",
    "needs_relay": true,
    "status": "written",
-   "sha256": "887557346da2832af25071aa1d9d8f8fbec9fb0b40c6af0a090e8b47dedc7360",
+   "sha256": "6c691a5839ffd6f814345fb22707f470a9150c2d90ed29c8395aa5b9499be35e",
    "bytes": 31415,
-   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_20260910-3.html"
   },
   {
    "name": "Info2-2_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=70789634",
    "needs_relay": true,
    "status": "written",
-   "sha256": "d601a3629f936b7144d6af815fd182619f82ee6839b34f81ebd569d5889b99d8",
+   "sha256": "551eb1a4ad38b3c597048ff3215d05bcaad0cd2f5966a2a8d98c0ad744e11d63",
    "bytes": 125963,
-   "path": "data/raw/ins-info-firm/Info2-2_shinkong_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_shinkong_life_20260910-2.html"
   },
   {
    "name": "Info2-5_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70789634",
    "needs_relay": true,
    "status": "written",
-   "sha256": "242098864a1981265587f8fc30bbd0d9b91840bd458e9647a951c8025dbc1a0b",
+   "sha256": "9d7b722729ab8ad2b8854dc77e38820b0857045a3e0699af4fd6620230459d5b",
    "bytes": 22628,
-   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_20260910-3.html"
   },
   {
    "name": "Info2-14_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70789634",
    "needs_relay": true,
    "status": "written",
-   "sha256": "11308d9cfa22f314a03df2fb9e55af03aaa997ef70da6a6e1e8f2680cb11020f",
+   "sha256": "bacba829ded239968d5e41359aad8286449ab2de11230dc0de4ab235b5a3afac",
    "bytes": 21924,
-   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_20260910-3.html"
   },
   {
    "name": "Info2-1_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03458902",
    "needs_relay": true,
    "status": "written",
-   "sha256": "079743a63e000426563fb299ad6f449cfee34a96f150a36ddb7bdd6556be52bf",
+   "sha256": "67f795dc86472f7eca73da251435bf14a4c7f06396d5160e22245edfe0257aa3",
    "bytes": 39259,
-   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_pre2026_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_pre2026_20260910-3.html"
   },
   {
    "name": "Info2-2_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=03458902",
    "needs_relay": true,
    "status": "written",
-   "sha256": "1efd26a01d17ede6248cba5532478ec34e4a376cf70a38b12c3be76045b206c1",
+   "sha256": "4405d4d10b30173db647938f7cdf0ce216ddc471fcab4e8498cac6d4a7fccc87",
    "bytes": 125548,
-   "path": "data/raw/ins-info-firm/Info2-2_shinkong_life_pre2026_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_shinkong_life_pre2026_20260910-2.html"
   },
   {
    "name": "Info2-5_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03458902",
    "needs_relay": true,
    "status": "written",
-   "sha256": "1be2e1ff517c628bc7a6a7f9b4646848c6cabe23998b27bc2b33ad4e98fb5193",
+   "sha256": "20512a7dd1b1bcc2bb09532f464f30f6b9320215aa435c620ad2c929b97d554d",
    "bytes": 26543,
-   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_pre2026_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_pre2026_20260910-3.html"
   },
   {
    "name": "Info2-14_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03458902",
    "needs_relay": true,
    "status": "written",
-   "sha256": "ea6d1bf20688907b8793223722aa7df3f80c7b65e45e2d60cff1d6c02b25fbb3",
+   "sha256": "63d9b53884910bb35823dc142756785a6f375c087ddcdcdbaf4ecec685df0fe2",
    "bytes": 20050,
-   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_pre2026_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_pre2026_20260910-3.html"
   },
   {
    "name": "Info2-1_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=28428384",
    "needs_relay": true,
    "status": "written",
-   "sha256": "17a2e1381698e4d20324c6d2582ece57b378505ed32c01e5dc33460245d0aaee",
+   "sha256": "2ca36ee14fe5a9e93749452bee3e629474ff4497bfa7a2b3de3963602cb42086",
    "bytes": 30932,
-   "path": "data/raw/ins-info-firm/Info2-1_banktaiwan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_banktaiwan_life_20260910-3.html"
   },
   {
    "name": "Info2-2_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=28428384",
    "needs_relay": true,
    "status": "written",
-   "sha256": "fcbdb177180fb543f14d4b034ffd34308a890a23ec4720cc5d3f1217380acba4",
+   "sha256": "d2e641fe3c47dee71a44b6f80a73a71ba78f17e2bb379f98fe0692b08df8df3e",
    "bytes": 125949,
-   "path": "data/raw/ins-info-firm/Info2-2_banktaiwan_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_banktaiwan_life_20260910-2.html"
   },
   {
    "name": "Info2-5_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=28428384",
    "needs_relay": true,
    "status": "written",
-   "sha256": "d937c60d4c7e4550c198f1215986c02d78e8adcaddf232e78733892114b72b6d",
+   "sha256": "36414c675e55f38866ad123e5f41f2b8d3f46e0e91b48a41b84c40c66a5d8a6d",
    "bytes": 22305,
-   "path": "data/raw/ins-info-firm/Info2-5_banktaiwan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_banktaiwan_life_20260910-3.html"
   },
   {
    "name": "Info2-14_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=28428384",
    "needs_relay": true,
    "status": "written",
-   "sha256": "35304533d10c963712d0afa298861aa64a7f5ddbb54622bd2b0dd2bea2b1c632",
+   "sha256": "771d43f2c52bd1076f50583b90c7d6e3d741291b8fdc1e1903bc3f8753713b5f",
    "bytes": 21636,
-   "path": "data/raw/ins-info-firm/Info2-14_banktaiwan_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_banktaiwan_life_20260910-3.html"
   },
   {
    "name": "Info2-1_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84443471",
    "needs_relay": true,
    "status": "written",
-   "sha256": "6faf6258295c07581e5d7bf3dc45c2a0662eb6d7afa0229f27c7501ae1c63518",
+   "sha256": "cd94774a10d703e168a8a8d0033883303d2975e2dada840d93736f2ec0855c38",
    "bytes": 32387,
-   "path": "data/raw/ins-info-firm/Info2-1_mercuries_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_mercuries_life_20260910-3.html"
   },
   {
    "name": "Info2-2_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=84443471",
    "needs_relay": true,
    "status": "written",
-   "sha256": "c39722beee79d0906f1cb7cd495077bf84e108f8ea69d8107d2c0b1555d7604f",
+   "sha256": "053e884ead455ec61e88b696b68acff6e7f7e55002e3ce0005af362d0a81f7eb",
    "bytes": 131030,
-   "path": "data/raw/ins-info-firm/Info2-2_mercuries_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_mercuries_life_20260910-2.html"
   },
   {
    "name": "Info2-5_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84443471",
    "needs_relay": true,
    "status": "written",
-   "sha256": "86b78ec511e29520a13dc1b96e535b9ce904ad8b81ea8def17b21870d36956c4",
+   "sha256": "083322aec6d0e15f99538a5c6af05e23ab8a0ee43eb036c189eb05a9f4caeafc",
    "bytes": 22968,
-   "path": "data/raw/ins-info-firm/Info2-5_mercuries_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_mercuries_life_20260910-3.html"
   },
   {
    "name": "Info2-14_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84443471",
    "needs_relay": true,
    "status": "written",
-   "sha256": "8162f4d1e7c9f89cd5e4e14d2a83c5b0e76eec32c6762e8de0c65fec8cae686c",
+   "sha256": "ba84ad792bbc95b076677928ee0e050c8d84af12649d037d87c59b9fcb3ed068",
    "bytes": 21674,
-   "path": "data/raw/ins-info-firm/Info2-14_mercuries_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_mercuries_life_20260910-3.html"
   },
   {
    "name": "Info2-1_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84894313",
    "needs_relay": true,
    "status": "written",
-   "sha256": "5dc8747f9785cc5de96c593ecd35c21e0e52be63a58efe6c97131ecaad527fff",
+   "sha256": "553f10c51cd6291d9cc0b7bb88f3db9ce552590e1f830ea677b8310428f3ba6b",
    "bytes": 31763,
-   "path": "data/raw/ins-info-firm/Info2-1_hontai_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_hontai_life_20260910-3.html"
   },
   {
    "name": "Info2-2_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=84894313",
    "needs_relay": true,
    "status": "written",
-   "sha256": "4fd6039debb798021ec2975fb842e9c21bde85bdadd255d516364657c96dfea1",
+   "sha256": "a55cf74b71db52388a9ac8f17946852fccbb769512a29ba83ed70580c6df06b3",
    "bytes": 124584,
-   "path": "data/raw/ins-info-firm/Info2-2_hontai_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_hontai_life_20260910-2.html"
   },
   {
    "name": "Info2-5_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84894313",
    "needs_relay": true,
    "status": "written",
-   "sha256": "acab4f6a6524507e43b92277517230689a374957e849b170a031a9fac3d8b9f6",
+   "sha256": "5315133e59808aaed8de61620fcff674d7807835bb897be94f092a3d40d38b2d",
    "bytes": 22302,
-   "path": "data/raw/ins-info-firm/Info2-5_hontai_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_hontai_life_20260910-3.html"
   },
   {
    "name": "Info2-14_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84894313",
    "needs_relay": true,
    "status": "written",
-   "sha256": "cc77b6636004bf9ecbd8e820c3b70d0e65665dd3370a519bd79ccea1a2d2bd0b",
+   "sha256": "f0f92abf732f2c4094882fc6d85fe683493fe8ac8e8db55b6fb1a2538c7d2d8a",
    "bytes": 21633,
-   "path": "data/raw/ins-info-firm/Info2-14_hontai_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_hontai_life_20260910-3.html"
   },
   {
    "name": "Info2-1_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70817744",
    "needs_relay": true,
    "status": "written",
-   "sha256": "8d9ba9d464bfb0e0dd159f72dc1f850dc1893272c2019f87565e1781733b02a2",
+   "sha256": "9363266e52a86a41bd1ca0d5f279037686a9c9732a4746f1a674c930f38615e2",
    "bytes": 31226,
-   "path": "data/raw/ins-info-firm/Info2-1_transglobe_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-1_transglobe_life_20260910-3.html"
   },
   {
    "name": "Info2-2_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-2.aspx?UID=70817744",
    "needs_relay": true,
    "status": "written",
-   "sha256": "41a5cc6d5231a64e076987b64f8f82cb350cc937287108714e3cca65f97098ce",
+   "sha256": "693df330a6d3979d0f45b99aa49ddaafc1230ac83723694bd84d0bd8c0573276",
    "bytes": 123511,
-   "path": "data/raw/ins-info-firm/Info2-2_transglobe_life_20260910.html"
+   "path": "data/raw/ins-info-firm/Info2-2_transglobe_life_20260910-2.html"
   },
   {
    "name": "Info2-5_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70817744",
    "needs_relay": true,
    "status": "written",
-   "sha256": "4281777c27b6b6935401f7d545248a5ab4c59d3c381278beddfc85fa6b413d5d",
+   "sha256": "c31f26cf0a513a62c6873e61100746d4de28c0b6aabbc5908e6829bf05d63c06",
    "bytes": 22311,
-   "path": "data/raw/ins-info-firm/Info2-5_transglobe_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-5_transglobe_life_20260910-3.html"
   },
   {
    "name": "Info2-14_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70817744",
    "needs_relay": true,
    "status": "written",
-   "sha256": "9d00ab172c139e1c2a303b44e848d0489ac1c4acb8c505eb2e3bceab78f44571",
+   "sha256": "a23279ea807f52029b7cbe8567102a5b909bc980477d99386991cd9f9f71ee6f",
    "bytes": 21636,
-   "path": "data/raw/ins-info-firm/Info2-14_transglobe_life_20260910-2.html"
+   "path": "data/raw/ins-info-firm/Info2-14_transglobe_life_20260910-3.html"
   }
  ],
  "summary": {
