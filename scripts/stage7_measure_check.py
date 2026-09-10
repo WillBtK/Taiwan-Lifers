@@ -23,7 +23,9 @@ riding on the assumption that they are the same thing.
 
 Run: python3 scripts/stage7_measure_check.py
 """
+import collections
 import csv
+import importlib.util
 import os
 import statistics
 import subprocess
@@ -32,6 +34,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 AGG = ROOT / "scripts" / "stage6_aggregate_hedge_ratio.py"
+NOTIONAL = ROOT / "data" / "firm_hedge_notional.csv"
+DECKPIE = ROOT / "data" / "deck_pie.csv"
 OUT = ROOT / "data" / "aggregate_hedge_ratio.csv"
 DECK_OUT = ROOT / "data" / "aggregate_hedge_ratio_deck_only.csv"
 REPORT = ROOT / "reports" / "measure_comparison.txt"
@@ -49,6 +53,61 @@ def run(source=None):
         raise SystemExit(f"aggregate failed ({source or 'mixed'}):\n{r.stderr}")
     return {row["as_of"]: row for row in
             csv.DictReader(open(OUT, newline="", encoding="utf-8"))}
+
+
+def paired():
+    """Every firm-quarter where BOTH measures exist, side by side.
+
+    Two firms publish a slide and a statutory notional at the same dates, which
+    is the only direct evidence there is about whether the two measure the same
+    thing. Sixteen comparisons, and the notional is at or above the slide in
+    every one of them — by 2% for Shin Kong and by as much as 150% for Taiwan
+    Life. A one-sided relationship across sixteen observations is not noise: the
+    notional is an UPPER BOUND on the hedge ratio, and the gap is however much
+    of a firm's currency-contract book is doing something other than hedging
+    the foreign bond portfolio.
+    """
+    _s = importlib.util.spec_from_file_location("ag", AGG)
+    ag = importlib.util.module_from_spec(_s)
+    _s.loader.exec_module(ag)
+    _f = importlib.util.spec_from_file_location(
+        "fx", ROOT / "scripts" / "stage5_twd_rates.py")
+    fx = importlib.util.module_from_spec(_f)
+    _f.loader.exec_module(fx)
+    tbl = fx.load()
+    fi, sec = ag.firm_bn(), ag.sector_bn()
+    share = {e: {m: v / sec[m] for m, v in d.items() if m in sec}
+             for e, d in fi.items()}
+
+    def book(e, d):
+        sh = ag.interp(share.get(e, {}), d)
+        lvl = sec.get(d[:7]) or ag.interp(sec, d)
+        return None if (sh is None or lvl is None) else sh * lvl
+
+    tot = collections.defaultdict(float)
+    for r in csv.DictReader(open(NOTIONAL, newline="", encoding="utf-8")):
+        if r["traditional"] != "True":
+            continue
+        v = (float(r["notional_ntd_k"]) if r["notional_ntd_k"] else
+             fx.convert(float(r["notional_ccy_k"]), r.get("currency"),
+                        r["as_of"], tbl) if r["notional_ccy_k"] else None)
+        if v:
+            tot[(r["entity_id"], r["as_of"], r["filing"])] += v
+    per = collections.defaultdict(lambda: collections.defaultdict(list))
+    for (e, d, _f2), v in tot.items():
+        per[e][d].append(v)
+    slide = {(r["entity_id"], r["as_of"]): float(r["hedged_pct"])
+             for r in csv.DictReader(open(DECKPIE, newline="",
+                                          encoding="utf-8"))}
+    out = []
+    for e in sorted(per):
+        for d in sorted(per[e]):
+            sl, bk = slide.get((e, d)), book(e, d)
+            if sl is None or not bk:
+                continue
+            out.append((ag.NAME.get(e, e), d, max(per[e][d]) / 1e6 / bk * 100,
+                        sl))
+    return out
 
 
 def num(row, col):
@@ -103,6 +162,26 @@ def main():
         say("  The gap is widest where the deck-publishing firms are thinnest.")
         say("  Read the difference as the size of the open question in 4.72,")
         say("  not as an error bar: neither series is known to be the wrong one.")
+    rows = paired()
+    if rows:
+        say()
+        say("Every firm-quarter where a company publishes BOTH measures.\n")
+        say(f"  {'company':<14}{'quarter':<12}{'from accounts':>14}"
+            f"{'from slide':>12}{'ratio':>8}")
+        for name, d, a, sl in rows:
+            say(f"  {name:<14}{d:<12}{a:>13.1f}%{sl:>11.1f}%{a / sl:>8.2f}")
+        n = sum(1 for _n, _d, a, sl in rows if a >= sl)
+        say()
+        say(f"  The accounts figure is at or above the slide in {n} of "
+            f"{len(rows)} comparisons.")
+        say("  It is a CEILING on the hedge ratio, not an estimate of it: the")
+        say("  gap is whatever part of the currency-contract book is not")
+        say("  hedging the foreign bond portfolio. 2% of it for Shin Kong,")
+        say("  as much as 150% for Taiwan Life.")
+        say()
+        say("  So the mixed series is an upper bound wherever accounts-only")
+        say("  firms carry weight, and the truth sits between the two lines,")
+        say("  nearer the deck one.")
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"\n-> {DECK_OUT.relative_to(ROOT)}")

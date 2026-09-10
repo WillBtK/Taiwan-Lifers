@@ -5654,3 +5654,60 @@ held, so no FY18 slide exists. The parent's IR host was checked as well —
 `ir.ctbcholding.com/download/YYYYMMDD.pdf` is a real and constructible pattern,
 and `20181231.pdf` turns out to be the related-party exposure return, not a
 deck. The workbook's Taiwan Life 2018-12-31 cell has no independent counterpart.
+
+---
+
+### 4.76 The statutory notional is a CEILING on the hedge ratio, not a measurement of it
+
+4.72 left an open question: why does Taiwan Life's derivative notional imply a
+hedge ratio about twice what its own slide prints, when Shin Kong's reproduces
+its slide to under a point? The answer comes from putting every firm-quarter
+where BOTH measures exist side by side. There are sixteen, across two firms:
+
+| firm | quarters | notional / foreign assets | slide | ratio |
+|---|---|---|---|---|
+| Shin Kong | 1Q26, 2Q26 | 38.8%, 33.2% | 38.1%, 32.2% | 1.02, 1.03 |
+| Taiwan Life | 1Q23 to 2Q26, 14 quarters | 23.8% to 78.1% | 20.0% to 37.0% | 1.19 to 2.50 |
+
+**The notional is at or above the slide in sixteen of sixteen.** Never below.
+A one-sided relationship across sixteen observations and two firms is not
+noise, and it identifies what the two quantities are.
+
+The slide answers "how much of the foreign bond portfolio is protected against
+a move in the New Taiwan dollar". The accounts answer a different question:
+"what is the total contract value of every currency instrument the group
+holds". Those coincide when every contract is doing the first job, which is
+Shin Kong's position. They separate by however much of the book is doing
+something else. **The gap is 2% for Shin Kong and up to 150% for Taiwan Life.**
+
+The parse is not in doubt. Taiwan Life's own page shows USD forwards going
+10,523,040 千元 at 4Q23 to 26,558,040 at 3Q24 and back to 5,464,040 by 2Q26,
+against a foreign book near USD 45bn throughout, while its slide moved 30% to
+37% to 20%. The forward book genuinely tripled and collapsed; the hedge did
+not. Whatever the extra contracts were for — the note is consolidated, so a
+subsidiary's business is one candidate, and short-dated funding swaps another —
+they were not hedging the bond portfolio.
+
+**What follows for the series.** Five of the nine contributing insurers have no
+slide and enter on notionals alone: Nan Shan, Fubon, Hontai, Bank Taiwan Life
+and Mercuries. Their ratios sit in a 21% to 84% band where the slide-publishing
+firms sit in 20% to 50%, which is exactly the pattern a ceiling produces. So:
+
+  * the mixed aggregate is an **upper bound** on the sector hedge ratio wherever
+    accounts-only firms carry weight, not a central estimate;
+  * the deck-only line of 4.74 is the measure-consistent estimate, over a third
+    of the sector rather than seven eighths;
+  * **the sector ratio sits between the two lines, nearer the deck one** — and
+    the two are 14 points apart in 2017-18, 2 to 3 points apart from 2021, and
+    cross in 2025.
+
+This does not discard the notional series. A ceiling is a real quantity and a
+useful one: it bounds how much of these books COULD be hedged, and its fall
+from 2024 is information about the size of the derivative book whatever the
+contracts were for. It is relabelled, not deleted.
+
+**And it explains 4.72's other observation.** Fubon's notional runs 1.13 to
+1.62 times the workbook's traditional hedge with no stable factor, which is
+what a ceiling does when the non-hedging part of the book moves around. The
+Fubon hedge/policy split cannot be derived by subtracting a ceiling from a
+merged wedge, so that route is closed rather than pending.

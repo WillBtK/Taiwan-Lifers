@@ -45,3 +45,33 @@ Two measures of 'hedged', weighted together.
   The gap is widest where the deck-publishing firms are thinnest.
   Read the difference as the size of the open question in 4.72,
   not as an error bar: neither series is known to be the wrong one.
+
+Every firm-quarter where a company publishes BOTH measures.
+
+  company       quarter      from accounts  from slide   ratio
+  Shin Kong     2026-03-31           38.8%       38.1%    1.02
+  Shin Kong     2026-06-30           33.2%       32.2%    1.03
+  Taiwan Life   2023-03-31           43.8%       30.0%    1.46
+  Taiwan Life   2023-06-30           50.2%       33.0%    1.52
+  Taiwan Life   2023-09-30           43.4%       33.0%    1.32
+  Taiwan Life   2023-12-31           40.4%       30.0%    1.35
+  Taiwan Life   2024-03-31           59.8%       30.0%    1.99
+  Taiwan Life   2024-06-30           65.7%       27.0%    2.43
+  Taiwan Life   2024-09-30           78.1%       37.0%    2.11
+  Taiwan Life   2024-12-31           72.6%       29.0%    2.50
+  Taiwan Life   2025-03-31           64.2%       27.0%    2.38
+  Taiwan Life   2025-06-30           41.3%       33.0%    1.25
+  Taiwan Life   2025-09-30           39.0%       29.0%    1.34
+  Taiwan Life   2025-12-31           39.8%       31.0%    1.29
+  Taiwan Life   2026-03-31           34.9%       28.0%    1.25
+  Taiwan Life   2026-06-30           23.8%       20.0%    1.19
+
+  The accounts figure is at or above the slide in 16 of 16 comparisons.
+  It is a CEILING on the hedge ratio, not an estimate of it: the
+  gap is whatever part of the currency-contract book is not
+  hedging the foreign bond portfolio. 2% of it for Shin Kong,
+  as much as 150% for Taiwan Life.
+
+  So the mixed series is an upper bound wherever accounts-only
+  firms carry weight, and the truth sits between the two lines,
+  nearer the deck one.
