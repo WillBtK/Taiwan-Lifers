@@ -5919,3 +5919,37 @@ defaults to a one-year listing of about 48 requests.
 
 So the question of 4.77 is still open, and is now asked in a way that can
 answer it.
+
+---
+
+### 4.82 Mercuries, Hontai and TransGlobe hold no investor conferences, and this time the run can prove it
+
+The re-run with a control settles 4.81's open question. On ROC 115:
+
+| issuer | conferences | months answered | refused |
+|---|---|---|---|
+| Mercuries (2867) | none | 8 of 8 | 0 |
+| Hontai (2876) | none | 8 of 8 | 0 |
+| TransGlobe (5873) | none | 8 of 8 | 0 |
+| **Cathay (2882), the control** | **13, 2026-03-12 to 2026-08-31** | 8 of 8 | 0 |
+
+Every month answered, nothing was refused, and the control returned thirteen
+conferences in the same run. **The zeroes are a real absence.** These three
+insurers are listed and file no investor-conference materials on MOPS at all.
+
+**So the measure-consistent line cannot be widened by finding more decks.** The
+firms that publish a hedge percentage are Cathay, KGI, Taiwan Life and Shin
+Kong, and that is the whole list — about a third of sector overseas investment.
+Everything else enters as a ceiling (4.76), and the only remaining route to
+widening it is the arithmetic one of 4.80: recover the split from the
+statements for a firm whose slide merges it, which is what the current pull is
+for.
+
+**And the same edit-to-run trigger bit again.** Editing
+`pull-firm-statements.yml` is the only way to start a pull, so every edit starts
+one — including an edit that only changes a concurrency group. That launched a
+second five-hour download beside a first already half done, against the same
+website, neither cancellable from this session. A commit whose message contains
+`[no-pull]` now configures the workflow without running it, as a step rather
+than a job-level condition so the run still appears and says why it did
+nothing.
