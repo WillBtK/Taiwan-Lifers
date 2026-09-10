@@ -25,16 +25,21 @@ from flask import Flask, Response, request
 
 app = Flask(__name__)
 
-ALLOWED_HOSTS = {
-    "ins-info.ib.gov.tw",
-    # Shin Kong Financial's own IR host, added 2026-09-10. MOPS carries no
-    # investor-conference filings for code 2888, and code 2887 is Taishin,
-    # whose decks describe Taishin Life until the July 2025 merger — so the
-    # pre-merger Shin Kong Life hedging disclosure exists nowhere else. Both
-    # www and apex, because the site serves each.
-    "www.skfh.com.tw",
-    "skfh.com.tw",
-}
+# Defaults, and an env override so a future host needs a console edit rather
+# than a redeploy. Widening this is a deliberate act either way: the token is
+# the only other thing standing between the relay and whoever finds the URL.
+#
+# ins-info.ib.gov.tw  the Insurance Bureau's portal, the reason this exists.
+# skfh.com.tw         Shin Kong Financial's IR host, added 2026-09-10. MOPS
+#                     carries no investor-conference filings for code 2888, and
+#                     2887 is Taishin, whose decks describe Taishin Life until
+#                     the July 2025 merger — so the pre-merger Shin Kong Life
+#                     hedging disclosure exists nowhere else. Both www and
+#                     apex, because the site serves each.
+_DEFAULT_HOSTS = "ins-info.ib.gov.tw,www.skfh.com.tw,skfh.com.tw"
+ALLOWED_HOSTS = {h.strip() for h in
+                 (os.environ.get("RELAY_ALLOWED_HOSTS") or _DEFAULT_HOSTS).split(",")
+                 if h.strip()}
 MAX_BYTES = 32 * 1024 * 1024
 UA = "Mozilla/5.0 (compatible; TLFX/1.0)"
 
@@ -145,7 +150,12 @@ PROJECT=$(gcloud config get-value project 2>/dev/null)
 TOKEN=$(gcloud run services describe taiwan-relay --region asia-east1 \
   --format='value(spec.template.spec.containers[0].env.filter("name:RELAY_TOKEN").extract("value"))' \
   2>/dev/null | tr -d '[]\n' )
-if [ -z "$TOKEN" ]; then TOKEN=$(openssl rand -hex 24); NEWTOKEN=1; fi
+# RELAY_TOKEN in the environment WINS. Reusing the deployed token is right for
+# a routine redeploy, but it is exactly wrong when the GitHub secret and the
+# service have drifted apart — which is the state this script would otherwise
+# preserve for ever, reporting "unchanged" while every fetch returns 403.
+if [ -n "${RELAY_TOKEN:-}" ]; then TOKEN="$RELAY_TOKEN"; NEWTOKEN=1
+elif [ -z "$TOKEN" ]; then TOKEN=$(openssl rand -hex 24); NEWTOKEN=1; fi
 NUM=$(gcloud projects describe "$PROJECT" --format='value(projectNumber)')
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com --quiet
 # Projects created after Google's 2024 change do not give the default Compute
@@ -170,7 +180,9 @@ echo; echo "TAIWAN_RELAY_URL    $URL"
 if [ -n "${NEWTOKEN:-}" ]; then
   echo "TAIWAN_RELAY_TOKEN  $TOKEN   <- NEW: update the GitHub secret"
 else
-  echo "TAIWAN_RELAY_TOKEN  (unchanged - existing GitHub secret still valid)"
+  echo "TAIWAN_RELAY_TOKEN  $TOKEN"
+  echo "                    (reused from the service; set it as the GitHub"
+  echo "                     secret if the two have drifted)"
 fi; echo
 # /fetch exists in every build the service has ever run, so a passing fetch
 # does NOT prove this redeploy took. /health reports "post" only in the build
