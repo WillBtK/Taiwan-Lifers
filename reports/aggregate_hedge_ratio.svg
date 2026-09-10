@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700"><rect width="1200" height="700" fill="#faf9f7"/>
-<text x="80.0" y="40.0" font-size="19" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Taiwan life sector: the bottom-up FX hedge ratio has more than halved, 61% to 31%</text>
+<text x="80.0" y="40.0" font-size="19" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Taiwan life sector: the bottom-up FX hedge ratio has more than halved, 62% to 31%</text>
 <text x="80.0" y="63.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Traditional hedge notional over overseas investment, chain-linked across six insurers. Built firm by firm from statutory</text>
 <text x="80.0" y="79.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">filings and company decks; no sector hedge-ratio series is used in the construction. Gross basis, not the regulatory denominator.</text>
 <line x1="80" y1="470.0" x2="1092" y2="470.0" stroke="#e2e0dc" stroke-width="1"/>
@@ -168,13 +168,13 @@
 <circle cx="1062.2" cy="346.8" r="2.4" fill="#9b8aa6" opacity="0.85"/>
 <circle cx="1092.0" cy="382.0" r="2.4" fill="#9b8aa6" opacity="0.85"/>
 <text x="1099.0" y="411.5" font-size="10" fill="#9b8aa6" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Taiwan Life</text>
-<polyline points="80.0,200.0 109.8,205.6 139.5,211.1 169.3,207.5 199.1,218.3 228.8,237.3 258.6,249.8 288.4,246.9 318.1,252.2 347.9,251.7 377.6,248.9 407.4,254.5 437.2,252.1 466.9,253.5 496.7,258.4 526.5,262.7 556.2,262.9 586.0,259.0 615.8,260.5 645.5,265.3 675.3,270.7 705.1,273.3 734.8,272.7 764.6,272.9 794.4,258.6 824.1,272.2 853.9,282.9 883.6,259.3 913.4,266.9 943.2,267.4 972.9,254.7 1002.7,285.7 1032.5,316.7 1062.2,329.2 1092.0,334.8" fill="none" stroke="#1c1c1c" stroke-width="3" stroke-linejoin="round"/>
-<circle cx="80.0" cy="200.0" r="4.5" fill="#1c1c1c"/>
+<polyline points="80.0,198.8 109.8,204.5 139.5,210.0 169.3,206.4 199.1,217.2 228.8,236.3 258.6,248.8 288.4,245.9 318.1,248.9 347.9,250.2 377.6,247.1 407.4,252.1 437.2,250.5 466.9,253.1 496.7,255.7 526.5,259.2 556.2,258.8 586.0,256.9 615.8,257.5 645.5,263.1 675.3,268.1 705.1,271.8 734.8,271.1 764.6,271.6 794.4,259.0 824.1,271.4 853.9,281.5 883.6,256.4 913.4,263.7 943.2,266.9 972.9,254.8 1002.7,283.6 1032.5,316.7 1062.2,329.2 1092.0,334.8" fill="none" stroke="#1c1c1c" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="80.0" cy="198.8" r="4.5" fill="#1c1c1c"/>
 <circle cx="1092.0" cy="334.8" r="4.5" fill="#1c1c1c"/>
-<text x="90.0" y="188.0" font-size="11.5" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">61.4%  2017-12-31</text>
+<text x="90.0" y="186.8" font-size="11.5" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">61.6%  2017-12-31</text>
 <text x="1080.0" y="356.8" font-size="14" fill="#1c1c1c" text-anchor="end" font-weight="bold" font-family="Georgia,'Times New Roman',serif">30.7%</text>
 <text x="1080.0" y="371.8" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">2026-06-30</text>
-<text x="586.0" y="243.0" font-size="12" fill="#1c1c1c" text-anchor="middle" font-weight="bold" font-family="Georgia,'Times New Roman',serif">AGGREGATE</text>
+<text x="586.0" y="240.9" font-size="12" fill="#1c1c1c" text-anchor="middle" font-weight="bold" font-family="Georgia,'Times New Roman',serif">AGGREGATE</text>
 <text x="80.0" y="538.0" font-size="12" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Share of sector overseas investment behind each point</text>
 <text x="80.0" y="554.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">The chain-link means a firm entering or leaving cannot move the level — but a thin quarter is still a noisier one.</text>
 <rect x="76.0" y="588.1" width="8" height="27.9" fill="#6b6b6b" opacity="0.5"/>
@@ -184,32 +184,32 @@
 <rect x="195.1" y="588.2" width="8" height="27.8" fill="#6b6b6b" opacity="0.5"/>
 <rect x="224.8" y="585.1" width="8" height="30.9" fill="#6b6b6b" opacity="0.5"/>
 <rect x="254.6" y="590.9" width="8" height="25.1" fill="#6b6b6b" opacity="0.5"/>
-<rect x="284.4" y="583.5" width="8" height="32.5" fill="#6b6b6b" opacity="0.5"/>
-<rect x="314.1" y="583.3" width="8" height="32.7" fill="#6b6b6b" opacity="0.5"/>
-<rect x="343.9" y="583.3" width="8" height="32.7" fill="#6b6b6b" opacity="0.5"/>
-<rect x="373.6" y="582.6" width="8" height="33.4" fill="#6b6b6b" opacity="0.5"/>
-<rect x="403.4" y="582.4" width="8" height="33.6" fill="#6b6b6b" opacity="0.5"/>
-<rect x="433.2" y="576.6" width="8" height="39.4" fill="#6b6b6b" opacity="0.5"/>
-<rect x="462.9" y="576.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
-<rect x="492.7" y="576.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
-<rect x="522.5" y="576.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
-<rect x="552.2" y="576.1" width="8" height="39.9" fill="#6b6b6b" opacity="0.5"/>
-<rect x="582.0" y="572.2" width="8" height="43.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="611.8" y="572.2" width="8" height="43.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="641.5" y="572.4" width="8" height="43.6" fill="#6b6b6b" opacity="0.5"/>
-<rect x="671.3" y="572.2" width="8" height="43.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="701.1" y="578.1" width="8" height="37.9" fill="#6b6b6b" opacity="0.5"/>
-<rect x="730.8" y="578.1" width="8" height="37.9" fill="#6b6b6b" opacity="0.5"/>
-<rect x="760.6" y="578.2" width="8" height="37.8" fill="#6b6b6b" opacity="0.5"/>
-<rect x="790.4" y="578.1" width="8" height="37.9" fill="#6b6b6b" opacity="0.5"/>
-<rect x="820.1" y="578.5" width="8" height="37.5" fill="#6b6b6b" opacity="0.5"/>
-<rect x="849.9" y="578.6" width="8" height="37.4" fill="#6b6b6b" opacity="0.5"/>
-<rect x="879.6" y="578.6" width="8" height="37.4" fill="#6b6b6b" opacity="0.5"/>
-<rect x="909.4" y="578.6" width="8" height="37.4" fill="#6b6b6b" opacity="0.5"/>
-<rect x="939.2" y="578.8" width="8" height="37.2" fill="#6b6b6b" opacity="0.5"/>
-<rect x="968.9" y="578.8" width="8" height="37.2" fill="#6b6b6b" opacity="0.5"/>
-<rect x="998.7" y="573.3" width="8" height="42.7" fill="#6b6b6b" opacity="0.5"/>
-<rect x="1028.5" y="573.3" width="8" height="42.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="284.4" y="581.3" width="8" height="34.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="314.1" y="581.2" width="8" height="34.8" fill="#6b6b6b" opacity="0.5"/>
+<rect x="343.9" y="581.2" width="8" height="34.8" fill="#6b6b6b" opacity="0.5"/>
+<rect x="373.6" y="580.5" width="8" height="35.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="403.4" y="580.3" width="8" height="35.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="433.2" y="574.5" width="8" height="41.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="462.9" y="574.3" width="8" height="41.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="492.7" y="574.3" width="8" height="41.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="522.5" y="574.3" width="8" height="41.7" fill="#6b6b6b" opacity="0.5"/>
+<rect x="552.2" y="574.0" width="8" height="42.0" fill="#6b6b6b" opacity="0.5"/>
+<rect x="582.0" y="570.1" width="8" height="45.9" fill="#6b6b6b" opacity="0.5"/>
+<rect x="611.8" y="570.1" width="8" height="45.9" fill="#6b6b6b" opacity="0.5"/>
+<rect x="641.5" y="570.2" width="8" height="45.8" fill="#6b6b6b" opacity="0.5"/>
+<rect x="671.3" y="570.1" width="8" height="45.9" fill="#6b6b6b" opacity="0.5"/>
+<rect x="701.1" y="575.9" width="8" height="40.1" fill="#6b6b6b" opacity="0.5"/>
+<rect x="730.8" y="576.0" width="8" height="40.0" fill="#6b6b6b" opacity="0.5"/>
+<rect x="760.6" y="576.1" width="8" height="39.9" fill="#6b6b6b" opacity="0.5"/>
+<rect x="790.4" y="576.0" width="8" height="40.0" fill="#6b6b6b" opacity="0.5"/>
+<rect x="820.1" y="576.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
+<rect x="849.9" y="576.5" width="8" height="39.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="879.6" y="576.4" width="8" height="39.6" fill="#6b6b6b" opacity="0.5"/>
+<rect x="909.4" y="576.5" width="8" height="39.5" fill="#6b6b6b" opacity="0.5"/>
+<rect x="939.2" y="576.6" width="8" height="39.4" fill="#6b6b6b" opacity="0.5"/>
+<rect x="968.9" y="576.7" width="8" height="39.3" fill="#6b6b6b" opacity="0.5"/>
+<rect x="998.7" y="571.2" width="8" height="44.8" fill="#6b6b6b" opacity="0.5"/>
+<rect x="1028.5" y="571.2" width="8" height="44.8" fill="#6b6b6b" opacity="0.5"/>
 <rect x="1058.2" y="574.1" width="8" height="41.9" fill="#6b6b6b" opacity="0.5"/>
 <rect x="1088.0" y="574.1" width="8" height="41.9" fill="#6b6b6b" opacity="0.5"/>
 <line x1="80" y1="603.0" x2="1092" y2="603.0" stroke="#e2e0dc" stroke-width="1"/>

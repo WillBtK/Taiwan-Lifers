@@ -22,6 +22,7 @@ published sector numerator is reported rather than hidden.
 """
 import csv
 import collections
+import importlib.util
 import re
 import sys
 from pathlib import Path
@@ -29,6 +30,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "data" / "firm_hedge_notional.csv"
 OUT = ROOT / "data" / "firm_hedge_panel.csv"
+
+# Four insurers state notionals in the CONTRACT currency and the extractor
+# records them that way, leaving notional_ntd_k empty rather than inventing an
+# NT$ figure the filing never gave. Two thirds of every row captured sat
+# unusable for want of the one line below, which is why Mercuries had a hedge
+# notional at 23 dates and appeared in no panel at all. The translation belongs
+# here, where it is a visible derivation with the rate table beside it, and not
+# inside the extractor, where it would look like disclosure.
+_spec = importlib.util.spec_from_file_location(
+    "fx", ROOT / "scripts" / "stage5_twd_rates.py")
+FX = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(FX)
 
 # quarter end months, to turn a MOPS filename (202404_5865_AI1.pdf) into the
 # reporting date the filing is primarily about
@@ -47,8 +60,28 @@ def main():
     if not SRC.exists():
         print(f"missing {SRC.relative_to(ROOT)}")
         return 1
-    rows = [r for r in csv.DictReader(open(SRC, newline="", encoding="utf-8"))
-            if r.get("traditional") == "True" and r.get("notional_ntd_k")]
+    table = FX.load()
+    rows, translated, norate = [], collections.Counter(), collections.Counter()
+    for r in csv.DictReader(open(SRC, newline="", encoding="utf-8")):
+        if r.get("traditional") != "True":
+            continue
+        if not r.get("notional_ntd_k") and r.get("notional_ccy_k"):
+            v = FX.convert(float(r["notional_ccy_k"]), r.get("currency"),
+                           r["as_of"], table)
+            if v is None:
+                norate[(r["entity_id"], r.get("currency"))] += 1
+                continue
+            r["notional_ntd_k"] = str(v)
+            r["translated"] = r.get("currency")
+            translated[r["entity_id"]] += 1
+        if r.get("notional_ntd_k"):
+            rows.append(r)
+    if translated:
+        print("  translated to NT$ at the month's CBC spot: "
+              + ", ".join(f"{k} {v}" for k, v in sorted(translated.items())))
+    if norate:
+        print("  no rate for: "
+              + ", ".join(f"{e} {c}" for (e, c), _ in sorted(norate.items())))
 
     # Candidate filings per firm-period. Reconciliation outranks recency:
     # preferring the filing for which the period is primary put Fubon's
@@ -76,9 +109,30 @@ def main():
     # filing's own printed asset and liability subtotals, which is checked by
     # fixture — so it is labelled distinctly rather than silently pooled.
     SUBTOTAL_VALIDATED = {"nanshan_life"}
+    # A third warrant, for the disclosures that print no 合計 to reconcile
+    # against because there is nothing else in them. Shin Kong states its
+    # notionals in a sentence — "the Company's outstanding derivative contract
+    # amounts (notional principal) are as follows" — and Mercuries in a table
+    # that itemises every currency; both are complete enumerations, so the sum
+    # IS the total and demanding a printed one would reject them for a line
+    # they had no reason to write.
+    #
+    # It is not taken on trust. Shin Kong publishes a hedging pie as well, and
+    # the enumeration reproduces it: 35.5% against 34.7% at 4Q25, 38.8% against
+    # 38.1% at 1Q26, 32.3% against 32.2% at 2Q26.
+    #
+    # TAIWAN LIFE IS EXCLUDED, and not because its table parses badly — it
+    # parses exactly, row for row, against the page. Its gross notional is
+    # simply about twice what its own deck calls hedged: NT$1,119bn at 3Q24
+    # against foreign assets of ~1,437bn, a 78% ratio where the slide prints
+    # 37%. Two measures, not one measure and an error, and until the gap is
+    # explained the deck is the series the aggregate already uses and this
+    # would silently contradict it. See decisions 4.72.
+    ENUMERATED = {"shinkong_life", "taishin_life", "mercuries_life"}
     agg = collections.defaultdict(float)
     parts = collections.defaultdict(dict)
     quality = {}
+    ccy = collections.defaultdict(set)
     dropped = collections.Counter()
     for r in rows:
         key = (r["entity_id"], r["as_of"])
@@ -88,6 +142,8 @@ def main():
             q = "reconciled"
         elif r["entity_id"] in SUBTOTAL_VALIDATED:
             q = "subtotal_validated"
+        elif r["entity_id"] in ENUMERATED and r.get("translated"):
+            q = "enumerated"
         else:
             dropped[r["entity_id"]] += 1
             continue
@@ -95,6 +151,8 @@ def main():
         if v <= 0:
             continue
         quality[key] = q
+        if r.get("translated"):
+            ccy[key].add(r["translated"])
         agg[key] += v
         parts[key][r["instrument"]] = parts[key].get(r["instrument"], 0.0) + v
 
@@ -114,7 +172,9 @@ def main():
                     "quality": quality[(ent, as_of)],
                     "instruments": "; ".join(
                         f"{k}={x / 1e6:,.1f}bn" for k, x in
-                        sorted(parts[(ent, as_of)].items(), key=lambda kv: -kv[1]))})
+                        sorted(parts[(ent, as_of)].items(), key=lambda kv: -kv[1])),
+                    "translated_ccy": ";".join(
+                        sorted(ccy[(ent, as_of)])) or ""})
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=list(out[0].keys()))

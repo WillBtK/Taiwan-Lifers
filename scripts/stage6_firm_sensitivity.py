@@ -805,6 +805,26 @@ CCY = re.compile(r"\b(USD|EUR|JPY|AUD|HKD|RMB|CNY|GBP|CHF|CAD|NZD|SGD|THB|ZAR|KR
 BYCCY_HEAD = re.compile(r"幣\s*別")
 
 
+# Two different tables both head a currency column, and they are not read the
+# same way. Taiwan Life prints 幣別 ONCE and the periods across it:
+#
+#     幣 別      115.6.30   114.12.31  114.6.30
+#     遠期外匯合約 AUD  -          -        76,000
+#                USD  5,464,040  12,165,040  12,435,040
+#
+# Mercuries repeats the whole triple per period, so the currency appears once
+# for every column and each occurrence owns exactly one figure:
+#
+#     項目   帳面金額 幣別 名目本金 | 帳面金額 幣別 名目本金 | 帳面金額 幣別 名目本金
+#     遠期外匯…合約 $15,663,818 USD 10,590,000  1,320,395 USD 1,550,000  41,670 USD 300,000
+#
+# Read as though it were the first shape, the second one takes 1,550,000 —
+# December's figure — as June's, and Mercuries' hedge ratio came out between
+# 97% and 170% of its own foreign assets. How many times 幣別 appears in the
+# header is what tells the two apart.
+BYCCY_ROW = re.compile(r"期\s*貨|選\s*擇\s*權|合\s*計|小\s*計|〜")
+
+
 def parse_note_by_currency(flat):
     """Instrument -> currency -> per-period notional, in FX thousands.
 
@@ -812,36 +832,62 @@ def parse_note_by_currency(flat):
     closing rate, which belongs with the loader that has the FX series, not
     with a text parser; carrying the currency through keeps that explicit
     rather than burying a conversion nobody can audit later.
+
+    The table is also not always two periods. A half-year filing carries three
+    — 115.6.30, 114.12.31, 114.6.30 — and taking the first two read the third
+    column's figures as the second's. The header row says how many there are.
     """
-    dates = [f"{1911 + int(y)}-{int(m):02d}-{int(d):02d}"
-             for y, m, d in DOTDATE.findall(flat)]
-    if not dates or not BYCCY_HEAD.search(flat):
+    head = BYCCY_HEAD.search(flat)
+    if not head:
         return []
-    # de-duplicate while preserving order: the page may print the dates twice
-    seen_d, order = set(), []
-    for d in dates:
-        if d not in seen_d:
-            seen_d.add(d)
-            order.append(d)
-    dates = order[:2] if len(order) >= 2 else order
+    # The periods are the ones printed in this table's own header, not every
+    # dot date on the page: the prose above it carries its own.
+    span = flat[head.end(): head.end() + 160]
+    cols = [f"{1911 + int(y)}-{int(m):02d}-{int(d):02d}"
+            for y, m, d in DOTDATE.findall(span)]
+    if not cols:
+        cols = [f"{1911 + int(y)}-{int(m):02d}-{int(d):02d}"
+                for y, m, d in DOTDATE.findall(flat)]
+    seen, dates = set(), []
+    for d in cols:
+        if d not in seen:
+            seen.add(d)
+            dates.append(d)
+    dates = dates[:4]
+    if not dates:
+        return []
+    # 幣別 repeated across the header means one currency column per period.
+    repeated = len(BYCCY_HEAD.findall(flat[head.start():
+                                           head.start() + 160])) >= 2
 
     out = []
-    hits = list(INSTR.finditer(flat))
+    hits = list(INSTR.finditer(flat, head.end()))
     for i, h in enumerate(hits):
-        seg = flat[h.end(): hits[i + 1].start() if i + 1 < len(hits) else len(flat)]
-        for c in CCY.finditer(seg):
-            tail = seg[c.end(): c.end() + 60]
-            # stop at the next currency code so a missing value cannot borrow
-            # the following row's numbers
-            nxt = CCY.search(tail)
-            if nxt:
-                tail = tail[:nxt.start()]
-            vals = numbers(tail, len(dates))
-            for di, d in enumerate(dates):
-                if di < len(vals) and vals[di] > 0:
+        end = hits[i + 1].start() if i + 1 < len(hits) else len(flat)
+        seg = flat[h.end(): end]
+        # The last instrument's segment otherwise runs to the end of the page
+        # and swallows the 期貨 row beneath the table.
+        stop = BYCCY_ROW.search(seg)
+        if stop and i + 1 == len(hits):
+            seg = seg[: stop.start()]
+        marks = list(CCY.finditer(seg))
+        for k, c in enumerate(marks):
+            tail = seg[c.end(): c.end() + 30 * len(dates)]
+            nxt = marks[k + 1].start() - c.end() if k + 1 < len(marks) else None
+            if nxt is not None:
+                tail = tail[:nxt]
+            if repeated:
+                # one figure per occurrence, in column order
+                vals = numbers(tail, 1)
+                pairs = [(dates[k % len(dates)], vals[0])] if vals else []
+            else:
+                vals = numbers(tail, len(dates))
+                pairs = [(d, vals[di]) for di, d in enumerate(dates)
+                         if di < len(vals)]
+            for d, v in pairs:
+                if v > 0:
                     out.append({"as_of": d, "instrument": h.group(1),
-                                "currency": c.group(1),
-                                "notional_ccy_k": vals[di],
+                                "currency": c.group(1), "notional_ccy_k": v,
                                 "traditional": h.group(1) in TRADITIONAL})
     return out
 
@@ -1202,7 +1248,10 @@ def pull():
                 rows.append({"entity_id": name, "co_id": co,
                              "filing": f["filename"], **r})
             for r in nots:
-                notional_rows.append({"entity_id": name, "co_id": co,
+                ent = entity_at(name, f["filename"], r.get("as_of"))
+                if ent is None:
+                    continue
+                notional_rows.append({"entity_id": ent, "co_id": co,
                                       "filing": f["filename"], **r})
         checkpoint()
 
@@ -1322,6 +1371,13 @@ def reparse():
                 else:
                     flag = "no_total"
                 r.update(meta, total_ntd_k=tv, reconciles=flag)
+                # A filing code is not an insurer. 6985 is Taishin Life until
+                # the 2026 rename and the Shin Kong survivor after it, so the
+                # row's own date decides which company it belongs to.
+                ent = entity_at(meta["entity_id"], filing, r.get("as_of"))
+                if ent is None:
+                    continue
+                r["entity_id"] = ent
                 notional_rows.append(r)
                 n += 1
             for r in (parse_sensitivity_ifrs17(flat) or []):
@@ -1348,6 +1404,53 @@ def reparse():
     print(f"\n{len(notional_rows)} notional rows -> "
           f"{NOTIONAL_OUT.relative_to(ROOT)}")
     return 0
+
+
+# MOPS code 6985 is not one insurer. It is Taishin Life — about NT$300bn of
+# invested assets — until the Shin Kong merger, and the renamed survivor
+# afterwards, an insurer ten times the size (4.61). Keying rows on the code
+# alone put a 1.1% hedge ratio into Shin Kong's series for five quarters, which
+# is Taishin's ratio and correct for Taishin.
+#
+# The split is on the FILING, not on the row's own date, because 2025-12-31 is
+# reported twice and means two different companies:
+#
+#   202504_6985 (FY25, standalone)     USD   870,000 千元  -> Taishin Life
+#   202601_6985 (1Q26, comparative)    USD 27,400,000 千元  -> Shin Kong Life
+#
+# The second is the merged book restated. Dating on as_of would have taken the
+# larger of the two and called it Taishin; dating on the filing keeps both, as
+# what each of them is.
+#
+# Splitting rather than dropping also keeps Taishin Life, a tenth insurer the
+# sell-side workbook does not carry at all.
+RENAMED = {"shinkong_life": ("taishin_life", (2026, 1))}
+
+
+def entity_at(name, filing, as_of=None):
+    """The insurer that filing code actually was when the filing was made.
+
+    Returns None for a row that cannot be attributed. Under a renamed code a
+    COMPARATIVE column cannot be: the 1Q26 filing shows 2025-12-31 at USD
+    27.4bn and 2025-03-31 at USD 840mn in the same table — one restated for the
+    merger and one not — and nothing on the page says which is which. Only the
+    period a filing is primarily about is unambiguous, so under a renamed code
+    that is all that is kept. Nothing is lost by it: Shin Kong's own deck
+    covers every quarter this discards.
+    """
+    before = RENAMED.get(name)
+    if not before:
+        return name
+    m = re.match(r"(\d{4})(\d{2})_", filing or "")
+    if not m:
+        return None
+    y, q = int(m.group(1)), int(m.group(2))
+    if as_of and as_of != f"{y}-{QUARTER_END.get(q, '12-31')}":
+        return None
+    return name if (y, q) >= before[1] else before[0]
+
+
+QUARTER_END = {1: "03-31", 2: "06-30", 3: "09-30", 4: "12-31"}
 
 
 def main():

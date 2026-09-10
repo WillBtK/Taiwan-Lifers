@@ -1,36 +1,36 @@
 as_of,hedge_ratio,unchained_ratio,coverage_share,n_firms,anchor,firms
-2017-12-31,0.61361,0.6207,0.5357,4,False,Cathay=0.441@w0.243;Hontai=0.936@w0.008;Nan Shan=0.838@w0.176;Shin Kong=0.648@w0.109
-2018-03-31,0.60084,0.60779,0.5292,4,False,Cathay=0.441@w0.235;Hontai=0.907@w0.008;Nan Shan=0.799@w0.176;Shin Kong=0.637@w0.111
-2018-06-30,0.58838,0.59519,0.5311,4,False,Cathay=0.448@w0.235;Hontai=0.878@w0.008;Nan Shan=0.760@w0.176;Shin Kong=0.626@w0.112
-2018-09-30,0.59648,0.60338,0.5341,4,False,Cathay=0.483@w0.237;Hontai=0.848@w0.008;Nan Shan=0.747@w0.176;Shin Kong=0.615@w0.114
-2018-12-31,0.57195,0.57857,0.5339,4,False,Cathay=0.427@w0.236;Hontai=0.819@w0.008;Nan Shan=0.734@w0.176;Shin Kong=0.636@w0.114
-2019-03-31,0.52892,0.51793,0.5944,4,False,Cathay=0.406@w0.236;Nan Shan=0.688@w0.176;Shin Kong=0.551@w0.113;Taiwan Life=0.415@w0.070
-2019-06-30,0.50055,0.48285,0.4826,3,False,Cathay=0.386@w0.237;Nan Shan=0.642@w0.176;Taiwan Life=0.409@w0.070
-2019-09-30,0.50705,0.50071,0.6259,4,False,Cathay=0.414@w0.237;Fubon=0.540@w0.143;Nan Shan=0.625@w0.176;Taiwan Life=0.403@w0.070
-2019-12-31,0.49505,0.48886,0.6295,4,False,Cathay=0.427@w0.241;Fubon=0.499@w0.143;Nan Shan=0.607@w0.176;Taiwan Life=0.384@w0.069
-2020-03-31,0.4962,0.48999,0.6294,4,False,Cathay=0.435@w0.241;Fubon=0.521@w0.144;Nan Shan=0.589@w0.176;Taiwan Life=0.366@w0.069
-2020-06-30,0.50257,0.50113,0.6422,5,False,Bank Taiwan=0.729@w0.013;Cathay=0.449@w0.240;Fubon=0.543@w0.145;Nan Shan=0.571@w0.176;Taiwan Life=0.372@w0.069
-2020-09-30,0.48987,0.48847,0.6466,5,False,Bank Taiwan=0.668@w0.013;Cathay=0.455@w0.244;Fubon=0.503@w0.145;Nan Shan=0.561@w0.176;Taiwan Life=0.354@w0.068
-2020-12-31,0.49525,0.49299,0.7572,6,False,Bank Taiwan=0.608@w0.013;Cathay=0.461@w0.244;Fubon=0.521@w0.146;Nan Shan=0.550@w0.176;Shin Kong=0.488@w0.110;Taiwan Life=0.384@w0.068
-2021-03-31,0.49206,0.48982,0.762,6,False,Bank Taiwan=0.625@w0.013;Cathay=0.476@w0.247;Fubon=0.494@w0.147;Nan Shan=0.541@w0.176;Shin Kong=0.498@w0.111;Taiwan Life=0.360@w0.068
-2021-06-30,0.48093,0.47873,0.7611,6,False,Bank Taiwan=0.642@w0.013;Cathay=0.447@w0.244;Fubon=0.467@w0.149;Nan Shan=0.531@w0.176;Shin Kong=0.508@w0.111;Taiwan Life=0.400@w0.067
-2021-09-30,0.47103,0.46888,0.7619,6,False,Bank Taiwan=0.632@w0.013;Cathay=0.419@w0.243;Fubon=0.498@w0.151;Nan Shan=0.496@w0.176;Shin Kong=0.518@w0.112;Taiwan Life=0.400@w0.067
-2021-12-31,0.47073,0.4684,0.768,7,False,Bank Taiwan=0.623@w0.013;Cathay=0.440@w0.242;Fubon=0.505@w0.153;Hontai=0.451@w0.008;Nan Shan=0.460@w0.176;Shin Kong=0.534@w0.110;Taiwan Life=0.370@w0.066
-2022-03-31,0.47956,0.47956,0.843,8,True,Bank Taiwan=0.630@w0.013;Cathay=0.455@w0.242;Fubon=0.509@w0.152;Hontai=0.493@w0.008;KGI=0.504@w0.075;Nan Shan=0.481@w0.176;Shin Kong=0.532@w0.111;Taiwan Life=0.350@w0.066
-2022-06-30,0.47614,0.47614,0.8419,8,False,Bank Taiwan=0.637@w0.013;Cathay=0.435@w0.241;Fubon=0.514@w0.151;Hontai=0.535@w0.008;KGI=0.469@w0.075;Nan Shan=0.501@w0.176;Shin Kong=0.530@w0.112;Taiwan Life=0.350@w0.065
-2022-09-30,0.46523,0.46523,0.8393,8,False,Bank Taiwan=0.638@w0.013;Cathay=0.422@w0.238;Fubon=0.491@w0.150;Hontai=0.577@w0.008;KGI=0.469@w0.075;Nan Shan=0.492@w0.176;Shin Kong=0.527@w0.113;Taiwan Life=0.330@w0.065
-2022-12-31,0.45306,0.45306,0.8428,8,False,Bank Taiwan=0.639@w0.013;Cathay=0.381@w0.241;Fubon=0.520@w0.150;Hontai=0.619@w0.008;KGI=0.456@w0.075;Nan Shan=0.482@w0.176;Shin Kong=0.525@w0.114;Taiwan Life=0.300@w0.065
-2023-03-31,0.44708,0.43593,0.7298,7,False,Bank Taiwan=0.577@w0.013;Cathay=0.380@w0.244;Fubon=0.495@w0.150;Hontai=0.589@w0.008;KGI=0.476@w0.075;Nan Shan=0.479@w0.176;Taiwan Life=0.300@w0.064
-2023-06-30,0.4483,0.43712,0.728,7,False,Bank Taiwan=0.515@w0.013;Cathay=0.401@w0.243;Fubon=0.470@w0.149;Hontai=0.559@w0.008;KGI=0.462@w0.075;Nan Shan=0.476@w0.176;Taiwan Life=0.330@w0.064
-2023-09-30,0.44791,0.43675,0.7268,7,False,Bank Taiwan=0.503@w0.013;Cathay=0.422@w0.242;Fubon=0.438@w0.149;Hontai=0.529@w0.008;KGI=0.442@w0.075;Nan Shan=0.483@w0.176;Taiwan Life=0.330@w0.063
-2023-12-31,0.48039,0.46841,0.7292,7,False,Bank Taiwan=0.491@w0.013;Cathay=0.441@w0.245;Fubon=0.564@w0.149;Hontai=0.500@w0.008;KGI=0.449@w0.075;Nan Shan=0.491@w0.176;Taiwan Life=0.300@w0.063
-2024-03-31,0.44949,0.43797,0.7203,6,False,Bank Taiwan=0.512@w0.013;Cathay=0.393@w0.244;Fubon=0.519@w0.149;KGI=0.408@w0.075;Nan Shan=0.489@w0.175;Taiwan Life=0.300@w0.063
-2024-06-30,0.42526,0.41436,0.7184,6,False,Bank Taiwan=0.533@w0.013;Cathay=0.373@w0.243;Fubon=0.473@w0.150;KGI=0.367@w0.076;Nan Shan=0.486@w0.174;Taiwan Life=0.270@w0.063
-2024-09-30,0.47885,0.46657,0.72,6,False,Bank Taiwan=0.629@w0.013;Cathay=0.435@w0.245;Fubon=0.564@w0.150;KGI=0.354@w0.076;Nan Shan=0.499@w0.173;Taiwan Life=0.370@w0.063
-2024-12-31,0.46155,0.44971,0.7184,6,False,Bank Taiwan=0.725@w0.014;Cathay=0.449@w0.243;Fubon=0.413@w0.151;KGI=0.469@w0.076;Nan Shan=0.512@w0.172;Taiwan Life=0.290@w0.063
-2025-03-31,0.46039,0.44858,0.7163,6,False,Bank Taiwan=0.603@w0.013;Cathay=0.469@w0.243;Fubon=0.447@w0.150;KGI=0.328@w0.076;Nan Shan=0.528@w0.171;Taiwan Life=0.270@w0.063
-2025-06-30,0.48928,0.47673,0.7162,6,False,Bank Taiwan=0.481@w0.013;Cathay=0.414@w0.244;Fubon=0.659@w0.149;KGI=0.288@w0.076;Nan Shan=0.544@w0.170;Taiwan Life=0.330@w0.063
-2025-09-30,0.41888,0.40029,0.8215,7,False,Bank Taiwan=0.496@w0.013;Cathay=0.414@w0.246;Fubon=0.336@w0.149;KGI=0.442@w0.075;Nan Shan=0.485@w0.170;Shin Kong=0.347@w0.106;Taiwan Life=0.290@w0.064
-2025-12-31,0.34834,0.33287,0.822,7,False,Bank Taiwan=0.510@w0.013;Cathay=0.283@w0.246;Fubon=0.245@w0.148;KGI=0.429@w0.075;Nan Shan=0.425@w0.169;Shin Kong=0.347@w0.107;Taiwan Life=0.310@w0.064
-2026-03-31,0.31999,0.30579,0.806,7,False,Bank Taiwan=0.453@w0.013;Cathay=0.264@w0.247;Fubon=0.214@w0.148;KGI=0.285@w0.075;Nan Shan=0.414@w0.169;Shin Kong=0.381@w0.090;Taiwan Life=0.280@w0.064
-2026-06-30,0.30719,0.29355,0.806,7,False,Bank Taiwan=0.396@w0.013;Cathay=0.266@w0.247;Fubon=0.239@w0.148;KGI=0.270@w0.075;Nan Shan=0.403@w0.169;Shin Kong=0.322@w0.090;Taiwan Life=0.200@w0.064
+2017-12-31,0.61629,0.6207,0.5357,4,False,Cathay=0.441@w0.243;Hontai=0.936@w0.008;Nan Shan=0.838@w0.176;Shin Kong=0.648@w0.109
+2018-03-31,0.60347,0.60779,0.5292,4,False,Cathay=0.441@w0.235;Hontai=0.907@w0.008;Nan Shan=0.799@w0.176;Shin Kong=0.637@w0.111
+2018-06-30,0.59096,0.59519,0.5311,4,False,Cathay=0.448@w0.235;Hontai=0.878@w0.008;Nan Shan=0.760@w0.176;Shin Kong=0.626@w0.112
+2018-09-30,0.59909,0.60338,0.5341,4,False,Cathay=0.483@w0.237;Hontai=0.848@w0.008;Nan Shan=0.747@w0.176;Shin Kong=0.615@w0.114
+2018-12-31,0.57446,0.57857,0.5339,4,False,Cathay=0.427@w0.236;Hontai=0.819@w0.008;Nan Shan=0.734@w0.176;Shin Kong=0.636@w0.114
+2019-03-31,0.53123,0.51793,0.5944,4,False,Cathay=0.406@w0.236;Nan Shan=0.688@w0.176;Shin Kong=0.551@w0.113;Taiwan Life=0.415@w0.070
+2019-06-30,0.50274,0.48285,0.4826,3,False,Cathay=0.386@w0.237;Nan Shan=0.642@w0.176;Taiwan Life=0.409@w0.070
+2019-09-30,0.50927,0.50469,0.6665,5,False,Cathay=0.414@w0.237;Fubon=0.540@w0.143;Mercuries=0.566@w0.041;Nan Shan=0.625@w0.176;Taiwan Life=0.403@w0.070
+2019-12-31,0.50239,0.49787,0.6701,5,False,Cathay=0.427@w0.241;Fubon=0.499@w0.143;Mercuries=0.638@w0.041;Nan Shan=0.607@w0.176;Taiwan Life=0.384@w0.069
+2020-03-31,0.49951,0.49502,0.6701,5,False,Cathay=0.435@w0.241;Fubon=0.521@w0.144;Mercuries=0.573@w0.041;Nan Shan=0.589@w0.176;Taiwan Life=0.366@w0.069
+2020-06-30,0.50661,0.50651,0.6828,6,False,Bank Taiwan=0.729@w0.013;Cathay=0.449@w0.240;Fubon=0.543@w0.145;Mercuries=0.592@w0.041;Nan Shan=0.571@w0.176;Taiwan Life=0.372@w0.069
+2020-09-30,0.49521,0.49511,0.6872,6,False,Bank Taiwan=0.668@w0.013;Cathay=0.455@w0.244;Fubon=0.503@w0.145;Mercuries=0.601@w0.041;Nan Shan=0.561@w0.176;Taiwan Life=0.354@w0.068
+2020-12-31,0.49896,0.49736,0.7978,7,False,Bank Taiwan=0.608@w0.013;Cathay=0.461@w0.244;Fubon=0.521@w0.146;Mercuries=0.579@w0.041;Nan Shan=0.550@w0.176;Shin Kong=0.488@w0.110;Taiwan Life=0.384@w0.068
+2021-03-31,0.49295,0.49137,0.8026,7,False,Bank Taiwan=0.625@w0.013;Cathay=0.476@w0.247;Fubon=0.494@w0.147;Mercuries=0.521@w0.041;Nan Shan=0.541@w0.176;Shin Kong=0.498@w0.111;Taiwan Life=0.360@w0.068
+2021-06-30,0.48713,0.48557,0.8017,7,False,Bank Taiwan=0.642@w0.013;Cathay=0.447@w0.244;Fubon=0.467@w0.149;Mercuries=0.614@w0.041;Nan Shan=0.531@w0.176;Shin Kong=0.508@w0.111;Taiwan Life=0.400@w0.067
+2021-09-30,0.47917,0.47763,0.8026,7,False,Bank Taiwan=0.632@w0.013;Cathay=0.419@w0.243;Fubon=0.498@w0.151;Mercuries=0.642@w0.041;Nan Shan=0.496@w0.176;Shin Kong=0.518@w0.112;Taiwan Life=0.400@w0.067
+2021-12-31,0.48001,0.47821,0.8086,8,False,Bank Taiwan=0.623@w0.013;Cathay=0.440@w0.242;Fubon=0.505@w0.153;Hontai=0.451@w0.008;Mercuries=0.664@w0.041;Nan Shan=0.460@w0.176;Shin Kong=0.534@w0.110;Taiwan Life=0.370@w0.066
+2022-03-31,0.48421,0.48421,0.8836,9,True,Bank Taiwan=0.630@w0.013;Cathay=0.455@w0.242;Fubon=0.509@w0.152;Hontai=0.493@w0.008;KGI=0.504@w0.075;Mercuries=0.581@w0.041;Nan Shan=0.481@w0.176;Shin Kong=0.532@w0.111;Taiwan Life=0.350@w0.066
+2022-06-30,0.48295,0.48295,0.8825,9,False,Bank Taiwan=0.637@w0.013;Cathay=0.435@w0.241;Fubon=0.514@w0.151;Hontai=0.535@w0.008;KGI=0.469@w0.075;Mercuries=0.624@w0.041;Nan Shan=0.501@w0.176;Shin Kong=0.530@w0.112;Taiwan Life=0.350@w0.065
+2022-09-30,0.47017,0.47017,0.88,9,False,Bank Taiwan=0.638@w0.013;Cathay=0.422@w0.238;Fubon=0.491@w0.150;Hontai=0.577@w0.008;KGI=0.469@w0.075;Mercuries=0.572@w0.041;Nan Shan=0.492@w0.176;Shin Kong=0.527@w0.113;Taiwan Life=0.330@w0.065
+2022-12-31,0.4589,0.4589,0.8835,9,False,Bank Taiwan=0.639@w0.013;Cathay=0.381@w0.241;Fubon=0.520@w0.150;Hontai=0.619@w0.008;KGI=0.456@w0.075;Mercuries=0.580@w0.041;Nan Shan=0.482@w0.176;Shin Kong=0.525@w0.114;Taiwan Life=0.300@w0.065
+2023-03-31,0.4505,0.44085,0.7704,8,False,Bank Taiwan=0.577@w0.013;Cathay=0.380@w0.244;Fubon=0.495@w0.150;Hontai=0.589@w0.008;KGI=0.476@w0.075;Mercuries=0.529@w0.041;Nan Shan=0.479@w0.176;Taiwan Life=0.300@w0.064
+2023-06-30,0.45196,0.44227,0.7686,8,False,Bank Taiwan=0.515@w0.013;Cathay=0.401@w0.243;Fubon=0.470@w0.149;Hontai=0.559@w0.008;KGI=0.462@w0.075;Mercuries=0.535@w0.041;Nan Shan=0.476@w0.176;Taiwan Life=0.330@w0.064
+2023-09-30,0.45091,0.44125,0.7675,8,False,Bank Taiwan=0.503@w0.013;Cathay=0.422@w0.242;Fubon=0.438@w0.149;Hontai=0.529@w0.008;KGI=0.442@w0.075;Mercuries=0.522@w0.041;Nan Shan=0.483@w0.176;Taiwan Life=0.330@w0.063
+2023-12-31,0.47949,0.46922,0.7699,8,False,Bank Taiwan=0.491@w0.013;Cathay=0.441@w0.245;Fubon=0.564@w0.149;Hontai=0.500@w0.008;KGI=0.449@w0.075;Mercuries=0.484@w0.041;Nan Shan=0.491@w0.176;Taiwan Life=0.300@w0.063
+2024-03-31,0.4513,0.44134,0.761,7,False,Bank Taiwan=0.512@w0.013;Cathay=0.393@w0.244;Fubon=0.519@w0.149;KGI=0.408@w0.075;Mercuries=0.501@w0.041;Nan Shan=0.489@w0.175;Taiwan Life=0.300@w0.063
+2024-06-30,0.42832,0.41886,0.7592,7,False,Bank Taiwan=0.533@w0.013;Cathay=0.373@w0.243;Fubon=0.473@w0.150;KGI=0.367@w0.076;Mercuries=0.498@w0.041;Nan Shan=0.486@w0.174;Taiwan Life=0.270@w0.063
+2024-09-30,0.48541,0.47469,0.7609,7,False,Bank Taiwan=0.629@w0.013;Cathay=0.435@w0.245;Fubon=0.564@w0.150;KGI=0.354@w0.076;Mercuries=0.618@w0.041;Nan Shan=0.499@w0.173;Taiwan Life=0.370@w0.063
+2024-12-31,0.4688,0.45845,0.7594,7,False,Bank Taiwan=0.725@w0.014;Cathay=0.449@w0.243;Fubon=0.413@w0.151;KGI=0.469@w0.076;Mercuries=0.612@w0.041;Nan Shan=0.512@w0.172;Taiwan Life=0.290@w0.063
+2025-03-31,0.46155,0.45136,0.757,7,False,Bank Taiwan=0.603@w0.013;Cathay=0.469@w0.243;Fubon=0.447@w0.150;KGI=0.328@w0.076;Mercuries=0.500@w0.041;Nan Shan=0.528@w0.171;Taiwan Life=0.270@w0.063
+2025-06-30,0.48903,0.47823,0.7566,7,False,Bank Taiwan=0.481@w0.013;Cathay=0.414@w0.244;Fubon=0.659@w0.149;KGI=0.288@w0.076;Mercuries=0.505@w0.040;Nan Shan=0.544@w0.170;Taiwan Life=0.330@w0.063
+2025-09-30,0.42369,0.40609,0.8616,8,False,Bank Taiwan=0.496@w0.013;Cathay=0.414@w0.246;Fubon=0.336@w0.149;KGI=0.442@w0.075;Mercuries=0.525@w0.040;Nan Shan=0.485@w0.170;Shin Kong=0.347@w0.106;Taiwan Life=0.290@w0.064
+2025-12-31,0.34847,0.33399,0.8618,8,False,Bank Taiwan=0.510@w0.013;Cathay=0.283@w0.246;Fubon=0.245@w0.148;KGI=0.429@w0.075;Mercuries=0.357@w0.040;Nan Shan=0.425@w0.169;Shin Kong=0.347@w0.107;Taiwan Life=0.310@w0.064
+2026-03-31,0.32011,0.30579,0.806,7,False,Bank Taiwan=0.453@w0.013;Cathay=0.264@w0.247;Fubon=0.214@w0.148;KGI=0.285@w0.075;Nan Shan=0.414@w0.169;Shin Kong=0.381@w0.090;Taiwan Life=0.280@w0.064
+2026-06-30,0.3073,0.29355,0.806,7,False,Bank Taiwan=0.396@w0.013;Cathay=0.266@w0.247;Fubon=0.239@w0.148;KGI=0.270@w0.075;Nan Shan=0.403@w0.169;Shin Kong=0.322@w0.090;Taiwan Life=0.200@w0.064

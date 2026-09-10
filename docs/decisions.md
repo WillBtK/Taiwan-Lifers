@@ -5483,3 +5483,75 @@ and the definition has not been run down. Formosa bonds are the obvious
 candidate — legally domestic, FX-denominated, excluded from the Bureau's
 國外投資 — but the sign is inconsistent across the three, so it is recorded as
 an open question rather than an explanation.
+
+---
+
+### 4.72 Two thirds of the captured notionals were unusable for want of an exchange rate, and the two tables that hold them were being read wrong
+
+The extractor had 1,074 notional rows and the panel could use 400 of them.
+Every row it dropped had a number on it. Four insurers state notionals in the
+CONTRACT currency, and the extractor records them that way — `notional_ccy_k`
+with the currency beside it, `notional_ntd_k` empty — which is right, because a
+filing that says `USD 19,200,000 仟元` has not stated an NT$ figure. Nothing
+downstream ever translated them, so Mercuries had a hedge notional at 23 dates
+and appeared in no panel at all.
+
+**The rates were already in the repository.** `scripts/stage5_twd_rates.py`
+builds TWD per unit for fourteen currencies from two CBC matrices this project
+caches — EG51M01 for the dollar, EG52M01 for the rest — as the mid of the
+customer bid and ask. The translation happens in the panel, not the extractor,
+so it reads as a derivation with the rate table beside it rather than as
+disclosure. Translating a notional at spot is not a valuation: the contract
+rate is not disclosed and no mark-to-market is implied. It puts numerator and
+denominator on one basis, which is all a hedge ratio needs.
+
+**Then two table shapes had to be told apart, because reading one as the other
+moves figures between columns.** Taiwan Life prints 幣別 ONCE with the periods
+across it; Mercuries repeats 帳面金額 / 幣別 / 名目本金 per period, so the
+currency appears once for every column and each occurrence owns exactly one
+figure. Read as the first shape, Mercuries' December figure was taken as its
+June figure and its hedge ratio came out between 97% and 170% of its own
+foreign assets. How many times 幣別 appears in the header separates them.
+
+Two smaller faults in the same parser: it took the first two periods when a
+half-year filing carries three, so the third column was read as the second; and
+the last instrument's segment ran past the table and swallowed the 期貨 row
+beneath it. Mercuries now reads 35% to 62% across 2019-2025, a stable series,
+against the impossible one it produced before.
+
+**A third quality warrant, and it is not taken on trust.** The panel admitted
+only notionals reconciling to the filing's own printed 合計, plus Nan Shan on
+its subtotals. These two disclosures print no 合計 because there is nothing
+else in them — Shin Kong states its notionals in a sentence, Mercuries itemises
+every currency — so the sum IS the total. The warrant is checked against an
+independent series: Shin Kong publishes a hedging pie, and the enumeration
+reproduces it at **35.5% against 34.7% (4Q25), 38.8% against 38.1% (1Q26) and
+32.3% against 32.2% (2Q26)**.
+
+**TAIWAN LIFE IS EXCLUDED, and this is a finding rather than a defect.** Its
+table now parses exactly, row for row, against the page — and its gross
+notional is about twice what its own deck calls hedged: NT$1,119bn at 3Q24
+against foreign assets near 1,437bn, a 78% ratio where the slide prints 37%.
+The gap is not a rounding or a base difference; it is systematic across
+2023-2026 and it does not appear for Shin Kong, where the two measures agree to
+under a point. Until it is explained, the deck is what the aggregate uses and
+the statutory series would silently contradict it. **It also puts a question
+against the four firms that enter the aggregate on notionals alone** — Nan
+Shan, Fubon, Hontai, Bank Taiwan Life — none of which publishes a pie to check
+against. That question is open.
+
+**And MOPS code 6985 turned out to be a subtler trap than 4.61 recorded.** It
+is Taishin Life before the Shin Kong merger and the renamed survivor after, so
+the code alone put a 1.1% hedge ratio into Shin Kong's series. But the date
+alone does not fix it either: **2025-12-31 is reported twice and means two
+different companies** — USD 870mn in the FY25 filing, standalone, and USD
+27.4bn as the 1Q26 filing's comparative, restated for the merger. Nothing on
+the page says which is which, and the same filing's 2025-03-31 comparative is
+the small one. So under a renamed code only the period a filing is PRIMARILY
+about is kept. Nothing is lost: Shin Kong's own deck covers every quarter this
+discards, and Taishin Life survives as a tenth insurer the sell-side workbook
+does not carry at all.
+
+**Effect on the aggregate.** Nine firms behind the 2022 anchor rather than
+eight, coverage at the anchor 84% to **88%**, and Mercuries added at 26 dates
+from 2019-09. The series reads 61.6% (2017-12) to 30.7% (2026-06).
