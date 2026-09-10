@@ -6034,3 +6034,24 @@ and the lines its shares. Logged as an amendment in the spec's §10 with
 that scope; built as `drawStackDual()` in `artifact/page.js` from the §3
 primitives. The authored page code now lives in `page.js` and the template
 holds the chrome only; the blob builder splices both.
+
+### 4.85 Fubon does not disclose its insurance liabilities by currency; the statutory route to its split is closed
+
+The re-fetch of all 302 filings under the widened page filter (4.80, task 9)
+landed on 2026-09-10 and was reparsed: 307 filings, every one at capture
+version 2, 1,074 notional rows. The foreign-currency policy-liability parser
+still finds exactly one firm, Mercuries (two quarters, both reconciling to
+the printed total). Fubon's 42 filings hold 381 captured pages; one matches
+the 以外幣計價之保險合約 wording, and it is the IFRS 17 transition table in
+the 1Q26 report (202601_5865_AI1.pdf page 16), which reclassifies
+liabilities and says nothing about currency. Nan Shan's 154 pages match
+nothing.
+
+**So the arithmetic of 4.80 cannot be run for Fubon from its statements.**
+Its deck's merged hedge-and-policy wedge stays the measure on the page, its
+derivatives figure stays the statutory ceiling, and the caveat in the page's
+"what would change the conclusion" callout (that the 2026 wedge is read as
+hedged-plus-policy on the deck's own label) stays live. The remaining route
+is the deck itself: Fubon's 2026 hedging slide may state the policy share in
+text or a sub-pie, and its 2024–25 slides are still unparsed for the
+naked/equity split (task open). No page change from this entry.
