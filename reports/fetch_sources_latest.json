@@ -1,5 +1,5 @@
 {
- "run_at": "2026-09-09T23:52:07.443564+00:00",
+ "run_at": "2026-09-10T05:14:15.246254+00:00",
  "sources": [
   {
    "name": "tigf_holdings",
@@ -37,307 +37,384 @@
    "name": "json-06161610",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161610.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "052ec8bd169e1188c351dedd040c33641171de29d04e81f2b887730837c850ba",
+   "matches": "json-06161610_20260905.json"
   },
   {
    "name": "json-06021011",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06021011.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "a4b4fad25e8ba73e05e91cddb69b99ca56e7e1a62defaebd9e7e7c7ebe282e27",
+   "matches": "json-06021011_20260905.json"
   },
   {
    "name": "json-05010111",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05010111.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "5e5ffa6dd1c1ea7fdc6ceb5ebeb79604f88b61cfee6a8558d293e3947da3baf1",
+   "matches": "json-05010111_20260905.json"
   },
   {
    "name": "json-05020511",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05020511.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "2a594ef68a29ad19eab0c64c7c9f4420cabe9cfdcdb0e2003e880da114dedc00",
+   "matches": "json-05020511_20260905.json"
   },
   {
    "name": "json-05030310",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05030310.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "1c521d5deb4f8eb132e4f13a22030c600069a7fca98872f94a2eb9188410e384",
+   "bytes": 52286,
+   "path": "data/raw/ins-info/json-05030310_20260910.json"
   },
   {
    "name": "json-05030311",
    "url": "https://ins-info.ib.gov.tw/opendata/json-05030311.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "a30e02cafb133936954adb35ca98accfe587790bcd85c937975dc5cee433acdc",
+   "matches": "json-05030311_20260905.json"
   },
   {
    "name": "json-06161601",
    "url": "https://ins-info.ib.gov.tw/opendata/json-06161601.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "d68e2b454845ec752bdc08868f87f83ec36370c73695fcb710c90dfd806e671d",
+   "matches": "json-06161601_20260905.json"
   },
   {
    "name": "json-07010801",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07010801.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "f75ff22881b1ef82e572e5a08161d34d599af5a3101491142f476761fe80f68f",
+   "matches": "json-07010801_20260905.json"
   },
   {
    "name": "json-07011010",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07011010.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "185f0a03217b0b0ec6b5d3237ef411f484ff734dea1dbe5f0830ad8147369acf",
+   "matches": "json-07011010_20260905.json"
   },
   {
    "name": "json-07090901",
    "url": "https://ins-info.ib.gov.tw/opendata/json-07090901.aspx",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "unchanged",
+   "sha256": "2cca97975dde8b777e960eb22163088e7428626c842ba3b744f9d45b1f148f9e",
+   "matches": "json-07090901_20260905.json"
   },
   {
    "name": "Info2-1_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03374707",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "8c78b2a2cad24ad335ec04784ceb3983af7ce772c152d64cb8a30c8acc7e0910",
+   "bytes": 31428,
+   "path": "data/raw/ins-info-firm/Info2-1_cathay_life_20260910.html"
   },
   {
    "name": "Info2-5_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03374707",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "d62fa0353cd41212aacfc93f1e786c82b2e92d36e7b8da129daaae0a48c2e46a",
+   "bytes": 22599,
+   "path": "data/raw/ins-info-firm/Info2-5_cathay_life_20260910.html"
   },
   {
    "name": "Info2-14_cathay_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03374707",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "2c5c4ca40960fca2414dbc437d1678bf5f57c6db165ff14f5c9c8f233ccc3ce2",
+   "bytes": 21924,
+   "path": "data/raw/ins-info-firm/Info2-14_cathay_life_20260910.html"
   },
   {
    "name": "Info2-1_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=27935073",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "c41b3c7ca3bd2cb20043ed5ec7b11e3ab875566181e28951e383d097ad34cc7f",
+   "bytes": 32123,
+   "path": "data/raw/ins-info-firm/Info2-1_fubon_life_20260910.html"
   },
   {
    "name": "Info2-5_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=27935073",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "83b47d9b1f62385e4e3dc4fed3eca5df23357dbd3fb3844feea758adfc21050d",
+   "bytes": 22775,
+   "path": "data/raw/ins-info-firm/Info2-5_fubon_life_20260910.html"
   },
   {
    "name": "Info2-14_fubon_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=27935073",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "401f664fb7710e384dfb32be268fa51d1126f18ad5910a425aa78a52922b9511",
+   "bytes": 21922,
+   "path": "data/raw/ins-info-firm/Info2-14_fubon_life_20260910.html"
   },
   {
    "name": "Info2-1_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=11456006",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "642562366258537e1276ebb4623c88f86ae93b77877ebcd9d237db413d32cbe6",
+   "bytes": 32769,
+   "path": "data/raw/ins-info-firm/Info2-1_nanshan_life_20260910.html"
   },
   {
    "name": "Info2-5_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=11456006",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "933b73e03f580e75422ed3b4f9f822f578b980834d06d711045e8b00ae334766",
+   "bytes": 22859,
+   "path": "data/raw/ins-info-firm/Info2-5_nanshan_life_20260910.html"
   },
   {
    "name": "Info2-14_nanshan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=11456006",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "6b308e0da99e69279162b919a8ba34f1d9280ff14434e492b24fc07b474a62b0",
+   "bytes": 22064,
+   "path": "data/raw/ins-info-firm/Info2-14_nanshan_life_20260910.html"
   },
   {
    "name": "Info2-1_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03434016",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "ac452867f995599804123b360dd1410a9ae7b14b9080224df43685451b8300b2",
+   "bytes": 31597,
+   "path": "data/raw/ins-info-firm/Info2-1_kgi_life_20260910.html"
   },
   {
    "name": "Info2-5_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03434016",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "d2baa5f82c48cdb9a10177cddc77c76d8a6fab9328c170d1da26db069a30dd3b",
+   "bytes": 22315,
+   "path": "data/raw/ins-info-firm/Info2-5_kgi_life_20260910.html"
   },
   {
    "name": "Info2-14_kgi_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03434016",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "4e63f3dea5a8a87f5b12665aba5c68ce962773a659082ae5b460b4da6c3008a5",
+   "bytes": 21638,
+   "path": "data/raw/ins-info-firm/Info2-14_kgi_life_20260910.html"
   },
   {
    "name": "Info2-1_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03557017",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "1d8263a9e962c377f237aef9ae0e975e48770998758d41c4dae90b68cb603f66",
+   "bytes": 31985,
+   "path": "data/raw/ins-info-firm/Info2-1_taiwan_life_20260910.html"
   },
   {
    "name": "Info2-5_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03557017",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "38f7e8093373a836b761c4fdbb338048f8d9f2cb96d19c3814a9b354f5f82727",
+   "bytes": 22659,
+   "path": "data/raw/ins-info-firm/Info2-5_taiwan_life_20260910.html"
   },
   {
    "name": "Info2-14_taiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03557017",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "c789498135ee1a4c5f9257d778556290b77408e919d85696d225a4282befdb0f",
+   "bytes": 21988,
+   "path": "data/raw/ins-info-firm/Info2-14_taiwan_life_20260910.html"
   },
   {
    "name": "Info2-1_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70789634",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "06fe6bda4a0f5ba3f58802879f25f06881d306d9f20d10f12225cdb646192784",
+   "bytes": 31415,
+   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_20260910.html"
   },
   {
    "name": "Info2-5_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70789634",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "91ef96451b283478ef3123a2a015bc795328f325f8f49301b8155ae7173616c9",
+   "bytes": 22628,
+   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_20260910.html"
   },
   {
    "name": "Info2-14_shinkong_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70789634",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "25dd942a7da4df0b2ba925cd0bfa3b0aa592506e0050495c43df2fd5cb296d6b",
+   "bytes": 21924,
+   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_20260910.html"
   },
   {
    "name": "Info2-1_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=03458902",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "31f2928ad8e8608bfe79eb1a2a5ada2cda64eb6c7fbbbbc703b8164b647951b8",
+   "bytes": 39259,
+   "path": "data/raw/ins-info-firm/Info2-1_shinkong_life_pre2026_20260910.html"
   },
   {
    "name": "Info2-5_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=03458902",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "5f4f99c64aecbcb64db2d08d6d2ec15989d94d00d184f0d85584658ec1a74e5e",
+   "bytes": 26543,
+   "path": "data/raw/ins-info-firm/Info2-5_shinkong_life_pre2026_20260910.html"
   },
   {
    "name": "Info2-14_shinkong_life_pre2026",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=03458902",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "4ab5eddc9cbcdce4e75e74b05f643f32d04d605d22e45d838d58692d2d56bfda",
+   "bytes": 20050,
+   "path": "data/raw/ins-info-firm/Info2-14_shinkong_life_pre2026_20260910.html"
   },
   {
    "name": "Info2-1_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=28428384",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "40278b364c57c35848c1c22aedfbbfc736cc876d2c4704c5b9b8e0269e569ec1",
+   "bytes": 30932,
+   "path": "data/raw/ins-info-firm/Info2-1_banktaiwan_life_20260910.html"
   },
   {
    "name": "Info2-5_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=28428384",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "dff94266e25110988d7e5c2ad8cfe84869d1541a1d0d536a84af309ca4f8bcdf",
+   "bytes": 22305,
+   "path": "data/raw/ins-info-firm/Info2-5_banktaiwan_life_20260910.html"
   },
   {
    "name": "Info2-14_banktaiwan_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=28428384",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "32bc10d10e7d7ddcf5eb322833a3dce8173189b176fa0e5cd7a9a679bfead3aa",
+   "bytes": 21636,
+   "path": "data/raw/ins-info-firm/Info2-14_banktaiwan_life_20260910.html"
   },
   {
    "name": "Info2-1_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84443471",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "edef953693c478fb25e0766708eeca0bebdb1844972096f5cb30744356f104c1",
+   "bytes": 32387,
+   "path": "data/raw/ins-info-firm/Info2-1_mercuries_life_20260910.html"
   },
   {
    "name": "Info2-5_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84443471",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "9dcb4053859a54f82b04de016af0952217191dc39503e51236cc3809b7ce0b8c",
+   "bytes": 22968,
+   "path": "data/raw/ins-info-firm/Info2-5_mercuries_life_20260910.html"
   },
   {
    "name": "Info2-14_mercuries_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84443471",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "b23765a5e991b69ba89e31000ba2846c5990c1a4645d6b47e0359a170654b257",
+   "bytes": 21674,
+   "path": "data/raw/ins-info-firm/Info2-14_mercuries_life_20260910.html"
   },
   {
    "name": "Info2-1_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=84894313",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "1315b22a7a2d8711bcb85ef7631543f4fa4ae4ee86ae2f62f9b019da1d2e11f0",
+   "bytes": 31763,
+   "path": "data/raw/ins-info-firm/Info2-1_hontai_life_20260910.html"
   },
   {
    "name": "Info2-5_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=84894313",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "09d5348c5ae6edbf9c7e2d662b8ebe544911b7175a7dad774d39b5fd2fb4a7a7",
+   "bytes": 22302,
+   "path": "data/raw/ins-info-firm/Info2-5_hontai_life_20260910.html"
   },
   {
    "name": "Info2-14_hontai_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=84894313",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "34df05eeda0c3874fac07bf3128cd6f06ac2bddd69a6579ade6f923022e55c90",
+   "bytes": 21633,
+   "path": "data/raw/ins-info-firm/Info2-14_hontai_life_20260910.html"
   },
   {
    "name": "Info2-1_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-1.aspx?UID=70817744",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "882097ff17ba962e80900e1577c877250f843d793e143a68c703bbcf31755e0d",
+   "bytes": 31226,
+   "path": "data/raw/ins-info-firm/Info2-1_transglobe_life_20260910.html"
   },
   {
    "name": "Info2-5_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-5.aspx?UID=70817744",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "6a94784c5c5b873fc55d70056084464eef21334d4dc7ae5152da1e151976468f",
+   "bytes": 22311,
+   "path": "data/raw/ins-info-firm/Info2-5_transglobe_life_20260910.html"
   },
   {
    "name": "Info2-14_transglobe_life",
    "url": "https://ins-info.ib.gov.tw/customer/Info2-14.aspx?UID=70817744",
    "needs_relay": true,
-   "status": "unavailable",
-   "error": "RuntimeError: relay refused: get 403 {\"error\":\"forbidden\"}; post 405 <!doctype html> <html lang=en> <title>405 Method Not Allowed</title> <h1>Method Not Allowe; bearer 403 {\"error\":\"forbidden\"}"
+   "status": "written",
+   "sha256": "ccfdb68eb5dd80b96a6a27e44d7a03fe2ce5e01c2f14e52062efbef7da087596",
+   "bytes": 21636,
+   "path": "data/raw/ins-info-firm/Info2-14_transglobe_life_20260910.html"
   }
  ],
  "summary": {
-  "written": 0,
-  "unchanged": 4,
-  "unavailable": 43
+  "written": 34,
+  "unchanged": 13,
+  "unavailable": 0
  }
 }
