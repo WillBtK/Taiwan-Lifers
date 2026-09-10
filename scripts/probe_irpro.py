@@ -34,20 +34,26 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
 
 # A file the archive proves exists, then the listing guesses.
-BASE = "https://skfh.irpro.co/tw/"
+# skfh.irpro.co serves a certificate that does not cover its own hostname, so
+# the relay's TLS verification refuses it and no amount of allow-listing helps.
+# Verification is NOT being relaxed to get round that — a certificate that does
+# not match the host is exactly the case it exists to catch. So the question
+# becomes whether the same PHP app answers on a hostname the certificate IS
+# valid for, which is where the PDFs already come from.
 TARGETS = [
-    ("conference list", BASE + "event-institutional-investor-conference-list.php"),
-    ("conference page id=421", BASE + "event-institutional-investor-conference-page.php?id=421"),
-    ("conference page id=404", BASE + "event-institutional-investor-conference-page.php?id=404"),
-    ("conference page id=357", BASE + "event-institutional-investor-conference-page.php?id=357"),
-    ("known deck (FY22, event 357)",
+    ("www + /tw/ path",
+     "https://www.irpro.co/tw/event-institutional-investor-conference-list.php"),
+    ("www + /2888/tw/ path",
+     "https://www.irpro.co/2888/tw/event-institutional-investor-conference-list.php"),
+    ("www + /skfh/tw/ path",
+     "https://www.irpro.co/skfh/tw/event-institutional-investor-conference-list.php"),
+    ("www conference page id=357",
+     "https://www.irpro.co/tw/event-institutional-investor-conference-page.php?id=357"),
+    ("event directory",
+     "https://www.irpro.co/2888/events/357/CH/"),
+    ("known deck, control",
      "https://www.irpro.co/2888/events/357/CH/20230321175446-1.pdf"),
 ]
-# The first harvest walked 310 ids and kept none, because its gate looked for
-# the literal string "conference" in a page served in Traditional Chinese. It
-# printed nothing either way, so a fetch failure and a gate rejection were
-# indistinguishable — the same defect as the note capture that wrote 62 empty
-# records. This prints enough of each body to write the parser against.
 DUMP = 2500
 
 
