@@ -980,3 +980,11 @@ Amendments so far:
   the §3 primitives are unchanged. Copy the `chartCard()` pattern from TLFX
   (`artifact/index.template.html`) rather than calling `lineChart()` directly
   when a chart's colours must follow the theme.
+- One dual-axis chart, by user decision (TLFX, 2026-09-10). §6's one-axis
+  rule stands as the default. The user asked for the page's lead chart to
+  carry a stacked area of hedged and unhedged foreign assets on a right axis
+  under the hedge ratios on a left axis, because the stack is the magnitude
+  and the lines are its shares — two scales describing one object. Built as
+  `drawStackDual()` in the page code from the §3 primitives, with the
+  tooltip carrying both scales and the right axis labelled with its unit.
+  Not a licence for two unrelated measures on one chart.

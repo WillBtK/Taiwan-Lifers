@@ -316,6 +316,68 @@ for r in rows("tic_taiwan_holdings.csv"):
                 "corporate": r1(g("corp_nonabs") + g("corp_abs"), 0),
                 "equities": r1(g("equities"), 0)})
 
+# --------------------------------------------- the central bank
+# The IRFCL template's section II short forward position (the forward leg of
+# the CBC's currency swaps) beside the two measures of the lifers' hedge book,
+# all in US$bn at the month's rate: the FSC's hedge principal (all traditional
+# hedges, from the briefing) and the CBC's own balance-sheet footnote (swap-type
+# hedges only, so NDFs excluded). Decision 4.45 for the reading.
+irfcl = []
+for r in rows("cbc_irfcl.csv"):
+    m = r["obs_date"][:7]
+    irfcl.append({"m": m, "x": xm(m), "reserves_bn": r1(float(r["fx_reserves"]) / 1e3, 1),
+                  "securities_bn": r1(float(r["reserve_securities"]) / 1e3, 1),
+                  "swap_bn": r1(float(r["fx_forward_short_total"]) / 1e3, 1)})
+fx_reserves = []
+for r in rows("cbc_fx_reserves_monthly.csv"):
+    m = r["obs_month"]
+    if m >= "2012-01":
+        fx_reserves.append({"m": m, "x": xm(m), "v": r1(float(r["fx_reserves_usd_mn"]) / 1e3, 1)})
+hp_usd = {r["obs_date"][:7]: float(r["value"]) / 1e3 / fx[r["obs_date"][:7]]
+          for r in rows("derived_series_sector.csv") if r["series_key"] == "hedge_principal"}
+fn_usd = {r["obs_month"][:7]: float(r["hedge_outstanding_ntd_mn"]) / 1e3 / fx[r["obs_month"][:7]]
+          for r in rows("cbc_hedge_footnote.csv")}
+
+
+def nearest(d, m, within):
+    best = None
+    for k in d:
+        gap = abs(mo_(k) - mo_(m))
+        if gap <= within and (best is None or gap < best[0]):
+            best = (gap, k)
+    return best[1] if best else None
+
+
+def mo_(m):
+    return int(m[:4]) * 12 + int(m[5:7])
+
+
+cbc_share = []
+for q in irfcl:
+    fm = nearest(fn_usd, q["m"], 3)
+    hm = nearest(hp_usd, q["m"], 1)
+    if fm is None and hm is None:
+        continue
+    cbc_share.append({
+        "m": q["m"], "swap_bn": q["swap_bn"],
+        "fsc_m": hm, "fsc_bn": r1(hp_usd[hm], 0) if hm else None,
+        "fsc_share": r1(q["swap_bn"] / hp_usd[hm] * 100, 0) if hm else None,
+        "fn_m": fm, "fn_bn": r1(fn_usd[fm], 0) if fm else None,
+        "fn_share": r1(q["swap_bn"] / fn_usd[fm] * 100, 0) if fm else None,
+        "indicative": False,
+    })
+# the latest hedge readings sit after the latest published quarter of the
+# template; pair them with it and say so
+last_q = irfcl[-1]
+hm, fm = max(hp_usd), max(fn_usd)
+if mo_(hm) > mo_(last_q["m"]):
+    cbc_share.append({
+        "m": hm, "swap_bn": last_q["swap_bn"],
+        "fsc_m": hm, "fsc_bn": r1(hp_usd[hm], 0), "fsc_share": r1(last_q["swap_bn"] / hp_usd[hm] * 100, 0),
+        "fn_m": fm, "fn_bn": r1(fn_usd[fm], 0), "fn_share": r1(last_q["swap_bn"] / fn_usd[fm] * 100, 0),
+        "indicative": True, "swap_m": last_q["m"],
+    })
+
 # --------------------------------------------- firm table, latest
 firms_latest = []
 for name, pts in firm_ratio.items():
@@ -367,6 +429,17 @@ latest = {
     "jpm_cells": len(jpm),
     "jpm_have_hedge": sum(1 for j in jpm if j["ours_hedge"] is not None),
     "jpm_have_protected": sum(1 for j in jpm if j["ours_protected"] is not None),
+    "cbc_swap_first": irfcl[0], "cbc_swap_last": irfcl[-1],
+    "hp_usd_last": {"m": max(hp_usd), "v": r1(hp_usd[max(hp_usd)], 0)},
+    "fn_usd_last": {"m": max(fn_usd), "v": r1(fn_usd[max(fn_usd)], 0)},
+    "fn_usd_2022": {"m": "2022-06", "v": r1(fn_usd.get("2022-06"), 0)},
+    "reserves": {m: next(r["v"] for r in fx_reserves if r["m"] == m)
+                 for m in ("2024-12", "2025-04", "2025-05", "2025-06", "2025-12")},
+    "reserves_last": fx_reserves[-1],
+    "protected_pct": r1(100 - last_exp["unprot_pct"]),
+    "protected_pct_2017": r1(100 - first_exp["unprot_pct"]),
+    "protected_pct_year_ago": r1(100 - yr_ago["unprot_pct"]),
+    "reg_eff_last": fsc["reg_hedge_ratio_effective"][-1],
 }
 
 blob = {
@@ -377,7 +450,10 @@ blob = {
     "firms_latest": firms_latest, "book_monthly": book_monthly, "release": release,
     "fsc": fsc, "cbc": cbc, "balance": balance, "cost_market": cost_market,
     "fubon_cost": fubon_cost, "jpm": jpm, "paired": paired, "tic": tic,
+    "irfcl": irfcl, "fx_reserves": fx_reserves, "cbc_share": cbc_share,
+    "usdtwd": {m: v for m, v in fx.items() if m >= "2012-01"},
 }
+PAGE_JS = OUT_DIR / "page.js"
 
 
 def main():
@@ -397,7 +473,12 @@ def main():
         if marker not in page:
             raise SystemExit(f"{TEMPLATE.name} has no {marker} marker")
         # a JSON payload inside <script> must not contain '</script'
-        PAGE.write_text(page.replace(marker, txt.replace("</", "<\\/")), encoding="utf-8")
+        page = page.replace(marker, txt.replace("</", "<\\/"))
+        # the authored page code lives in page.js so the template stays the
+        # design system's chrome and nothing else
+        if "/*PAGE_SCRIPT*/" in page:
+            page = page.replace("/*PAGE_SCRIPT*/", PAGE_JS.read_text(encoding="utf-8"))
+        PAGE.write_text(page, encoding="utf-8")
         print(f"-> {PAGE.relative_to(ROOT)}  ({PAGE.stat().st_size / 1024:.0f} KB)")
     return 0
 

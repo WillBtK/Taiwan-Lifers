@@ -5990,3 +5990,47 @@ pasted verbatim.
 
 Rendered once in Chromium before publishing: nine SVG charts, no console
 errors, 400px viewport with no horizontal overflow.
+
+### 4.84 The page is cut to the spillover question, with the central bank's book beside the lifers'
+
+The user's outline of 2026-09-10 replaces the first build (4.83): one lead
+chart with hedged and unhedged foreign assets stacked on a right axis under
+the hedge ratios on a left axis; a lede on what changed in the ratio and how
+the rule changes contributed; a section on the CBC's forward book, now
+published in the IRFCL template, and on the reserves' role in May 2025; the
+shock table; and everything about construction and coverage moved into
+expanders at the end. Six panels became four; nine charts became three.
+
+**The lede's causal claim is the project's, not the sell-side's.** The fall
+in cover is attributed to the accounting changes (the FY2026 amortisation of
+exchange differences on undesignated amortised-cost bonds; the February 2026
+four-bucket reserve, whose 強化準備 charges a firm hedging below its 2021-25
+benchmark the deemed 2.5% cost of the shortfall rather than making it hedge)
+and not to hedging cost, because 4.31 tested cost and found nothing once the
+trend is removed. The regulator's "effective" ratio is named and dismissed
+as a stock buffer added to a flow hedge (README §9).
+
+**The central bank's share.** The IRFCL short forward position (76.1bn at
+2026-03, from 91.9bn at 2021-12) is set against both measures of the lifers'
+hedge book in US$ at the month's rate: the FSC hedge principal (211bn at
+2026-07, so the CBC is 36%) and the CBC's own footnote of swap-type hedges
+(162bn, 47%). The pairing rule is 4.45's, extended to the FSC principal now
+that it is published monthly; the last row pairs July 2026 hedges with the
+March 2026 book and is marked indicative on the page.
+
+**Reserves, monthly, are a new file.** `scripts/stage8_cbc_reserves.py`
+reads matrix EF07M01 of the CBC database (key financial indicators, column
+外匯存底 in US$ million, monthly from 1987) into
+`data/cbc_fx_reserves_monthly.csv`. May 2025: +10.1bn in the month, +15.6bn
+over May-June, the third-largest two-month rise since 2010 after the two
+2020-21 months; the forward book moved +2.1bn between December 2024 and June
+2025. The page reads that as the CBC meeting the rally in spot rather than
+by supplying hedges, with the valuation caveat stated.
+
+**One dual-axis chart, by the user's decision.** The design system forbids
+two y-axes (§6). The user asked for this one, and it is one object on two
+scales rather than two measures on one chart: the areas are the magnitude
+and the lines its shares. Logged as an amendment in the spec's §10 with
+that scope; built as `drawStackDual()` in `artifact/page.js` from the §3
+primitives. The authored page code now lives in `page.js` and the template
+holds the chrome only; the blob builder splices both.
