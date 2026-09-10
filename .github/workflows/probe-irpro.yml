@@ -1,0 +1,33 @@
+# Can the relay reach irpro.co, and where is Shin Kong's conference list?
+#
+# irpro.co hosts the decks — skfh.com.tw/events-conferences is only an iframe
+# onto it — and refuses this project's sandbox and GitHub's runners alike with
+# a 403. The relay egresses from Taiwan, which may or may not satisfy that
+# filter. This answers it in about a billed minute and writes nothing.
+#
+# In CI because the relay's token is a repository secret and the relay is the
+# only thing that can reach the host.
+name: probe-irpro
+on:
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - '.github/workflows/probe-irpro.yml'
+      - 'scripts/probe_irpro.py'
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Probe
+        env:
+          TAIWAN_RELAY_URL: ${{ secrets.TAIWAN_RELAY_URL }}
+          TAIWAN_RELAY_TOKEN: ${{ secrets.TAIWAN_RELAY_TOKEN }}
+        run: python3 -u scripts/probe_irpro.py
