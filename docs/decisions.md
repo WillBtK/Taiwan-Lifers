@@ -5711,3 +5711,50 @@ contracts were for. It is relabelled, not deleted.
 what a ceiling does when the non-hedging part of the book moves around. The
 Fubon hedge/policy split cannot be derived by subtracting a ceiling from a
 merged wedge, so that route is closed rather than pending.
+
+---
+
+### 4.77 The repository is public, the benchmark stays, and the long jobs were costing real money
+
+**Visibility.** Taiwan-Lifers is now public, so GitHub Actions minutes are free
+from here. They were not: September to the 10th cost **1,575 billed minutes of a
+3,000 allowance** on this repository alone, and three jobs account for 1,472 of
+them — pulling statutory filings (768), harvesting investor decks (501) and
+hunting Shin Kong's filing code (203). Runs already made stay billed; new ones
+do not.
+
+**The sell-side workbook stays in the repository, by explicit instruction.** It
+is the only independent check this project has and removing it would leave
+nothing to validate against. It is not a source: nothing is ingested from it,
+and every series is built from the primary disclosure. It is now publicly
+visible along with the rest of the repository, which is a consequence of the
+visibility change rather than of anything done to the file.
+
+**A secrets scan was run on the working tree and on the last forty commits.**
+Nothing was found. The relay's address and token live in GitHub Secrets, which
+stay private on a public repository; the matches the scan raised were prose
+references to the `*.run.app` wildcard and SHA-256 content hashes of downloaded
+files.
+
+**The expensive habit, and three fixes.** A full deck harvest was launched to
+answer a yes/no question — do Mercuries, Hontai and TransGlobe hold investor
+conferences at all — that the listing query answers in about a minute against
+the harvest's 270. That is the wrong instinct whatever minutes cost.
+
+  * `TLFX_DECK_INDEX_ONLY` prints the listing per issuer and stops before
+    downloading, and `TLFX_DECK_ISSUERS` narrows a run to named codes.
+  * harvest-decks is now `cancel-in-progress: true`. The workflow fires on any
+    edit to itself or its script and this session's token cannot cancel a run
+    through the API, so a mistaken run previously had to be waited out. The one
+    above cost 11 minutes instead of 270.
+  * **The filing index no longer re-queries a company-year it has already
+    completed.** A 2019 annual report will not be filed again, but the index
+    step re-established every one of them on every run at two requests and
+    sixteen seconds apiece, and spent fifty minutes doing it. Only the two most
+    recent ROC years are re-read now, where a filing can still appear;
+    `TLFX_MOPS_REINDEX=1` forces the full sweep. Thirteen of the thirty-three
+    cached company-years are already complete and are skipped today, and that
+    share grows with every run.
+
+Free minutes make this cheaper, not unimportant: a five-hour job still delays
+every result behind it and still hammers a public regulator's website.

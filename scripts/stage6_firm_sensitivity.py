@@ -987,13 +987,36 @@ ATTEMPTED = ROOT / "reports" / "mops_parsed_filings.json"
 PARSER_VERSION = 4
 
 
+# A company-year that already has all four quarters in the cache is FINISHED:
+# a 2019 annual report is not going to be filed again. Re-querying it costs two
+# requests at eight seconds each and a WAF pause when the site tires of us, and
+# the index step of a recent run spent fifty minutes re-establishing facts it
+# already held. Only the two most recent ROC years are re-read, because that is
+# where a filing can still appear.
+#
+# TLFX_MOPS_REINDEX=1 forces the full sweep, for the case where the cache is
+# suspected wrong rather than merely old.
+FRESH_YEARS = 2
+
+
+def _settled(rows, co, y):
+    qs = {r["quarter"] for r in rows if r["co_id"] == co and r["roc_year"] == y}
+    return len(qs) >= 4
+
+
 def build_index(years):
     purge()
     idx = json.loads(IDX.read_text(encoding="utf-8")) if IDX.exists() else {}
+    force = (os.environ.get("TLFX_MOPS_REINDEX") or "").strip() == "1"
+    recent = sorted(years, reverse=True)[:FRESH_YEARS]
+    skipped = 0
     for co, name in FIRMS.items():
         got = {(r["roc_year"], r["quarter"], r["filename"]): r
                for r in idx.get(co, [])}
         for y in years:
+            if not force and y not in recent and _settled(idx.get(co, []), co, y):
+                skipped += 1
+                continue
             rows, err = index(co, y)
             if err:
                 print(f"  {co} {name} {y}: ERROR {err[:60]}")
@@ -1006,7 +1029,10 @@ def build_index(years):
               + " ".join(f"{y}Q{q}" for y, q in qs))
         IDX.parent.mkdir(exist_ok=True)
         IDX.write_text(json.dumps(idx, indent=1, ensure_ascii=False), encoding="utf-8")
-    print(f"\nindex: {IDX.relative_to(ROOT)}")
+    if skipped:
+        print(f"\n  {skipped} company-years already complete in the cache, "
+              f"not re-queried (TLFX_MOPS_REINDEX=1 to force)")
+    print(f"index: {IDX.relative_to(ROOT)}")
     return idx
 
 
