@@ -14,20 +14,26 @@
 # wayback_ts is the capture the CDX index proves returned the PDF, used only
 # when the live fetch fails, so a host outage does not cost the harvest.
 #
+# as_of is NOT the conference date. A deck presented in March reports the prior
+# year, one presented in January reports the third quarter, and the file's own
+# name is unreliable — "SKFH Company Overview May 2019" carries the FY18 pie.
+# Each is taken from the hedging slide's own text, quoted in `evidence`, which
+# is the cost figure or the last column of the cost series printed beside the
+# pie. A blank as_of means the deck has no hedging slide.
+#
 # conf_id  the vendor's event id, kept for provenance
-# label    what the file is called, which is where its as-of date comes from
-conf_id	label	url	wayback_ts
-254	SKFH Company Overview Apr 2017 (CH)	https://www.ir-cloud.com/taiwan/2888/events/254/CH/SKFH%20Company%20Overview%20Apr%202017%20Chi_HYA3rHfHR3Pj.pdf	20180712230136
-269	SKFH Company Overview Mar 2018 (CH)	https://www.ir-cloud.com/taiwan/2888/events/269/CH/SKFH%20Company%20Overview%20Mar%202018%20Chi_ABiDUKAtDhkA.pdf	20230316072608
-282	SKFH Company Overview January 2019 (EN)	https://www.ir-cloud.com/taiwan/2888/events/282/EN/SKFH%20Company%20Overview%20January%202019%20Eng_2QDI3GFcAKhr.pdf	20190828175835
-283	SKFH Company Overview January 2019 (EN)	https://www.ir-cloud.com/taiwan/2888/events/283/EN/SKFH%20Company%20Overview%20January%202019%20Eng_2HnFAdNkeT6J.pdf	20190828193642
-284	2018Q4 (EN)	https://www.ir-cloud.com/taiwan/2888/events/284/EN/2018Q4%20Eng%20(H)_caj32AT1n5t8.pdf	20190828211621
-285	2018Q4 (EN)	https://www.ir-cloud.com/taiwan/2888/events/285/EN/2018Q4%20Eng%20(H)_Aknqng8rb2DJ.pdf	20190828220151
-287	2019Q1 (EN)	https://www.ir-cloud.com/taiwan/2888/events/287/EN/2019Q1%20Eng%20(H)_elDcjFHHRbRA.pdf	20190828171842
-289	SKFH Company Overview May 2019 (EN)	https://www.ir-cloud.com/taiwan/2888/events/289/EN/SKFH%20Company%20Overview%20May%202019%20Eng_T5eDAJaNc7FC.pdf	20190828170949
-312	2020Q4 (CH)	https://www.ir-cloud.com/taiwan/2888/events/312/CH/2020Q4%20Chi%20(H)_GAjH2jEBEFqL.pdf	20250805031115
-325	SKFH Company Overview December 2021 (CH)	https://www.ir-cloud.com/taiwan/2888/events/325/CH/SKFH%20Company%20Overview%20December%20%202021%20Chi_H6NirNI4efTe.pdf	20250723041056
-330	2022-03-15 conference (CH)	https://www.irpro.co/2888/events/330/CH/20220315154743-1.pdf	20250803174916
-331	2022-03-15 conference (CH)	https://www.irpro.co/2888/events/331/CH/20220315154821-1.pdf	20241204075516
-357	2023-03-21 conference, FY22 (CH)	https://www.irpro.co/2888/events/357/CH/20230321175446-1.pdf	20240519030123
-404	2024-08-26 conference (CH)	https://www.irpro.co/2888/events/404/CH/20240826083438-1.pdf	20240830150215
+conf_id	label	as_of	evidence	url	wayback_ts
+254	SKFH Company Overview Apr 2017 (CH)	2016-12-31	2016年避險成本為0.87%	https://www.ir-cloud.com/taiwan/2888/events/254/CH/SKFH%20Company%20Overview%20Apr%202017%20Chi_HYA3rHfHR3Pj.pdf	20180712230136
+269	SKFH Company Overview Mar 2018 (CH)	2017-09-30	2017年前三季避險成本為1.21%(未年化)	https://www.ir-cloud.com/taiwan/2888/events/269/CH/SKFH%20Company%20Overview%20Mar%202018%20Chi_ABiDUKAtDhkA.pdf	20230316072608
+282	SKFH Company Overview January 2019 (EN)	2018-09-30	Annualized hedging cost for 9M 2018 was 1.76%	https://www.ir-cloud.com/taiwan/2888/events/282/EN/SKFH%20Company%20Overview%20January%202019%20Eng_2QDI3GFcAKhr.pdf	20190828175835
+283	SKFH Company Overview January 2019 (EN)	2018-09-30	Annualized hedging cost for 9M 2018 was 1.76%	https://www.ir-cloud.com/taiwan/2888/events/283/EN/SKFH%20Company%20Overview%20January%202019%20Eng_2HnFAdNkeT6J.pdf	20190828193642
+284	2018Q4 (EN)	2018-12-31	Hedging cost for 2018 was 1.72%	https://www.ir-cloud.com/taiwan/2888/events/284/EN/2018Q4%20Eng%20(H)_caj32AT1n5t8.pdf	20190828211621
+285	2018Q4 (EN)	2018-12-31	Hedging cost for 2018 was 1.72%	https://www.ir-cloud.com/taiwan/2888/events/285/EN/2018Q4%20Eng%20(H)_Aknqng8rb2DJ.pdf	20190828220151
+287	2019Q1 (EN)	2019-03-31	cost series ends Q1 2019 at 1.59%	https://www.ir-cloud.com/taiwan/2888/events/287/EN/2019Q1%20Eng%20(H)_elDcjFHHRbRA.pdf	20190828171842
+289	SKFH Company Overview May 2019 (EN)	2018-12-31	Hedging cost for 2018 was 1.72% — the FY18 slide again	https://www.ir-cloud.com/taiwan/2888/events/289/EN/SKFH%20Company%20Overview%20May%202019%20Eng_T5eDAJaNc7FC.pdf	20190828170949
+312	2020Q4 (CH)	2020-12-31	cost series ends 2020 at 2.28%	https://www.ir-cloud.com/taiwan/2888/events/312/CH/2020Q4%20Chi%20(H)_GAjH2jEBEFqL.pdf	20250805031115
+325	SKFH Company Overview December 2021 (CH)	2021-09-30	cost series ends 9M 2021 at 1.75%	https://www.ir-cloud.com/taiwan/2888/events/325/CH/SKFH%20Company%20Overview%20December%20%202021%20Chi_H6NirNI4efTe.pdf	20250723041056
+330	2022-03-15 conference (CH)	2021-12-31	cost series ends 2021 at 1.53%	https://www.irpro.co/2888/events/330/CH/20220315154743-1.pdf	20250803174916
+331	2022-03-15 conference (CH)	2021-12-31	cost series ends 2021 at 1.53%	https://www.irpro.co/2888/events/331/CH/20220315154821-1.pdf	20241204075516
+357	2023-03-21 conference, FY22 (CH)	2022-12-31	cost series ends 2022 at 0.27%	https://www.irpro.co/2888/events/357/CH/20230321175446-1.pdf	20240519030123
+404	2024-08-26 conference (CH)		13 pages, no hedging slide	https://www.irpro.co/2888/events/404/CH/20240826083438-1.pdf	20240830150215

@@ -318,19 +318,36 @@ def main():
     # they did, the backward walk stopped and took eight quarters of 2022-24
     # with it. Walking forward from the earliest quarter cannot hit that,
     # because a link's reference is always a quarter already visited.
-    idx = {}
-    for i, d in enumerate(live):
-        if i == 0:
-            idx[d] = 1.0
-            continue
+    #
+    # A quarter with no usable link starts a NEW SEGMENT rather than being
+    # dropped where it stands. The distinction only became visible when Shin
+    # Kong's IR-host decks pushed the earliest observation back to 2016: for
+    # five quarters it is the only firm with a pie, 10% of the sector, below
+    # MIN_LINK, so nothing can link out of that stretch. Treating the first
+    # quarter as the chain's origin then anchored the whole series inside an
+    # island it could never leave, and the aggregate collapsed to one quarter.
+    #
+    # Only the segment containing the anchor survives. An unlinked segment is
+    # real data, but its LEVEL cannot be placed against the rest without an
+    # assumption about what happened in the gap, and that assumption is exactly
+    # what chain-linking exists to avoid.
+    idx, seg, cur = {}, {}, -1
+    for d in live:
         ref = links.get(d)
         if ref and ref[0] in idx:
             idx[d] = idx[ref[0]] * ref[1]
-        # no usable link: the chain cannot cross this gap, so the quarter is
-        # left out rather than bridged on an assumption
+            seg[d] = seg[ref[0]]
+        else:
+            cur += 1
+            idx[d], seg[d] = 1.0, cur
     anchor = max((d for d in idx), key=lambda d: (direct[d][1], d))
+    orphans = sorted(d for d in idx if seg[d] != seg[anchor])
+    idx = {d: v for d, v in idx.items() if seg[d] == seg[anchor]}
     scale = direct[anchor][0] / idx[anchor]
     idx = {d: v * scale for d, v in idx.items()}
+    if orphans:
+        print(f"  {len(orphans)} quarter(s) not linkable to the anchor's "
+              f"chain, so left out: {orphans[0]} .. {orphans[-1]}")
 
     rows = []
     for d in grid:

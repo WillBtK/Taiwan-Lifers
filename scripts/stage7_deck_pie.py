@@ -50,6 +50,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "data" / "deck_fx_text.json.gz"
+SKFH_SRC = ROOT / "data" / "skfh_deck_text.json.gz"
+SKFH_MAN = ROOT / "config" / "skfh_decks.tsv"
 TRANS = ROOT / "config" / "deck_pie_transcribed.tsv"
 OUT = ROOT / "data" / "deck_pie.csv"
 
@@ -97,11 +99,33 @@ T_PAT = {
 # Read with the 2021 rule the old slide sums to 138 and is discarded, which is
 # why Taiwan Life began in 2021 and not 2018.
 TL_OLD_NTD = re.compile(r"台\s*幣\s*保\s*單\s*(\d{1,3})\s*%")
-S_ORDER = ("hedged", "fx_policy", "equity", "naked")
-S_NUMS = re.compile(r"(\d{1,2}\.\d)%\s*(\d{1,2}\.\d)%\s*(\d{1,2}\.\d)%\s*"
-                    r"(\d{1,2}\.\d)%\s*股\s*票\s*及\s*基\s*金")
-S_BASE = re.compile(r"外\s*幣\s*資\s*產\s*總\s*計\s*=\s*新\s*台\s*幣\s*"
-                    r"([\d,]+)\s*億\s*元")
+# Shin Kong's four slices, in the order they are DRAWN, which is not the order
+# they are labelled: hedged, unhedged, equity & fund, FX policy. That order is
+# asserted on four independent proofs rather than read off the legend —
+#
+#   * the slide states the hedge ratio "including naturally-hedged FX policy
+#     position" and it is the FIRST plus the LAST every time: 70.1 + 16.6 =
+#     86.7, 65.9 + 17.1 = 83.0, 61.5 + 17.8 = 79.3, 63.6 + 19.0 = 82.7;
+#   * from 2026 the same slide also prints the NTD-policy-backed sub-pie, and
+#     rescaling it by the complement of the last number reproduces the first
+#     three exactly — 54.5 / 43.5 / 2.0 times 69.9% gives 38.1 / 30.4 / 1.4;
+#   * the sell-side workbook's two overlapping quarters land on it to the
+#     decimal (FY18 63.6 / 19.0 / 12.6 / 4.8, 1Q19 55.1 / 19.8 / 18.7 / 6.4);
+#   * the third slice is a bond book's equity sliver, 1.0% to 6.4% across ten
+#     years, and no other assignment keeps it that small.
+#
+# Read the old way — policy second, unhedged last — FX policy jumps from 28.8%
+# to 34.4% in one quarter and back, which is what gave the error away.
+S_ORDER = ("hedged", "naked", "equity", "fx_policy")
+# The pie page names its equity slice, in one of three vocabularies across the
+# redraws, and no other page of a results deck does. The gate is needed: a
+# income statement's growth column contains runs of four percentages that sum
+# to 100 by coincidence, and two of them were read as pies before this.
+S_PIE = re.compile(r"股\s*票\s*及\s*基\s*金|股\s*票\s*備\s*供\s*出\s*售\s*部\s*位"
+                   r"|Equity\s*&\s*fund", re.I)
+S_BASE = re.compile(r"(?:外\s*幣\s*資\s*產\s*)?總\s*計\s*=\s*新\s*台\s*幣\s*"
+                    r"([\d,]+(?:\.\d+)?)\s*億\s*元"
+                    r"|Total\s*=\s*NT\$\s*([\d,]+(?:\.\d+)?)\s*bn")
 S_PER = re.compile(r"(\d)M(\d{2})\s*外幣投資資產|(\d)[QH](\d{2})\s*外幣"
                    r"|(20\d{2})\s*外幣投資資產"
                    r"|新光人壽[^0-9]{0,40}?(\d)[QH](\d{2})")
@@ -146,6 +170,38 @@ def triple(text):
     return None
 
 
+def quad(text):
+    """Shin Kong's four slices: the first consecutive run summing to 100.
+
+    Positional only in the sense that the run's ORDER is fixed (see S_ORDER);
+    which four numbers form the run is found, not assumed, because the slide
+    has been redrawn three times in ten years and the numbers sit variously
+    before the legend, after it, and interleaved with the page number. The
+    same page also carries the currency-swap/NDF split and a four-year cost
+    series, neither of which sums to 100, and from 2026 an NTD-policy sub-pie
+    of three, which is why the first qualifying run is the right one.
+    """
+    if not S_PIE.search(text):
+        return {}
+    vals = [float(v) for v in PCT.findall(text)]
+    for a, b, c, d in zip(vals, vals[1:], vals[2:], vals[3:]):
+        if not all(0.1 <= v <= 90.0 for v in (a, b, c, d)):
+            continue
+        if 98.5 <= a + b + c + d <= 101.5 and c == min(a, b, c, d):
+            return dict(zip(S_ORDER, (a, b, c, d)))
+    return {}
+
+
+def s_base(text):
+    """Shin Kong prints the pie's base in NT$. Returns NT$ bn."""
+    m = S_BASE.search(text)
+    if not m:
+        return None
+    if m.group(1):                                   # 億元, hundred millions
+        return float(m.group(1).replace(",", "")) / 10.0
+    return float(m.group(2).replace(",", ""))        # already NT$ bn
+
+
 def harmonise(cs_ndf, proxy, fvoci, risk):
     """A pie drawn on the FX-risk-bearing base, restated on foreign investment.
 
@@ -163,6 +219,55 @@ def keep(d):
     tot = sum(d[k] for k in ("hedged_pct", "fx_policy_pct", "naked_pct",
                              "equity_pct"))
     return 98.0 <= tot <= 102.0 and d["equity_pct"] < 20.0
+
+
+def skfh():
+    """Shin Kong Life before the Taishin merger, from the IR-host decks.
+
+    A separate corpus because MOPS has none of it: there are no
+    investor-conference filings under code 2888, and 2887's decks describe
+    Taishin Life until July 2025 (4.61, 4.67). These fourteen files come from
+    the vendor's own file store, enumerated through the archive because the
+    index is unreachable (4.70), and they carry the same four-slice pie the
+    later decks do — the slide has been redrawn but never renamed.
+
+    The as-of date comes from config/skfh_decks.tsv, not from the page. It
+    cannot be read off the filename: "SKFH Company Overview May 2019" carries
+    the FY18 pie, and January 2019's carries 9M18. What the page does state is
+    the hedging cost for the period it reports, which is the evidence recorded
+    beside each date in the manifest.
+    """
+    if not (SKFH_SRC.exists() and SKFH_MAN.exists()):
+        return {}
+    when = {}
+    for line in SKFH_MAN.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith(("#", "conf_id\t")):
+            continue
+        cid, _label, as_of, _ev, _url, _ts = line.split("\t")
+        if as_of.strip():
+            when[int(cid)] = as_of.strip()
+    with gzip.open(SKFH_SRC, "rt", encoding="utf-8") as fh:
+        store = json.load(fh)
+    out = {}
+    for name, rec in sorted(store.items(), key=lambda kv: kv[1]["conf_id"]):
+        as_of = when.get(rec["conf_id"])
+        if not as_of:
+            continue
+        for page, text in sorted(rec["pages"].items(), key=lambda x: int(x[0])):
+            pie = quad(text)
+            if len(pie) != 4:
+                continue
+            base = s_base(text)
+            row = {"hedged_pct": pie["hedged"], "fx_policy_pct": pie["fx_policy"],
+                   "naked_pct": pie["naked"], "equity_pct": pie["equity"],
+                   "basis": "foreign_investment", "cs_ndf_pct_of_risk": None,
+                   "fx_risk_pct": None, "foreign_assets_ntd_bn": base,
+                   "entity_id": "shinkong_life", "as_of": as_of,
+                   "deck": name, "deck_date": as_of, "page": int(page),
+                   "source": "ir_host", "includes_proxy": False}
+            if keep(row):
+                out.setdefault(("shinkong_life", as_of), row)
+    return out
 
 
 def transcribed():
@@ -266,10 +371,7 @@ def main():
                         else:
                             pie = {}
                 else:
-                    m = S_NUMS.search(text)
-                    if m:
-                        pie = {k: float(v) for k, v in
-                               zip(S_ORDER, m.groups())}
+                    pie = quad(text)
                 if len(pie) != 4:
                     continue
                 # The equity sliver of a bond book is the smallest slice. The
@@ -281,15 +383,12 @@ def main():
                 if pie["equity"] >= cap or pie["equity"] != min(pie.values()):
                     continue
                 as_of = period_of(text, ddate)
-                b = S_BASE.search(text)
                 got = {"hedged_pct": pie["hedged"],
                        "fx_policy_pct": pie["fx_policy"],
                        "naked_pct": pie["naked"], "equity_pct": pie["equity"],
                        "basis": "foreign_investment",
                        "cs_ndf_pct_of_risk": None, "fx_risk_pct": None,
-                       "foreign_assets_ntd_bn": (
-                           float(b.group(1).replace(",", "")) / 10
-                           if b else None)}
+                       "foreign_assets_ntd_bn": s_base(text)}
             if not got or not keep(got):
                 continue
             got.update(entity_id=ent, as_of=as_of, deck=name, deck_date=ddate,
@@ -307,6 +406,8 @@ def main():
     tr, _ = transcribed()
     for k, v in tr.items():
         rows.setdefault(k, v)          # text always outranks a transcription
+    for k, v in skfh().items():
+        rows.setdefault(k, v)          # MOPS outranks the IR host where both
 
     missing = sorted({(e, d) for e, d, _, _ in blank} - set(rows))
     out = sorted(rows.values(), key=lambda r: (r["entity_id"], r["as_of"]))

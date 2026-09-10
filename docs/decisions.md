@@ -5319,3 +5319,95 @@ the literal string "conference" in a page served in Traditional Chinese. A
 fetch failure and a gate rejection were indistinguishable in the log — the same
 shape as the note capture that wrote 62 empty records (4.62). A harvester that
 finds nothing must say which of the two it was.
+
+---
+
+### 4.70 The Shin Kong hole is closed back to 2016, and the slice order it was read with was wrong
+
+Two things came out of the same corpus, and the second is a correction to what
+is already loaded.
+
+**The blocker was addressing, not access.** 4.69 recorded the certificate
+failure correctly and drew the wrong conclusion from it. Every Shin Kong deck
+URL tried comes back 200 through the relay, from both of the vendor's hosts.
+What the unreachable index actually costs is the FILENAME: the older host names
+files by title plus a random suffix (`2020Q4 Chi (H)_GAjH2jEBEFqL.pdf`), the
+newer by upload timestamp (`20230321175446-1.pdf`), and neither is derivable
+from a date. So an id walk finds nothing however wide its range.
+
+The stale-routing-table hypothesis is also dead: the 2025-07-23 capture of
+`SystemUrlInfo` names the same `skfh.irpro.co` URLs as the 2022 one. And every
+HTML path on the hosts whose certificates ARE valid returns the origin's own
+500 — the app is there and erroring, which no path-hunting fixes.
+
+**The file store is enumerable from outside even though the index is not.** A
+Wayback CDX prefix query over `www.ir-cloud.com/taiwan/2888/events/` and
+`www.irpro.co/2888/events/` returns fourteen decks between 2017 and 2024. The
+archive has the NAMES; the live host serves the FILES. `config/skfh_decks.tsv`
+holds the fourteen with the capture that proves each exists, and
+`stage7_skfh_harvest.py` now works from that list, falling back to the archived
+copy only when a live fetch fails. Thirteen of the fourteen carry the hedging
+slide; the fourteenth is a 13-page August 2024 deck that has no such slide.
+
+Nine distinct quarters result — 2016-12, 2017-09, 2018-09, 2018-12, 2019-03,
+2020-12, 2021-09, 2021-12, 2022-12. **That is annual, not quarterly, and it is
+a floor rather than a history.** 2023-03 to 2025-06 stays empty: those
+conferences are ids the archive never crawled, and the pre-merger 2887 decks
+describe Taishin Life, not Shin Kong.
+
+**The as-of date cannot be taken from the filename and is not.** "SKFH Company
+Overview May 2019" carries the FY18 pie; "January 2019" carries 9M18. Each date
+in the manifest is taken from the hedging slide's own text — the cost figure
+for the period it reports, or the last column of the cost series printed beside
+the pie — and that quotation is stored in the file beside the date.
+
+**The correction: the four slices were being read in the wrong order.** The
+parser had them as hedged / FX policy / equity / unhedged. They are drawn
+hedged / UNHEDGED / equity / FX POLICY, on four independent proofs:
+
+  * the slide states its own hedge ratio "including naturally-hedged foreign
+    currency policy position", and it is the FIRST number plus the LAST every
+    time — 70.1 + 16.6 = 86.7, 65.9 + 17.1 = 83.0, 61.5 + 17.8 = 79.3,
+    63.6 + 19.0 = 82.7, each printed on the same page;
+  * from 2026 the slide also prints the NTD-policy-backed sub-pie, and
+    rescaling it by the complement of the last number reproduces the first
+    three exactly: 54.5 / 43.5 / 2.0 times 69.9% gives 38.1 / 30.4 / 1.4;
+  * the sell-side workbook's two overlapping quarters now land to the decimal
+    (FY18 63.6 / 19.0 / 12.6 / 4.8 against 4.7; 1Q19 exact on all four);
+  * the third slice is a bond book's equity sliver, 1.0% to 6.4% across ten
+    years, and no other assignment keeps it that small.
+
+Read the old way, Shin Kong's FX policy share jumps 28.8% to 34.4% in one
+quarter and back, which is what gave it away — that share has sat in a 28.8 to
+30.8 band for three years. **The four rows already loaded had FX policy and
+unhedged transposed.** The hedge ratio itself is unaffected, since the first
+slice is hedged under either reading, but the composition was wrong and the
+aggregate's own denominator arithmetic would have been wrong the moment it used
+the policy bucket.
+
+**A page gate was needed alongside.** Replacing the old fixed-format regex with
+"the first run of four percentages summing to 100" read an income statement's
+growth column as a pie, twice. The pie page names its equity slice — 股票及基金,
+股票備供出售部位, or "Equity & fund" — and no other page of a results deck does.
+
+**And the chain-link needed a fix the new data exposed.** For five quarters
+Shin Kong is the only firm with a pie, 10% of the sector, below MIN_LINK, so
+nothing can link out of that stretch. The forward walk treated its first
+quarter as the chain's origin and anchored the whole series inside an island it
+could never leave: the aggregate collapsed from 35 quarters to one. A quarter
+with no usable link now starts a new SEGMENT, and only the segment containing
+the anchor survives. Three quarters (2017-03 to 2017-09) are left out on that
+rule, and the reason is printed rather than inferred from the gap.
+
+**What it does to the aggregate.** Still 2017-12 to 2026-06, but coverage rises
+where it was thinnest — 43% to 54% in 2017-18, 65% to 76% in 2021, 73% to 84%
+at the 2022 anchor — and the level lifts 0.7 to 2.2pp throughout, because Shin
+Kong hedged more than the sample it joins and now sits inside the anchor's
+direct weighted ratio. The series reads 60.9% (2017-12) to 30.7% (2026-06).
+
+**A by-product worth recording, not yet loaded.** Every one of these slides
+prints the split of traditional hedging between currency swaps and NDFs —
+64/36 in 2016, 61/39 in 2017, 68/32 at 9M18, 64/36 at FY18, 57/43 in 2020,
+53/47 at 9M21, 51/49 at FY21, 53/47 at FY22 — and the annual hedging cost and
+FX volatility reserve balance beside it. 4.67 noted the split exists; this is
+ten years of it for one firm.
