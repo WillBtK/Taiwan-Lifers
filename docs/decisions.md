@@ -5192,3 +5192,53 @@ redeployed service now expects.
 Recorded because the failure was invisible in the workflow's own summary: the
 run went green, committed a report saying "unavailable 43", and pushed. A
 source that stops arriving must be as loud as one that arrives wrong.
+
+### 4.67 Shin Kong's decks are not on skfh.com.tw, and they publish the swap/NDF split
+
+**Where they are.** `skfh.com.tw/events-conferences/` is an empty shell. Its
+content API returns one field:
+
+```
+{"fieldType":"IFRAME_LINK","fieldVal":"",
+ "extension":{"systemInfo":{"systemId":"irpro-tw","funcId":"conferencelisttw"}}}
+```
+
+The page is an iframe onto **irpro.co**, the IR hosting service, under company
+code 2888. The files sit at
+
+```
+https://www.irpro.co/2888/events/<event_id>/CH/<upload-timestamp>-<n>.pdf
+```
+
+Neither part of that path is guessable: the event id is a database key and the
+timestamp is the upload minute. The listing is what makes them reachable, and
+the listing is JS-driven, so the Wayback Machine holds files but no index —
+twelve of Shin Kong's, none of the list.
+
+**What is in them.** The FY22 deck (event 357, page 16) carries exactly the
+disclosure this project has been missing for the pre-2026 entity:
+
+```
+52.5% 15.7% 1.8% 29.9%   避險組合
+外幣資產總計 = 新台幣24,235.1億元
+外匯交換與無本金遠期外匯 / 股票及基金 / 美金及其他幣別部位 / 外幣保單部位
+註: (1) Currency swaps與non-delivery forwards,比重分別為53%及47%
+```
+
+The four buckets on total foreign assets, the base in NT$ — and the split
+between currency swaps and NDFs, in a footnote.
+
+**That last line corrects 4.65 and 4.58.** Both record the swap-versus-NDF
+split as unobtainable from public disclosure, on the ground that the sell-side
+gets it by asking the IR teams. Shin Kong prints it. The claim should have been
+narrower: no firm this project had *already parsed* published it. Whether
+Cathay, Fubon or KGI do so somewhere unread is now an open question rather than
+a settled one, and the JPM column that looked like privileged access may be
+partly a reading of the same footnotes.
+
+**What it needs.** irpro.co refuses this sandbox with a 403 — a bot filter, not
+a geography one, since it refuses GitHub runners identically (4.13 records the
+same for the Fubon and CTBC IR hosts). The relay is the route, and `www.irpro.co`
+is now in `_DEFAULT_HOSTS`; on a service already running the env-var build it is
+a `RELAY_ALLOWED_HOSTS` edit with no redeploy. Whether Taiwan egress alone
+satisfies irpro's filter is untested.

@@ -36,7 +36,8 @@ app = Flask(__name__)
 #                     the July 2025 merger — so the pre-merger Shin Kong Life
 #                     hedging disclosure exists nowhere else. Both www and
 #                     apex, because the site serves each.
-_DEFAULT_HOSTS = "ins-info.ib.gov.tw,www.skfh.com.tw,skfh.com.tw"
+_DEFAULT_HOSTS = ("ins-info.ib.gov.tw,www.skfh.com.tw,skfh.com.tw,"
+                  "www.irpro.co")
 ALLOWED_HOSTS = {h.strip() for h in
                  (os.environ.get("RELAY_ALLOWED_HOSTS") or _DEFAULT_HOSTS).split(",")
                  if h.strip()}
