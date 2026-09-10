@@ -56,6 +56,7 @@ NOTIONAL = ROOT / "data" / "firm_hedge_notional.csv"
 FX = ROOT / "data" / "usdtwd_monthly.csv"
 DECKPIE = ROOT / "data" / "deck_pie.csv"
 OUT = ROOT / "data" / "aggregate_hedge_ratio.csv"
+DECK_ONLY = ROOT / "data" / "aggregate_hedge_ratio_deck_only.csv"
 
 # config/firm_uids.tsv only. Nothing inferred: an earlier pass guessed four more
 # identifiers and produced hedge ratios of 1,534% and 10,610%.
@@ -421,6 +422,27 @@ def _t(x, y, s, size=11, fill=INK, anchor="start", weight="normal"):
             f'font-family="Georgia,\'Times New Roman\',serif">{s}</text>')
 
 
+def deck_only_rows():
+    """The measure-consistent series, if stage7_measure_check has written it.
+
+    Drawn beside the main line because the two are not interchangeable and the
+    chart is where that has to be visible. Five of the nine contributing
+    insurers publish no hedge percentage, only the size of their currency
+    contracts, and that is a CEILING on hedging rather than a measurement of it
+    — at or above the disclosed figure in sixteen of sixteen firm-quarters
+    where both exist (4.76). So the main line is an upper bound wherever those
+    firms carry weight, and this one is the like-for-like measure over a third
+    of the sector instead of seven eighths.
+    """
+    if not DECK_ONLY.exists():
+        return []
+    out = []
+    for r in csv.DictReader(open(DECK_ONLY, newline="", encoding="utf-8")):
+        if r.get("hedge_ratio"):
+            out.append((r["as_of"], float(r["hedge_ratio"])))
+    return out
+
+
 def chart(rows, obs, share_obs):
     """One picture: the aggregate, the firms behind it, and the coverage."""
     W, H = 1200, 700
@@ -439,14 +461,18 @@ def chart(rows, obs, share_obs):
          f'fill="#faf9f7"/>']
     a0, a1 = rows[0]["hedge_ratio"], rows[-1]["hedge_ratio"]
     o.append(_t(L, 40, f"Taiwan life sector: the bottom-up FX hedge ratio has "
-                       f"more than halved, {a0:.0%} to {a1:.0%}", 19, INK,
-                weight="bold"))
-    o.append(_t(L, 63, "Traditional hedge notional over overseas investment, "
-                       "chain-linked across six insurers. Built firm by firm "
-                       "from statutory", 11.5, MUTE))
-    o.append(_t(L, 79, "filings and company decks; no sector hedge-ratio "
-                       "series is used in the construction. Gross basis, not "
-                       "the regulatory denominator.", 11.5, MUTE))
+                       f"fallen hard, to {a1:.0%}", 19, INK, weight="bold"))
+    o.append(_t(L, 63, "Built firm by firm from statutory filings and company "
+                       "decks; no sector hedge-ratio series is used in the "
+                       "construction.", 11.5, MUTE))
+    o.append(_t(L, 79, "TWO MEASURES. Four insurers disclose a hedge "
+                       "percentage. Five disclose only the size of their "
+                       "currency contracts, which is a CEILING on hedging",
+                11.5, MUTE))
+    o.append(_t(L, 95, "— at or above the disclosed figure in 16 of 16 "
+                       "firm-quarters where both exist. The upper line is "
+                       "therefore a bound; the truth is between them.",
+                11.5, MUTE))
 
     for g in range(0, 81, 20):
         y = ys(g / 100)
@@ -508,8 +534,19 @@ def chart(rows, obs, share_obs):
     o.append(_t(xs(ag[-1][0]) - 12, ys(ag[-1][1]) + 37, ag[-1][0], 10, MUTE,
                 "end"))
     mid = ag[len(ag) // 2]
-    o.append(_t(xs(mid[0]), ys(mid[1]) - 16, "AGGREGATE", 12, INK, "middle",
-                "bold"))
+    o.append(_t(xs(mid[0]), ys(mid[1]) - 16, "ALL NINE INSURERS (upper bound)",
+                12, INK, "middle", "bold"))
+    dk = [(d, v) for d, v in deck_only_rows() if d >= ag[0][0]]
+    if len(dk) > 1:
+        pts = " ".join(f"{xs(d):.1f},{ys(v):.1f}" for d, v in dk)
+        o.append(f'<polyline points="{pts}" fill="none" stroke="{INK}" '
+                 f'stroke-width="2" stroke-dasharray="6 4" opacity="0.75"/>')
+        m2 = dk[len(dk) // 6]
+        o.append(_t(xs(m2[0]), ys(m2[1]) + 44,
+                    "THE FOUR THAT DISCLOSE A HEDGE %", 11, MUTE, "start",
+                    "bold"))
+        o.append(_t(xs(dk[0][0]) + 8, ys(dk[0][1]) + 16, f"{dk[0][1]:.0%}",
+                    11.5, MUTE, "start", "bold"))
 
     # coverage. BAR is the height of a 100% bar, so the strip's own captions
     # have to clear STRIP - BAR; written at STRIP - 34 they were printed across
@@ -538,11 +575,10 @@ def chart(rows, obs, share_obs):
                            "measured only across firms present in BOTH "
                            "quarters, then chained, so composition never "
                            "moves the level.", 10.5, MUTE))
-    o.append(_t(L, H - 28, "Cathay, KGI, Taiwan Life and Shin Kong from their "
-                           "own investor decks; Fubon and Nan Shan from "
-                           "statutory notionals. Weights are each "
-                           "firm\u2019s share of sector overseas investment.",
-                10.5, MUTE))
+    o.append(_t(L, H - 28, "Hedge percentage disclosed: Cathay, KGI, Taiwan "
+                           "Life, Shin Kong. Currency-contract size only "
+                           "(a ceiling): Nan Shan, Fubon, Hontai, Bank Taiwan "
+                           "Life, Mercuries.", 10.5, MUTE))
     o.append(_t(L, H - 12, "Source: MOPS statutory filings, company investor "
                            "presentations, Insurance Bureau monthly statistics. "
                            "Author\u2019s extraction.", 10.5, MUTE))

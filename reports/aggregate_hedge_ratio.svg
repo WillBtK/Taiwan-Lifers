@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700"><rect width="1200" height="700" fill="#faf9f7"/>
-<text x="80.0" y="40.0" font-size="19" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Taiwan life sector: the bottom-up FX hedge ratio has more than halved, 62% to 31%</text>
-<text x="80.0" y="63.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Traditional hedge notional over overseas investment, chain-linked across six insurers. Built firm by firm from statutory</text>
-<text x="80.0" y="79.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">filings and company decks; no sector hedge-ratio series is used in the construction. Gross basis, not the regulatory denominator.</text>
+<text x="80.0" y="40.0" font-size="19" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Taiwan life sector: the bottom-up FX hedge ratio has fallen hard, to 31%</text>
+<text x="80.0" y="63.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Built firm by firm from statutory filings and company decks; no sector hedge-ratio series is used in the construction.</text>
+<text x="80.0" y="79.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">TWO MEASURES. Four insurers disclose a hedge percentage. Five disclose only the size of their currency contracts, which is a CEILING on hedging</text>
+<text x="80.0" y="95.0" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">— at or above the disclosed figure in 16 of 16 firm-quarters where both exist. The upper line is therefore a bound; the truth is between them.</text>
 <line x1="80" y1="470.0" x2="1092" y2="470.0" stroke="#e2e0dc" stroke-width="1"/>
 <text x="70.0" y="474.0" font-size="10.5" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">0%</text>
 <line x1="80" y1="382.0" x2="1092" y2="382.0" stroke="#e2e0dc" stroke-width="1"/>
@@ -174,7 +175,10 @@
 <text x="90.0" y="186.8" font-size="11.5" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">61.6%  2017-12-31</text>
 <text x="1080.0" y="356.8" font-size="14" fill="#1c1c1c" text-anchor="end" font-weight="bold" font-family="Georgia,'Times New Roman',serif">30.7%</text>
 <text x="1080.0" y="371.8" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">2026-06-30</text>
-<text x="586.0" y="240.9" font-size="12" fill="#1c1c1c" text-anchor="middle" font-weight="bold" font-family="Georgia,'Times New Roman',serif">AGGREGATE</text>
+<text x="586.0" y="240.9" font-size="12" fill="#1c1c1c" text-anchor="middle" font-weight="bold" font-family="Georgia,'Times New Roman',serif">ALL NINE INSURERS (upper bound)</text>
+<polyline points="80.0,261.5 109.8,262.1 139.5,261.4 169.3,253.0 199.1,265.7 228.8,283.2 258.6,290.7 288.4,281.6 318.1,278.9 347.9,278.0 377.6,272.3 407.4,271.7 437.2,266.4 466.9,263.2 496.7,266.5 526.5,272.5 556.2,267.3 586.0,265.1 615.8,271.8 645.5,275.8 675.3,287.5 705.1,285.9 734.8,278.1 764.6,273.8 794.4,269.5 824.1,287.9 853.9,300.5 883.6,274.9 913.4,266.2 943.2,274.9 972.9,290.6 1002.7,279.2 1032.5,311.3 1062.2,326.5 1092.0,337.9" fill="none" stroke="#1c1c1c" stroke-width="2" stroke-dasharray="6 4" opacity="0.75"/>
+<text x="228.8" y="327.2" font-size="11" fill="#6b6b6b" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">THE FOUR THAT DISCLOSE A HEDGE %</text>
+<text x="88.0" y="277.5" font-size="11.5" fill="#6b6b6b" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">47%</text>
 <text x="80.0" y="538.0" font-size="12" fill="#1c1c1c" text-anchor="start" font-weight="bold" font-family="Georgia,'Times New Roman',serif">Share of sector overseas investment behind each point</text>
 <text x="80.0" y="554.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">The chain-link means a firm entering or leaving cannot move the level — but a thin quarter is still a noisier one.</text>
 <rect x="76.0" y="588.1" width="8" height="27.9" fill="#6b6b6b" opacity="0.5"/>
@@ -220,6 +224,6 @@
 <text x="70.0" y="581.0" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="normal" font-family="Georgia,'Times New Roman',serif">75%</text>
 <line x1="80" y1="616" x2="1092" y2="616" stroke="#1c1c1c" stroke-width="1"/>
 <text x="80.0" y="656.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Chain-linked: each quarter-on-quarter change is measured only across firms present in BOTH quarters, then chained, so composition never moves the level.</text>
-<text x="80.0" y="672.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Cathay, KGI, Taiwan Life and Shin Kong from their own investor decks; Fubon and Nan Shan from statutory notionals. Weights are each firm’s share of sector overseas investment.</text>
+<text x="80.0" y="672.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Hedge percentage disclosed: Cathay, KGI, Taiwan Life, Shin Kong. Currency-contract size only (a ceiling): Nan Shan, Fubon, Hontai, Bank Taiwan Life, Mercuries.</text>
 <text x="80.0" y="688.0" font-size="10.5" fill="#6b6b6b" text-anchor="start" font-weight="normal" font-family="Georgia,'Times New Roman',serif">Source: MOPS statutory filings, company investor presentations, Insurance Bureau monthly statistics. Author’s extraction.</text>
 </svg>
