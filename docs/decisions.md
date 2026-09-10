@@ -5242,3 +5242,38 @@ same for the Fubon and CTBC IR hosts). The relay is the route, and `www.irpro.co
 is now in `_DEFAULT_HOSTS`; on a service already running the env-var build it is
 a `RELAY_ALLOWED_HOSTS` edit with no redeploy. Whether Taiwan egress alone
 satisfies irpro's filter is untested.
+
+### 4.68 The listing URL, found in the front-end's own routing table
+
+4.67 established that Shin Kong's decks are on irpro.co and that the index is
+JS-driven, so the archive holds files and no list. The route to the list turned
+out to be in the shell page's own bundle. `main-es2015.js` resolves a funcId to
+a URL through a second API call — `GET /skfh-portal-api/SystemUrlInfo` — and an
+archived copy of that endpoint is the whole routing table:
+
+| funcId | URL |
+|---|---|
+| `conferencelisttw` | `skfh.irpro.co/tw/event-institutional-investor-conference-list.php` |
+| `financialreporttw` | `skfh.irpro.co/tw/financial-report-season.php` |
+| `annualreporttw` | `skfh.irpro.co/tw/annual-report.php` |
+
+**The host is `skfh.irpro.co`, not `www.irpro.co`.** The relay matches hostnames
+exactly, so the two are different permissions; the probe that succeeded fetched
+files from `www.irpro.co`, which is where the PDFs sit, while the index needs
+the subdomain.
+
+**And skfh.com.tw was never needed.** It does not even resolve from Cloud Run
+asia-east1 — the probe's control returned "Name or service not known" — and its
+events page is only an iframe. It is out of the default host list again.
+
+**The index is year-filtered but the ids are not.** The list page shows four
+conferences at a time, but the per-conference page takes a plain integer:
+330 and 331 are 2022, 357 is 2023, 404 is 2024, 415 to 421 are 2025. Walking
+the range finds every conference without reproducing the pagination, which is
+what `scripts/stage7_skfh_harvest.py` does.
+
+**What the relay probe settled.** irpro.co answers it: both known deck URLs came
+back as full PDFs, 200. So the 403 that refuses the sandbox and the runners is a
+filter Taiwan egress satisfies. The HTML paths under `www.irpro.co/2888/` still
+403 — the files are open, the app pages are not — which is consistent with the
+index living on the subdomain instead.

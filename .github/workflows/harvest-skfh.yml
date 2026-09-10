@@ -1,0 +1,56 @@
+# Shin Kong Financial's investor decks from skfh.irpro.co, through the relay.
+#
+# The pre-2026 Shin Kong Life is roughly a tenth of sector overseas investment
+# and absent from the aggregate before 3Q25. Its decks are on skfh.irpro.co,
+# which refuses this project's sandbox and GitHub's runners alike with a 403
+# and answers the relay — so this needs both CI (for the token) and the relay
+# (for the egress).
+#
+# Requires skfh.irpro.co in the relay's RELAY_ALLOWED_HOSTS.
+name: harvest-skfh
+on:
+  push:
+    branches: [claude/stage-1-fsc-sector-monthly-jh1pkf]
+    paths:
+      - '.github/workflows/harvest-skfh.yml'
+      - 'scripts/stage7_skfh_harvest.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: harvest-skfh
+  cancel-in-progress: false
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stage-1-fsc-sector-monthly-jh1pkf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the PDF reader
+        run: pip install --quiet pymupdf
+      - name: Harvest
+        env:
+          TAIWAN_RELAY_URL: ${{ secrets.TAIWAN_RELAY_URL }}
+          TAIWAN_RELAY_TOKEN: ${{ secrets.TAIWAN_RELAY_TOKEN }}
+        run: python3 -u scripts/stage7_skfh_harvest.py
+      # always(): each deck costs a relay round trip. A failure late in the run
+      # must not discard the pages already captured — the same reasoning, and
+      # the same separate forced adds, as harvest-decks.yml, where `git add A B`
+      # with B gitignored staged NEITHER and threw away three hours.
+      - name: Commit the captured text
+        if: always()
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -f data/skfh_deck_text.json.gz 2>/dev/null || true
+          git add -f reports/skfh_deck_index.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo 'unchanged'; else
+            git commit -m 'Harvest: Shin Kong investor-deck FX pages from irpro'
+            git pull --rebase origin claude/stage-1-fsc-sector-monthly-jh1pkf || true
+            git push
+          fi

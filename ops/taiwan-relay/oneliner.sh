@@ -36,8 +36,11 @@ app = Flask(__name__)
 #                     the July 2025 merger — so the pre-merger Shin Kong Life
 #                     hedging disclosure exists nowhere else. Both www and
 #                     apex, because the site serves each.
-_DEFAULT_HOSTS = ("ins-info.ib.gov.tw,www.skfh.com.tw,skfh.com.tw,"
-                  "www.irpro.co")
+# skfh.com.tw is deliberately NOT here: it does not resolve from the relay
+# (Cloud Run asia-east1 gets "Name or service not known"), and it is not
+# needed — its events page is an iframe onto skfh.irpro.co, which is where
+# both the conference index and the decks actually live.
+_DEFAULT_HOSTS = ("ins-info.ib.gov.tw,skfh.irpro.co,www.irpro.co")
 ALLOWED_HOSTS = {h.strip() for h in
                  (os.environ.get("RELAY_ALLOWED_HOSTS") or _DEFAULT_HOSTS).split(",")
                  if h.strip()}
