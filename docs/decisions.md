@@ -5277,3 +5277,45 @@ back as full PDFs, 200. So the 403 that refuses the sandbox and the runners is a
 filter Taiwan egress satisfies. The HTML paths under `www.irpro.co/2888/` still
 403 — the files are open, the app pages are not — which is consistent with the
 index living on the subdomain instead.
+
+### 4.69 The Shin Kong harvest is blocked by a certificate, not by access
+
+The relay reaches irpro.co: both known deck PDFs come back 200, full size. What
+it cannot reach is the app that lists them.
+
+```
+GET https://skfh.irpro.co/tw/event-institutional-investor-conference-list.php
+  -> [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed:
+     Hostname mismatch, certificate is not valid for 'skfh.irpro.co'
+```
+
+**Verification is not being relaxed for it.** A certificate that does not match
+the host it is served from is precisely the case verification exists to catch,
+and the relay is a shared credentialled service; the one flag `main.py` does
+clear, VERIFY_X509_STRICT, is about optional extensions on a chain that still
+verifies, which is a different thing entirely.
+
+**The app is only on that hostname.** Probed through the relay, every path on
+the host whose certificate IS valid — where the PDFs sit — returns 404 or 403:
+
+| target | result |
+|---|---|
+| `www.irpro.co/tw/…conference-list.php` | 404 |
+| `www.irpro.co/2888/tw/…conference-list.php` | 404 |
+| `www.irpro.co/skfh/tw/…conference-list.php` | 404 |
+| `www.irpro.co/2888/events/357/CH/` | 403 |
+| `www.irpro.co/2888/events/357/CH/<file>.pdf` | **200, 1,056,568 bytes** |
+
+So the files are open and the index is not, and the index is what carries the
+per-conference upload timestamp that makes a file URL constructible.
+
+**What the archive holds is not a substitute.** One capture of the list page,
+showing four 2025 conferences, and twelve files across four years. Enough for a
+few quarters, not a history.
+
+**The first harvest also had a defect of its own, fixed alongside.** It walked
+310 ids, kept none, and printed nothing either way, because its gate looked for
+the literal string "conference" in a page served in Traditional Chinese. A
+fetch failure and a gate rejection were indistinguishable in the log — the same
+shape as the note capture that wrote 62 empty records (4.62). A harvester that
+finds nothing must say which of the two it was.
