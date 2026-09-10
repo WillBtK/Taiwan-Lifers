@@ -10,8 +10,10 @@ exists solely to give continuous integration a Taiwanese address.
 
 ## What it is not
 
-Not a general proxy. It forwards only to hosts in `ALLOWED_HOSTS` (currently
-one), only over https, and only when the caller presents `X-Relay-Token`
+Not a general proxy. It forwards only to hosts in `ALLOWED_HOSTS` — the
+Insurance Bureau's portal, and from 2026-09-10 Shin Kong Financial's IR host,
+which is the only place the pre-merger Shin Kong Life hedging disclosure
+exists — only over https, and only when the caller presents `X-Relay-Token`
 matching the `RELAY_TOKEN` environment variable. Widen `ALLOWED_HOSTS`
 deliberately, never as a convenience. Behaviour verified locally: missing and
 wrong tokens are refused, a foreign host is refused, a plain-http target is

@@ -97,3 +97,7 @@ jobs:
           path: cache/mops_pdf/
           retention-days: 5
           if-no-files-found: warn
+# 2026-09-10: re-run to reach the 62 filings captured with zero note pages —
+# every Fubon and Mercuries filing before 2020, every Cathay one before 2019.
+# They were never examined: an empty record was written, `done` swallowed it,
+# and the retry was locked out by the failure it existed to correct.

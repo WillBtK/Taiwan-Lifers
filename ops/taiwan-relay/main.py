@@ -21,7 +21,16 @@ from flask import Flask, Response, request
 
 app = Flask(__name__)
 
-ALLOWED_HOSTS = {"ins-info.ib.gov.tw"}
+ALLOWED_HOSTS = {
+    "ins-info.ib.gov.tw",
+    # Shin Kong Financial's own IR host, added 2026-09-10. MOPS carries no
+    # investor-conference filings for code 2888, and code 2887 is Taishin,
+    # whose decks describe Taishin Life until the July 2025 merger — so the
+    # pre-merger Shin Kong Life hedging disclosure exists nowhere else. Both
+    # www and apex, because the site serves each.
+    "www.skfh.com.tw",
+    "skfh.com.tw",
+}
 MAX_BYTES = 32 * 1024 * 1024
 UA = "Mozilla/5.0 (compatible; TLFX/1.0)"
 

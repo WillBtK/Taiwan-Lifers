@@ -989,15 +989,29 @@ def note_pages(path):
     """
     import pymupdf
     out = {}
-    for page in pymupdf.open(path):
+    doc = pymupdf.open(path)
+    chars = 0
+    for page in doc:
         raw = unicodedata.normalize("NFKC", page.get_text())
+        chars += len(raw.strip())
         if not (INSTR.search(raw) or "敏感度" in raw
                 or re.search(r"名目本金|合約金額|契約金額", raw)):
             continue
         if len(re.findall(r"\d{1,3}(?:,\d{3})+", raw)) < 4:
             continue                      # prose mentioning it, not a table
         out[str(page.number + 1)] = re.sub(r"\s+", " ", raw)
-    return out
+    # WHY a filing yielded nothing, because the two reasons need opposite
+    # treatment. A filing with pages but no TEXT is a scan, and re-downloading
+    # it a hundred times will not produce a table; a filing with plenty of text
+    # and no match is a layout this filter has not met, and is worth another
+    # look. Sixty-two filings sit at zero pages — every Fubon and Mercuries
+    # filing before 2020, every Cathay one before 2019 — and until now the
+    # record could not tell the two apart.
+    if not out:
+        return {}, {"pages": doc.page_count, "text_chars": chars,
+                    "why": "no text layer (scan)" if chars < 200 * doc.page_count
+                           else "text present, no note matched"}
+    return out, None
 
 
 def _write(path, rows, keyf):
@@ -1086,7 +1100,19 @@ def pull():
         # NOTE_TEXT is deliberately NOT cleared: it is raw captured input, not
         # a parser output, and discarding it would throw away the downloads
         # this whole mechanism exists to avoid repeating.
-    done = (done_sens | done_not | attempted)
+    # A filing captured with ZERO note pages and no recorded reason was never
+    # actually examined — the record was written, `done` swallowed it, and it
+    # could never be retried. That is why 62 filings, all of them the earliest
+    # years, have sat empty since the first pull: the retry was locked out by
+    # the failure it was meant to correct. One whose emptiness has since been
+    # EXPLAINED stays done, so a scan is not re-fetched for ever.
+    _notes_now = load_note_text()
+    retry = {k for k, v in _notes_now.items()
+             if not v.get("pages") and not v.get("empty")}
+    if retry:
+        print(f"  {len(retry)} filings captured no note pages and no reason; "
+              f"retrying those")
+    done = (done_sens | done_not | attempted) - retry
     if done:
         print(f"  {len(done)} filings already extracted; skipping those\n")
     # One filing per firm-quarter. Insurers with subsidiaries file 合併財報 and
@@ -1146,10 +1172,16 @@ def pull():
             # parser passes free: the download is the expensive half and every
             # firm lays these notes out differently, so there will be many.
             try:
-                notes[f["filename"]] = {"entity_id": name, "co_id": co,
-                                        "roc_year": f["roc_year"],
-                                        "quarter": f["quarter"],
-                                        "pages": note_pages(p)}
+                pages, empty_why = note_pages(p)
+                rec = {"entity_id": name, "co_id": co,
+                       "roc_year": f["roc_year"], "quarter": f["quarter"],
+                       "pages": pages}
+                if empty_why:
+                    rec["empty"] = empty_why
+                    print(f"    ~ {f['filename']}: no note pages — "
+                          f"{empty_why['why']} ({empty_why['pages']}pp, "
+                          f"{empty_why['text_chars']:,} chars)")
+                notes[f["filename"]] = rec
             except Exception as e:
                 print(f"    ! {f['filename']}: text capture failed: "
                       f"{type(e).__name__}: {e}")
