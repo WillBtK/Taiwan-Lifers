@@ -6115,3 +6115,39 @@ Aviva, Japan Times) were not used.
 **Template shared.** `artifact/index.template.html` now carries `{{TITLE}}`
 and `{{EYEBROW}}` placeholders and both builders fill them; the Taiwan page
 is unchanged in content.
+
+### 4.87 The Asia page is reframed for an investment committee reading the September 2026 move
+
+The user asked how the two exposures contribute to the current sharp yen
+rally and rise in global long yields, and what the portfolio risk factors
+are, and for that to lead the page. The lede and nut graf now open on the
+move (yen up about 4.6% against the July month-end rate; US 30-year 5.25%,
+30-year JGB 4.01%, gilt 30-year 5.82% at syndication; BoJ priced for a hike
+on 17–18 September) and state the mechanism: both sectors lose on both legs,
+and both available responses (sell the bonds, or re-hedge them) buy the local
+currency and remove a buyer from the US long end. Japan is the active seller
+(ESR falls on higher foreign AND domestic rates on the firms' own +50bp
+sensitivities, and a 4% JGB is the exit); Taiwan is the latent one (currency
+not yet moving, bonds locked in by unrealised losses that amortisation keeps
+out of earnings, position four times equity, so the hedge is the only lever).
+
+**Market levels are press-reported, not repository data,** held in a dated
+`CONTEXT` block in `scripts/stage9_asia_blob.py` with the source of each
+figure, and shown on the page under the nut graf with that label. They are
+updated by hand at each rebuild; nothing else on the page depends on them
+except the "since July" loss on Japan's open book, which is the open ¥37.3tn
+times the yen move. Trading Economics was blocked at the proxy; the levels
+come from FXStreet (ING, DBS), Bloomberg and CNBC pieces of 1–8 September and
+a 10 September JGB print.
+
+**Two new tables in the portfolio panel.** "Legs of the current move" gives,
+per sector, the yen move to date, a further 10% in the local currency, a
+50bp rise in long yields (illustrative, ten-year duration, labelled as such),
+the BoJ hike, and what each response does to the market. "Portfolio risk
+factors" names five: USD/JPY downside skew beyond the BoJ event; US term
+premium with no Asian buyer of last resort at 5%+; agency MBS and long IG
+spreads (and the callable Formosa book); the USD/TWD gap and TWD basis as
+the low-probability, high-impact tail; and the failure of a long-dollar
+overlay as a duration hedge in the regime where dollar and bonds fall
+together. `data/japan/esr_anchors.csv` is copied from JLIM for the ESR
+sensitivities (Asahi group, Nippon non-consolidated preliminary, March 2026).

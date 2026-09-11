@@ -152,6 +152,27 @@ smr = [r for r in rows(J / "smr_sensitivity.csv") if r["fy"] == "2025" and r["co
 jp_net_assets_tn = round(sum(float(r["net_assets_base_yen_mn"]) for r in smr) / 1e6, 1)
 jp_net_assets_firms = sorted(r["firm_id"] for r in smr)
 
+# ------------------------------------------------------ market context
+# Press-reported levels at build time, NOT repository data: dated, sourced,
+# and shown on the page as such. Update by hand with each rebuild.
+CONTEXT = {
+    "as_of": "2026-09-10",
+    "usdjpy": 153.0,
+    "usdjpy_note": "near 153 on 8 September 2026, the strongest yen in about seven months, on carry-trade unwinding, "
+                   "repatriation expectations and US pressure for tighter BoJ policy (ING and DBS via FXStreet, 8 Sep; Bloomberg, 4 Sep)",
+    "usdjpy_ref_m": "2026-07",
+    "ust30": 5.25, "ust30_note": "5.25% on 8 September 2026 after trading above 5.3%, the highest since 2007 (CNBC, 3 and 4 Sep)",
+    "jgb30": 4.01, "jgb30_note": "4.01% on 10 September 2026",
+    "jgb10": 2.88, "jgb10_note": "about 2.88% on 9 September, off 30-year highs as the yen rallied",
+    "gilt30": 5.82, "gilt30_note": "30-year gilt syndicated at 5.82%, the highest since comparable records began in 1998 (Bloomberg, 1 Sep)",
+    "boj": "the 17–18 September meeting is priced for a 25bp rise to 1.25%",
+}
+CONTEXT["usdjpy_ref"] = round(usdjpy[CONTEXT["usdjpy_ref_m"]], 1)
+CONTEXT["yen_move_pct"] = round((CONTEXT["usdjpy"] / CONTEXT["usdjpy_ref"] - 1) * 100, 1)   # negative = yen up
+esr = [{"firm": r["firm_id"], "label": r["period_label"], "esr": num(r["esr_level_pct"]),
+        "dom_up": num(r["domestic_rate_up_pt"]), "for_up": num(r["foreign_rate_up_pt"]),
+        "basis": r["consolidation"]} for r in rows(J / "esr_anchors.csv")]
+
 # ---------------------------------------------------------------- headline
 L = s8.latest
 b1, b0 = jp_boj[-1], jp_boj[0]
@@ -185,7 +206,8 @@ latest = {
 
 blob = {"meta": {"built": dt.date.today().isoformat(), "tw_sector_last": s8.sec_last, "jp_last": b1["m"],
                  "jp_flows_last": jp_last_month},
-        "latest": latest, "usdtwd": {m: v for m, v in usdtwd.items() if m >= "2010-01"},
+        "latest": latest, "context": CONTEXT, "esr": esr,
+        "usdtwd": {m: v for m, v in usdtwd.items() if m >= "2010-01"},
         "usdjpy": {m: round(v, 2) for m, v in usdjpy.items() if m >= "2010-01"},
         "tw": {"hedge": tw_hedge, "principal": tw_principal, "footnote": tw_footnote, "reg_ratio": s8.fsc["reg_hedge_ratio"],
                "book": [{"m": b["m"], "x": b["x"], "ntd_bn": b["fa_ntd_bn"], "usd_bn": b["fa_usd_bn"]} for b in s8.book_monthly],
