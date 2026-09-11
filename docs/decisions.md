@@ -6151,3 +6151,39 @@ the low-probability, high-impact tail; and the failure of a long-dollar
 overlay as a duration hedge in the regime where dollar and bonds fall
 together. `data/japan/esr_anchors.csv` is copied from JLIM for the ESR
 sensitivities (Asahi group, Nippon non-consolidated preliminary, March 2026).
+
+### 4.88 A downloaded copy of a self-building page is blank, so the download is pre-rendered
+
+The Asia page builds itself in the browser from one JSON blob, which is the
+design system's architecture (§1: everything under `#main` is built by JS).
+A file built that way is blank wherever scripts do not run, and the reader
+gets the rail and nothing else: the user opened the downloaded HTML on
+iPadOS and saw exactly that, the static chrome with an empty `railSub`, an
+empty jump nav and an empty `#main`. iPadOS opens a downloaded `.html` in
+Quick Look, which renders HTML and CSS and blocks script; Mail previews,
+Preview.app, print-to-PDF and locked-down desktops behave the same way. The
+first attempt at a downloadable file only wrapped the same self-building
+page in a `<!doctype>` skeleton, which fixes nothing.
+
+`scripts/stage9_static_page.py` renders the built page once in headless
+Chromium, waits for the DOM, then serialises it. Every panel, table and
+chart is then literal HTML and inline SVG. It strips all `<script>` tags,
+which also drops the 64KB data blob (124KB -> 72KB), and replaces the two
+controls that would be dead without script — the currency switch and the
+theme toggle — with a line of text and a link to the interactive version.
+Three things survive untouched because they were never script-driven: the
+jump-to links are ordinary anchors, the disclosure panels are `<details>`,
+and dark mode is a CSS media query.
+
+The script fails loudly rather than shipping a broken file: it refuses to
+freeze a page that threw, or that has no panels or charts, and it then
+reopens the frozen file with `java_script_enabled=False` and requires
+script-free body text, charts and jump links before it exits zero. Measured
+on this build: 4 panels, 8 charts, 15,772 characters of body text with
+scripting off, no horizontal overflow at 1024px.
+
+**The split is deliberate.** The artifact stays interactive — it is a hosted
+page in a real browser, where hover values and the currency switch earn
+their place. The download is a static snapshot, which is what a file that
+gets emailed, previewed and printed needs to be. Both come from the same
+build, so they cannot diverge.
