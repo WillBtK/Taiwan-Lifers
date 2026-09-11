@@ -235,6 +235,15 @@ def main():
         page = page.replace("{{TITLE}}", TITLE).replace("{{EYEBROW}}", EYEBROW)
         PAGE.write_text(page, encoding="utf-8")
         print(f"-> {PAGE.relative_to(ROOT)}  ({PAGE.stat().st_size / 1024:.0f} KB)")
+        # The artifact host wraps index.html in its own document skeleton; the
+        # standalone copy carries that skeleton itself so the file opens from
+        # disk, offline, with no dependencies.
+        standalone = OUT_DIR / "two_ways_to_stop_hedging.html"
+        standalone.write_text(
+            "<!doctype html>\n<html lang=\"en-GB\">\n<head>\n<meta charset=\"utf-8\">\n"
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+            "</head>\n<body>\n" + page + "\n</body>\n</html>\n", encoding="utf-8")
+        print(f"-> {standalone.relative_to(ROOT)}  ({standalone.stat().st_size / 1024:.0f} KB, standalone)")
     return 0
 
 
