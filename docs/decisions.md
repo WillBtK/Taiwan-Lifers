@@ -6187,3 +6187,35 @@ page in a real browser, where hover values and the currency switch earn
 their place. The download is a static snapshot, which is what a file that
 gets emailed, previewed and printed needs to be. Both come from the same
 build, so they cannot diverge.
+
+### 4.89 One figure per country on the Asia page, and the reader's voice
+
+The user rejected the first chart block: three series per chart, each
+labelled by construction, and copy that addressed "the committee". Both
+failed the reader the page is for, who wants the big picture and has no use
+for the ways a hedge ratio can be computed. The page now shows six charts,
+one line each: foreign assets, FX hedges, hedge ratio, Taiwan beside Japan,
+and every methodological remark is out of the captions and into one
+expander at the end.
+
+**The two figures.** Taiwan's is the Taiwan page's headline: the share of
+foreign assets covered by derivatives or matched by foreign-currency
+policies, applied to the regulator's sector total (78% at end-2017, 51% at
+2Q26; US$342bn uncovered). Japan's is the Bank of Japan's constant nine-firm
+series (60% at FY2021, 41% at September 2025; US$252bn open). The bottom-up
+JLIM rollup was tried first, because it is the figure JLIM publishes, and
+failed on the page for two reasons: its points are keyed by fiscal year and
+period, so sorted that way the line doubled back in time at every interim;
+and its reporting panel grows from seven firms to ten, so the asset and
+hedge amounts step up when Dai-ichi (FY2016) and Nippon (FY2020) enter,
+which a reader would take for sector growth. The BoJ series is the same
+quantity on a fixed panel and gives the same ratio within a point (40.3%
+rollup against 41.0% BoJ at September 2025); the rollup stays in the notes
+as the cross-check. The Japanese loss and capital figures now use the BoJ
+open position (¥37.3tn) against the seven-firm net assets, and say so.
+
+**Voice.** No "for the committee", no "on this project's own test", no
+measure names in running text. The lede states the two positions and how
+each got there; the nut graf states the common driver and the four
+exposures; the tables carry the arithmetic. The static download and the
+artifact are rebuilt from the same source.
