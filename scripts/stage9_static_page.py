@@ -28,20 +28,45 @@ OUT = ROOT / "artifact" / "asia" / "two_ways_to_stop_hedging.html"
 ARTIFACT_URL = "https://claude.ai/code/artifact/93ee9e89-d40d-46f0-b55e-ef371b7f991a"
 CHROME = "/opt/pw-browsers/chromium"
 
-# Runs inside the page once it has built itself.
-FREEZE = """(url) => {
-  // The currency switch and theme toggle need script; say so instead of
-  // showing dead controls.
+# The currency switch has to survive without script, so both currency
+# versions of the two headline charts are rendered and the switch is a pair
+# of radio buttons: CSS shows whichever pane belongs to the checked one. The
+# theme toggle has no CSS-only equivalent and is replaced by a line of text.
+SWITCH_CSS = """
+.unit-switch input[type=radio]{ position:absolute; opacity:0; width:0; height:0; }
+.unit-switch .seg{ display:inline-flex; }
+.unit-switch .seg label{
+  padding:5px 12px; border-radius:4px; cursor:pointer;
+  font-family:ui-monospace,monospace; font-size:12px; color:var(--muted);
+}
+.unit-switch .unit-pane{ display:none; }
+#unit-usd:checked ~ .unit-pane.usd, #unit-local:checked ~ .unit-pane.local{ display:grid; }
+#unit-usd:checked ~ .unit-row label[for=unit-usd], #unit-local:checked ~ .unit-row label[for=unit-local]{
+  background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,0.08);
+}
+"""
+FREEZE = """([url, usdHtml, localHtml, css]) => {
   const row = document.getElementById('unitRow');
-  if (row) {
-    row.innerHTML = '';
-    const label = document.createElement('span');
-    label.className = 'eyebrow';
-    label.textContent = 'Amounts in US$';
-    const note = document.createElement('span');
-    note.className = 'hint';
-    note.textContent = 'Converted at each date\\u2019s month-end rate. The interactive version switches to NT$ and yen.';
-    row.appendChild(label); row.appendChild(note);
+  const grid = row && row.nextElementSibling;
+  if (row && grid) {
+    const sw = document.createElement('div');
+    sw.className = 'unit-switch';
+    sw.style.position = 'relative';
+    sw.innerHTML =
+      '<input type="radio" name="unit" id="unit-usd" checked>' +
+      '<input type="radio" name="unit" id="unit-local">' +
+      '<div class="unit-row" style="display:flex;align-items:center;gap:12px;margin:22px 0 10px">' +
+        '<span class="eyebrow">Amounts in</span>' +
+        '<span class="seg"><label for="unit-usd">US$</label><label for="unit-local">NT$ / \\u00a5</label></span>' +
+        '<span class="hint">Converted at each date\\u2019s month-end rate. The ratio is unaffected.</span>' +
+      '</div>' +
+      usdHtml.replace('class="grid-2"', 'class="grid-2 unit-pane usd"') +
+      localHtml.replace('class="grid-2"', 'class="grid-2 unit-pane local"');
+    row.parentNode.insertBefore(sw, row);
+    row.remove(); grid.remove();
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
   }
   const toggle = document.getElementById('themeToggle');
   if (toggle) {
@@ -94,7 +119,15 @@ async def build():
             raise SystemExit(f"the page threw before it could be frozen: {errors}")
         if not charts or not panels:
             raise SystemExit(f"nothing to freeze: {panels} panels, {charts} charts")
-        await page.evaluate(FREEZE, ARTIFACT_URL)
+        # capture the headline charts in both currencies before freezing
+        grid_js = "document.getElementById('unitRow').nextElementSibling.outerHTML"
+        usd_html = await page.evaluate(grid_js)
+        await page.click("#unitRow .seg button:nth-child(2)")
+        await page.wait_for_timeout(300)
+        local_html = await page.evaluate(grid_js)
+        if usd_html == local_html:
+            raise SystemExit("the currency switch did not change the headline charts")
+        await page.evaluate(FREEZE, [ARTIFACT_URL, usd_html, local_html, SWITCH_CSS])
         html = await page.evaluate("'<!doctype html>\\n' + document.documentElement.outerHTML")
         await browser.close()
     return html, panels, charts
@@ -113,7 +146,15 @@ async def verify():
         scripts = await page.evaluate("document.querySelectorAll('script').length")
         links = await page.evaluate("document.querySelectorAll('#jumpNav a').length")
         wide = await page.evaluate("document.documentElement.scrollWidth")
+        # the CSS-only switch: with script off, checking the second radio must
+        # hide the US$ pane and show the local-currency one
+        vis = "(sel)=>getComputedStyle(document.querySelector(sel)).display"
+        before = (await page.evaluate(vis, ".unit-pane.usd"), await page.evaluate(vis, ".unit-pane.local"))
+        await page.click("label[for=unit-local]")
+        after = (await page.evaluate(vis, ".unit-pane.usd"), await page.evaluate(vis, ".unit-pane.local"))
         await browser.close()
+    if before != ("grid", "none") or after != ("none", "grid"):
+        raise SystemExit(f"currency switch does not work without script: {before} -> {after}")
     return text, charts, scripts, links, wide
 
 

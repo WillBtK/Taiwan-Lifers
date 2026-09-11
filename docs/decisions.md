@@ -6258,3 +6258,17 @@ Taiwan's May 2025 shock, the December 2025 amortisation rule, the February
 2022–24 loss of hedged-Treasury economics, the closing of the duration gap,
 the ESR regime from March 2026 with the firms' own rate sensitivities, and
 the BoJ's October 2025 survey.
+
+### 4.91 The download keeps the currency switch without script
+
+The static download had replaced the US$ / local-currency switch with a line
+of text, because the switch redrew the charts in script. The user wanted the
+switch. The freeze step now captures the two headline charts in both
+currencies before stripping the scripts, and emits them as two panes under a
+pair of radio buttons styled as the segmented control; a `:checked ~`
+selector shows the pane that belongs to the checked button. Radio buttons
+and CSS sibling selectors work in Quick Look, mail previews and print
+dialogs, where script does not. The verifier now opens the frozen file with
+scripting disabled, clicks the second label, and requires the US$ pane to
+hide and the local pane to show before it exits zero. The live artifact's
+switch was tested the same way and redraws both charts.
