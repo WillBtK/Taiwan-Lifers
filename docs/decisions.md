@@ -6219,3 +6219,42 @@ measure names in running text. The lede states the two positions and how
 each got there; the nut graf states the common driver and the four
 exposures; the tables carry the arithmetic. The static download and the
 artifact are rebuilt from the same source.
+
+### 4.90 The Asia page takes the JLIM chart design, and only lifer-specific series
+
+The user supplied the design from the JLIM hedge-ratio page: hedged and
+unhedged stacked on the left axis in the local currency or US$, the ratio on
+the right axis, one currency switch. The page now shows exactly that, Taiwan
+beside Japan, as its only two headline charts. Taiwan's stack is the cover
+figure from the Taiwan page (hedged = derivatives or foreign-currency-policy
+matched) applied to the regulator's sector total; Japan's is the Bank of
+Japan's nine-firm series. Built as `drawStackRatio()` in `artifact/asia/
+page.js` from the §3 primitives; the spec's §10 dual-axis exception covers
+it.
+
+**Flows: only where the series is life insurers and nothing else.** Japan's
+MOF investor-type series is life insurance companies by name and stays.
+Taiwan's balance-of-payments series is "other financial institutions"; life
+insurers are most of it, but the page no longer shows it or infers lifer
+behaviour from it. The page says so in the coverage table.
+
+**Japan's duration gap** enters from JLIM's chart pack: the four-firm EEV
+composite (Dai-ichi, Meiji Yasuda, Sumitomo, Japan Post) in years of
+duration, about −2.0 in FY2019 and +0.1 in FY2024, with the seven-firm
+statutory FY2025 point dashed and called provisional, as JLIM draws it.
+`data/japan/duration_gap_composite.csv` holds it with provenance; the
+firm-level file is copied alongside. The page's reading: a sector with no
+duration gap and a 4% JGB has no structural reason to hold foreign bonds
+unhedged, and the MOF flows show the consequence.
+
+**Taiwan's central bank** enters as its own panel: the IRFCL short forward
+position against the regulator's hedge principal (about 36% at the latest
+pairing) with the CBC footnote of swap-type hedges as the pre-2025 history,
+and the share table from decision 4.45 extended to the FSC figure.
+
+**Regulation** is two dated timelines side by side rather than prose:
+Taiwan's May 2025 shock, the December 2025 amortisation rule, the February
+2026 four-bucket reserve, and the regulatory ratio 66% to 43%; Japan's
+2022–24 loss of hedged-Treasury economics, the closing of the duration gap,
+the ESR regime from March 2026 with the firms' own rate sensitivities, and
+the BoJ's October 2025 survey.

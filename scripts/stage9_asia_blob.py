@@ -152,6 +152,13 @@ smr = [r for r in rows(J / "smr_sensitivity.csv") if r["fy"] == "2025" and r["co
 jp_net_assets_tn = round(sum(float(r["net_assets_base_yen_mn"]) for r in smr) / 1e6, 1)
 jp_net_assets_firms = sorted(r["firm_id"] for r in smr)
 
+jp_gap = []
+for r in rows(J / "duration_gap_composite.csv"):
+    fy = int(r["fy"])
+    m = f"{fy + 1}-03"
+    jp_gap.append({"fy": fy, "m": m, "x": xm(m), "years": float(r["years_gap"]), "basis": r["basis"],
+                   "label": f"FY{fy}" + (" (statutory, 7 firms)" if r["basis"].startswith("statutory") else "")})
+
 # ------------------------------------------------------ market context
 # Press-reported levels at build time, NOT repository data: dated, sourced,
 # and shown on the page as such. Update by hand with each rebuild.
@@ -191,7 +198,7 @@ latest = {
            "equity_bn": L["equity_bn"], "equity_m": L["equity_m"], "unhedged_ntd_tn": L["unhedged_ntd_tn"],
            "cbc_swap_bn": L["cbc_swap_last"]["swap_bn"], "cbc_swap_m": L["cbc_swap_last"]["m"],
            "hp_usd_last": L["hp_usd_last"], "book_peak": L["book_peak"], "book_last": L["book_last"],
-           "flow_years": tw_flow_years, "cover_last": L["cover"]},
+           "flow_years": tw_flow_years, "cover_last": L["cover"], "reserves": L["reserves"]},
     "jp": {"as_of": b1["m"], "label": b1["label"], "total_tn": b1["total_tn"], "total_usd_bn": b1["total_usd_bn"],
            "open_tn": b1["open_tn"], "open_usd_bn": b1["open_usd_bn"], "hedged_tn": b1["hedged_tn"],
            "hedged_usd_bn": b1["hedged_usd_bn"], "ratio": b1["ratio"], "ratio_peak": b_peak["ratio"],
@@ -212,7 +219,8 @@ blob = {"meta": {"built": dt.date.today().isoformat(), "tw_sector_last": s8.sec_
         "tw": {"hedge": tw_hedge, "principal": tw_principal, "footnote": tw_footnote, "reg_ratio": s8.fsc["reg_hedge_ratio"],
                "book": [{"m": b["m"], "x": b["x"], "ntd_bn": b["fa_ntd_bn"], "usd_bn": b["fa_usd_bn"]} for b in s8.book_monthly],
                "flows": tw_flows, "exposure": s8.exposure},
-        "jp": {"boj": jp_boj, "rollup": jp_rollup, "flows": jp_flows}}
+        "jp": {"boj": jp_boj, "rollup": jp_rollup, "flows": jp_flows, "gap": jp_gap},
+        "cbc": {"irfcl": s8.irfcl, "share": s8.cbc_share, "footnote": tw_footnote, "principal": tw_principal}}
 
 
 def main():
