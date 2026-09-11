@@ -1,0 +1,16 @@
+fy,period,total_foreign_exposure_tn,open_unhedged_tn,hedge_currency_swap_tn,hedge_fx_swap_tn,hedge_ratio_bars_pct,hedge_ratio_line_pct,panel_scope,consolidation,asset_basis,ratio_basis,source_document,source_page,extraction_method
+2011,annual,30.12,15.97,0.45,13.71,47.0,47.0,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2012,annual,36.04,18.66,0.67,16.7,48.2,48.3,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2013,annual,38.97,19.79,1.05,18.13,49.2,49.2,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2014,annual,46.76,24.73,1.42,20.6,47.1,47.2,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2015,annual,49.31,24.58,1.65,23.07,50.1,50.2,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2016,annual,53.43,22.64,1.72,29.07,57.6,57.7,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2017,annual,56.13,24.21,1.8,30.12,56.9,56.8,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2018,annual,59.28,26.01,2.1,31.17,56.1,56.2,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2019,annual,60.93,24.66,3.52,32.74,59.5,59.6,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2020,annual,65.8,26.76,5.32,33.72,59.3,59.4,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2021,annual,67.75,26.98,6.0,34.77,60.2,60.3,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2022,annual,56.13,28.93,6.75,20.45,48.5,48.6,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2023,annual,63.18,36.28,8.62,18.28,42.6,42.6,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2024,annual,61.15,36.2,8.39,16.55,40.8,40.8,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry
+2025,interim,63.03,37.25,8.62,17.15,40.9,41.0,headline_9,non_consolidated,book_unadjusted,economic,raw/boj_fsr/2025/other/fsr260421a.pdf,29,digitized_vector_geometry

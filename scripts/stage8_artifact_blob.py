@@ -478,6 +478,8 @@ def main():
         # design system's chrome and nothing else
         if "/*PAGE_SCRIPT*/" in page:
             page = page.replace("/*PAGE_SCRIPT*/", PAGE_JS.read_text(encoding="utf-8"))
+        page = (page.replace("{{TITLE}}", "Taiwan's Unhedged Dollar Book")
+                    .replace("{{EYEBROW}}", "TLFX · Taiwan life insurers"))
         PAGE.write_text(page, encoding="utf-8")
         print(f"-> {PAGE.relative_to(ROOT)}  ({PAGE.stat().st_size / 1024:.0f} KB)")
     return 0

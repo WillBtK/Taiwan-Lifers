@@ -6055,3 +6055,63 @@ hedged-plus-policy on the deck's own label) stays live. The remaining route
 is the deck itself: Fubon's 2026 hedging slide may state the policy share in
 text or a sub-pie, and its 2024–25 slides are still unparsed for the
 naked/equity split (task open). No page change from this entry.
+
+### 4.86 The Asia page: Taiwan and Japan on one measure, with the Japanese side taken from JLIM unchanged
+
+A second page (`artifact/asia/`, built by `scripts/stage9_asia_blob.py` from
+the same Taiwan series as the first page, imported from
+`stage8_artifact_blob` so the two cannot disagree) puts the two sectors side
+by side: hedge amount, foreign assets and hedge ratio, each Taiwan beside
+Japan, with one switch between US$ and local currency for the amounts; then
+the flows; then a portfolio table and the notes.
+
+**The Japanese series are copied, not rebuilt.** `data/japan/` holds three
+files from `WillBtK/Japan-Lifers` at commit f84873c with a README stating
+what each is: the BoJ Financial System Report chart III-2-5 digitised (nine
+majors, general account, open / currency-swap / FX-swap, FY2011 to Sep 2025),
+the firm-level statutory hedge-accounting ratio (the rollup JLIM's own
+published page uses), and the statutory net assets used only to scale the
+open position. JLIM's by-currency table was checked and left out on JLIM's
+own finding that it is structurally unreliable. One new series: MOF
+investor-type flows for life insurers, long-term debt, monthly from 2005
+(`scripts/stage9_mof_lifer_flows.py`).
+
+**The comparable Taiwanese measure is derivatives over total foreign assets,
+not the cover-including-policies figure that headlines the Taiwan page.**
+The BoJ's own note puts assets backing foreign-currency insurance in the open
+segment, so the Japanese ratio is measure A; the Taiwanese equivalent is the
+four slide-publishing firms' hedged slice (47.4% at end-2017, 30.0% at
+2Q26), and the Taiwanese hedge amount is that ratio applied to the
+regulator's sector total, drawn beside the FSC hedge principal and the CBC
+footnote as the published checks. The stat tiles carry both Taiwanese open
+figures (US$488bn derivatives-only, US$342bn policy-netted) and say which
+the Japanese chart matches. Japan's open ¥37.3tn is therefore an upper
+bound on its economic open position, and the page says so.
+
+**The finding the page is built around.** The same falling ratio describes
+two different adjustments. Japan sold the hedged asset: FX-swap-hedged
+holdings ¥34.8tn (Mar 2022) to ¥17.2tn (Sep 2025), net sales of foreign
+long-term debt every calendar year since 2020, ¥20.8tn in total, open book
+flat at about US$250bn in dollars while the yen fell. Taiwan dropped the
+hedge and kept the asset: book within 4% of its peak in dollars, policy-
+netted open position US$107bn (2017) to US$342bn. Scaled to capital, a 10%
+local-currency rally costs Taiwan 40% of equity (NT$1.09tn / NT$2.71tn) and
+Japan about 8% of statutory net assets (¥3.7tn / ¥48.2tn, seven panel firms
+against a nine-firm exposure, indicative). The regulators point opposite
+ways: the FSC's FY2026 amortisation and four-bucket reserve lower the
+earnings cost of running open; Japan's ESR charges capital for it.
+
+**Literature used and how.** Setser and S.T.W. (2019) for the Taiwan
+architecture and the CBC swap book; Setser (2022, 2024) for the Japanese
+bid's disappearance and the hedged/unhedged distinction; Setser (2026) for
+the ten-point-of-ratio ≈ US$50bn flow reading; BoJ FSR April 2026 (chart) and
+October 2025 (investment plans) and BoJ Review May 2026 (hedging fell as it
+became expensive); IMF GFSR October 2025 chapter 1 (hedge ratios well below
+100%, shallow FX markets); Borio, McCauley and McGuire (2022) for hedging as
+off-balance-sheet dollar borrowing. Nothing on the page is quoted from a
+source that could not be opened; two paywalled or blocked items (Daiwa,
+Aviva, Japan Times) were not used.
+
+**Template shared.** `artifact/index.template.html` now carries `{{TITLE}}`
+and `{{EYEBROW}}` placeholders and both builders fill them; the Taiwan page
+is unchanged in content.
